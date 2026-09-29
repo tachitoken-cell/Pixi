@@ -63,3 +63,15 @@
 .world-label .player-title { display: block; margin-top: 2px; color: #ead39b; font-size: 10px; line-height: 1.3; overflow-wrap: anywhere; }
 
 .damage-number-immune { color:#e7e1cf; font-size:22px; }
+
+/* Your own name, title and GM tag are not drawn above your character (chat bubbles still are). */
+#label-you > :is(strong, small, .player-title, .gm-badge) { display: none; }
+
+/* Health colours for every unit frame and player nameplate: green > 50 %, yellow 50-25 %, red <= 25 % (set in unit-frames.ts and updatePlayerNameplate). */
+:root { --hp-high: linear-gradient(#a9e38c, #4f9c45); --hp-mid: linear-gradient(#f7e07e, #c9992a); --hp-low: linear-gradient(#f39180, #b9372b); }
+#unit-frames .unit-health[data-hp="high"] .unit-health-fill, .player-nameplate[data-hp="high"] .player-nameplate-health i { background: var(--hp-high) !important; opacity: 1 !important; }
+#unit-frames .unit-health[data-hp="mid"] .unit-health-fill, .player-nameplate[data-hp="mid"] .player-nameplate-health i { background: var(--hp-mid) !important; opacity: 1 !important; }
+#unit-frames .unit-health[data-hp="low"] .unit-health-fill, .player-nameplate[data-hp="low"] .player-nameplate-health i { background: var(--hp-low) !important; opacity: 1 !important; }
+#unit-frames .unit-health[data-hp="high"] .unit-health-percent { color: #b8f59a; }
+#unit-frames .unit-health[data-hp="mid"] .unit-health-percent { color: #ffe27a; }
+#unit-frames .unit-health[data-hp="low"] .unit-health-percent { color: #ff8f7e; }

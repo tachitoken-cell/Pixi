@@ -619,6 +619,7 @@ function updatePlayerNameplate(el:HTMLElement,p:Player){
  if(p.role==='gm'||el.dataset.gm==='true')updateGmNameplate(el,p.gm?.tagHidden?undefined:p.role);
  el.querySelector('small')!.textContent=`${leader?'♛ ':''}Level ${p.level} ${p.appearance.className}${p.arenaMatchId||hostile?` · ${arenaPlayerLabel(p)}`:member?leader?' · Leader':' · Party':''}${p.hp<=0?' · Defeated':''}`;
  el.querySelector<HTMLElement>('.player-nameplate-health i')!.style.width=`${Math.max(0,Math.min(100,p.maxHp>0?p.hp/p.maxHp*100:0))}%`;
+ const hpFraction=p.maxHp>0?Math.max(0,p.hp)/p.maxHp:0;el.dataset.hp=hpFraction>.5?'high':hpFraction>.25?'mid':'low';
  el.title=`${p.name}${playerTitle(p)?` <${playerTitle(p)}>`:''} · Level ${p.level} ${p.appearance.className} · ${Math.max(0,p.hp)} / ${p.maxHp} health${p.arenaMatchId||hostile?` · ${arenaPlayerLabel(p)}`:''}${member?' · Your party':''}`;
 }
 function toast(text:string,kind='info') { const el=document.createElement('div');el.className=`toast ${kind}`;el.textContent=text;$('toasts').append(el);setTimeout(()=>el.remove(),document.body.classList.contains('mobile-controls')?2800:4200);while($('toasts').children.length>(document.body.classList.contains('mobile-controls')?1:3))$('toasts').firstElementChild?.remove(); }

@@ -91,6 +91,8 @@ export function mountUnitFrames(root: HTMLElement, callbacks: {
     view.className.hidden = view.kind !== 'player' || !data.className; view.className.textContent = data.className || '';
     view.level.hidden = level === null; view.level.textContent = level === null ? '' : String(level); view.level.title = level === null ? '' : `Level ${level}`;
     view.health.hidden = !hasHealth;
+    // green above 50 %, yellow down to 25 %, red at 25 % and below
+    if (hasHealth) view.health.dataset.hp = hp / maxHp > .5 ? 'high' : hp / maxHp > .25 ? 'mid' : 'low'; else delete view.health.dataset.hp;
     const healthText = hasHealth ? `${number(hp)} / ${number(maxHp)}` : '';
     view.current.textContent = healthText; view.percent.textContent = hasHealth ? `${healthPercent}%` : ''; view.fill.style.width = `${hasHealth ? hp / maxHp * 100 : 0}%`;
     if (hasHealth) {
