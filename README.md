@@ -49,6 +49,16 @@ The realm records unlocks and dates from accepted gameplay and saves them with t
 
 Each achievement has its own generated fantasy icon. Ten achievements also unlock a player title; choose **Displayed title** at the bottom of the window, or **No title** to hide it. Titles appear beneath player names and on character sheets. The realm validates and saves each character's selection. **Beta Tester** is a separate account entitlement for accounts registered before 13 September 2026, Stockholm time, with a current character, plus independently verified older characters. It is available to every character on an entitled account. Run `npm run check:titles` for selection, entitlement, persistence and save-failure checks.
 
+## Start the game (one click)
+
+1. Install **Node.js 22 LTS** from https://nodejs.org (once).
+2. Download this repository (Code → Download ZIP, then unzip) or clone it.
+3. Double-click **`START-GAME.bat`** (Windows) or **`start-game.command`** (macOS; on Linux run `./start-game.command`).
+
+The first start installs the packages. Then the game server and the web client start and your browser opens
+http://localhost:5173. Choose **Continue as guest**, create a character and press **Enter world**. Keep the
+window open while you play; closing it stops the game. Characters are saved in `.data/players.json`.
+
 ## Run locally
 
 Use **Node.js 22.18 or newer**; the checks use Node's TypeScript stripping support.
