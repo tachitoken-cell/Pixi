@@ -8,9 +8,26 @@ import { Character } from './character.js';
 
 const loader = new GLTFLoader();
 const cache = new Map();
-function loadModel(url) {
-  if (!cache.has(url)) cache.set(url, loader.loadAsync(url));
-  return cache.get(url);
+// url: a .glb/.gltf file, or a .js module whose default export is the GLB as base64 (for hosts that only
+// serve scripts and images). texture: optional image that replaces the model's base colour texture.
+function loadModel(url, texture) {
+  const key = url + '|' + (texture ?? '');
+  if (!cache.has(key)) cache.set(key, (async () => {
+    let gltf;
+    if (url.endsWith('.js')) {
+      const b64 = (await import(new URL(url, document.baseURI).href)).default;
+      const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+      gltf = await loader.parseAsync(bytes.buffer, '');
+    } else gltf = await loader.loadAsync(url);
+    if (texture) {
+      const map = await new THREE.TextureLoader().loadAsync(texture);
+      map.flipY = false;                        // glTF texture convention
+      map.colorSpace = THREE.SRGBColorSpace;
+      gltf.scene.traverse((o) => { if (o.isMesh) o.material.map = map; });
+    }
+    return gltf;
+  })());
+  return cache.get(key);
 }
 
 // model bone -> procedural pivot group (see Character constructor)
@@ -34,7 +51,7 @@ export class ModelCharacter extends Character {
     }
     this.procHeight = this.measureHeight();
     this.model = null;
-    loadModel(cls.model).then((gltf) => this.attach(gltf)).catch((e) => console.warn('model load failed, keeping the procedural look', e));
+    loadModel(cls.model, cls.modelTexture).then((gltf) => this.attach(gltf)).catch((e) => console.warn('model load failed, keeping the procedural look', e));
   }
 
   measureHeight() {
