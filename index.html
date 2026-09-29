@@ -1,28 +1,137 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <meta name="theme-color" content="#202d28"/>
-  <meta name="description" content="Find your own adventure in Mossvale, a living voxel world. Explore, gather, battle, and play together."/>
-  <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png"/>
-  <title>Mossvale — A little world. A grand adventure.</title>
-  <style>
-    #boot-loading{position:fixed;inset:0;z-index:99;box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:32px 20px;background:#092b20;color:#f8f3de;text-align:center;font-family:system-ui,sans-serif}
-    #boot-loading img{width:min(420px,70vw);height:auto;max-height:35dvh;object-fit:contain;margin-bottom:26px}
-    #boot-loading h1{font:clamp(20px,4vw,30px) Georgia,serif;margin:0}
-    #boot-loading p{font-size:14px;color:#d8dfc0}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#1f2126">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Voxel Quest">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Voxel Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+  { "imports": { "three": "./vendor/three.module.js" } }
+</script>
 </head>
 <body>
-  <div id="app">
-    <div id="boot-loading" role="status">
-      <img src="/ui/wordmark.png" alt="Mossvale"/>
-      <h1>Your adventure is taking shape</h1>
-      <p>Preparing the realm…</p>
-      <noscript><p>Enable JavaScript to play Mossvale.</p></noscript>
+  <canvas id="view"></canvas>
+  <div id="labels"></div>
+
+  <header>
+    <div class="logo">VOXEL<span>QUEST</span></div>
+    <nav id="modes">
+      <button data-mode="play" class="on">Play</button>
+      <button data-mode="showcase">Character</button>
+      <button data-mode="lineup">Class paths</button>
+    </nav>
+    <div id="sound">
+      <button id="snd-music" title="Music on/off">♪</button>
+      <button id="snd-sfx" title="Sound effects on/off">SFX</button>
+    </div>
+  </header>
+
+  <aside id="info">
+    <div class="tag" id="c-role"></div>
+    <div class="locknote" id="c-lock" hidden></div>
+    <h1 id="c-name"></h1>
+    <p id="c-desc"></p>
+    <div id="c-stats"></div>
+    <div class="weapon"><span>Weapon</span><b id="c-weapon"></b></div>
+    <div class="weapon"><span>Crit · Crit DMG</span><b id="c-crit"></b></div>
+  </aside>
+
+  <aside id="controls">
+    <h3>Animation</h3>
+    <div class="grid" id="anims"></div>
+    <h3 id="skills-title">Adventurer skills</h3>
+    <div class="grid two" id="skill-previews"></div>
+    <h3>View</h3>
+    <div class="grid four" id="views">
+      <button data-view="0">Front</button>
+      <button data-view="0.785">3/4</button>
+      <button data-view="1.571">Side</button>
+      <button data-view="3.1416">Back</button>
+    </div>
+    <h3>Options</h3>
+    <label class="toggle"><input type="checkbox" id="opt-weapon" checked> Weapon</label>
+    <label class="toggle"><input type="checkbox" id="opt-rotate"> Turntable</label>
+    <label class="toggle"><input type="checkbox" id="opt-pixel"> Pixel mode</label>
+    <label class="toggle"><input type="checkbox" id="opt-wire"> Wireframe</label>
+  </aside>
+
+  <div id="help" hidden>
+    <b>Controls</b>
+    <span><kbd>WASD</kbd> / click ground: move</span>
+    <span>Hold <kbd>Shift</kbd>: sprint</span>
+    <span>Click a monster: attack it</span>
+    <span><kbd>Space</kbd> Swing · <kbd>1</kbd>–<kbd>0</kbd> skills</span>
+    <span><kbd>V</kbd>: classic ↔ 360° view · <kbd>Q</kbd> <kbd>E</kbd>: turn</span>
+    <span>Mouse wheel: zoom</span>
+    <span><kbd>F</kbd> wave · <kbd>R</kbd> cheer · <kbd>X</kbd> sit (heal)</span>
+    <span>Walk into a glowing gate: next map</span>
+  </div>
+
+  <div id="pframe" hidden>
+    <div class="pf-top"><b id="pf-name">Hero</b><span id="pf-lv">Lv. 1</span></div>
+    <div class="meter hp"><i id="pf-hp"></i><span id="pf-hpt"></span></div>
+    <div class="meter mp"><i id="pf-mp"></i><span id="pf-mpt"></span></div>
+    <div class="meter xp"><i id="pf-xp"></i></div>
+    <div class="pf-crit" id="pf-crit"></div>
+  </div>
+  <button id="tframe" hidden title="Clear target"><b id="tf-name"></b><span class="meter hp"><i id="tf-hp"></i></span></button>
+  <div id="mapbox" hidden><canvas id="minimap" width="160" height="160"></canvas><span id="mapname"></span></div>
+  <div id="vignette"></div>
+  <div id="banner"><small id="banner-lv"></small><b id="banner-name"></b></div>
+  <div id="fade"></div>
+
+  <div id="hud" hidden>
+    <div id="buffs"></div>
+    <div class="jobbar">
+      <b id="job-lv">Job Lv. 1</b>
+      <div class="track"><i id="job-fill"></i></div>
+      <span id="job-xp"></span>
+      <button id="job-test" title="Testing: jump to Job Lv. 20">Unlock all</button>
+    </div>
+    <div id="slots"></div>
+    <div id="emotes">
+      <button id="cam-btn" data-emote="cam">View: Classic</button>
+      <button data-emote="sprint">Sprint</button>
+      <button data-emote="wave">Wave</button>
+      <button data-emote="victory">Cheer</button>
+      <button data-emote="sit">Sit</button>
     </div>
   </div>
-  <script type="module" src="/src/main.ts"></script>
+
+  <div id="stick" hidden><div class="knob"></div></div>
+
+  <footer id="classbar"></footer>
+  <div id="classpick" hidden>
+    <div class="cp-box">
+      <small class="cp-eyebrow">Class Master Oren</small>
+      <h2>Choose your path</h2>
+      <p class="cp-lead">You have mastered the Adventurer. Pick one class; your Job Level starts again at 1. This choice is final.</p>
+      <div id="cp-cards"></div>
+      <button id="cp-close">Not yet</button>
+    </div>
+  </div>
+  <div id="rotate">
+    <div>
+      <div class="phone"></div>
+      <b>Turn your phone</b>
+      <p>Voxel Quest plays best sideways. Rotate your phone to landscape.</p>
+      <button class="primary" id="rotate-go">Play in landscape</button>
+      <button id="rotate-stay">Keep playing vertical</button>
+    </div>
+  </div>
+  <div id="toast" hidden></div>
+  <div id="loading">Loading…</div>
+
+  <script type="module" src="src/main.js"></script>
 </body>
 </html>

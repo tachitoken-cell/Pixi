@@ -1,9 +1,0 @@
-/* Keep the existing painted wood frame and the world visible during each lesson. */
-#quest-button.guided-quest { border-color:#dfc881; }
-#quest-button.guided-quest #quest-summary { line-height:1.6; }
-#quest-button.guided-quest .quest-line { display:flex!important; align-items:flex-start; }
-#quest-button.guided-quest #quest-progress { color:#eee0b0; line-height:1.5; }
-body.onboarding-active #waypoint-hud { top:132px; }
-body.onboarding-active #toasts { top:194px; }
-.utility button.onboarding-locked { opacity:.7; filter:saturate(.15); }
-.utility button.onboarding-next { outline:2px solid #efcf75; outline-offset:2px; filter:brightness(1.15); }
