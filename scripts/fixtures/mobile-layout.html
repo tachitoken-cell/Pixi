@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Mossvale touch layout fixture</title></head>
+<body><div id="app"></div><script type="module">
+import '/src/style.css';
+import '/src/art.css';
+import '/src/hotbar.css';
+import '/src/mobile-controls.css';
+import '/src/mobile-layout.css';
+import { mountUI, icon } from '/src/ui.ts';
+import { renderHotbar } from '/src/hotbar.ts';
+import { bindJoystick, bindTouchActions } from '/src/mobile-controls.ts';
+import { createMobileLayout } from '/src/mobile-layout.ts';
+mountUI();
+document.body.className='mobile-controls';
+const play=document.getElementById('play-ui');
+for(const child of [...document.getElementById('app').children]) if(child!==play)child.remove();
+for(const child of [...play.children])if(!child.matches('#mobile-move,#mobile-actions,#mobile-tools,.bottom-center,#mobile-menu-button'))child.remove();
+const hotbar=document.getElementById('hotbar');
+hotbar.innerHTML=renderHotbar(['arrow','hamstring-shot','power-shot','trail-mending','poison-shot','concussive-shot','multishot','mend']);
+document.querySelectorAll('#mobile-tools button').forEach(button=>button.hidden=false);
+const bar=document.createElement('div');bar.id='fixture-toolbar';bar.innerHTML='<button id="fixture-edit" class="primary-button">Arrange touch controls</button><output id="fixture-state" aria-live="polite">Gameplay actions: 0 · movement keys: 0</output><p id="fixture-note">Local fixture: real Mossvale controls, no server connection.</p>';document.body.append(bar);
+let editing=false,actions=0;const keys=new Set();
+const state=document.getElementById('fixture-state');
+function report(){state.textContent=`Gameplay actions: ${actions} · movement keys: ${keys.size}`;}
+const layout=createMobileLayout({begin:()=>{editing=true;keys.clear();report();},end:()=>{editing=false;keys.clear();report();},announce:message=>document.getElementById('fixture-note').textContent=message});
+document.getElementById('fixture-edit').onclick=()=>layout.open();
+document.getElementById('mobile-menu-button').onclick=()=>layout.open();
+bindJoystick(document.getElementById('mobile-joystick'),keys,()=>!editing,report);bindTouchActions(play);
+for(const button of play.querySelectorAll('button:not(#mobile-joystick):not(#mobile-menu-button)'))button.onclick=()=>{actions++;report();};
+window.addEventListener('keydown',event=>{if(!event.repeat&&event.key==='1'){actions++;report();}});
+setInterval(report,200);
+</script><style>
+body{background:#365244;min-height:100dvh}
+#fixture-toolbar{position:fixed;left:12px;top:12px;right:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;z-index:20;color:#fff0c7;font-size:12px}
+#fixture-toolbar p{width:100%}#mobile-menu-button{display:none!important}
+#mobile-tools #mobile-mount{display:none}#casting-bar,.xp-track,.level-caption{display:none!important}
+</style></body></html>

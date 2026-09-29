@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mossvale auction settlement setup</title>
+<style>body{max-width:700px;margin:48px auto;padding:0 24px;font:16px/1.5 system-ui;color:#e8e3d1;background:#172520}h1{font:30px Georgia;color:#e8c985}label{display:block;margin:22px 0 8px}input,select,button{font:inherit;padding:12px;background:#243b30;color:inherit;border:1px solid #81967c;border-radius:4px}input{box-sizing:border-box;width:100%}button{margin:16px 10px 0 0;cursor:pointer}button:disabled{opacity:.4;cursor:default}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:#0c1913}a{color:#e8c985}small{display:block;color:#b2c0b0}.status{min-height:3em}</style></head>
+<body><h1>Auction settlement setup</h1><p>Deploy the settlement contract for MOSS or ETH auctions with your wallet. The wallet pays the network deployment fee. This page never asks for a private key.</p>
+<label for="currency">Auction currency</label><select id="currency"><option value="moss">MOSS · Mossvale token</option><option value="eth">ETH</option></select><small id="token">MOSS on Robinhood Chain: 0x6742883Eef788E2424CE5a1b0d4303144AaEc0a5</small>
+<label for="network">Network</label><select id="network"><option value="46630">Robinhood Chain Testnet</option><option value="4663" selected>Robinhood Chain Mainnet · real ETH</option></select>
+<label for="authority">Game signing authority · public wallet address</label><input id="authority" placeholder="0x…" autocomplete="off" spellcheck="false"><small>Use the public address of the signing key stored in your server’s MOSS_AUCTION_AUTHORITY_KEY (MOSS) or AUCTION_AUTHORITY_KEY (ETH) secret. This authority is permanent for this contract.</small>
+<div id="treasury-settings"><label for="treasury">Existing Mossvale treasury · public contract address</label><input id="treasury" placeholder="0x…" autocomplete="off" spellcheck="false"><small>Use the existing TREASURE_TREASURY_CONTRACT address. The treasury address is permanent for this contract.</small><p id="tax-split">Every MOSS sale deducts a 5% fee: 1.25% of the purchase price goes to the treasury, 1.25% to the dev team, and 2.5% to burning before referral rewards. A 100 MOSS sale pays the seller 95 MOSS, burns 2.5 MOSS, and sends 1.25 MOSS each to treasury and dev team. Qualified referral milestones of 1, 10, 25, 50 and 100 award 0.10%, 0.25%, 0.50%, 0.75% and 1.00% of the purchase price to the inviter, deducted from burning. At 100 qualified referrals a 100 MOSS sale burns 1.5 MOSS and credits 1 MOSS to the inviter. The buyer pays the listed price. Burning reduces the token’s total supply. Rewards use the existing proceeds withdrawal; fee, recipient shares and rewards round down to the smallest token unit, with the remainder burned. This version requires a new contract deployment and configuration. Existing contracts and pending purchases keep their original terms.</p><small>Fixed dev team recipient: <a id="dev-team" href="https://robinhoodchain.blockscout.com/address/0x6D96b833C760774175Cc6E2c4F7424122EA3798f" target="_blank" rel="noopener">0x6D96b833C760774175Cc6E2c4F7424122EA3798f</a>. This address cannot be changed for this contract.</small><p>Existing game listings can carry over without relisting. Before activating a replacement, release support for settling original payments and withdrawing old seller balances, or finish all pending purchases first and preserve the original withdrawal address.</p></div>
+<button id="connect">Connect wallet</button><button id="deploy" disabled>Deploy settlement contract</button>
+<p id="status" class="status" role="status">No wallet connected. No contract deployed.</p><pre id="result" hidden></pre>
+<p><a id="artifact-link" href="/contracts/MossvaleTokenAuction.json" target="_blank" rel="noopener">Review compiled contract and ABI</a> · <a href="https://docs.robinhood.com/chain/deploy-smart-contracts/" target="_blank" rel="noopener">Robinhood deployment guide</a></p>
+<script type="module">
+const $ = id => document.getElementById(id), address = /^0x[0-9a-fA-F]{40}$/;
+let account, busy = false;
+const tokenTrade=()=>$('currency').value==='moss';
+function currencyChanged(){if(tokenTrade())$('network').value='4663';$('network').disabled=tokenTrade();$('token').hidden=!tokenTrade();$('treasury-settings').hidden=!tokenTrade();$('treasury').required=tokenTrade();$('artifact-link').href=`/contracts/${tokenTrade()?'MossvaleTokenAuction':'MossvaleAuction'}.json`;}
+$('currency').onchange=currencyChanged;currencyChanged();
+const suppliedAuthority=new URLSearchParams(location.search).get('authority');if(suppliedAuthority&&address.test(suppliedAuthority))$('authority').value=suppliedAuthority;
+const suppliedTreasury=new URLSearchParams(location.search).get('treasury');if(suppliedTreasury&&address.test(suppliedTreasury))$('treasury').value=suppliedTreasury;
+const settings = () => $('network').value === '4663'
+  ? { chainId:'0x1237',chainName:'Robinhood Chain',rpcUrls:['https://rpc.mainnet.chain.robinhood.com'],blockExplorerUrls:['https://robinhoodchain.blockscout.com'] }
+  : { chainId:'0xb626',chainName:'Robinhood Chain Testnet',rpcUrls:['https://rpc.testnet.chain.robinhood.com'],blockExplorerUrls:['https://explorer.testnet.chain.robinhood.com'] };
+const request = (method, params=[]) => window.ethereum.request({method,params});
+async function network() {
+  if(tokenTrade()&&$('network').value!=='4663')throw Error('MOSS is only available on Robinhood Chain mainnet.');
+  const config=settings();
+  try { await request('wallet_switchEthereumChain',[{chainId:config.chainId}]); }
+  catch(error) { if(error.code!==4902) throw error; await request('wallet_addEthereumChain',[{...config,nativeCurrency:{name:'Ether',symbol:'ETH',decimals:18}}]); }
+  if(await request('eth_chainId')!==config.chainId) throw Error('Select the matching Robinhood network in your wallet.');
+  return config;
+}
+$('connect').onclick=async()=>{try{
+  if(!window.ethereum) throw Error('Open this page in a browser with an Ethereum-compatible wallet.');
+  await network(); [account]=await request('eth_requestAccounts');
+  $('status').textContent=`Connected ${account}. Review the public signing authority before deployment.`; $('deploy').disabled=false;
+}catch(error){$('status').textContent=error.message;}};
+$('deploy').onclick=async()=>{if(busy)return;busy=true;$('deploy').disabled=true;$('currency').disabled=true;$('network').disabled=true;$('authority').disabled=true;$('treasury').disabled=true;
+try{
+  const authority=$('authority').value.trim(),treasury=$('treasury').value.trim(),isMoss=tokenTrade(),symbol=isMoss?'MOSS':'ETH';
+  if(!address.test(authority)||/^0x0{40}$/i.test(authority))throw Error('Enter a valid, nonzero public signing authority address.');
+  if(isMoss&&(!address.test(treasury)||/^0x0{40}$/i.test(treasury)))throw Error('Enter the valid, nonzero existing Mossvale treasury address.');
+  const config=await network(), accounts=await request('eth_accounts');
+  if(accounts[0]?.toLowerCase()!==account?.toLowerCase())throw Error('Wallet account changed. Connect again before deploying.');
+  const response=await fetch(`/contracts/${isMoss?'MossvaleTokenAuction':'MossvaleAuction'}.json`);if(!response.ok)throw Error('Contract artifact unavailable.');
+  const artifact=await response.json(),data=artifact.bytecode+[authority,...(isMoss?[treasury]:[])].map(value=>value.slice(2).toLowerCase().padStart(64,'0')).join('');
+  const transaction={from:account,data,value:'0x0',chainId:config.chainId};
+  transaction.gas=await request('eth_estimateGas',[transaction]);
+  $('status').textContent='Review the deployment and gas fee in your wallet.';
+  const hash=await request('eth_sendTransaction',[transaction]);
+  $('status').textContent=`Deployment submitted: ${hash}. Waiting for its receipt…`;
+  const link=document.createElement('a');link.href=`${config.blockExplorerUrls[0]}/tx/${hash}`;link.target='_blank';link.rel='noopener';link.textContent='View deployment transaction';$('status').append(' ',link);
+  let receipt;for(let count=0;count<180;count++){receipt=await request('eth_getTransactionReceipt',[hash]);if(receipt)break;await new Promise(resolve=>setTimeout(resolve,1000));}
+  if(!receipt)throw Error(`Deployment is still pending. Follow the transaction in the explorer: ${hash}`);
+  if(receipt.status!=='0x1'||!address.test(receipt.contractAddress))throw Error('Deployment reverted. No settlement contract was created.');
+  if(await request('eth_getCode',[receipt.contractAddress,'latest'])!==artifact.deployedBytecode)throw Error('Deployed contract code does not match. Do not configure it.');
+  const prefix=isMoss?'MOSS_AUCTION':'AUCTION',serverRpc=isMoss?'https://robinhood-mainnet-rpc.blockreq.com/v1/rpc/public':config.rpcUrls[0];
+  $('result').hidden=false;$('result').textContent=`${prefix}_CONTRACT=${receipt.contractAddress}\n${prefix}_CHAIN_ID=${parseInt(config.chainId,16)}\n${prefix}_RPC_URL=${serverRpc}${isMoss?`\nTREASURE_TREASURY_CONTRACT=${treasury}`:''}\n\nKeep ${prefix}_AUTHORITY_KEY in server secrets only. Its public address must be ${authority}.`;
+  $('status').textContent=`Contract deployed and code verified. Configure every realm and release through the production workflow with original-payment recovery, or after pending purchases finish. ${symbol} trading becomes available after the contract is finalized on chain.`;
+}catch(error){$('status').textContent=error.message;}finally{busy=false;$('deploy').disabled=!account;$('currency').disabled=false;$('authority').disabled=false;$('treasury').disabled=false;currencyChanged();}};
+</script></body></html>

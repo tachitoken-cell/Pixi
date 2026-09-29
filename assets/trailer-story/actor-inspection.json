@@ -1,0 +1,74 @@
+{
+  "fps": 24,
+  "sourceSHA256": "79a265d18d32a1b2fddf56e53a5764bf71ea3f2b662564181b4924a7388663dc",
+  "bytes": 417728,
+  "checks": "finite TRS; run legs; attack arms; bow deformation; all 9 clips and targets; GLTFLoader run playback",
+  "actors": [
+    {
+      "hero": "hero-ranger",
+      "meshes": 54,
+      "nodes": 77,
+      "clips": [
+        {
+          "name": "ranger-run",
+          "duration": 0.8333333333333334,
+          "tracks": 42
+        },
+        {
+          "name": "ranger-idle",
+          "duration": 2,
+          "tracks": 42
+        },
+        {
+          "name": "ranger-attack",
+          "duration": 1,
+          "tracks": 42
+        }
+      ]
+    },
+    {
+      "hero": "hero-knight",
+      "meshes": 44,
+      "nodes": 68,
+      "clips": [
+        {
+          "name": "knight-run",
+          "duration": 0.8333333333333334,
+          "tracks": 24
+        },
+        {
+          "name": "knight-idle",
+          "duration": 2,
+          "tracks": 24
+        },
+        {
+          "name": "knight-attack",
+          "duration": 1,
+          "tracks": 24
+        }
+      ]
+    },
+    {
+      "hero": "hero-mage",
+      "meshes": 48,
+      "nodes": 69,
+      "clips": [
+        {
+          "name": "mage-run",
+          "duration": 0.8333333333333334,
+          "tracks": 21
+        },
+        {
+          "name": "mage-idle",
+          "duration": 2,
+          "tracks": 21
+        },
+        {
+          "name": "mage-attack",
+          "duration": 1,
+          "tracks": 21
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+ "_note": "What each NPC says when you press Talk. option.open = window to open (trainer | vendor | bank | auction), or no open = just close.",
+ "npcs": {
+  "sylva": {
+   "npc": {
+    "id": "sylva",
+    "name": "Sylva Fletch",
+    "role": "Ranger trainer",
+    "icon": "class-ranger",
+    "color": "#5fe39a"
+   },
+   "text": "Steady hands, keen eyes. I can teach you new shots and tricks as you grow, ranger.",
+   "options": [
+    {
+     "id": "train",
+     "label": "Train skills",
+     "icon": "spell-quick-shot",
+     "open": "trainer"
+    },
+    {
+     "id": "bye",
+     "label": "Goodbye"
+    }
+   ]
+  },
+  "hilda": {
+   "npc": {
+    "id": "hilda",
+    "name": "Hilda Ironstitch",
+    "role": "Armor & accessories",
+    "icon": "gear-body",
+    "color": "#f3c252"
+   },
+   "text": "Welcome to Lanternreach. Browse my armor and accessories for every class and level.",
+   "options": [
+    {
+     "id": "shop",
+     "label": "Browse supplies",
+     "icon": "gear-body",
+     "open": "vendor"
+    },
+    {
+     "id": "bye",
+     "label": "Close"
+    }
+   ]
+  },
+  "elara": {
+   "npc": {
+    "id": "elara",
+    "name": "Elara Mossledger",
+    "role": "Banker",
+    "icon": "bag-main",
+    "color": "#6cb8ff"
+   },
+   "text": "Your belongings are safe with me. What would you like to store today?",
+   "options": [
+    {
+     "id": "bank",
+     "label": "Open personal storage",
+     "icon": "bag-main",
+     "open": "bank"
+    },
+    {
+     "id": "bye",
+     "label": "Goodbye"
+    }
+   ]
+  },
+  "merrick": {
+   "npc": {
+    "id": "merrick",
+    "name": "Merrick Ledger",
+    "role": "Auctioneer",
+    "icon": "menu-shop",
+    "color": "#f3c252"
+   },
+   "text": "Buy, sell and trade gold for MOSS with players from every realm.",
+   "options": [
+    {
+     "id": "ah",
+     "label": "Open the auction house",
+     "icon": "coin-gold",
+     "open": "auction"
+    },
+    {
+     "id": "bye",
+     "label": "Goodbye"
+    }
+   ]
+  },
+  "tobin": {
+   "npc": {
+    "id": "tobin",
+    "name": "Tobin Reedfoot",
+    "role": "Townsperson",
+    "icon": "lantern",
+    "color": "#b9c4bb"
+   },
+   "text": "Lovely day in Lanternreach, isn't it? The bank is just past the fountain, and the auction house is by the east gate.",
+   "options": [
+    {
+     "id": "bye",
+     "label": "Thanks, bye!"
+    }
+   ]
+  }
+ }
+}

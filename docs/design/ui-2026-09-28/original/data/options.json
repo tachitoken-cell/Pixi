@@ -1,0 +1,655 @@
+{
+ "sections": [
+  {
+   "group": "System",
+   "items": [
+    {
+     "id": "language",
+     "name": "Language",
+     "settings": [
+      {
+       "id": "lang",
+       "label": "Language",
+       "desc": "Menus, quests and chat system messages.",
+       "type": "select",
+       "value": "English",
+       "options": [
+        [
+         "English",
+         "English"
+        ],
+        [
+         "Deutsch",
+         "Deutsch"
+        ],
+        [
+         "Français",
+         "Français"
+        ],
+        [
+         "Español",
+         "Español"
+        ],
+        [
+         "中文",
+         "中文"
+        ]
+       ]
+      },
+      {
+       "id": "chatFilter",
+       "label": "Chat filter",
+       "desc": "Hide rude words in chat.",
+       "type": "toggle",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": "graphics",
+     "name": "Graphics",
+     "settings": [
+      {
+       "id": "preset",
+       "label": "Preset",
+       "desc": "Auto runs a short check to find the highest quality at around 50 FPS.",
+       "type": "segment",
+       "value": "High",
+       "options": [
+        [
+         "Auto",
+         "Auto"
+        ],
+        [
+         "Low",
+         "Low"
+        ],
+        [
+         "Medium",
+         "Medium"
+        ],
+        [
+         "High",
+         "High"
+        ],
+        [
+         "Ultra",
+         "Ultra"
+        ]
+       ]
+      },
+      {
+       "id": "renderScale",
+       "label": "Render scale",
+       "desc": "3D resolution; menus stay sharp.",
+       "type": "range",
+       "value": 100,
+       "min": 50,
+       "max": 150,
+       "step": 5,
+       "unit": "%"
+      },
+      {
+       "id": "renderDistance",
+       "label": "Render distance",
+       "desc": "How far the world is drawn.",
+       "type": "range",
+       "value": 420,
+       "min": 120,
+       "max": 800,
+       "step": 20,
+       "unit": " m"
+      },
+      {
+       "id": "shadows",
+       "label": "Shadows",
+       "desc": "Off saves work on lighting and shadows.",
+       "type": "segment",
+       "value": "High",
+       "options": [
+        [
+         "Off",
+         "Off"
+        ],
+        [
+         "Low",
+         "Low"
+        ],
+        [
+         "Medium",
+         "Medium"
+        ],
+        [
+         "High",
+         "High"
+        ]
+       ]
+      },
+      {
+       "id": "textures",
+       "label": "Texture quality",
+       "desc": "Shoreline and glow detail. Voxel models stay the same.",
+       "type": "segment",
+       "value": "High",
+       "options": [
+        [
+         "Low",
+         "Low"
+        ],
+        [
+         "Medium",
+         "Medium"
+        ],
+        [
+         "High",
+         "High"
+        ]
+       ]
+      },
+      {
+       "id": "effects",
+       "label": "Effects",
+       "desc": "Ambient and cosmetic combat particles. Combat cues stay visible.",
+       "type": "segment",
+       "value": "High",
+       "options": [
+        [
+         "Low",
+         "Low"
+        ],
+        [
+         "Medium",
+         "Medium"
+        ],
+        [
+         "High",
+         "High"
+        ]
+       ]
+      },
+      {
+       "id": "bloom",
+       "label": "Bloom / glow",
+       "desc": "Spell radiance and lantern halos.",
+       "type": "toggle",
+       "value": true
+      },
+      {
+       "id": "water",
+       "label": "Water reflections",
+       "desc": "Sky and sun highlights on water.",
+       "type": "toggle",
+       "value": true
+      },
+      {
+       "id": "fpsCap",
+       "label": "Frame rate limit",
+       "desc": "Lower saves battery on laptops.",
+       "type": "segment",
+       "value": "60",
+       "options": [
+        [
+         "30",
+         "30"
+        ],
+        [
+         "60",
+         "60"
+        ],
+        [
+         "120",
+         "120"
+        ],
+        [
+         "0",
+         "Off"
+        ]
+       ]
+      },
+      {
+       "id": "showFps",
+       "label": "Show FPS",
+       "desc": "Small counter in the corner.",
+       "type": "toggle",
+       "value": false
+      }
+     ],
+     "action": "Run performance check"
+    },
+    {
+     "id": "wallet",
+     "name": "Wallet",
+     "link": "wallet",
+     "settings": [
+      {
+       "id": "confirmSends",
+       "label": "Confirm every transfer",
+       "desc": "Always show the review step before sending MOSS or ETH.",
+       "type": "toggle",
+       "value": true
+      },
+      {
+       "id": "hideBalance",
+       "label": "Hide balances in the HUD",
+       "desc": "Useful when streaming.",
+       "type": "toggle",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": "audio",
+     "name": "Audio",
+     "settings": [
+      {
+       "id": "master",
+       "label": "Master volume",
+       "desc": "",
+       "type": "range",
+       "value": 80,
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "%"
+      },
+      {
+       "id": "music",
+       "label": "Music",
+       "desc": "",
+       "type": "range",
+       "value": 60,
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "%"
+      },
+      {
+       "id": "sfx",
+       "label": "Effects",
+       "desc": "Spells, hits and footsteps.",
+       "type": "range",
+       "value": 85,
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "%"
+      },
+      {
+       "id": "ambient",
+       "label": "Ambience",
+       "desc": "Wind, birds, the village.",
+       "type": "range",
+       "value": 50,
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "%"
+      },
+      {
+       "id": "ui",
+       "label": "Interface",
+       "desc": "Clicks and notifications.",
+       "type": "range",
+       "value": 70,
+       "min": 0,
+       "max": 100,
+       "step": 1,
+       "unit": "%"
+      },
+      {
+       "id": "muteBg",
+       "label": "Mute when the game is in the background",
+       "desc": "",
+       "type": "toggle",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": "notifications",
+     "name": "Notifications",
+     "settings": [
+      {
+       "id": "nWhisper",
+       "label": "Whispers",
+       "desc": "Sound and a highlight when someone whispers you.",
+       "type": "toggle",
+       "value": true
+      },
+      {
+       "id": "nFriends",
+       "label": "Friends coming online",
+       "desc": "",
+       "type": "toggle",
+       "value": true
+      },
+      {
+       "id": "nIC",
+       "label": "Instant Combat registration",
+       "desc": "5 minutes before each event.",
+       "type": "toggle",
+       "value": true
+      },
+      {
+       "id": "nAuction",
+       "label": "Auction House",
+       "desc": "When you are outbid or an auction ends.",
+       "type": "toggle",
+       "value": true
+      },
+      {
+       "id": "nParty",
+       "label": "Party invites",
+       "desc": "",
+       "type": "segment",
+       "value": "Everyone",
+       "options": [
+        [
+         "Everyone",
+         "Everyone"
+        ],
+        [
+         "Friends",
+         "Friends"
+        ],
+        [
+         "Nobody",
+         "Nobody"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "id": "updates",
+     "name": "Updates",
+     "info": {
+      "version": "0.9.4",
+      "channel": "Stable",
+      "notes": "Placeholder: your patch notes go here."
+     },
+     "settings": [
+      {
+       "id": "channel",
+       "label": "Update channel",
+       "desc": "Test builds get new features first.",
+       "type": "segment",
+       "value": "Stable",
+       "options": [
+        [
+         "Stable",
+         "Stable"
+        ],
+        [
+         "Test",
+         "Test"
+        ]
+       ]
+      },
+      {
+       "id": "autoRestart",
+       "label": "Restart to update automatically",
+       "desc": "Only outside combat and dungeons.",
+       "type": "toggle",
+       "value": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "group": "Gameplay",
+   "items": [
+    {
+     "id": "keybindings",
+     "name": "Keybindings",
+     "binds": [
+      [
+       "Movement",
+       [
+        [
+         "forward",
+         "Move forward",
+         "W"
+        ],
+        [
+         "back",
+         "Move back",
+         "S"
+        ],
+        [
+         "left",
+         "Strafe left",
+         "A"
+        ],
+        [
+         "right",
+         "Strafe right",
+         "D"
+        ],
+        [
+         "jump",
+         "Jump",
+         "Space"
+        ],
+        [
+         "interact",
+         "Interact",
+         "E"
+        ]
+       ]
+      ],
+      [
+       "Skills",
+       [
+        [
+         "s1",
+         "Skill 1",
+         "1"
+        ],
+        [
+         "s2",
+         "Skill 2",
+         "2"
+        ],
+        [
+         "s3",
+         "Skill 3",
+         "3"
+        ],
+        [
+         "s4",
+         "Skill 4",
+         "4"
+        ],
+        [
+         "s5",
+         "Skill 5",
+         "5"
+        ],
+        [
+         "swap",
+         "Switch skill set",
+         "Tab"
+        ]
+       ]
+      ],
+      [
+       "Windows",
+       [
+        [
+         "bag",
+         "Bag",
+         "B"
+        ],
+        [
+         "journal",
+         "Journal",
+         "J"
+        ],
+        [
+         "character",
+         "Character",
+         "C"
+        ],
+        [
+         "spellbook",
+         "Spellbook",
+         "K"
+        ],
+        [
+         "talents",
+         "Talents",
+         "N"
+        ],
+        [
+         "workshop",
+         "Workshop",
+         "F"
+        ],
+        [
+         "pets",
+         "Mounts & pets",
+         "V"
+        ],
+        [
+         "achievements",
+         "Achievements",
+         "Y"
+        ],
+        [
+         "friends",
+         "Friends",
+         "O"
+        ],
+        [
+         "wallet",
+         "Wallet",
+         "L"
+        ],
+        [
+         "map",
+         "World map",
+         "M"
+        ],
+        [
+         "chat",
+         "Chat",
+         "Enter"
+        ]
+       ]
+      ]
+     ]
+    },
+    {
+     "id": "controls",
+     "name": "Controls",
+     "settings": [
+      {
+       "id": "sens",
+       "label": "Mouse sensitivity",
+       "desc": "",
+       "type": "range",
+       "value": 50,
+       "min": 1,
+       "max": 100,
+       "step": 1,
+       "unit": ""
+      },
+      {
+       "id": "invertY",
+       "label": "Invert camera Y",
+       "desc": "",
+       "type": "toggle",
+       "value": false
+      },
+      {
+       "id": "clickMove",
+       "label": "Click to move",
+       "desc": "Left-click the ground to walk there.",
+       "type": "toggle",
+       "value": true
+      },
+      {
+       "id": "autoTarget",
+       "label": "Auto target",
+       "desc": "Pick the nearest enemy when you use a skill without a target.",
+       "type": "toggle",
+       "value": true
+      },
+      {
+       "id": "camShake",
+       "label": "Camera shake",
+       "desc": "",
+       "type": "segment",
+       "value": "Low",
+       "options": [
+        [
+         "Off",
+         "Off"
+        ],
+        [
+         "Low",
+         "Low"
+        ],
+        [
+         "Full",
+         "Full"
+        ]
+       ]
+      },
+      {
+       "id": "hudScale",
+       "label": "HUD size",
+       "desc": "",
+       "type": "range",
+       "value": 100,
+       "min": 70,
+       "max": 140,
+       "step": 5,
+       "unit": "%"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "presets": {
+  "Low": {
+   "renderScale": 75,
+   "renderDistance": 220,
+   "shadows": "Off",
+   "textures": "Low",
+   "effects": "Low",
+   "bloom": false,
+   "water": false
+  },
+  "Medium": {
+   "renderScale": 90,
+   "renderDistance": 320,
+   "shadows": "Low",
+   "textures": "Medium",
+   "effects": "Medium",
+   "bloom": true,
+   "water": false
+  },
+  "High": {
+   "renderScale": 100,
+   "renderDistance": 420,
+   "shadows": "High",
+   "textures": "High",
+   "effects": "High",
+   "bloom": true,
+   "water": true
+  },
+  "Ultra": {
+   "renderScale": 125,
+   "renderDistance": 640,
+   "shadows": "High",
+   "textures": "High",
+   "effects": "High",
+   "bloom": true,
+   "water": true
+  }
+ }
+}

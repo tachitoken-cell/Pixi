@@ -1,0 +1,1274 @@
+{
+  "artifact": "https://claude.ai/artifact/XpAfNzz6CGTNviF5VPqTeQ",
+  "publicBase": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/",
+  "acquiredAt": "2026-09-28",
+  "files": [
+    {
+      "path": "world.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/world.json",
+      "bytes": 59044,
+      "sha256": "f24c15cfc204da497f059c53bdadf65dd1fe68fd581da16bcb20130a9c3f46b6",
+      "kind": "world"
+    },
+    {
+      "path": "maps/lanternreach.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/lanternreach.json",
+      "bytes": 30287,
+      "sha256": "4727c3dfcad15d9402486294335e54f1832340c29722a70b3e85d7bef738c859",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/lanternreach.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/lanternreach.png",
+      "bytes": 10722,
+      "sha256": "e77a3b4d3ebd5a005b62db1c929b9738f392931c462ff4f42037ee7a74f25e87",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/greenwood-meadows.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/greenwood-meadows.json",
+      "bytes": 41751,
+      "sha256": "6a9ef70d527729a63a9ecd873962fcfa3a87d4fcefef91efed2a443b71303e1b",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/greenwood-meadows.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/greenwood-meadows.png",
+      "bytes": 16862,
+      "sha256": "d8f2331ef6bec46f8129b59e76db76d7441d4f51e0ab9b7275aa417ce9311e44",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/mill-plains.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/mill-plains.json",
+      "bytes": 41326,
+      "sha256": "1628fa28392a2aea65ae0d47c2438ebedf9431136f714388bda401d7ccfc688b",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/mill-plains.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/mill-plains.png",
+      "bytes": 18028,
+      "sha256": "e7fe4a11d0888fce98ab25e241e3d955a3c0da75b3eb4396ce0638fab1940000",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/brookside-fields.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/brookside-fields.json",
+      "bytes": 41688,
+      "sha256": "9932d465ecaee1deff5947e9f261b7f17a58e719718729ebd7a738cbc510476f",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/brookside-fields.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/brookside-fields.png",
+      "bytes": 17730,
+      "sha256": "6b9e76e61d1b85273f7d92db538b7832f8e501909ce2762b0e474d35480ffdf9",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/old-ruins-crossing.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/old-ruins-crossing.json",
+      "bytes": 38741,
+      "sha256": "4c5daf6ae222ba486db42721cc400ff88dc9f5db92f80678de453c37b90d53e4",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/old-ruins-crossing.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/old-ruins-crossing.png",
+      "bytes": 16590,
+      "sha256": "4e38229a4a6c7579e8d38d10bfafe2a3d72902f3be5dec81bf86f5e637bbf813",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/frostpeak-foothills.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/frostpeak-foothills.json",
+      "bytes": 47429,
+      "sha256": "446685c4fb1fe8d809f645c56beea82f169691af198136da4e5649c80b5aa31f",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/frostpeak-foothills.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/frostpeak-foothills.png",
+      "bytes": 10494,
+      "sha256": "d96d5a333c16895c856af5554c36bb7b7ed3ddec532a04956cb4c915c5aca187",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/blightmarsh-border.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/blightmarsh-border.json",
+      "bytes": 44308,
+      "sha256": "961c19addd54adedad97996a5661efd29e05fd0182656401701418f80014dc54",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/blightmarsh-border.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/blightmarsh-border.png",
+      "bytes": 13204,
+      "sha256": "2c0a1b7dc72c334b648001265aaca90cd73874bede523ce30e164e64d0fec887",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/cindergrove-edge.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/cindergrove-edge.json",
+      "bytes": 45720,
+      "sha256": "e2cd405ff9a63aad8a008489ca1818b68bcddccae320a5ae89744aa731641865",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/cindergrove-edge.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/cindergrove-edge.png",
+      "bytes": 18274,
+      "sha256": "15bf15769c94147d9a78c80e1d4784614b77dd2e73a5f6adc6c6f97e27e242a7",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/sunscar-outskirts.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/sunscar-outskirts.json",
+      "bytes": 44731,
+      "sha256": "8db4e66821020004c94cade38e23200a1f5a6cfa61a1d27dacd29fc2edc4b47a",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/sunscar-outskirts.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/sunscar-outskirts.png",
+      "bytes": 16993,
+      "sha256": "b32f045d17b3867fbaa0b4e9fe85c048115cf749dff7316f56745743b745a156",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/hollowroot-grove.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/hollowroot-grove.json",
+      "bytes": 45670,
+      "sha256": "cde07868c558567575ebaa3c9d2850d40e77612c2cf91e171d611b5ad5341139",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/hollowroot-grove.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/hollowroot-grove.png",
+      "bytes": 18085,
+      "sha256": "aaa7aec5dec59101c95296562ba713bfc7c9b1953c7f6e97250f093c4a1e381d",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/rootway-tunnels-1.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/rootway-tunnels-1.json",
+      "bytes": 19145,
+      "sha256": "9f82eb0ac6e76ee7a60cf59887d5b9cc2bea2a89a8bba9cd08627f59916b7df0",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/rootway-tunnels-1.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/rootway-tunnels-1.png",
+      "bytes": 3209,
+      "sha256": "6d3741d85bd445f654143583b5d845b09a2e4db00d0608a34dfe07fc19b8d550",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/rootway-tunnels-2.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/rootway-tunnels-2.json",
+      "bytes": 19133,
+      "sha256": "fa9064720d6275b3beb4f30924857f742311b8cf90d4e905e1a49097b7bbe9a5",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/rootway-tunnels-2.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/rootway-tunnels-2.png",
+      "bytes": 3169,
+      "sha256": "92d02ec58a8c9ca2d62a08a9251a3695545bd775c3ed0f448a3dc7dfe9c0269b",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/mushroom-glade.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/mushroom-glade.json",
+      "bytes": 44997,
+      "sha256": "024d55c90c929f47b779ecd09a0d909d4c0b2d856739aea0111c0e0e4181e629",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/mushroom-glade.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/mushroom-glade.png",
+      "bytes": 17889,
+      "sha256": "ff74499e6fc21561cc1bdb4e30a605145edbfc33cbd9cee7bf1a7b60dc6eec9e",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/heartwood-hollow.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/heartwood-hollow.json",
+      "bytes": 46126,
+      "sha256": "7fd3c90c28022888d9b98229351fb41b02367f8fcc27271e71ec5eeeede3fd4c",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/heartwood-hollow.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/heartwood-hollow.png",
+      "bytes": 19988,
+      "sha256": "0ea7d95c225571140e7ee32e67e9f239a956206d05f561b033fed0f02f888c05",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/ember-fields.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/ember-fields.json",
+      "bytes": 49870,
+      "sha256": "d4f147e0a544bee0465a8792029421b2219da7b4fdcd26218eb2ec11bc074a1f",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/ember-fields.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/ember-fields.png",
+      "bytes": 18418,
+      "sha256": "cd0e81c91be5b22c99e2e9d666d228f1dcb40240b367b3b208f11f9b3e3654f6",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/magma-mine-1.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/magma-mine-1.json",
+      "bytes": 24373,
+      "sha256": "13e7a26d0519fc76920b520fb5c0f37869393e9d630a45c1aa34d9bf783fa454",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/magma-mine-1.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/magma-mine-1.png",
+      "bytes": 2895,
+      "sha256": "7e2e4bf2f89eeb2e7303b907bee1e836287d132cf5c71f6595b93a4372f6839f",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/magma-mine-2.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/magma-mine-2.json",
+      "bytes": 23336,
+      "sha256": "21bc042b4395918b1b3873f3f542a7a7556432e47b8286fd550f6d9b5fa828eb",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/magma-mine-2.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/magma-mine-2.png",
+      "bytes": 2808,
+      "sha256": "220d23e17fae0aacd5045b64cbc2187d0cd13335471d369552d0d4aaec3a1b9b",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/cinder-caves.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/cinder-caves.json",
+      "bytes": 18502,
+      "sha256": "c53f58546274b44e056be66ba713989a7614763e0c9bd47d43fd0fd124c83a88",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/cinder-caves.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/cinder-caves.png",
+      "bytes": 3709,
+      "sha256": "4c6c78705db1196276565f6b90480c59d882ef6d51e8baa6c8cdad83392b88c8",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/cinder-peak.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/cinder-peak.json",
+      "bytes": 50116,
+      "sha256": "024a6e2b51ca16ec9809a512f71428d88410e0bda88ffa00ad953f23111aaf36",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/cinder-peak.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/cinder-peak.png",
+      "bytes": 20512,
+      "sha256": "a29da69efb1a38f5e3f176a5446ee707e296c016b25c74295db5c6d42d495db0",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/rotting-fen.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/rotting-fen.json",
+      "bytes": 47404,
+      "sha256": "6eba5676606be413e66cdf73bcfb1beafaa82bd5841368758546e3e84ce78d7e",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/rotting-fen.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/rotting-fen.png",
+      "bytes": 13292,
+      "sha256": "a075ecf483956702b5a9c5d48cd9feacc2065a5acaf46884a1569b59dffe5885",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/bogwater-crossing.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/bogwater-crossing.json",
+      "bytes": 46453,
+      "sha256": "7a97806050c79aef538b928475397878590f0f456d31cb0d8615a1ec0f7aeb3a",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/bogwater-crossing.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/bogwater-crossing.png",
+      "bytes": 13028,
+      "sha256": "5a75d15b54a245be831cdb09b05973a61db5e1852ba2aaaab1b1a63c8007896e",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/sunken-crypt-1.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/sunken-crypt-1.json",
+      "bytes": 19457,
+      "sha256": "11e823010c54a58f82e2f8a26e7ccf8856e40bbd733cba66f34928aa20548b82",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/sunken-crypt-1.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/sunken-crypt-1.png",
+      "bytes": 1785,
+      "sha256": "668a81319c34b5430326827c9bfe73fa48368526d1e1497a44b098cf5b227cb7",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/sunken-crypt-2.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/sunken-crypt-2.json",
+      "bytes": 19297,
+      "sha256": "c449faec09d65190d8be3fb072d196c2d9eb535b9b384d69abd6fafb7111428e",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/sunken-crypt-2.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/sunken-crypt-2.png",
+      "bytes": 1714,
+      "sha256": "8cfc94e4daeea333bd7703e84422c266380d09198a58fe4d5ff5a0a89c58cd65",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/hags-hollow.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/hags-hollow.json",
+      "bytes": 47396,
+      "sha256": "1d2550b08e0e713772f91b71f494b31f5768fb11f2b59024ac49731108f0a7a8",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/hags-hollow.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/hags-hollow.png",
+      "bytes": 13476,
+      "sha256": "2eb49f8802726cb3799d28354e09cecbce0b88525beb8937e88a59b870b8ea4a",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/rimefang-slopes.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/rimefang-slopes.json",
+      "bytes": 53462,
+      "sha256": "caf0c0cd8739156824e2f73ec130b0f4b923704be7ef4d934de287ec07393580",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/rimefang-slopes.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/rimefang-slopes.png",
+      "bytes": 10954,
+      "sha256": "a18a9f81c9a9a16587117eb14fc65ed44f0d5567cb85666ad77ba7b11194a3c6",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/ice-cave-1.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/ice-cave-1.json",
+      "bytes": 18606,
+      "sha256": "7532cc02bcea2cf1457a8b6741ddf80549818f43fc0a528bf719e7a470eeae6a",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/ice-cave-1.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/ice-cave-1.png",
+      "bytes": 2915,
+      "sha256": "d53f996b4db58710f0332cc93d1cf6121f242fc39d6a8e43467359ca8e87a8a9",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/ice-cave-2.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/ice-cave-2.json",
+      "bytes": 18938,
+      "sha256": "acc4cfcce1a35b236faf53e24b245afedd9b664dac91e30e2b20ea3e09ba10df",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/ice-cave-2.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/ice-cave-2.png",
+      "bytes": 3229,
+      "sha256": "34c1d497c0746cf584e632b2e8217755d9df753631593b12eddea0c0328d1f87",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/ice-cave-3.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/ice-cave-3.json",
+      "bytes": 18972,
+      "sha256": "965b17528aa48ffba109edb2138d5b61b9f32910b0e7df929c1d6cc17b1f517d",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/ice-cave-3.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/ice-cave-3.png",
+      "bytes": 3328,
+      "sha256": "d1fb1cb43889662b95beb92387771cc3df9d345f7b4d538848c91ebb85f42654",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/frozen-peak.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/frozen-peak.json",
+      "bytes": 53062,
+      "sha256": "d678eb85bbfddd7b32e49651de3adba8a67626d0c371bdefc2238e819a2026ee",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/frozen-peak.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/frozen-peak.png",
+      "bytes": 13235,
+      "sha256": "8572dca50ae9f717005bb2467cfe8e3058aed414d3b1d1cbc62af90beaa495c4",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/scorched-dunes.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/scorched-dunes.json",
+      "bytes": 43985,
+      "sha256": "fecb591edd2da47db63b4fd767f3c0a239db86d550b9a55ada0c4659dd87e036",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/scorched-dunes.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/scorched-dunes.png",
+      "bytes": 14991,
+      "sha256": "8028e289c1fe02a55a921bf01d0544c0a1117e6397de4c9176c864e9c1deba14",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/canyon-pass.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/canyon-pass.json",
+      "bytes": 47455,
+      "sha256": "f7f7581b71bf1a2d3dfff9fa0963673471ed922706368b92933cff1644376b5c",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/canyon-pass.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/canyon-pass.png",
+      "bytes": 17933,
+      "sha256": "5f56f2abda8292fb8ffd5c6821c8f6f476f95da35198efce82b3455962dba16f",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/sun-temple-1.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/sun-temple-1.json",
+      "bytes": 20414,
+      "sha256": "d62a445af4f85ecac951be7cef1b7234d505e0c9f11cdeefb2edae025d7dc10d",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/sun-temple-1.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/sun-temple-1.png",
+      "bytes": 1953,
+      "sha256": "587a5f71110ae648c6cf1121525fbc3f700494d32d4009a2b2da7b443ae29ff2",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/sun-temple-2.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/sun-temple-2.json",
+      "bytes": 20024,
+      "sha256": "5542ac2ff6a8f0414648095fb965bec0a137a1702dee15f893588339504b6fa2",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/sun-temple-2.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/sun-temple-2.png",
+      "bytes": 1917,
+      "sha256": "31cd03133c7df87eebe69c3f35e7481b36ed55fa14a509ffb33d5248e944af90",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/wyrms-rest.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/wyrms-rest.json",
+      "bytes": 43781,
+      "sha256": "6e73f51219491d615b3aacaaefc886532911aa32b837b1b9321f518289a57806",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/wyrms-rest.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/wyrms-rest.png",
+      "bytes": 14800,
+      "sha256": "cd8699e4a574c9e33548c9f7b07012940e4dfce248aa82ad6fde7129e2c783bd",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/vault-gardens.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/vault-gardens.json",
+      "bytes": 40855,
+      "sha256": "ae9e60c251c739789451328faf66efc8494f6c5e3c17a25a2821c331d23ba15d",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/vault-gardens.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/vault-gardens.png",
+      "bytes": 17058,
+      "sha256": "1ddb1727c515e3b50afcf9c0e40c4409f918c4003cac66122d52a90cf3e773b1",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/rune-labyrinth-1.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/rune-labyrinth-1.json",
+      "bytes": 18958,
+      "sha256": "3c50ac526c86d67c7e21c3ec732fd6cbc07965120de7ad5e510a72bdc28753ec",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/rune-labyrinth-1.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/rune-labyrinth-1.png",
+      "bytes": 1921,
+      "sha256": "440ea17623788fc70929425adc885f6740f8abeaabf18998ad907d2500cd394d",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/rune-labyrinth-2.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/rune-labyrinth-2.json",
+      "bytes": 19158,
+      "sha256": "9083b94c22ec151b4e494dc64b57614b666d579ca9553b3528c2235dc57ebb9e",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/rune-labyrinth-2.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/rune-labyrinth-2.png",
+      "bytes": 1916,
+      "sha256": "fc5204dc3e1e9e3b0df59a8ada181406a7a79e44976fd88c9103a9577f8f368c",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/rune-labyrinth-3.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/rune-labyrinth-3.json",
+      "bytes": 18333,
+      "sha256": "c48ae7a88bf53ab21c9144d311609fb1877df85421d39963db5148c72904d9b6",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/rune-labyrinth-3.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/rune-labyrinth-3.png",
+      "bytes": 1745,
+      "sha256": "ee540abc0b0c239a04c765d118b97f8281e5d504a5d649ce0124713c181cece6",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "maps/floating-sanctum.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/maps/floating-sanctum.json",
+      "bytes": 42134,
+      "sha256": "2d01b63bfa5b28692a5470a8f2d3b31ecf90f9333aa7c5ad22746cdae055ef19",
+      "kind": "map"
+    },
+    {
+      "path": "thumbs/floating-sanctum.png",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/thumbs/floating-sanctum.png",
+      "bytes": 18591,
+      "sha256": "e02deb22190172a38dac4e1e643ceb0988d39a5d3b7d5b381bdb75de4a6fef58",
+      "kind": "thumbnail"
+    },
+    {
+      "path": "assets/blightmarsh-bog-pool.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/blightmarsh-bog-pool.json",
+      "bytes": 117097,
+      "sha256": "6be7edaa4aee4aed9605f925867a8849c209ff27a3ff76d5307dc0bd5cc9f842",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/blightmarsh-bone-pile.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/blightmarsh-bone-pile.json",
+      "bytes": 56934,
+      "sha256": "fd2b1cd91fc49a75e7c7883351870580c2ccf3fc3d62c9a79282f9950f7dc44d",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/blightmarsh-dead-tree.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/blightmarsh-dead-tree.json",
+      "bytes": 78329,
+      "sha256": "35a2df7b8ed54cb560ab094af7273283aeae0120c74e9acba69e28e899e99025",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/blightmarsh-dead-tree-small.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/blightmarsh-dead-tree-small.json",
+      "bytes": 72999,
+      "sha256": "ff31842561063183a3a58e8c199bd805ded5beeee8be26c8b7f924531f24de16",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/blightmarsh-glow-mushrooms.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/blightmarsh-glow-mushrooms.json",
+      "bytes": 33505,
+      "sha256": "93d82b7be4eab1dc00b305c5dfd057dffb71e22cc2fe6262cbdd061a530462f5",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/blightmarsh-skull-totem.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/blightmarsh-skull-totem.json",
+      "bytes": 34599,
+      "sha256": "727e76bafb9d49d10a0726646c3e9737904914a18412f327ce785a5942f139fc",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cave-crystals-blue.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cave-crystals-blue.json",
+      "bytes": 21070,
+      "sha256": "59f3d83b2aea0bd0428ae3a1d39ff016301f23d9d1883820b4af62ee82ff8984",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cave-crystals-green.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cave-crystals-green.json",
+      "bytes": 21009,
+      "sha256": "ab3410e5539f47ec69a54ad4668667066c33e3f25cac84dda886c2ce676e04b6",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cave-crystals-red.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cave-crystals-red.json",
+      "bytes": 21049,
+      "sha256": "466ab5fa494771fba9f5e0140344143f3139386204ef57e76df11df08d6844b8",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cave-rocks.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cave-rocks.json",
+      "bytes": 17225,
+      "sha256": "844b7a40c1354d11aa96bee4fbcc14f789a4c584fdc42c4c15543ef2e756011a",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cave-roots.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cave-roots.json",
+      "bytes": 66751,
+      "sha256": "b0d3667886e19bd8df1bd70c3f5dd40b4560e151fa3d2e9ab30e4a456c1ee112",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cave-stalagmite.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cave-stalagmite.json",
+      "bytes": 10653,
+      "sha256": "aa8a5b57b27eb4d005ded8a515c2bd64e1784074919b8611548f24f8d177bd7e",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cave-stalagmites.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cave-stalagmites.json",
+      "bytes": 21745,
+      "sha256": "71da2d7b9be6f95be558b0d80a360a155e1622d3d0fad99ee3c40c776b5981da",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cindergrove-brazier.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cindergrove-brazier.json",
+      "bytes": 16125,
+      "sha256": "a488e801f4b95584a24a97c8becf7fa51608fbecd7980a99650a7dc0236d4446",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cindergrove-charred-stump.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cindergrove-charred-stump.json",
+      "bytes": 21658,
+      "sha256": "07f9f1d60801c27bee983897adbd80830a8b9384df95ae501af88a6c6cf3cfb7",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cindergrove-ember-rock.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cindergrove-ember-rock.json",
+      "bytes": 27656,
+      "sha256": "2adde9faaf31c686993a74e613e2f11d7f283c057ec100873d87c0705a095897",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cindergrove-fallen-log.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cindergrove-fallen-log.json",
+      "bytes": 24897,
+      "sha256": "d04b57dcef9267961d9f631558a09dfbbd338db13804de8979bd1a1622c15bd2",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cindergrove-leaf-pile.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cindergrove-leaf-pile.json",
+      "bytes": 52121,
+      "sha256": "dfd0e17c69e34cb9cc84e59e81fd5631a5784dcc17776b5d284897b196a1eef6",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cindergrove-maple.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cindergrove-maple.json",
+      "bytes": 119534,
+      "sha256": "6c6455a99534a4a0c459b26a1f7d990cdaf93158e8313d229a095b1ee58da306",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/cindergrove-maple-small.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/cindergrove-maple-small.json",
+      "bytes": 67610,
+      "sha256": "e699c9e55bbe8e9644a1a81dc12622046aa9f43c3f7b9b6ac9a6ca6e5ea44bd2",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/crypt-candles.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/crypt-candles.json",
+      "bytes": 45226,
+      "sha256": "605cccbb74b5e3aaa1a1eb1946300f3661adf2e78ca2ca1641879df3ef399a18",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/crypt-coffin.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/crypt-coffin.json",
+      "bytes": 7842,
+      "sha256": "41376fb01857e20f54908b31b8e9bf3e3151f5aec2e044b43c59596d8f230c72",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/crypt-gravestones.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/crypt-gravestones.json",
+      "bytes": 11338,
+      "sha256": "d6950f6d5d43469e986c6ec8b2aa7a5f5742823ce5218743721c3567a131aa33",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/crypt-tomb.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/crypt-tomb.json",
+      "bytes": 44118,
+      "sha256": "c1e961cca7424e8d984d1b92c220eecfecb75bdfa43895b96ed40628fddbcd44",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/frostpeak-ice-crystals.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/frostpeak-ice-crystals.json",
+      "bytes": 21053,
+      "sha256": "77e0f1745c2881cca59ff1fee8a2a3c9c3e3b4cabb6d4e13cc1d809b9d5adb0f",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/frostpeak-icicle-arch.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/frostpeak-icicle-arch.json",
+      "bytes": 47978,
+      "sha256": "ec82e8d30760ff7eb47dad577287162622f26ab5f243f2ff72d4eb253372467e",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/frostpeak-snow-drift.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/frostpeak-snow-drift.json",
+      "bytes": 32339,
+      "sha256": "33b2b75d85f35b5788b2c0b0c67a919526e1bc5450ad2d9860ed8ce0d5945ead",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/frostpeak-snow-pine.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/frostpeak-snow-pine.json",
+      "bytes": 235955,
+      "sha256": "669c9efb42bf17345a26cbdb7c8387d0efcd34a196ce78bbfce94cf385264540",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/frostpeak-snow-pine-small.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/frostpeak-snow-pine-small.json",
+      "bytes": 79752,
+      "sha256": "d9b8f4a1508fcc74b8fcf88125fe326b03e44b4b1dfb1fb14a8137b5e4642edb",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/frostpeak-snow-rock.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/frostpeak-snow-rock.json",
+      "bytes": 45852,
+      "sha256": "596e3c3fd0f56adc2be12c4f528b7d883692043d19d38ed0bc523a951a8aeac6",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/greenwood-apple-tree.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/greenwood-apple-tree.json",
+      "bytes": 92122,
+      "sha256": "ca035c6bb05f7bfc49d40bc1a932c5223a860fd4f647041c8fdf0f110f0672c1",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/greenwood-fence.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/greenwood-fence.json",
+      "bytes": 12753,
+      "sha256": "045a39fef7056b5e51d10629b7c44ea090faba8bda08063d21c7b45a9e6cb6a1",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/greenwood-flower-bed.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/greenwood-flower-bed.json",
+      "bytes": 109896,
+      "sha256": "1a6db5cdae2d631e827acea6529c06aac5d143b6e5e28fe9fd3a49c512b427a4",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/greenwood-hay-bales.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/greenwood-hay-bales.json",
+      "bytes": 10955,
+      "sha256": "46d09515d8ca9de7977531508d1d3e21eb40cec3085129276b73a92d9e4dcdc6",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/greenwood-lantern-post.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/greenwood-lantern-post.json",
+      "bytes": 21586,
+      "sha256": "d5bb05f2078426a35425f231705167825478303eb8c607cd36474528f856d1ae",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/greenwood-oak.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/greenwood-oak.json",
+      "bytes": 115013,
+      "sha256": "8ca03374a9b8c802d450e3a4fb73abfd5c70ddc099d0ff3900ded9bb336c65b5",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/greenwood-oak-small.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/greenwood-oak-small.json",
+      "bytes": 65619,
+      "sha256": "7d5ace6f759847c967b56c76eff336e1bf51c2ca3c13fadfb7b687085b525be8",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/greenwood-signpost.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/greenwood-signpost.json",
+      "bytes": 19325,
+      "sha256": "06a5325c9da13d91c9ef9a7ed19f8ef5f28f64a2bbb2493f6d462aef048e14c7",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/greenwood-well.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/greenwood-well.json",
+      "bytes": 31114,
+      "sha256": "1cc2a3c6519bd458e1a657e0971cf98d5f0958aea9bec0c4774a855ca2c2fd1e",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/heartwood-great-tree.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/heartwood-great-tree.json",
+      "bytes": 510913,
+      "sha256": "7b4a69cb2a718159193e8e953a8cd2460e4796b365b63b1de89998d3e5df896b",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/lab-bookshelf.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/lab-bookshelf.json",
+      "bytes": 85190,
+      "sha256": "d51ef509b381b928f0aab69688fc0146a27d163db28d0bd50621d6b610681f1c",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/lab-orb-pedestal.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/lab-orb-pedestal.json",
+      "bytes": 10706,
+      "sha256": "a535caafb404ea3e5517f2f222c694bb524b07378f31b64aa1cb548b369b32a1",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/lab-pipes.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/lab-pipes.json",
+      "bytes": 15686,
+      "sha256": "f5087e5eb603db0186e508bc57695df972974af82f4b17fc12c45acbefaf6d39",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/lab-rune-pillar.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/lab-rune-pillar.json",
+      "bytes": 34654,
+      "sha256": "d0e695d4e749facd7749f7cb9d60ac91ff1e7da78e5f4b83f5b4ccea2cf732a1",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/lab-tank.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/lab-tank.json",
+      "bytes": 20460,
+      "sha256": "25c81c69ad5a35d4f64b61e0daabff5d94a20dc0287ae42fe985eb6a029e5510",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/map-gate-cave.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/map-gate-cave.json",
+      "bytes": 105286,
+      "sha256": "ef329eac50b8ed9a493ed257d8d8bcae171eb4ae21fc0393be28554ca5b3946a",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/map-gate-crypt.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/map-gate-crypt.json",
+      "bytes": 105397,
+      "sha256": "ca604d6e7e97a02dc5edfd7c32d80a4cc08198d0a223433ed77121d5c4c7a36a",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/map-gate-field.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/map-gate-field.json",
+      "bytes": 105421,
+      "sha256": "ec20e6ef35ad9d040575a3ed292416e418873d66afb899578a28baeee9045447",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/map-gate-ice.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/map-gate-ice.json",
+      "bytes": 105223,
+      "sha256": "9a3baf7e351d5e5a77cb9c673952456c896655900c636c77b88282c6019a87af",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/map-gate-lab.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/map-gate-lab.json",
+      "bytes": 105175,
+      "sha256": "fd683ea54445fbbfc51236c0c27621dbc0939deca596f2568f5c8b0150283de7",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/map-gate-mine.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/map-gate-mine.json",
+      "bytes": 105430,
+      "sha256": "42201d14f85f8b9b2fc5902a50234a2bdfe6017eb32a7a4a1404745bd91e4576",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/map-gate-temple.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/map-gate-temple.json",
+      "bytes": 105364,
+      "sha256": "fa82aa629b93c94143cfe5ef996eeecdceff7084220b18417ba0dd7bebcf386e",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/mine-cart.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/mine-cart.json",
+      "bytes": 42250,
+      "sha256": "1a298089439a28f78e856160a5b7cef0ee75752bf313253ea99ba712e04f9e66",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/mine-crates.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/mine-crates.json",
+      "bytes": 10638,
+      "sha256": "21021d7a16b3bf33c2109319c6e0a0310a991b6aa2bee6a7086a47cf08eed35c",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/mine-lantern.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/mine-lantern.json",
+      "bytes": 14259,
+      "sha256": "33eca29286df394a641e59f403f80ffb6c6425f6685be89be2808e1fecfa0df6",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/mine-ore-ember.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/mine-ore-ember.json",
+      "bytes": 26047,
+      "sha256": "2791284368d3fd8af506b4e738ea6a755901bddb195ebe764df3fb590d184929",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/mine-rails.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/mine-rails.json",
+      "bytes": 11252,
+      "sha256": "5a2a9a6e82f457e62a37dc06dca1ef1025521e5ddd9009970afc4ccf71491634",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/mine-support.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/mine-support.json",
+      "bytes": 9156,
+      "sha256": "d835f99befa08239faa9b0472cbb388347c73052d53d307d48d34ca4b10ab13f",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/monster-border.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/monster-border.json",
+      "bytes": 62763,
+      "sha256": "faadeacfd72c41f6d61bbf44eb1af357f3ce773a5632d875af58d1b1819efbd5",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-door-blightmarsh.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-door-blightmarsh.json",
+      "bytes": 130119,
+      "sha256": "1a07fe37df7d1d7dd2aec6959b20c5c8100cd693033a4c0f0922e3683a452508",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-door-cindergrove.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-door-cindergrove.json",
+      "bytes": 141555,
+      "sha256": "40b35a3bc9cb4c57e544896d90de0596426977d16ddd9097b608ba7ad72a7b5d",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-door-frostpeak.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-door-frostpeak.json",
+      "bytes": 143856,
+      "sha256": "e4ce75edc22dd6a5f7d8bf8aaf48dfd74937e0c70f7b4693c0ed432e228fb0e9",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-door-greenwood.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-door-greenwood.json",
+      "bytes": 286891,
+      "sha256": "ed75f8e7b2b9e323de26e00f361d940585c26a3bc9c49b014cd985fe76ebf2f6",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-door-ruins.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-door-ruins.json",
+      "bytes": 117459,
+      "sha256": "41da59c0142de5a377dd1bd3b9aa8cdb242f734cf54dc4c68558e5fb7e1bb64c",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-door-sunscar.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-door-sunscar.json",
+      "bytes": 120226,
+      "sha256": "ad0d04fb0edf855a1f673abc2af80011f67e8246501ee3b558e1be6063902318",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-return-blightmarsh.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-return-blightmarsh.json",
+      "bytes": 101942,
+      "sha256": "d1f0e7cbc7b7d8d533a4afb0669be4674cfbc0e083371dc4abfc030d4d2d2088",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-return-cindergrove.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-return-cindergrove.json",
+      "bytes": 102014,
+      "sha256": "7c704cc5b44def232ba6cc1c8d044652385c8d81c177a75626cc831431a09189",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-return-frostpeak.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-return-frostpeak.json",
+      "bytes": 102086,
+      "sha256": "36c5e8cd60c1304ab6c033566aec2291c68c5706b3bcde6c1463006df18197a7",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-return-greenwood.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-return-greenwood.json",
+      "bytes": 102110,
+      "sha256": "ebf105a8e11bc69fc0767ba5613eefb12577f9b4fa35f9f0a41a9c608f860f3c",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-return-ruins.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-return-ruins.json",
+      "bytes": 101822,
+      "sha256": "feaacb47f4615b3c94bdba281991e06db2eac9ac10fa0f7ab405b7fb267d6d9e",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/realm-return-sunscar.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/realm-return-sunscar.json",
+      "bytes": 102038,
+      "sha256": "0d0640d0a30c2b3b987b9910c5eef8cb83684f8807a3be195914b435ca11a304",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/ruins-archway.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/ruins-archway.json",
+      "bytes": 98574,
+      "sha256": "c9afa51845e4ed160c9452b0a199bc80fcf9a205312e1cecf5b9f3c974d88edf",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/ruins-broken-pillar.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/ruins-broken-pillar.json",
+      "bytes": 88843,
+      "sha256": "55720b4625b7129fe07fecaf8bd6fb0f7e80d9ab49c5cbe0fb5b57a00952d358",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/ruins-broken-pillar-short.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/ruins-broken-pillar-short.json",
+      "bytes": 61327,
+      "sha256": "c59154088920202aea44af19d8ac96de602fa8ffb8122ce3d8b4b744c5b346f8",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/ruins-fallen-column.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/ruins-fallen-column.json",
+      "bytes": 70700,
+      "sha256": "97c57b3357fce155f936999857e6e67ae20ee2b304c0965e987bba659dadde07",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/ruins-rune-stone.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/ruins-rune-stone.json",
+      "bytes": 15601,
+      "sha256": "9a260b07db968c3fe1344ede6845ef43fa2230b08be2d96e2f46d40c3fa7af67",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/ruins-statue-head.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/ruins-statue-head.json",
+      "bytes": 157062,
+      "sha256": "e81cc8a8df9520603fccca62b9d96fd67f3eabc269c9fda54e3dddb5c9d00ed5",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/sp-gate.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/sp-gate.json",
+      "bytes": 601897,
+      "sha256": "659b3b8a19346ecba102662c9ea7e892f43ccf1fc544cd571212de4c3870cd99",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/sunscar-cactus.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/sunscar-cactus.json",
+      "bytes": 23432,
+      "sha256": "2c9e8b0e8f4f4dbc9856a1ff62cccdb94ef91538f24069bce76dc2e74e0643a5",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/sunscar-cactus-small.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/sunscar-cactus-small.json",
+      "bytes": 14480,
+      "sha256": "3b7b685ca9341c0e8642b64297fd9ff9977def3afc1d185dc4108903559d6e19",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/sunscar-desert-rock.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/sunscar-desert-rock.json",
+      "bytes": 11998,
+      "sha256": "875309703f9e971dec91413f43c9c625b28f3c3e374c35eca1b471d8f1db33c2",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/sunscar-dry-bush.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/sunscar-dry-bush.json",
+      "bytes": 60258,
+      "sha256": "2d4b262a86ab0e25bae5c2db50644794e8b97ef3386a787481f88d993ac2072e",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/sunscar-ribcage.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/sunscar-ribcage.json",
+      "bytes": 127853,
+      "sha256": "98e23440db89e0b04ebbfac0b40503edb861aeecf1301760bf4697fdacaf693d",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/sunscar-sandstone-arch.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/sunscar-sandstone-arch.json",
+      "bytes": 40328,
+      "sha256": "d93d4b0b8a041e77fa514358f76efb7ba546281e7469692ef6ab7d73f41d08c4",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/sunscar-sandstone-pillar.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/sunscar-sandstone-pillar.json",
+      "bytes": 18612,
+      "sha256": "65edbdc2a18391caeed3a717bfe445ef090b1397077163b7898edebbbcae1578",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/temple-brazier.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/temple-brazier.json",
+      "bytes": 11292,
+      "sha256": "0334ef8e7f3156a0eb0ae6c075ac3ee2ea8621afed46028ab63f2611bc72e291",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/temple-pillar.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/temple-pillar.json",
+      "bytes": 15844,
+      "sha256": "f2f307998313209d1b6dc832d60f66809bf4d51dbdc61ef0025aadc8f226cc44",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/temple-seal.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/temple-seal.json",
+      "bytes": 38345,
+      "sha256": "8d8b72c6c3ecb887ef42ed5545189c9ddc807c16d54b99728ad5a73b0cd5c905",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/temple-sun-statue.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/temple-sun-statue.json",
+      "bytes": 25507,
+      "sha256": "cab7faefea8f80d5fca2928fa222a76d8df9818a4396d3b8b00bb9ebdcee64be",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/temple-urns.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/temple-urns.json",
+      "bytes": 14942,
+      "sha256": "51750eafc35e2a714246eb2eb27333c57c3ac4a20d83b4f6ef7cd455c9b687a3",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/town-fountain.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/town-fountain.json",
+      "bytes": 58602,
+      "sha256": "dfe8dd8debcc0f0467dcc42389872f50ac0b4ce6cc1c01185033a861933db3de",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/town-house-large.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/town-house-large.json",
+      "bytes": 197022,
+      "sha256": "3916f31a18a845d89d414c81bc49bcc0d379bff0919c5957bc3e1771006d163c",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/town-house-small.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/town-house-small.json",
+      "bytes": 100096,
+      "sha256": "0e356e0bea15e9cae311f99b436f02cc146fddc7c7593bf49a11f95050b0e387",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/town-lamp-post.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/town-lamp-post.json",
+      "bytes": 17629,
+      "sha256": "d48e7864f56ad98d92093b666796084826b3cdbb06ce7c2c5c6ee273b1ddb159",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/town-market-stall.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/town-market-stall.json",
+      "bytes": 30786,
+      "sha256": "31a9010144ae2d66ac9e036a27ab33b7a309328586c278bb49dc1b8b4a8b18fe",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/town-notice-board.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/town-notice-board.json",
+      "bytes": 13033,
+      "sha256": "badce9d0061223bcbe21d7bb3aab3c0db9b8e69cc3c55f72fbc44a8f2e3e6764",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/waystone-blightmarsh.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/waystone-blightmarsh.json",
+      "bytes": 41351,
+      "sha256": "1eacf7ef9a50ba927c5219c43ce2ea5d67451098b3885043f1c3f064c70a3cb2",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/waystone-cindergrove.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/waystone-cindergrove.json",
+      "bytes": 41397,
+      "sha256": "75b6636614c2b16bd66c82f2e3c4443b894f72f10b1e2f03f6ab089cdc2bc975",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/waystone-frostpeak.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/waystone-frostpeak.json",
+      "bytes": 41378,
+      "sha256": "964b9c6ebcfd789c776c825169677276ada083416407564457ce99a0709e216d",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/waystone-greenwood.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/waystone-greenwood.json",
+      "bytes": 41397,
+      "sha256": "0e639c6fcedb383c31a00832088ab8c4737f37f0ce82983c6f7df29b99df5de0",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/waystone-ruins.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/waystone-ruins.json",
+      "bytes": 41582,
+      "sha256": "0c60cffd96048918ac60c299cedd4e357a8b7734943188257d75120eea8b38f3",
+      "kind": "asset"
+    },
+    {
+      "path": "assets/waystone-sunscar.json",
+      "url": "https://f988123c-37b9-4df6-acf7-06c8655f0d81.frame.claudeusercontent.com/_f/1790602834-55a3/assets/waystone-sunscar.json",
+      "bytes": 41307,
+      "sha256": "744398489a13ed1aa40f855ed7c4482a69a17716d049528c3b67d27940ed6a6d",
+      "kind": "asset"
+    }
+  ]
+}

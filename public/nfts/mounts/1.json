@@ -1,0 +1,24 @@
+{
+  "name": "Verdant Revenant",
+  "description": "A jade spirit dragon with flowing antlers and a spectral green mane. Its hovering stride follows ordinary riding rules and does not grant flight. This Mossvale Mounts NFT grants its current verified wallet holder access to this mount in Mossvale. Riding level and training are still required. Selling or transferring it moves that access to the new holder.",
+  "image": "https://mossvale.world/ui/mount-verdant-revenant.png",
+  "external_url": "https://mossvale.world",
+  "attributes": [
+    {
+      "trait_type": "Mount",
+      "value": "Verdant Revenant"
+    },
+    {
+      "trait_type": "Game asset",
+      "value": "verdant-revenant"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "epic"
+    },
+    {
+      "trait_type": "Source",
+      "value": "veiled-abbess"
+    }
+  ]
+}

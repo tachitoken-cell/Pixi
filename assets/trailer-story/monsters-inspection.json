@@ -1,0 +1,108 @@
+{
+  "fps": 24,
+  "bytes": 161620,
+  "monsters": [
+    {
+      "root": "monster-wolf",
+      "kind": "bramble-wolf",
+      "clips": [
+        {
+          "name": "wolf-idle",
+          "duration": 2,
+          "tracks": 3
+        },
+        {
+          "name": "wolf-run",
+          "duration": 1,
+          "tracks": 8
+        },
+        {
+          "name": "wolf-attack",
+          "duration": 1,
+          "tracks": 9
+        }
+      ],
+      "bounds": {
+        "min": [
+          -0.40849998593330383,
+          0,
+          -1.3550000190734863
+        ],
+        "max": [
+          0.40849998593330383,
+          1.809000015258789,
+          1.3029999732971191
+        ]
+      },
+      "nodes": 10
+    },
+    {
+      "root": "monster-golem",
+      "kind": "stone-golem",
+      "clips": [
+        {
+          "name": "golem-idle",
+          "duration": 2,
+          "tracks": 2
+        },
+        {
+          "name": "golem-run",
+          "duration": 1,
+          "tracks": 7
+        },
+        {
+          "name": "golem-attack",
+          "duration": 1,
+          "tracks": 7
+        }
+      ],
+      "bounds": {
+        "min": [
+          -1.199999988079071,
+          0,
+          -0.3799999952316284
+        ],
+        "max": [
+          1.199999988079071,
+          2.525000035762787,
+          0.5425000190734863
+        ]
+      },
+      "nodes": 8
+    },
+    {
+      "root": "monster-boss",
+      "kind": "stormhorn-behemoth",
+      "clips": [
+        {
+          "name": "boss-idle",
+          "duration": 2,
+          "tracks": 3
+        },
+        {
+          "name": "boss-run",
+          "duration": 1,
+          "tracks": 8
+        },
+        {
+          "name": "boss-attack",
+          "duration": 1,
+          "tracks": 9
+        }
+      ],
+      "bounds": {
+        "min": [
+          -1.6150000095367432,
+          0,
+          -2.6300000101327896
+        ],
+        "max": [
+          1.6150000095367432,
+          6.490999937057495,
+          2.4600000828504562
+        ]
+      },
+      "nodes": 10
+    }
+  ]
+}

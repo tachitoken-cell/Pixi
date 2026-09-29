@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Live Mossvale player counts, hourly activity, registered accounts and confirmed MOSS auction house volume across Europe, North America and Asia.">
+  <meta name="theme-color" content="#203d31">
+  <meta name="mossvale-source-revision" content="__REVISION__">
+  <title>Mossvale statistics · Players &amp; economy</title>
+  <link rel="canonical" href="https://stats.mossvale.world/">
+  <link rel="icon" href="/favicon.png">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/client.js" type="module"></script>
+</head>
+<body>
+<!-- THESIS: Public player and economy charts, following the user's SteamDB reference.
+OWN-WORLD: Mossvale forest masthead, authored wordmark, white chart surfaces, Marcellus titles, green data lines.
+STORY: Check the population now, explore its history, understand what each total counts.
+FIRST VIEWPORT: Compact navigation, title, six totals, a full-width concurrent-player chart and time controls.
+FORM: Familiar statistics dashboard explicitly requested by the user; inherit Mossvale's reference-site identity.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md -->
+<a class="skip" href="#main">Skip to statistics</a>
+<header class="masthead"><div class="header-inner">
+  <a class="brand" href="/" aria-label="Mossvale statistics home"><img src="/wordmark.png" alt="Mossvale" width="152" height="66"><span>Statistics</span></a>
+  <nav aria-label="Mossvale"><a href="https://wiki.mossvale.world/">Wiki</a><a href="https://mossvale.world/">Play Mossvale</a></nav>
+</div></header>
+<main id="main">
+  <div class="page-heading"><h1>Mossvale statistics</h1><div class="refresh"><span id="status" role="status">Loading…</span><button id="refresh" type="button">Refresh</button></div></div>
+  <p id="notice" class="notice" role="status" hidden></p>
+  <noscript><p class="notice">Enable JavaScript to load live totals and interactive charts. Public data is also available from <a href="/api/stats">the statistics API</a>.</p></noscript>
+  <dl class="metrics" aria-label="Mossvale totals">
+    <div><dt>Players online</dt><dd id="online">—</dd><p id="online-note" hidden></p></div>
+    <div><dt>24-hour peak</dt><dd id="peak">—</dd></div>
+    <div><dt>Registered users</dt><dd id="registered">—</dd><p id="registered-note" hidden></p></div>
+    <div><dt>MOSS auction volume</dt><dd id="moss" class="moss-amount">—</dd><p id="moss-note" hidden></p></div>
+    <div><dt>MOSS treasury payouts</dt><dd id="vouchers" class="moss-amount">—</dd><p id="vouchers-note" hidden></p></div>
+    <div><dt>MOSS vault balance</dt><dd id="vault" class="moss-amount">—</dd><p id="vault-note" hidden></p></div>
+  </dl>
+  <section class="chart-section" aria-labelledby="concurrent-title">
+    <div class="section-heading"><h2 id="concurrent-title">Concurrent players</h2><div class="ranges" role="group" aria-label="Statistics time range"><button type="button" data-range="24h" aria-pressed="true">24 hours</button><button type="button" data-range="7d" aria-pressed="false">7 days</button><button type="button" data-range="30d" aria-pressed="false">30 days</button><button type="button" data-range="all" aria-pressed="false">All time</button></div></div>
+    <div class="plot" id="concurrent-plot"><svg id="concurrent-chart" role="img" aria-labelledby="concurrent-chart-title" viewBox="0 0 1100 300"><title id="concurrent-chart-title">Concurrent players over time</title></svg><p class="empty" id="concurrent-empty">Loading…</p></div>
+    <div class="chart-footer"><span class="legend"><i aria-hidden="true"></i> All realms combined</span><span id="concurrent-partial" class="legend partial" hidden><i aria-hidden="true"></i> Partial coverage</span><span>Times in UTC</span></div>
+    <p class="chart-readout" id="concurrent-readout" aria-live="polite">Loading…</p>
+    <label class="sr-only" for="chart-time">Inspect concurrent player sample</label><input id="chart-time" class="chart-time" type="range" min="0" max="0" value="0" disabled>
+  </section>
+  <div class="activity-layout">
+    <section class="activity" aria-labelledby="activity-title"><div class="section-heading"><div><h2 id="activity-title">Active players per hour</h2><p>Unique accounts · UTC</p></div></div><div class="plot hourly-plot"><svg id="hourly-chart" role="img" aria-labelledby="hourly-chart-title" viewBox="0 0 740 220"><title id="hourly-chart-title">Unique active players each hour</title></svg><p class="empty" id="hourly-empty">Loading…</p></div><div class="hourly-legend"><span class="legend"><i aria-hidden="true"></i> Complete hour</span><span class="legend partial"><i aria-hidden="true"></i> Partial hour</span></div></section>
+    <section class="realms" aria-labelledby="realms-title"><h2 id="realms-title">Live by realm</h2><ul id="realms"><li><span>Europe</span><strong>—</strong></li><li><span>North America</span><strong>—</strong></li><li><span>Asia</span><strong>—</strong></li></ul><dl class="record"><dt>All-time peak</dt><dd id="record">—</dd></dl></section>
+  </div>
+  <section class="history" aria-labelledby="gold-title">
+    <div class="section-heading"><h2 id="gold-title">Gold created</h2></div>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Created gold"><table><thead><tr><th scope="col">Period</th><th scope="col">Gold</th></tr></thead><tbody id="gold-history"><tr><td colspan="2">Loading…</td></tr></tbody></table></div>
+  </section>
+  <section class="history countries" aria-labelledby="country-title">
+    <div class="section-heading"><div><h2 id="country-title">Players by country</h2><p id="country-summary">Loading…</p></div><button type="button" id="country-download" disabled>Download CSV</button></div>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Active accounts by country"><table><thead><tr><th scope="col">Country / region</th><th scope="col">Active accounts</th><th scope="col">Share</th></tr></thead><tbody id="country-history"><tr><td colspan="3">Loading…</td></tr></tbody></table></div>
+  </section>
+  <section class="history" aria-labelledby="history-title"><div class="section-heading"><h2 id="history-title">Hourly history</h2><button type="button" id="download" disabled>Download CSV</button></div><div class="table-scroll" tabindex="0" role="region" aria-label="Hourly activity table"><table><thead><tr><th scope="col">Hour (UTC)</th><th scope="col">Active players</th><th scope="col">Average online</th><th scope="col">Peak online</th><th scope="col">Coverage</th></tr></thead><tbody id="history"><tr><td colspan="5">Loading…</td></tr></tbody></table></div><button id="more" type="button" hidden>Show more hours</button></section>
+  <details class="definitions">
+    <summary>About this data</summary>
+    <div>
+      <p><strong>Players.</strong> Online counts connected sessions. Hourly activity counts each account once per UTC hour across realms. Registered users excludes service accounts.</p>
+      <p><strong>MOSS.</strong> Auction volume and treasury payouts are all-time finalized totals. Auction volume excludes listings, cancellations, gold trades and store purchases. Treasury payouts include voucher and gold-round claims from current and older treasuries, excluding owner withdrawals. The vault balance may include funds reserved for vouchers and gold rounds.</p>
+      <p><strong>Countries.</strong> Each account uses its latest connection country, not nationality. VPNs can affect location; Unknown means location is unavailable. All time uses the last 30 days. <span id="country-tracking"></span></p>
+      <p><strong>History.</strong> Longer charts average the available readings. Dashed lines mark partial coverage. Hours without readings stay empty. Peaks are recorded observations. Counts refresh every 30 seconds. <span id="tracking"></span></p>
+    </div>
+    <p class="subnote">Country data: <a href="https://www.maxmind.com/">MaxMind GeoLite2</a> and Cloudflare. No IP addresses are published.</p>
+  </details>
+</main>
+<footer><span>Mossvale · Public statistics</span><a href="https://wiki.mossvale.world/patch-notes/">Patch notes</a><a href="/api/stats">Statistics API</a><a href="https://mossvale.world/">Enter the world</a></footer>
+</body>
+</html>

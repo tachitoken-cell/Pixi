@@ -1,0 +1,89 @@
+#dungeon-timer { position:absolute; top:64px; left:50%; transform:translateX(-50%); min-height:44px; padding:7px 14px; display:flex; align-items:center; gap:12px; border:1px solid var(--gold); border-radius:4px; background:#142d25ed; color:var(--cream); font-size:11px; box-shadow:0 3px 14px #08170f66; }
+#dungeon-timer[hidden] { display:none; }
+#dungeon-timer strong { font-size:18px; color:var(--gold); font-variant-numeric:tabular-nums; }
+#dungeon-timer span { display:block; text-align:left; line-height:1.35; }
+#dungeon-timer small { display:block; font-size:10px; color:var(--muted); }
+#panel[data-mode="dungeon"] { width:780px; max-width:calc(100vw - 24px); }
+/* Match the carved oak and forest leather used by inventory, loot and achievements. */
+#panel[data-mode="dungeon"]:has(.dungeon-result) {
+ --dungeon-ink:#f0dfb9; --dungeon-muted:#c8c7a7; --dungeon-gold:#f7d68a; --reward-line:#bba06460;
+ border-image:var(--wood-art) 175 fill / 18px / 0 stretch; background:#172c23; color:var(--dungeon-ink);
+ scrollbar-color:#a28b50 #15271c;
+}
+#panel[data-mode="dungeon"]:has(.dungeon-result) .panel-heading { margin-bottom:16px; padding-bottom:12px; border-color:var(--reward-line); }
+#panel[data-mode="dungeon"]:has(.dungeon-result) :is(#panel-title,h3) { color:var(--dungeon-ink); }
+#panel[data-mode="dungeon"]:has(.dungeon-result) :is(.eyebrow,#panel-content p) { color:var(--dungeon-muted); }
+#panel[data-mode="dungeon"]:has(.dungeon-result) .close-button { border:0; border-radius:0; background:transparent; color:var(--dungeon-ink); }
+#panel[data-mode="dungeon"]:has(.dungeon-result) :focus-visible { outline:2px solid #f4d17d; outline-offset:2px; }
+.dungeon-result { margin-bottom:20px; }
+.dungeon-result-heading { text-align:center; padding:8px 0 14px; }
+.dungeon-result-heading .eyebrow { justify-content:center; }
+#panel-content .dungeon-result-heading h3 { display:flex; align-items:center; justify-content:center; gap:10px; font:30px/1.2 'Marcellus',Georgia,serif; margin:8px 0; color:var(--dungeon-ink); }
+.dungeon-result-heading h3 > .item-art { width:32px; height:32px; flex:none; }
+#panel-content .dungeon-result-heading p { margin:0; }
+.dungeon-result-heading p strong { display:block; font-size:30px; line-height:1.4; color:var(--dungeon-gold); font-variant-numeric:tabular-nums; }
+.dungeon-result-stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:0; padding:12px 0; border-block:1px solid var(--reward-line); text-align:center; }
+.dungeon-result-stats dt { font-size:11px; color:var(--dungeon-muted); }
+.dungeon-result-stats dd { margin:6px 0 0; color:var(--dungeon-gold); font-size:22px; font-variant-numeric:tabular-nums; }
+#panel-content .dungeon-ranking-note { text-align:center; font-size:11px; margin:12px 0 18px; }
+.dungeon-reward-slots { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+.dungeon-reward-slot { min-width:0; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center; padding:14px 8px 8px; border:1px solid #bba06445; border-radius:2px; background:#10271f66; color:var(--dungeon-ink); }
+.dungeon-reward-slot>small { font-size:10px; color:var(--dungeon-muted,#d4d8bf); }
+.dungeon-reward-art.bag-slot { --reel-cell:58px; width:60px; height:60px; flex:none; margin:2px 0; padding:0; overflow:hidden; }
+.dungeon-reward-art :is(.icon,.item-art,.gear-art) { width:48px; height:48px; object-fit:contain; }
+.dungeon-reel-track { display:flex; flex-direction:column; width:100%; align-self:start; will-change:transform; }
+.dungeon-reel-symbol { display:grid; place-items:center; height:var(--reel-cell); flex:none; }
+.dungeon-reward-slot.is-rolling .dungeon-reward-art { --quality:#bba064; box-shadow:inset 0 8px 10px #071610,inset 0 -8px 10px #071610; }
+.dungeon-reward-slot.is-rolling>strong,.dungeon-reward-slot.is-rolling>span:not(.dungeon-reward-art,.dungeon-reward-status) { visibility:hidden; }
+.dungeon-reward-slot.is-rolling .dungeon-reward-status { color:var(--dungeon-gold); }
+.dungeon-reward-slot>strong { font-size:13px; overflow-wrap:anywhere; color:var(--quality,var(--dungeon-gold)); }
+.dungeon-reward-slot>span:not(.dungeon-reward-art) { font-size:10px; line-height:1.4; color:var(--dungeon-muted,#d4d8bf); }
+#panel .dungeon-reward-slot .primary-button { width:100%; min-height:44px; margin:auto 0 0; padding:7px 4px; font-size:11px; }
+.dungeon-reward-status { margin-top:auto; min-height:44px; display:grid; place-items:center; }
+.dungeon-reward-footer { display:flex; align-items:center; gap:16px; justify-content:space-between; }
+#panel-content .dungeon-reward-footer p { font-size:11px; line-height:1.5; }
+#panel .dungeon-reward-footer .primary-button { flex:0 0 160px; min-height:44px; }
+.dungeon-leaderboard { margin-top:24px; padding-top:20px; border-top:1px solid #ad925b66; }
+.dungeon-leaderboard>header { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+#panel-content .dungeon-leaderboard h3 { font:24px 'Marcellus',Georgia,serif; margin:7px 0; color:var(--dungeon-ink,#3f3a28); }
+#panel .dungeon-leaderboard>header .primary-button { width:auto; margin:0; min-height:44px; }
+.dungeon-board-sizes { display:flex; gap:6px; margin:14px 0; }
+.dungeon-board-sizes button { flex:1; min-height:44px; padding:8px 6px; border:1px solid #ad925b66; border-radius:3px; background:#122c22; color:var(--dungeon-muted,#d4d8bf); font-size:12px; }
+.dungeon-board-sizes button[aria-pressed="true"] { background:#42623b; color:#fff0bb; border-color:#c7b16d; font-weight:700; }
+#panel-content .dungeon-board-message { padding:20px 12px; text-align:center; color:#f4efd9; background:#122c22; border:1px solid #ad925b44; }
+.dungeon-records { margin:0; padding:0; list-style:none; }
+.dungeon-records li { display:flex; align-items:center; gap:12px; min-width:0; padding:12px 0; border-bottom:1px solid #ad925b33; }
+.dungeon-record-rank { flex:0 0 24px; font:22px 'Marcellus',Georgia,serif; color:var(--dungeon-gold,#78582d); text-align:center; }
+.dungeon-record-party { flex:1; min-width:0; }
+.dungeon-record-party strong { display:block; font-size:12px; overflow-wrap:anywhere; }
+.dungeon-record-party small { display:block; color:var(--dungeon-muted,#685637); font-size:10px; line-height:1.5; margin-top:4px; }
+.dungeon-records time { flex-shrink:0; color:var(--dungeon-gold,#28563d); font-size:14px; font-variant-numeric:tabular-nums; }
+body.mobile-controls #dungeon-timer { top:max(8px,env(safe-area-inset-top)); left:calc(var(--control-left) + 148px); right:calc(var(--control-right) + 96px); transform:none; padding:3px 5px; min-width:0; gap:4px; justify-content:center; flex-wrap:wrap; }
+body.mobile-controls #dungeon-timer strong { font-size:15px; }
+body.mobile-controls #dungeon-timer span { font-size:10px; text-align:center; }
+body.mobile-controls #dungeon-timer small { display:none; }
+body.mobile-controls:is(.mobile-chat-open,.mobile-panel-open,.mobile-menu-open) #dungeon-timer { visibility:hidden; }
+@media(max-width:560px) {
+ .dungeon-reward-slots { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .dungeon-reward-footer { flex-direction:column; gap:0; align-items:stretch; }
+ #panel .dungeon-reward-footer .primary-button { flex:auto; width:100%; }
+ .dungeon-result-stats { gap:6px; }
+ .dungeon-result-stats dt { font-size:10px; }
+ .dungeon-records li { flex-wrap:wrap; gap:6px; }
+ .dungeon-records time { margin-left:30px; }
+ .dungeon-record-party { flex-basis:calc(100% - 40px); }
+}
+@media(orientation:landscape) and (max-height:500px) {
+ .dungeon-result-heading { display:grid; grid-template-columns:1fr auto; align-items:center; gap:4px 16px; padding:0 0 8px; text-align:left; }
+ .dungeon-result-heading .eyebrow { grid-column:1; justify-content:flex-start; }
+ #panel-content .dungeon-result-heading h3 { grid-column:1; justify-content:flex-start; font-size:24px; margin:0; }
+ #panel-content .dungeon-result-heading p { grid-column:2; grid-row:1 / span 2; text-align:right; }
+ .dungeon-result-heading p strong { font-size:24px; }
+ .dungeon-result-stats { padding:6px 0; }
+ .dungeon-result-stats dd { font-size:18px; margin-top:2px; }
+ #panel-content .dungeon-ranking-note { margin:6px 0; }
+ .dungeon-reward-slot { gap:4px; padding:8px 8px 4px; }
+ .dungeon-reward-art.bag-slot { --reel-cell:38px; width:40px; height:40px; margin:0; }
+ .dungeon-result-heading h3 > .item-art { width:24px; height:24px; }
+ .dungeon-reward-art :is(.icon,.item-art,.gear-art) { width:32px; height:32px; }
+}

@@ -1,0 +1,174 @@
+/* The live scene fills the screen; only the roster and entry controls sit above it. */
+.roster-screen {
+  position: fixed; inset: 0; z-index: 85; isolation: isolate;
+  overflow-y: auto; overscroll-behavior: contain;
+  background: #17291f; color: #f0e5c7;
+}
+.roster-screen[hidden], .roster-screen [hidden], #roster-error:empty { display: none; }
+.roster-screen::before {
+  content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, #11231b55, transparent 25%, transparent 65%, #11231b66),
+    linear-gradient(0deg, #102018bf, transparent 30%, transparent 82%, #15251944);
+}
+body.at-roster #play-ui > :not(#game):not(.vignette),
+body.at-roster #labels > * { visibility: hidden !important; }
+.roster-shell {
+  display: grid; grid-template-columns: clamp(170px, 16vw, 260px) minmax(0, 1fr) clamp(280px, 25vw, 340px);
+  grid-template-rows: auto minmax(0, 1fr) auto; gap: 20px 26px;
+  width: 100%; height: 100dvh; min-width: 0;
+  padding: max(24px, env(safe-area-inset-top)) max(28px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(28px, env(safe-area-inset-left));
+}
+.roster-shell > * { min-width: 0; }
+.roster-header, .roster-list-pane, .roster-actions, .roster-character-caption, .roster-entry-controls { position: relative; z-index: 2; }
+.roster-header { grid-column: 1; grid-row: 1; align-self: start; text-align: center; }
+.roster-header > img { display: block; width: 260px; max-width: 100%; height: auto; }
+.roster-header h1 { margin: 8px 0 0; color: #e7d8b0; font: 16px/1.4 'Marcellus', Georgia, serif; text-shadow: 0 2px 8px #122218; overflow-wrap: anywhere; }
+.roster-stage {
+  grid-column: 2; grid-row: 1 / -1; display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto; gap: 12px;
+  min-width: 0; min-height: 0; text-align: center;
+}
+.roster-preview-mount { position: relative; min-width: 0; min-height: 0; }
+.roster-preview-mount > canvas { position: fixed; inset: 0; z-index: 0; display: block; width: 100%; height: 100dvh; touch-action: none; }
+.roster-character-caption { min-width: 0; width: min(440px, 100%); justify-self: center; text-shadow: 0 2px 8px #142219; }
+.roster-character-caption h2 { margin: 0; color: #f4d58e; font: 34px/1.2 'Marcellus', Georgia, serif; overflow-wrap: anywhere; }
+.roster-character-caption p { margin: 7px 0 0; color: #e0d8b9; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.roster-character-caption .roster-error { margin-top: 10px; color: #ffd0ad; font-size: 12px; line-height: 1.5; }
+.roster-entry-controls { display: grid; grid-template-columns: minmax(0, 270px) auto; justify-content: center; align-items: center; gap: 10px; min-width: 0; }
+.roster-entry-controls > .roster-retry { grid-column: 1 / -1; width: 100%; }
+.roster-realm-choice { grid-column: 1; grid-row: 2; align-self: start; position: relative; z-index: 2; width: 100%; text-align: left; }
+.roster-realm-choice label { display: block; margin-bottom: 5px; color: #f2dfb7; font-size: 12px; }
+#roster-realm { width: 100%; min-height: 44px; padding: 8px; border: 1px solid #b79858; border-radius: 2px; background: #14241d; color: #f3e3be; font: inherit; font-size: 13px; }
+#roster-realm:focus-visible, .roster-retry:focus-visible { outline: 2px solid #fff1c4; outline-offset: 2px; }
+#roster-realm:disabled { opacity: .6; }
+#roster-realm-note { margin: 7px 0 4px; color: #e0d8b9; font-size: 11px; line-height: 1.5; }
+.roster-retry { min-height: 44px; padding: 8px 18px; border: 1px solid #b79858; background: #14241d; color: #f3e3be; font: inherit; font-size: 13px; }
+.roster-retry:hover { background: #243b2c; }
+#roster-enter { grid-column: 1; grid-row: 1; width: min(270px, 100%); min-height: 52px; padding: 14px 20px; gap: 13px; font-size: 15px; }
+#roster-enter:disabled { cursor: not-allowed; }
+.roster-turn-controls { grid-column: 2; grid-row: 1; display: flex; justify-content: center; gap: 10px; }
+.roster-turn-controls button {
+  position: relative; isolation: isolate; display: grid; place-items: center;
+  width: 44px; height: 44px; padding: 8px; border: 1px solid transparent; background: none;
+}
+.roster-turn-controls button::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  border: 8px solid transparent; border-image: var(--wood-art) 175 fill / 8px / 0 stretch;
+}
+.roster-turn-controls button:hover:not(:disabled) { border-color: #d3b775; }
+.roster-turn-controls button:disabled { opacity: .4; cursor: not-allowed; }
+.roster-turn-controls .item-art { width: 25px; height: 25px; }
+.roster-list-pane {
+  grid-column: 3; grid-row: 1 / -1; min-width: 0; min-height: 0; padding: 26px 22px;
+  display: flex; flex-direction: column; color: #eddbaf;
+  border: 1px solid transparent; border-image: var(--wood-art) 175 fill / 22px / 0 stretch;
+}
+.roster-list-heading { display: flex; align-items: baseline; gap: 8px; margin-bottom: 22px; }
+.roster-list-heading h2 { margin: 0; font: 23px/1.3 'Marcellus', Georgia, serif; overflow-wrap: anywhere; }
+#roster-count { flex-shrink: 0; margin-left: auto; color: #c9b684; font-size: 11px; font-variant-numeric: tabular-nums; }
+.character-list { min-width: 0; min-height: 0; flex: 1; display: grid; align-content: start; gap: 8px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ac9259 #14251b; }
+.roster-character {
+  position: relative; min-width: 0; min-height: 79px; width: 100%;
+  display: grid; grid-template-columns: 36px minmax(0, 1fr) 16px; align-items: center; gap: 10px;
+  padding: 13px 11px; border: 1px solid #c6aa6b25;
+  background: #12251b4d; color: #e9d8b1; text-align: left;
+}
+.roster-character > .item-art { width: 36px; height: 36px; }
+.roster-character-copy { min-width: 0; }
+.roster-character-copy strong { display: block; font-size: 14px; font-weight: 600; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.roster-character-copy small { display: block; margin-top: 5px; color: #c5c4a2; font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+.roster-selection-mark { display: grid; place-items: center; opacity: .4; }
+.roster-selection-mark .item-art { width: 16px; height: 16px; }
+.roster-character:hover { border-color: #bfa26388; color: #fff0c7; }
+.roster-character.selected { border-color: #e3c477; background: #ba913b35; box-shadow: inset 0 0 16px #d8af4930; color: #ffe59e; }
+.roster-character.selected .roster-selection-mark { opacity: 1; }
+.roster-character:focus-visible { outline-color: #f0d592; outline-offset: -4px; }
+.roster-empty { align-self: center; padding: 20px 6px; text-align: center; overflow-wrap: anywhere; }
+.roster-empty > .item-art { width: 64px; height: 64px; margin-bottom: 16px; }
+.roster-empty h3 { margin: 0 0 10px; font: 24px/1.3 'Marcellus', Georgia, serif; }
+.roster-empty p { margin: 0; color: #d1c5a0; font-size: 13px; line-height: 1.7; }
+.roster-list-pane > .primary-button { flex-shrink: 0; width: 100%; min-height: 50px; margin-top: 22px; padding: 13px 11px; gap: 8px; font-size: 12px; }
+.roster-list-pane > .primary-button:disabled { cursor: not-allowed; }
+.roster-actions { grid-column: 1; grid-row: 3; align-self: end; justify-self: start; }
+.roster-account { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; max-width: 100%; padding: 10px 14px; background: none; color: #dfd5b5; font-size: 12px; line-height: 1.5; text-align: left; }
+.roster-account > span:not(.item-art) { min-width: 0; overflow-wrap: anywhere; }
+.roster-account .item-art { width: 23px; height: 23px; }
+.roster-account:hover { color: #fff0c7; }
+/* Keep the world edge-to-edge. The empty mount frames the avatar between the controls. */
+@media (max-width: 1000px), (max-height: 680px) {
+  .roster-shell {
+    grid-template-columns: minmax(110px, .7fr) minmax(150px, 1fr) minmax(230px, 34%);
+    grid-template-rows: auto minmax(0, 1fr); gap: 12px 18px;
+    padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  .roster-header { grid-column: 1; grid-row: 1; text-align: left; align-self: center; }
+  .roster-header > img { width: 150px; }
+  .roster-header h1 { margin-top: 3px; font-size: 13px; }
+  .roster-realm-choice { grid-column: 2; grid-row: 1; align-self: center; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 8px; align-items: center; }
+  .roster-realm-choice label { margin: 0; }
+  #roster-realm { font-size: 13px; }
+  #roster-realm-note { grid-column: 1 / -1; margin: 0; font-size: 10px; line-height: 1.3; text-shadow: 0 1px 4px #102018; }
+  .roster-actions { grid-column: 3; grid-row: 1; align-self: center; justify-self: end; }
+  .roster-account { min-height: 44px; padding: 8px; }
+  .roster-stage { grid-column: 1 / 3; grid-row: 2; grid-template-rows: minmax(80px, 1fr) auto auto; gap: 8px; }
+  .roster-character-caption h2 { font-size: clamp(24px, 3.5vw, 32px); }
+  .roster-character-caption p { margin-top: 3px; font-size: 12px; line-height: 1.35; }
+  .roster-character-caption .roster-error { margin-top: 4px; font-size: 11px; }
+  .roster-entry-controls { grid-template-columns: minmax(0, 280px) auto; width: 100%; }
+  #roster-enter { width: 100%; min-height: 48px; padding: 10px 14px; font-size: 14px; }
+  .roster-turn-controls { gap: 6px; }
+  .roster-list-pane { grid-column: 3; grid-row: 2; padding: 18px 16px; border-image-width: 16px; }
+  .roster-list-heading { margin-bottom: 12px; }
+  .roster-list-heading h2 { font-size: 20px; }
+  .character-list { gap: 6px; overscroll-behavior: contain; }
+  .roster-character { min-height: 64px; grid-template-columns: 30px minmax(0, 1fr) 16px; gap: 8px; padding: 8px; }
+  .roster-character > .item-art { width: 30px; height: 30px; }
+  .roster-character-copy strong { font-size: 14px; }
+  .roster-character-copy small { margin-top: 3px; font-size: 11px; }
+  .roster-list-pane > .primary-button { min-height: 44px; margin-top: 12px; padding: 8px; }
+  .roster-list-pane > .roster-delete { min-height: 44px; margin: 4px 0 0; padding: 8px; flex-shrink: 0; }
+  .roster-empty { padding: 8px 4px; }
+  .roster-empty > .item-art { width: 40px; height: 40px; margin-bottom: 6px; }
+  .roster-empty h3 { font-size: 20px; margin-bottom: 6px; }
+  .roster-empty p { font-size: 12px; line-height: 1.4; }
+}
+@media (orientation: landscape) and (max-height: 480px) {
+  .roster-shell { gap: 6px 12px; padding-top: max(6px, env(safe-area-inset-top)); padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+  .roster-header > img { width: 115px; }
+  .roster-header h1 { font-size: 12px; }
+  .roster-stage { gap: 4px; }
+  .roster-character-caption h2 { font-size: 24px; }
+  .roster-list-pane { padding: 12px; border-image-width: 12px; }
+  .roster-list-heading { margin-bottom: 6px; }
+  .roster-list-heading h2 { font-size: 18px; }
+  .roster-character { min-height: 56px; padding: 5px 6px; }
+  .roster-list-pane > .primary-button { margin-top: 6px; }
+  .roster-list-pane > .roster-delete { margin-top: 0; }
+}
+@media (orientation: portrait) and (max-width: 1000px), (max-width: 540px) {
+  .roster-shell {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto minmax(180px, 1fr) 188px;
+    gap: 10px; padding: max(10px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  }
+  .roster-header { grid-column: 1; }
+  .roster-header > img { width: 140px; }
+  .roster-header h1 { font-size: 14px; }
+  .roster-actions { grid-column: 2; }
+  .roster-realm-choice { grid-column: 1 / -1; grid-row: 2; grid-template-columns: auto minmax(0, 1fr); }
+  .roster-stage { grid-column: 1 / -1; grid-row: 3; }
+  .roster-list-pane { grid-column: 1 / -1; grid-row: 4; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto minmax(0, 1fr) 44px; gap: 8px; padding: 14px; }
+  .roster-list-heading { grid-column: 1 / -1; margin: 0; }
+  .roster-list-heading h2 { font-size: 18px; }
+  .character-list { grid-column: 1 / -1; grid-auto-flow: column; grid-auto-columns: 72%; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; }
+  .roster-character { scroll-snap-align: start; min-height: 60px; }
+  .roster-list-pane > .primary-button { grid-column: 1; margin: 0; }
+  .roster-list-pane > .roster-delete { grid-column: 2; margin: 0; font-size: 11px; }
+  .roster-empty { grid-column: 1; padding: 2px 0; text-align: left; }
+  .roster-empty > .item-art { display: none; }
+  .roster-empty h3 { font-size: 16px; margin-bottom: 3px; }
+  .roster-empty p { font-size: 11px; }
+}
+
+.roster-delete{margin:10px auto 0;padding:7px 12px;background:transparent;border:0;color:#d9a59a;font:inherit;font-size:12px;cursor:pointer}.roster-delete:hover{color:#ffd1c6}.roster-delete:disabled{opacity:.4;cursor:default}
+.character-delete-dialog{box-sizing:border-box;width:min(430px,calc(100vw - 40px));padding:32px 34px;border:0;background:#162e24;color:#eee3c7;overflow:visible;isolation:isolate}.character-delete-dialog::before{content:"";position:absolute;inset:-6px;z-index:-1;border:25px solid transparent;border-image:var(--wood-art) 175 fill/25px/0 stretch;pointer-events:none}.character-delete-dialog::backdrop{background:#06140ec9}.character-delete-dialog h2{margin:0 0 17px;font-size:25px;color:#f6dfb2}.character-delete-dialog p{font-size:13px;line-height:1.55;margin:10px 0}.character-delete-dialog label{display:block;margin:19px 0 7px;font-size:13px}.character-delete-dialog input{box-sizing:border-box;width:100%;padding:10px;border:1px solid #b5a569;background:#0f231b;color:#f5e8c7;font:16px system-ui}.character-delete-dialog :focus-visible,.roster-delete:focus-visible{outline:2px solid #ebc977;outline-offset:3px}.character-delete-dialog #character-delete-error{color:#f6aea0;min-height:20px;font-size:12px}.character-delete-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:16px}.character-delete-actions button{padding:9px 13px;border:1px solid #8c9468;background:#2e4833;color:#f3e7c8;border-radius:3px;font:600 12px system-ui;cursor:pointer}.character-delete-actions #character-delete-submit{border-color:#bf7764;background:#792e29;color:#ffe0d6}.character-delete-actions button:disabled{opacity:.4;cursor:default}

@@ -1,0 +1,24 @@
+{
+  "name": "Cinderfang",
+  "description": "An ember wolf with a blazing mane and smoldering armored flanks. This Mossvale Mounts NFT grants its current verified wallet holder access to this mount in Mossvale. Riding level and training are still required. Selling or transferring it moves that access to the new holder.",
+  "image": "https://mossvale.world/ui/mount-store-cinderfang.png",
+  "external_url": "https://mossvale.world",
+  "attributes": [
+    {
+      "trait_type": "Mount",
+      "value": "Cinderfang"
+    },
+    {
+      "trait_type": "Game asset",
+      "value": "store-cinderfang"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "epic"
+    },
+    {
+      "trait_type": "Source",
+      "value": "Store purchase"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Lanternreach Cottage 1",
+  "description": "The unique Mossvale Houses deed for Lanternreach Cottage 1 (house-greenwood-1) in Greenwood. The current verified wallet holder owns this in-game house. One deed identifies this location across Mossvale realms; selling or transferring the NFT moves ownership to the new holder.",
+  "image": "https://mossvale.world/nfts/houses/1.png",
+  "external_url": "https://mossvale.world",
+  "attributes": [
+    {
+      "trait_type": "House ID",
+      "value": "house-greenwood-1"
+    },
+    {
+      "trait_type": "Zone",
+      "value": "greenwood"
+    },
+    {
+      "trait_type": "Building",
+      "value": "cottage"
+    },
+    {
+      "trait_type": "World X",
+      "value": -34
+    },
+    {
+      "trait_type": "World Z",
+      "value": 31
+    }
+  ]
+}

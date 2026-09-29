@@ -1,0 +1,20 @@
+[Unit]
+Description=Mossvale origin proxy and restart page
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+DynamicUser=yes
+RuntimeDirectory=mossvale-proxy
+EnvironmentFile=-/etc/mossvale-edge/country.env
+Environment=XDG_CONFIG_HOME=/run/mossvale-proxy XDG_DATA_HOME=/run/mossvale-proxy
+ExecStart=/opt/mossvale-edge/caddy run --config /opt/mossvale-edge/Caddyfile --adapter caddyfile
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+
+[Install]
+WantedBy=multi-user.target

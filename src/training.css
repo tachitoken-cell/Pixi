@@ -1,0 +1,298 @@
+/* Trainers, vendors and NPC conversations share Mossvale's oak and portrait frame. */
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) {
+  --trainer-gold: #edcf89; --trainer-ink: #f1e5c6; --trainer-muted: #b7b99e;
+  position: fixed; inset: 126px auto auto 18px; margin: 0; z-index: 32;
+  width: 348px; max-width: calc(100vw - 36px); max-height: none;
+  padding: 0; overflow: visible; border: 0; border-image: none; border-radius: 0;
+  background: none; box-shadow: none; color: var(--trainer-ink); pointer-events: none;
+}
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"])::backdrop { background: transparent; backdrop-filter: none; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .panel-heading {
+  position: relative; isolation: isolate; min-height: 58px; padding: 10px 13px 9px 66px;
+  margin: 0; gap: 8px; border: 0; pointer-events: auto;
+}
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .panel-heading::before,
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-shell::before,
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-detail::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  border: 10px solid transparent; border-image: var(--wood-art) 175 fill / 10px / 0 stretch;
+}
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .panel-heading > div { min-width: 0; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .panel-heading h2 {
+  margin: 0; font: 17px/1.25 'Marcellus', Georgia, serif; color: var(--trainer-gold);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .panel-heading .eyebrow {
+  display: block; color: var(--trainer-muted); font-size: 9px; line-height: 1.3;
+  margin: 0 0 3px; letter-spacing: .5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .close-button {
+  flex: none; width: 24px; height: 24px; min-width: 24px; min-height: 24px; padding: 3px; border-radius: 3px;
+  background: #47251f; border: 1px solid #b09253; color: #efd7a3;
+}
+.trainer-portrait { display: none; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .trainer-portrait { display: block; position: absolute; left: -6px; top: -9px; width: 76px; height: 76px; pointer-events: none; }
+.trainer-portrait canvas { position: absolute; inset: 16.8%; width: 66.4%; height: 66.4%; border-radius: 50%; }
+.trainer-portrait > .item-art { position: absolute; inset: 25%; width: 50%; height: 50%; }
+.trainer-portrait-ring { position: absolute; inset: 0; background: url('/ui/unit-portrait-ring.png') center/contain no-repeat; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) #panel-content { position: relative; overflow: visible; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-shell { position: relative; isolation: isolate; padding: 3px 12px 9px; pointer-events: auto; }
+.training-toolbar { display: flex; justify-content: space-between; align-items: center; min-height: 34px; gap: 8px; color: var(--trainer-muted); font-size: 10px; }
+.training-toolbar label { margin-left: auto; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-list {
+  position: relative; isolation: isolate; height: clamp(280px, 38vh, 352px); display: flex; flex-direction: column;
+  gap: 2px; margin: 0; padding: 5px; overflow: auto; scrollbar-width: thin; scrollbar-color: #8b8960 #17281e;
+  border: 1px solid #8b7648; border-radius: 2px; background: #30291c;
+}
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-list::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(#332e20bb, #48361999), var(--parchment-art) center/100% 100%;
+}
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-entry {
+  display: grid; grid-template-columns: 38px minmax(0,1fr) auto; gap: 8px; align-items: center;
+  flex: 0 0 auto; width: 100%; min-height: 52px; padding: 6px; text-align: left; cursor: pointer;
+  border: 1px solid #9a78453d; border-radius: 2px; background: #131b15e8; color: var(--trainer-ink);
+}
+.training-entry > .icon, .training-entry > .item-art, .training-entry > img { width: 36px; height: 36px; object-fit: contain; border-radius: 2px; }
+.training-entry.unavailable > .item-art, .training-entry.learned > .item-art,
+.training-entry.unavailable > img, .training-entry.learned > img { filter: grayscale(.8); opacity: .72; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-entry:hover { border-color: #d5b96b; background: #39432dcc; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-entry.selected { border-color: #f0d991; background: #61713ee8; box-shadow: inset 0 0 12px #bbd67d55, 0 0 2px #f0d991; }
+.training-entry-copy { min-width: 0; }
+#panel-content .training-entry-copy > strong { display: block; font: 12px/1.25 'DM Sans', sans-serif; color: #efd07b; margin: 0 0 4px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+#panel-content .training-entry p, .training-entry small { display: block; font: 10px/1.3 'DM Sans', sans-serif; color: #e0ddc6; margin: 0; }
+.training-entry.unavailable .training-level, .training-entry.unavailable small { color: #e9a391; }
+.training-entry.learned small { color: #a7c59a; }
+.training-cost { display: inline-flex; align-items: center; justify-content: flex-end; gap: 3px; max-width: 72px; align-self: start; padding-top: 1px; color: #e8ddbd; font-size: 11px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.training-cost > .item-art, .training-cost > .icon { width: 14px; height: 14px; }
+.training-footer { display: flex; flex-wrap: wrap; column-gap: 12px; row-gap: 0; padding-top: 8px; align-items: center; justify-content: space-between; border-top: 1px solid #b29b5733; }
+#panel-content .training-status { flex-basis: 100%; min-height: 14px; margin: 4px 0; color: #dbb999; font-size: 10px; line-height: 1.4; overflow-wrap: anywhere; }
+#panel-content .training-wallet { display: flex; align-items: center; gap: 6px; min-width: 0; margin: 0; color: #ead59e; font-size: 12px; font-variant-numeric: tabular-nums; }
+.training-wallet > .item-art, .training-wallet > .icon { width: 20px; height: 20px; flex: none; }
+.training-wallet strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-footer .primary-button { width: 98px; min-height: 30px; margin: 0; padding: 5px 8px; flex: none; font-size: 12px; border-radius: 2px; }
+.training-links { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.training-links .primary-button { min-width: 0; white-space: normal; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-links { justify-content: flex-end; min-height: 24px; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-links button { width: auto; min-width: 0; min-height: 22px; margin: 0; padding: 2px 3px; background: none; border: 0; font-size: 10px; line-height: 1.3; color: #c5c6a4; box-shadow: none; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-links button::before { content: none; }
+.training-links .item-art, .training-links img { width: 16px; height: 16px; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-links button { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.training-detail-heading { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+.training-detail-heading > .item-art, .training-detail-heading > img { width: 34px; height: 34px; flex: none; object-fit: contain; }
+#panel-content .training-detail-heading h3 { margin: 0; }
+#panel-content .training-guidance { color: #e5d8b8; padding: 12px 4px; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-detail {
+  position: absolute; isolation: isolate; top: 1px; left: calc(100% + 12px); width: 258px;
+  max-height: calc(100vh - 228px); padding: 17px; overflow: auto; scrollbar-width: thin;
+  pointer-events: auto; color: #e8e4c8;
+}
+#panel-content .training-detail h3 { color: #efdaa5; font: 19px/1.2 'Marcellus', Georgia, serif; margin: 0 0 10px; overflow-wrap: anywhere; }
+#panel-content .training-detail p { color: #ded9b7; font-size: 12px; line-height: 1.55; margin: 0 0 12px; overflow-wrap: anywhere; }
+.training-stats { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 5px 10px; margin: 12px 0; padding: 10px 0; border-block: 1px solid #bfa66a44; font-size: 11px; }
+.training-stats dt { color: #bfc5aa; }
+.training-stats dd { margin: 0; color: #ede5c6; text-align: right; }
+#panel-content .training-requirements { font-size: 11px; color: #dfb99b; }
+#panel-content .training-empty { margin: auto; padding: 20px; text-align: center; color: #e1d4af; font-size: 12px; }
+.panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) button:focus-visible, #training-filter:focus-visible { outline: 2px solid #f3dc9b; outline-offset: 2px; }
+@media(max-height: 680px) {
+  .panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) { top: 110px; }
+  .panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) .training-list { height: 242px; }
+}
+
+/* Merchants share the trainer frame; paginate stock to keep trading compact. */
+.panel[data-mode="shop"] .training-toolbar { justify-content: flex-end; }
+.shop-tabs { display: flex; gap: 3px; margin-right: auto; }
+.panel[data-mode="shop"] .shop-tabs button,
+.panel[data-mode="shop"] .shop-pagination button {
+  min-width: 0; min-height: 24px; padding: 3px 9px; font: 11px 'DM Sans', sans-serif;
+  color: #d9d5b7; border: 1px solid #8b764866; border-radius: 2px; background: #17281e;
+}
+.panel[data-mode="shop"] .shop-tabs button[aria-pressed="true"] { color: #ffe3a0; border-color: #c9b16b; background: #4c5837; }
+#shop-filter, #shop-quantity { min-width: 0; min-height: 24px; height: 24px; max-width: 126px; padding: 3px 6px; border: 1px solid #8e8057; border-radius: 2px; color: #efe3c5; background: #17281e; font: 11px 'DM Sans', sans-serif; }
+.panel[data-mode="shop"] .training-list { height: 288px; overflow: hidden; }
+.panel[data-mode="shop"] .training-entry { min-height: 44px; padding: 4px 6px; gap: 7px; grid-template-columns: 34px minmax(0,1fr) auto; }
+.panel[data-mode="shop"] .training-entry > .item-art,
+.panel[data-mode="shop"] .training-entry > img { width: 34px; height: 34px; }
+.panel[data-mode="shop"] .training-entry-copy > strong { font-size: 11px; margin-bottom: 2px; }
+.shop-pagination { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 30px; color: #bfc5aa; font-size: 10px; }
+.panel[data-mode="shop"] .shop-pagination button:disabled { opacity: .4; }
+.panel[data-mode="shop"] .training-wallet > img { width: 30px; height: 30px; object-fit: contain; flex: none; }
+.shop-quantity { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 11px; color: #c8c6ab; margin: 10px 0; }
+#shop-filter:focus-visible, #shop-quantity:focus-visible { outline: 2px solid #f3dc9b; outline-offset: 2px; }
+@media(max-height: 800px) { .panel[data-mode="shop"] { top: 106px; } }
+
+#panel-content .shop-detail h3, #panel-content .shop-quality { color: var(--quality, #efdaa5); }
+#panel-content .shop-quality { margin-top: -4px; font-size: 10px; }
+#panel-content .shop-entry .training-entry-copy strong { color: var(--quality, #efd07b); }
+#panel-content .shop-footer .training-status { display: flex; flex-wrap: wrap; gap: 4px 8px; }
+.shop-capacity { margin-left: auto; color: #bfc5aa; }
+.training-stats dd { max-width: 140px; overflow-wrap: anywhere; }
+
+/* NPC conversations keep their choices inside the same compact forest-green frame. */
+.panel:is([data-mode="npc-talk"],[data-mode="gold-merchant"]) .npc-talk-shell { padding: 17px 18px 16px; }
+.panel:is([data-mode="npc-talk"],[data-mode="gold-merchant"]) .npc-talk-copy {
+  min-height: 96px; max-height: max(120px, calc(100dvh - 360px)); margin: 0 0 17px;
+  overflow-y: auto; scrollbar-width: thin; scrollbar-color: #8b8960 #17281e;
+}
+#panel:is([data-mode="npc-talk"],[data-mode="gold-merchant"]) .npc-talk-copy p {
+  margin: 0 0 12px; color: #dfdfc1; font-size: 13px; line-height: 1.65; overflow-wrap: anywhere;
+}
+#panel:is([data-mode="npc-talk"],[data-mode="gold-merchant"]) .npc-talk-copy p:last-child { margin-bottom: 0; }
+#panel:is([data-mode="npc-talk"],[data-mode="gold-merchant"]) .npc-talk-topic {
+  color: #edcf89; margin: 0 0 12px; font: 17px/1.3 'Marcellus', Georgia, serif; overflow-wrap: anywhere;
+}
+.npc-talk-actions { display: grid; gap: 7px; padding-top: 12px; border-top: 1px solid #b29b5740; }
+#panel:is([data-mode="npc-talk"],[data-mode="gold-merchant"]) .npc-talk-actions .primary-button {
+  display: flex; align-items: center; justify-content: flex-start; width: 100%; min-height: 36px;
+  margin: 0; padding: 8px 11px; font-size: 12px; line-height: 1.4; gap: 8px; color: #efe1b4;
+}
+#panel:is([data-mode="npc-talk"],[data-mode="gold-merchant"]) .npc-talk-actions .primary-button > .item-art,
+#panel:is([data-mode="npc-talk"],[data-mode="gold-merchant"]) .npc-talk-actions .primary-button > .icon { width: 23px; height: 23px; flex: none; }
+#panel:is([data-mode="npc-talk"],[data-mode="gold-merchant"]) .npc-talk-actions .npc-talk-close { justify-content: center; color: #bec5aa; }
+
+/* Source NPC composition: list and details on desktop, one selected-row expansion on phones.
+   The same details node owns every action/confirmation in both layouts. */
+body:not(.mobile-controls) #panel:is([data-mode="training"],[data-mode="shop"]) {
+  inset:50% auto auto 50%; transform:translate(-50%,-50%); width:min(780px,calc(100vw - 40px));
+  max-width:calc(100vw - 40px); max-height:calc(100dvh - 40px); overflow:auto; pointer-events:auto;
+}
+#panel:is([data-mode="training"],[data-mode="shop"]) #panel-content { display:block; min-width:0; }
+#panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog { padding:8px 14px 12px; }
+#panel:is([data-mode="training"],[data-mode="shop"]) .training-toolbar { padding-bottom:8px; gap:10px; }
+#panel .training-filters { display:flex; flex-wrap:wrap; gap:4px; min-width:0; }
+#panel .training-filters button, #panel[data-mode="shop"] .shop-tabs button {
+  display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:36px; min-width:0;
+  padding:7px 10px; border:1px solid #8b7648; border-radius:2px; color:#e6dfbe; background:#17281e;
+  font:12px/1.3 'DM Sans',sans-serif; cursor:pointer;
+}
+#panel .training-filters button[aria-pressed="true"], #panel[data-mode="shop"] .shop-tabs button[aria-pressed="true"] {
+  color:#ffe3a0; border-color:#c9b16b; background:#4c5837;
+}
+#panel :is(.training-filters,.shop-tabs) button span { color:#d0d5af; font-size:11px; font-variant-numeric:tabular-nums; }
+#panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog .training-list {
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(240px,.8fr); grid-template-rows:repeat(var(--training-rows),minmax(56px,max-content));
+  align-content:start; gap:4px 12px; height:clamp(200px,48vh,450px); overflow:auto; padding:6px;
+}
+#panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog .training-entry {
+  grid-column:1; grid-row:var(--training-row); align-self:start; min-height:56px; padding:7px;
+}
+#panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog .training-detail {
+  position:sticky; inset:auto; top:0; grid-column:2; grid-row:1 / span var(--training-rows); align-self:start;
+  width:auto; min-width:0; max-height:clamp(200px,46vh,438px); padding:16px; overflow:auto; margin:0;
+}
+#panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog .training-empty { grid-column:1 / -1; }
+#panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog .training-entry-copy > strong { font-size:13px; }
+#panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog .training-entry small { font-size:11px; }
+#panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog .training-primary {
+  width:100%; min-height:44px; margin:8px 0 0; padding:9px 12px; font-size:13px; white-space:normal;
+}
+#panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog .training-status:empty { display:none; }
+#panel:is([data-mode="training"],[data-mode="shop"]) .training-footer { margin-top:10px; gap:6px 14px; }
+#panel .training-student { color:#d0d5b5; font-size:11px; }
+#panel .training-catalog .training-links { margin-left:auto; }
+#panel .training-catalog .training-links button { min-height:36px; font-size:11px; }
+#panel[data-mode="shop"] #shop-filter { min-height:36px; height:36px; max-width:190px; font-size:12px; }
+#panel[data-mode="shop"] .shop-pagination { min-height:38px; }
+#panel[data-mode="shop"] .shop-pagination button { min-height:32px; min-width:36px; }
+body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"]) {
+  inset:12px; transform:none; margin:0; width:auto; max-width:none; height:calc(100dvh - 24px);
+  max-height:calc(100dvh - 24px); padding:0; overflow:hidden; pointer-events:auto;
+}
+body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"])[open] { display:flex; flex-direction:column; }
+body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"]) > .panel-heading { flex:none; }
+body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"]) #panel-content {
+  display:flex; flex-direction:column; flex:1; min-height:0; min-width:0; overflow:auto;
+}
+body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog {
+  display:flex; flex-direction:column; flex:1; min-width:0; min-height:0; padding:6px 10px 10px;
+}
+body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"]) .training-toolbar { flex:none; flex-wrap:wrap; gap:6px; }
+body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog .training-list {
+  display:flex; flex-direction:column; flex:1; min-height:100px; height:auto; max-height:none; gap:4px; padding:4px;
+}
+body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog .training-detail {
+  position:relative; inset:auto; grid-row:auto; grid-column:auto; flex:none; width:100%; max-height:none;
+  padding:12px; overflow:visible; box-sizing:border-box; margin:-4px 0 8px;
+}
+body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog .training-entry { flex:none; }
+body.mobile-controls #panel .training-filters { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:100%; }
+body.mobile-controls #panel .training-filters button, body.mobile-controls #panel[data-mode="shop"] :is(.shop-tabs button,.shop-pagination button,#shop-filter,#shop-quantity) {
+  min-height:44px; height:44px;
+}
+body.mobile-controls #panel[data-mode="shop"] :is(#shop-filter,#shop-quantity) { font-size:16px; }
+body.mobile-controls #panel[data-mode="shop"] .shop-toolbar label { margin-left:auto; }
+body.mobile-controls #panel[data-mode="shop"] #shop-filter { max-width:150px; }
+body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"]) .training-footer { flex:none; margin-top:6px; }
+body.mobile-controls #panel .training-catalog .training-links button { min-height:44px; }
+@media(max-height:480px) {
+  body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"]) { inset:6px; height:calc(100dvh - 12px); max-height:calc(100dvh - 12px); }
+  body.mobile-controls #panel .training-filters { display:flex; flex-wrap:nowrap; }
+  body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"]) .training-catalog { flex:none; min-height:420px; }
+}
+
+/* The caravan checklist uses the existing NPC frame, with readable status text. */
+.panel[data-mode="gold-merchant"] { max-height:calc(100dvh - 144px); }
+#panel[data-mode="gold-merchant"] #panel-content { max-height:calc(100dvh - 210px); overflow-y:auto; scrollbar-width:thin; }
+#panel[data-mode="gold-merchant"] .npc-talk-copy { min-height:0; max-height:none; margin-bottom:14px; overflow:visible; }
+.gold-merchant-subtitle { margin:0 0 10px; color:var(--trainer-gold); font:15px/1.3 'Marcellus',Georgia,serif; }
+.gold-merchant-requirements { display:grid; gap:10px; margin:0; padding:0; list-style:none; }
+.gold-merchant-requirements li { display:flex; align-items:flex-start; gap:10px; padding:10px; border:1px solid #b29b5759; background:#17281eb3; }
+.gold-merchant-requirements li>div { min-width:0; flex:1; }
+.gold-merchant-requirements strong,.gold-merchant-requirements span { display:block; overflow-wrap:anywhere; }
+.gold-merchant-requirements strong { font-size:12px; line-height:1.5; }
+.gold-merchant-requirements span { margin-top:4px; font-size:11px; line-height:1.5; color:#c0c6ac; }
+.gold-merchant-requirements b { flex:none; font-size:10px; line-height:1.6; color:#e0c5a1; }
+.gold-merchant-requirements [data-status="met"] b { color:#b6df98; }
+.gold-merchant-requirements [data-status="unverified"] b { color:#e2d399; }
+#panel[data-mode="gold-merchant"] :is(.gold-merchant-wallet,.gold-merchant-note,.gold-merchant-status) { margin:10px 0; font-size:11px; line-height:1.5; overflow-wrap:anywhere; color:#ced0b2; }
+#panel[data-mode="gold-merchant"] .gold-merchant-status:empty { display:none; }
+#panel[data-mode="gold-merchant"] .npc-talk-actions .primary-button { justify-content:center; }
+@media(max-width:600px) {
+  #panel[data-mode="gold-merchant"] { inset:96px auto auto 12px; width:min(348px,calc(100vw - 24px)); max-width:calc(100vw - 24px); max-height:calc(100dvh - 112px); }
+  #panel[data-mode="gold-merchant"] #panel-content { max-height:calc(100dvh - 178px); }
+  #panel[data-mode="gold-merchant"] .npc-talk-shell { padding:13px; }
+  #panel[data-mode="gold-merchant"] .npc-talk-actions .primary-button { min-height:44px; }
+}
+body.mobile-controls #panel[data-mode="gold-merchant"] { inset:96px auto auto 12px; width:min(348px,calc(100vw - 24px)); max-width:calc(100vw - 24px); max-height:calc(100dvh - 112px); }
+body.mobile-controls #panel:is([data-mode="training"],[data-mode="shop"],[data-mode="npc-talk"],[data-mode="gold-merchant"]) > .panel-heading { min-height:68px; padding:10px 13px 9px 76px; }
+body.mobile-controls #panel[data-mode="gold-merchant"] #panel-content { max-height:calc(100dvh - 178px); overflow-y:auto; }
+body.mobile-controls #panel[data-mode="gold-merchant"] .npc-talk-actions .primary-button { min-height:44px; }
+
+#panel-content .shop-sale-warning { display:flex; align-items:flex-start; gap:8px; margin:10px 0; color:#f0c298; font-size:12px; line-height:1.4; cursor:pointer; }
+#panel-content .shop-sale-warning input { flex:none; width:18px; height:18px; margin:0; accent-color:#d5b66e; }
+#panel-content .shop-sell-all { display:flex; flex-direction:column; align-items:center; width:100%; min-height:44px; margin:8px 0 0; white-space:normal; }
+#panel-content .shop-sell-all small { font-size:11px; }
+#shop-sale-ack:focus-visible { outline:2px solid #f3dc9b; outline-offset:2px; }
+body.mobile-controls #panel[data-mode="shop"] :is(.shop-sale-warning,.shop-sell-all) { order:-1; flex:none; }
+
+/* Gold offers stay in the caravan's existing compact counter. */
+#panel[data-mode="gold-merchant"] .gold-merchant-subtitle { margin:0 0 6px; font:15px/1.3 'Marcellus',Georgia,serif; color:var(--trainer-gold); }
+.gold-merchant-round-heading,.gold-merchant-offer-heading { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:4px 12px; }
+.gold-merchant-round-heading>strong { color:#d6e4b4; font-size:12px; font-variant-numeric:tabular-nums; }
+#panel[data-mode="gold-merchant"] .gold-merchant-budget { margin:8px 0 0; overflow-wrap:anywhere; }
+.gold-merchant-budget strong { display:block; color:var(--trainer-gold); font:20px/1.3 'Marcellus',Georgia,serif; }
+.gold-merchant-budget span,.gold-merchant-offer-heading>span { font-size:11px; color:#ced0b2; }
+.gold-merchant-offer,.gold-merchant-result,.gold-merchant-eligibility { margin-top:18px; padding-top:14px; border-top:1px solid #b29b5759; }
+.gold-merchant-fields { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; margin:12px 0; }
+.gold-merchant-fields label { min-width:0; color:#e7ddb8; font-size:11px; line-height:1.5; }
+.gold-merchant-fields input { display:block; box-sizing:border-box; width:100%; min-width:0; min-height:44px; margin-top:5px; padding:9px; border:1px solid #ad9557; border-radius:2px; background:#17281e; color:#f1e5c6; font:16px/1.4 'DM Sans',sans-serif; }
+.gold-merchant-fields input:focus-visible,.gold-merchant-eligibility summary:focus-visible { outline:2px solid #f3dc9b; outline-offset:2px; }
+.gold-merchant-fields input:disabled { opacity:.6; }
+#panel[data-mode="gold-merchant"] :is(.gold-merchant-review,.gold-merchant-saved,.gold-merchant-result p,.gold-merchant-collector p) { margin:10px 0; font-size:12px; line-height:1.6; color:#dfdfc1; overflow-wrap:anywhere; }
+#panel[data-mode="gold-merchant"] .gold-merchant-saved { color:#c9dfa7; }
+#panel[data-mode="gold-merchant"] .gold-merchant-offer-actions { grid-template-columns:1fr 1fr; padding-top:6px; border:0; }
+#panel[data-mode="gold-merchant"] .gold-merchant-offer-actions:has(>button:only-child) { grid-template-columns:1fr; }
+#panel[data-mode="gold-merchant"] .gold-merchant-account-actions { grid-template-columns:1fr 1fr; }
+#panel[data-mode="gold-merchant"] .gold-merchant-account-actions .npc-talk-close { grid-column:1 / -1; }
+.gold-merchant-eligibility summary { cursor:pointer; color:var(--trainer-gold); font-size:12px; line-height:1.6; }
+.gold-merchant-eligibility[open] summary { margin-bottom:10px; }
+#panel[data-mode="gold-merchant"] .gold-merchant-collector:has(.treasure-payout) { margin-top:18px; padding-top:14px; border-top:1px solid #b29b5759; }
+#panel[data-mode="gold-merchant"] .gold-merchant-collector :is(.treasure-counter,.treasure-payout) { padding:0; border:0; background:none; box-shadow:none; }
+#panel[data-mode="gold-merchant"] .gold-merchant-collector h3 { margin:0 0 10px; font:18px/1.4 'Marcellus',Georgia,serif; color:var(--trainer-gold); overflow-wrap:anywhere; }
+#panel[data-mode="gold-merchant"] :is(.gold-merchant-result,.gold-merchant-collector) .primary-button { min-height:44px; margin:4px 0; padding:8px; font-size:12px; }
+#panel[data-mode="gold-merchant"] .treasure-actions { display:flex; flex-wrap:wrap; gap:8px; }
+#panel[data-mode="gold-merchant"] .treasure-status:empty { display:none; }
+@media(max-width:340px) { .gold-merchant-fields { grid-template-columns:minmax(0,1fr); } }
+
+body.mobile-controls #panel[data-mode="shop"] .shop-pagination button{min-width:44px}

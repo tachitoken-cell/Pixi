@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mossvale store contract setup</title>
+<style>body{max-width:700px;margin:48px auto;padding:0 24px;font:16px/1.5 system-ui;color:#e8e3d1;background:#172520}h1{font:30px Georgia;color:#e8c985}label{display:block;margin:22px 0 8px}input,button{font:inherit;padding:12px;background:#243b30;color:inherit;border:1px solid #81967c;border-radius:4px}input{box-sizing:border-box;width:100%}button{margin:16px 10px 0 0;cursor:pointer}button:disabled{opacity:.4;cursor:default}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:#0c1913}a{color:#e8c985}small{display:block;color:#b2c0b0}</style></head>
+<body><h1>Ingame store contract setup</h1><p>Deploy the separate MossvaleStore contract on Robinhood Chain mainnet (4663). It burns MOSS for signed character rewards and holds no funds. Your wallet pays ETH for deployment.</p>
+<p>One-hour boosts: $2 of MOSS · Cosmetic box: $5 of MOSS · Mounts: $40 of MOSS · Pets: $20 of MOSS · Class Change: $50 of MOSS · Burned title: $100 of MOSS.</p>
+<label for="authority">Game signing authority · public wallet address</label><input id="authority" placeholder="0x…" autocomplete="off" spellcheck="false"><small>The public address of STORE_AUTHORITY_KEY, or the existing MOSS_AUCTION_AUTHORITY_KEY / AUCTION_AUTHORITY_KEY fallback. Never enter a private key here.</small>
+<button id="connect">Connect deployment wallet</button><button id="deploy" disabled>Deploy store contract</button>
+<p id="status" role="status" aria-live="polite">Connect a funded mainnet wallet to begin.</p><pre id="result" hidden></pre>
+<script type="module">
+const $=id=>document.getElementById(id), address=/^0x[\da-f]{40}$/i;
+let account, busy=false;
+const request=(method,params=[])=>{if(!window.ethereum)throw Error('Use a browser with an Ethereum wallet.');return window.ethereum.request({method,params});};
+async function network(){
+  if(BigInt(await request('eth_chainId'))!==4663n){
+    try{await request('wallet_switchEthereumChain',[{chainId:'0x1237'}]);}
+    catch(error){if(error.code!==4902)throw error;await request('wallet_addEthereumChain',[{chainId:'0x1237',chainName:'Robinhood Chain',rpcUrls:['https://rpc.mainnet.chain.robinhood.com'],blockExplorerUrls:['https://robinhoodchain.blockscout.com'],nativeCurrency:{name:'Ether',symbol:'ETH',decimals:18}}]);await request('wallet_switchEthereumChain',[{chainId:'0x1237'}]);}
+  }
+  if(BigInt(await request('eth_chainId'))!==4663n)throw Error('Select Robinhood Chain mainnet.');
+}
+$('connect').onclick=async()=>{if(busy)return;try{const accounts=await request('eth_requestAccounts');account=accounts[0];if(!address.test(account))throw Error('Choose a wallet account.');$('deploy').disabled=false;$('status').textContent=`Deployment wallet: ${account}`;}catch(error){$('status').textContent=error.message;}};
+$('deploy').onclick=async()=>{
+  if(busy)return;busy=true;for(const name of ['deploy','connect','authority'])$(name).disabled=true;
+  try{
+    const authority=$('authority').value.trim();
+    if(!address.test(authority)||/^0x0{40}$/i.test(authority))throw Error('Enter a nonzero public signing authority address.');
+    await network();if((await request('eth_accounts'))[0]?.toLowerCase()!==account.toLowerCase())throw Error('Wallet account changed. Connect again.');
+    const response=await fetch('/contracts/MossvaleStore.json');if(!response.ok)throw Error('Store contract artifact unavailable.');
+    const artifact=await response.json();if(artifact.contractName!=='MossvaleStore')throw Error('Wrong contract artifact.');
+    const transaction={from:account,data:artifact.bytecode+authority.slice(2).toLowerCase().padStart(64,'0'),value:'0x0',chainId:'0x1237'};
+    transaction.gas=await request('eth_estimateGas',[transaction]);
+    $('status').textContent='Review the new store contract and deployment gas fee in your wallet.';
+    if(BigInt(await request('eth_chainId'))!==4663n||(await request('eth_accounts'))[0]?.toLowerCase()!==account.toLowerCase())throw Error('Wallet account or network changed.');
+    const hash=await request('eth_sendTransaction',[transaction]);
+    $('status').textContent=`Deployment submitted: ${hash}. Waiting for its receipt…`;
+    const link=document.createElement('a');link.href=`https://robinhoodchain.blockscout.com/tx/${hash}`;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View deployment';$('status').append(' ',link);
+    let receipt;for(let count=0;count<180;count++){receipt=await request('eth_getTransactionReceipt',[hash]);if(receipt)break;await new Promise(resolve=>setTimeout(resolve,1000));}
+    if(!receipt)throw Error(`Still pending. Keep the deployment hash and check it in the explorer: ${hash}`);
+    if(receipt.status!=='0x1'||!address.test(receipt.contractAddress))throw Error('Deployment reverted; no store contract was created.');
+    if(BigInt(await request('eth_chainId'))!==4663n||await request('eth_getCode',[receipt.contractAddress,'latest'])!==artifact.deployedBytecode)throw Error('Contract network or runtime does not match. Do not configure it.');
+    $('result').hidden=false;$('result').textContent=`Deployed store: ${receipt.contractAddress}\nSigning authority: ${authority}\n\nFollow deploy/PRODUCTION.md for the reviewed activation release through the normal production workflow on EU, US and Asia. Preserve settlement on both older contracts and their signing authority. Do not overwrite legacy settings or manually restart the realms.`;
+    $('status').textContent='Deployment mined and runtime verified. Before activation, verify finalized contract state and complete the compatibility rollout on every realm. The store enables only after the activation release verifies the new contract and fresh USD pricing.';
+  }catch(error){$('status').textContent=error.message;}finally{busy=false;for(const name of ['connect','authority'])$(name).disabled=false;$('deploy').disabled=!account;}
+};
+</script></body></html>

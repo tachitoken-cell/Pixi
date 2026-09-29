@@ -1,0 +1,1172 @@
+{
+  "human-male": {
+    "race": "human",
+    "gender": "male",
+    "root": "race-human-male",
+    "torso": {
+      "width": 0.7,
+      "depth": 0.4,
+      "topY": 1.555,
+      "hemY": 0.89,
+      "hemWidth": 0.72,
+      "waistY": 1.1099999999999999,
+      "waistWidth": 0.58,
+      "chestY": 1.31,
+      "chestWidth": 0.7,
+      "chestFront": 0.225,
+      "chestBack": -0.2,
+      "femaleChest": false
+    },
+    "head": {
+      "x": 0,
+      "y": 1.9,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.47,
+      "y": 1.44,
+      "z": 0,
+      "upperWidth": 0.25
+    },
+    "hip": {
+      "x": 0.2,
+      "y": 0.86,
+      "z": 0,
+      "thighWidth": 0.26
+    },
+    "foot": {
+      "width": 0.31,
+      "depth": 0.46,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.86
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.49,
+      "z": -0.23500000000000001
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "human-female": {
+    "race": "human",
+    "gender": "female",
+    "root": "race-human-female",
+    "torso": {
+      "width": 0.68,
+      "depth": 0.42,
+      "topY": 1.505,
+      "hemY": 0.88,
+      "hemWidth": 0.73,
+      "waistY": 1.1,
+      "waistWidth": 0.53,
+      "chestY": 1.2599999999999998,
+      "chestWidth": 0.68,
+      "chestFront": 0.32,
+      "chestBack": -0.21,
+      "femaleChest": true
+    },
+    "head": {
+      "x": 0,
+      "y": 1.85,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.445,
+      "y": 1.39,
+      "z": 0,
+      "upperWidth": 0.25
+    },
+    "hip": {
+      "x": 0.205,
+      "y": 0.85,
+      "z": 0,
+      "thighWidth": 0.25
+    },
+    "foot": {
+      "width": 0.3,
+      "depth": 0.45,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.85
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.44,
+      "z": -0.245
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "elf-male": {
+    "race": "elf",
+    "gender": "male",
+    "root": "race-elf-male",
+    "torso": {
+      "width": 0.62,
+      "depth": 0.35,
+      "topY": 1.735,
+      "hemY": 1.03,
+      "hemWidth": 0.65,
+      "waistY": 1.25,
+      "waistWidth": 0.5,
+      "chestY": 1.4900000000000002,
+      "chestWidth": 0.62,
+      "chestFront": 0.19999999999999998,
+      "chestBack": -0.175,
+      "femaleChest": false
+    },
+    "head": {
+      "x": 0,
+      "y": 2.1,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.425,
+      "y": 1.62,
+      "z": 0,
+      "upperWidth": 0.21
+    },
+    "hip": {
+      "x": 0.18,
+      "y": 1.0,
+      "z": 0,
+      "thighWidth": 0.22
+    },
+    "foot": {
+      "width": 0.27,
+      "depth": 0.43,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -1.0
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.6700000000000002,
+      "z": -0.21
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "elf-female": {
+    "race": "elf",
+    "gender": "female",
+    "root": "race-elf-female",
+    "torso": {
+      "width": 0.59,
+      "depth": 0.37,
+      "topY": 1.715,
+      "hemY": 1.02,
+      "hemWidth": 0.65,
+      "waistY": 1.24,
+      "waistWidth": 0.46,
+      "chestY": 1.4700000000000002,
+      "chestWidth": 0.59,
+      "chestFront": 0.295,
+      "chestBack": -0.185,
+      "femaleChest": true
+    },
+    "head": {
+      "x": 0,
+      "y": 2.06,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.415,
+      "y": 1.6,
+      "z": 0,
+      "upperWidth": 0.21
+    },
+    "hip": {
+      "x": 0.18,
+      "y": 0.99,
+      "z": 0,
+      "thighWidth": 0.215
+    },
+    "foot": {
+      "width": 0.265,
+      "depth": 0.42,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.99
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.6500000000000001,
+      "z": -0.22
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "dwarf-male": {
+    "race": "dwarf",
+    "gender": "male",
+    "root": "race-dwarf-male",
+    "torso": {
+      "width": 0.87,
+      "depth": 0.49,
+      "topY": 1.365,
+      "hemY": 0.6900000000000001,
+      "hemWidth": 0.92,
+      "waistY": 0.91,
+      "waistWidth": 0.74,
+      "chestY": 1.12,
+      "chestWidth": 0.87,
+      "chestFront": 0.27,
+      "chestBack": -0.245,
+      "femaleChest": false
+    },
+    "head": {
+      "x": 0,
+      "y": 1.68,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.58,
+      "y": 1.25,
+      "z": 0,
+      "upperWidth": 0.34
+    },
+    "hip": {
+      "x": 0.25,
+      "y": 0.66,
+      "z": 0,
+      "thighWidth": 0.31
+    },
+    "foot": {
+      "width": 0.36,
+      "depth": 0.49,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.66
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.3,
+      "z": -0.28
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "dwarf-female": {
+    "race": "dwarf",
+    "gender": "female",
+    "root": "race-dwarf-female",
+    "torso": {
+      "width": 0.84,
+      "depth": 0.51,
+      "topY": 1.365,
+      "hemY": 0.7000000000000001,
+      "hemWidth": 0.91,
+      "waistY": 0.92,
+      "waistWidth": 0.67,
+      "chestY": 1.12,
+      "chestWidth": 0.84,
+      "chestFront": 0.365,
+      "chestBack": -0.255,
+      "femaleChest": true
+    },
+    "head": {
+      "x": 0,
+      "y": 1.66,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.565,
+      "y": 1.25,
+      "z": 0,
+      "upperWidth": 0.34
+    },
+    "hip": {
+      "x": 0.25,
+      "y": 0.67,
+      "z": 0,
+      "thighWidth": 0.3
+    },
+    "foot": {
+      "width": 0.35,
+      "depth": 0.48,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.67
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.3,
+      "z": -0.29000000000000004
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "orc-male": {
+    "race": "orc",
+    "gender": "male",
+    "root": "race-orc-male",
+    "torso": {
+      "width": 0.93,
+      "depth": 0.53,
+      "topY": 1.735,
+      "hemY": 0.92,
+      "hemWidth": 0.94,
+      "waistY": 1.1400000000000001,
+      "waistWidth": 0.76,
+      "chestY": 1.4900000000000002,
+      "chestWidth": 0.93,
+      "chestFront": 0.29000000000000004,
+      "chestBack": -0.265,
+      "femaleChest": false
+    },
+    "head": {
+      "x": 0,
+      "y": 2.13,
+      "z": 0.045,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.64,
+      "y": 1.62,
+      "z": 0,
+      "upperWidth": 0.36
+    },
+    "hip": {
+      "x": 0.26,
+      "y": 0.89,
+      "z": 0,
+      "thighWidth": 0.32
+    },
+    "foot": {
+      "width": 0.37,
+      "depth": 0.5,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.89
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.6700000000000002,
+      "z": -0.30000000000000004
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "orc-female": {
+    "race": "orc",
+    "gender": "female",
+    "root": "race-orc-female",
+    "torso": {
+      "width": 0.84,
+      "depth": 0.53,
+      "topY": 1.665,
+      "hemY": 0.93,
+      "hemWidth": 0.89,
+      "waistY": 1.15,
+      "waistWidth": 0.65,
+      "chestY": 1.42,
+      "chestWidth": 0.84,
+      "chestFront": 0.375,
+      "chestBack": -0.265,
+      "femaleChest": true
+    },
+    "head": {
+      "x": 0,
+      "y": 2.06,
+      "z": 0.045,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.59,
+      "y": 1.55,
+      "z": 0,
+      "upperWidth": 0.36
+    },
+    "hip": {
+      "x": 0.245,
+      "y": 0.9,
+      "z": 0,
+      "thighWidth": 0.3
+    },
+    "foot": {
+      "width": 0.35,
+      "depth": 0.49,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.9
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.6,
+      "z": -0.30000000000000004
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "goblin-male": {
+    "race": "goblin",
+    "gender": "male",
+    "root": "race-goblin-male",
+    "torso": {
+      "width": 0.54,
+      "depth": 0.32,
+      "topY": 1.365,
+      "hemY": 0.66,
+      "hemWidth": 0.56,
+      "waistY": 0.88,
+      "waistWidth": 0.42,
+      "chestY": 1.12,
+      "chestWidth": 0.54,
+      "chestFront": 0.185,
+      "chestBack": -0.16,
+      "femaleChest": false
+    },
+    "head": {
+      "x": 0,
+      "y": 1.73,
+      "z": 0.045,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.385,
+      "y": 1.25,
+      "z": 0,
+      "upperWidth": 0.185
+    },
+    "hip": {
+      "x": 0.17,
+      "y": 0.63,
+      "z": 0,
+      "thighWidth": 0.2
+    },
+    "foot": {
+      "width": 0.3,
+      "depth": 0.51,
+      "height": 0.2,
+      "front": 0.3,
+      "baseY": -0.63
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.3,
+      "z": -0.195
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "goblin-female": {
+    "race": "goblin",
+    "gender": "female",
+    "root": "race-goblin-female",
+    "torso": {
+      "width": 0.53,
+      "depth": 0.35,
+      "topY": 1.365,
+      "hemY": 0.67,
+      "hemWidth": 0.57,
+      "waistY": 0.89,
+      "waistWidth": 0.4,
+      "chestY": 1.12,
+      "chestWidth": 0.53,
+      "chestFront": 0.285,
+      "chestBack": -0.175,
+      "femaleChest": true
+    },
+    "head": {
+      "x": 0,
+      "y": 1.71,
+      "z": 0.045,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.38,
+      "y": 1.25,
+      "z": 0,
+      "upperWidth": 0.185
+    },
+    "hip": {
+      "x": 0.175,
+      "y": 0.64,
+      "z": 0,
+      "thighWidth": 0.195
+    },
+    "foot": {
+      "width": 0.3,
+      "depth": 0.5,
+      "height": 0.2,
+      "front": 0.3,
+      "baseY": -0.64
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.3,
+      "z": -0.21
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "foxfolk-male": {
+    "race": "foxfolk",
+    "gender": "male",
+    "root": "race-foxfolk-male",
+    "torso": {
+      "width": 0.66,
+      "depth": 0.39,
+      "topY": 1.585,
+      "hemY": 0.91,
+      "hemWidth": 0.69,
+      "waistY": 1.13,
+      "waistWidth": 0.53,
+      "chestY": 1.3399999999999999,
+      "chestWidth": 0.66,
+      "chestFront": 0.22,
+      "chestBack": -0.195,
+      "femaleChest": false
+    },
+    "head": {
+      "x": 0,
+      "y": 1.94,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.45,
+      "y": 1.47,
+      "z": 0,
+      "upperWidth": 0.22
+    },
+    "hip": {
+      "x": 0.19,
+      "y": 0.88,
+      "z": 0,
+      "thighWidth": 0.235
+    },
+    "foot": {
+      "width": 0.33,
+      "depth": 0.48,
+      "height": 0.2,
+      "front": 0.3,
+      "baseY": -0.88
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.52,
+      "z": -0.23
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "foxfolk-female": {
+    "race": "foxfolk",
+    "gender": "female",
+    "root": "race-foxfolk-female",
+    "torso": {
+      "width": 0.62,
+      "depth": 0.42,
+      "topY": 1.545,
+      "hemY": 0.92,
+      "hemWidth": 0.69,
+      "waistY": 1.1400000000000001,
+      "waistWidth": 0.47,
+      "chestY": 1.2999999999999998,
+      "chestWidth": 0.62,
+      "chestFront": 0.32,
+      "chestBack": -0.21,
+      "femaleChest": true
+    },
+    "head": {
+      "x": 0,
+      "y": 1.91,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.435,
+      "y": 1.43,
+      "z": 0,
+      "upperWidth": 0.22
+    },
+    "hip": {
+      "x": 0.195,
+      "y": 0.89,
+      "z": 0,
+      "thighWidth": 0.23
+    },
+    "foot": {
+      "width": 0.32,
+      "depth": 0.47,
+      "height": 0.2,
+      "front": 0.3,
+      "baseY": -0.89
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.48,
+      "z": -0.245
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "catfolk-male": {
+    "race": "catfolk",
+    "gender": "male",
+    "root": "race-catfolk-male",
+    "torso": {
+      "width": 0.7,
+      "depth": 0.4,
+      "topY": 1.555,
+      "hemY": 0.89,
+      "hemWidth": 0.72,
+      "waistY": 1.1099999999999999,
+      "waistWidth": 0.58,
+      "chestY": 1.31,
+      "chestWidth": 0.7,
+      "chestFront": 0.225,
+      "chestBack": -0.2,
+      "femaleChest": false
+    },
+    "head": {
+      "x": 0,
+      "y": 1.9,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.47,
+      "y": 1.44,
+      "z": 0,
+      "upperWidth": 0.25
+    },
+    "hip": {
+      "x": 0.2,
+      "y": 0.86,
+      "z": 0,
+      "thighWidth": 0.26
+    },
+    "foot": {
+      "width": 0.31,
+      "depth": 0.46,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.86
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.49,
+      "z": -0.23500000000000001
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "catfolk-female": {
+    "race": "catfolk",
+    "gender": "female",
+    "root": "race-catfolk-female",
+    "torso": {
+      "width": 0.68,
+      "depth": 0.42,
+      "topY": 1.505,
+      "hemY": 0.88,
+      "hemWidth": 0.73,
+      "waistY": 1.1,
+      "waistWidth": 0.53,
+      "chestY": 1.2599999999999998,
+      "chestWidth": 0.68,
+      "chestFront": 0.32,
+      "chestBack": -0.21,
+      "femaleChest": true
+    },
+    "head": {
+      "x": 0,
+      "y": 1.85,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.445,
+      "y": 1.39,
+      "z": 0,
+      "upperWidth": 0.25
+    },
+    "hip": {
+      "x": 0.205,
+      "y": 0.85,
+      "z": 0,
+      "thighWidth": 0.25
+    },
+    "foot": {
+      "width": 0.3,
+      "depth": 0.45,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.85
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.44,
+      "z": -0.245
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "dogfolk-male": {
+    "race": "dogfolk",
+    "gender": "male",
+    "root": "race-dogfolk-male",
+    "torso": {
+      "width": 0.7,
+      "depth": 0.4,
+      "topY": 1.555,
+      "hemY": 0.89,
+      "hemWidth": 0.72,
+      "waistY": 1.1099999999999999,
+      "waistWidth": 0.58,
+      "chestY": 1.31,
+      "chestWidth": 0.7,
+      "chestFront": 0.225,
+      "chestBack": -0.2,
+      "femaleChest": false
+    },
+    "head": {
+      "x": 0,
+      "y": 1.9,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.47,
+      "y": 1.44,
+      "z": 0,
+      "upperWidth": 0.25
+    },
+    "hip": {
+      "x": 0.2,
+      "y": 0.86,
+      "z": 0,
+      "thighWidth": 0.26
+    },
+    "foot": {
+      "width": 0.31,
+      "depth": 0.46,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.86
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.49,
+      "z": -0.23500000000000001
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "dogfolk-female": {
+    "race": "dogfolk",
+    "gender": "female",
+    "root": "race-dogfolk-female",
+    "torso": {
+      "width": 0.68,
+      "depth": 0.42,
+      "topY": 1.505,
+      "hemY": 0.88,
+      "hemWidth": 0.73,
+      "waistY": 1.1,
+      "waistWidth": 0.53,
+      "chestY": 1.2599999999999998,
+      "chestWidth": 0.68,
+      "chestFront": 0.32,
+      "chestBack": -0.21,
+      "femaleChest": true
+    },
+    "head": {
+      "x": 0,
+      "y": 1.85,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.445,
+      "y": 1.39,
+      "z": 0,
+      "upperWidth": 0.25
+    },
+    "hip": {
+      "x": 0.205,
+      "y": 0.85,
+      "z": 0,
+      "thighWidth": 0.25
+    },
+    "foot": {
+      "width": 0.3,
+      "depth": 0.45,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.85
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.44,
+      "z": -0.245
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "lizardfolk-male": {
+    "race": "lizardfolk",
+    "gender": "male",
+    "root": "race-lizardfolk-male",
+    "torso": {
+      "width": 0.7,
+      "depth": 0.4,
+      "topY": 1.555,
+      "hemY": 0.89,
+      "hemWidth": 0.72,
+      "waistY": 1.1099999999999999,
+      "waistWidth": 0.58,
+      "chestY": 1.31,
+      "chestWidth": 0.7,
+      "chestFront": 0.225,
+      "chestBack": -0.2,
+      "femaleChest": false
+    },
+    "head": {
+      "x": 0,
+      "y": 1.9,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.47,
+      "y": 1.44,
+      "z": 0,
+      "upperWidth": 0.25
+    },
+    "hip": {
+      "x": 0.2,
+      "y": 0.86,
+      "z": 0,
+      "thighWidth": 0.26
+    },
+    "foot": {
+      "width": 0.31,
+      "depth": 0.46,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.86
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.49,
+      "z": -0.23500000000000001
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  },
+  "lizardfolk-female": {
+    "race": "lizardfolk",
+    "gender": "female",
+    "root": "race-lizardfolk-female",
+    "torso": {
+      "width": 0.68,
+      "depth": 0.42,
+      "topY": 1.505,
+      "hemY": 0.88,
+      "hemWidth": 0.73,
+      "waistY": 1.1,
+      "waistWidth": 0.53,
+      "chestY": 1.2599999999999998,
+      "chestWidth": 0.68,
+      "chestFront": 0.32,
+      "chestBack": -0.21,
+      "femaleChest": true
+    },
+    "head": {
+      "x": 0,
+      "y": 1.85,
+      "z": 0,
+      "upperWidth": 0.73,
+      "upperDepth": 0.66,
+      "top": 0.335,
+      "front": 0.31
+    },
+    "shoulder": {
+      "x": 0.445,
+      "y": 1.39,
+      "z": 0,
+      "upperWidth": 0.25
+    },
+    "hip": {
+      "x": 0.205,
+      "y": 0.85,
+      "z": 0,
+      "thighWidth": 0.25
+    },
+    "foot": {
+      "width": 0.3,
+      "depth": 0.45,
+      "height": 0.2,
+      "front": 0.31,
+      "baseY": -0.85
+    },
+    "cape": {
+      "x": 0,
+      "y": 1.44,
+      "z": -0.245
+    },
+    "palm": {
+      "x": 0,
+      "y": -0.625,
+      "z": 0.04
+    },
+    "tints": [
+      "skin",
+      "hair",
+      "outfit",
+      "accent",
+      "leather",
+      "fixed"
+    ]
+  }
+}

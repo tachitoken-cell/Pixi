@@ -1,0 +1,135 @@
+/* Landscape gameplay leaves the center for the world and readable chat. */
+#mobile-actions,#mobile-tools,#mobile-menu-button,#mobile-mount,.mobile-controls-help { display:none; }
+/* The desktop strip is icon-sized; these labels are shown by the touch menu. */
+body:not(.mobile-controls) #game-menus button:not(#store-button):not(#arena-button)>:is(span:not(.item-art),small) { display:none; }
+#mobile-reset-zoom { position:fixed; z-index:1000; top:calc(var(--mobile-vtop,0px) + max(8px,env(safe-area-inset-top))); left:calc(var(--mobile-vleft,0px) + var(--mobile-vw,100vw)/2); transform:translateX(-50%) scale(var(--mobile-inverse-scale,1)); transform-origin:top center; min-height:44px; padding:8px 14px; white-space:nowrap; touch-action:manipulation; }
+#mobile-reset-zoom[hidden],body:not(.mobile-controls) #mobile-reset-zoom { display:none; }
+body.mobile-controls { --mobile-control-scale:1; --control-left:max(12px,env(safe-area-inset-left)); --control-right:max(12px,env(safe-area-inset-right)); --control-bottom:max(12px,env(safe-area-inset-bottom)); --mobile-chat-left:calc(var(--control-left) + 104px * var(--mobile-control-scale)); --mobile-chat-right:calc(var(--control-right) + 232px * var(--mobile-control-scale)); -webkit-user-select:none; user-select:none; }
+body.mobile-controls :is(input,textarea,[contenteditable="true"]) { -webkit-user-select:text; user-select:text; }
+body.mobile-controls .controls-list,body.mobile-controls #play-ui kbd { display:none; }
+body.mobile-controls .mobile-controls-help { display:block; }
+body.mobile-controls #play-ui #mobile-move { display:block; position:fixed; left:var(--control-left); bottom:var(--control-bottom); z-index:4; width:calc(88px * var(--mobile-control-scale)); }
+body.mobile-controls #mobile-joystick { position:relative; display:block; width:calc(88px * var(--mobile-control-scale)); height:calc(88px * var(--mobile-control-scale)); margin:0; padding:0; border:0; border-radius:50%; background:url('/ui/mobile/joystick-base.png') center/contain no-repeat; color:#fff0cd; touch-action:none; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; }
+body.mobile-controls #mobile-stick { position:absolute; width:46%; height:46%; left:27%; top:27%; border:1px solid #c8af6a; border-radius:50%; background:#3b5144 url('/ui/mobile/control-ring.png') center/contain no-repeat; transform:translate(var(--stick-x,0px),var(--stick-y,0px)); pointer-events:none; }
+body.mobile-controls .mobile-joystick-label { position:absolute; inset:auto 0 4px; font-size:calc(10px * var(--mobile-control-scale)); text-shadow:0 1px 3px #06150d; pointer-events:none; }
+body.mobile-controls #mobile-joystick.is-held #mobile-stick { background-color:#65734b; }
+body.mobile-controls #mobile-actions { display:block; position:fixed; right:calc(var(--control-right) + 56px * var(--mobile-control-scale)); bottom:calc(var(--control-bottom) + 56px * var(--mobile-control-scale)); z-index:5; }
+body.mobile-controls #mobile-attack { width:calc(64px * var(--mobile-control-scale)); height:calc(64px * var(--mobile-control-scale)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; padding:calc(6px * var(--mobile-control-scale)); border:0; border-radius:50%; background:#40503c url('/ui/mobile/control-ring.png') center/contain no-repeat; color:#ffedba; font-size:calc(11px * var(--mobile-control-scale)); font-weight:700; touch-action:manipulation; }
+body.mobile-controls #mobile-attack :is(.icon,.item-art) { width:calc(28px * var(--mobile-control-scale)); height:calc(28px * var(--mobile-control-scale)); }
+body.mobile-controls #mobile-attack[aria-pressed=true] { background-color:#7b4b2c; color:#fff4d1; }
+body.mobile-controls #play-ui .bottom-center { position:fixed; left:auto; right:var(--control-right); bottom:var(--control-bottom); width:calc(176px * var(--mobile-control-scale)); height:0; transform:none; z-index:4; pointer-events:none; }
+body.mobile-controls #hotbar { position:absolute; right:0; bottom:0; width:calc(176px * var(--mobile-control-scale)); height:calc(176px * var(--mobile-control-scale)); display:block; padding:0; border:0; background:none; box-shadow:none; backdrop-filter:none; pointer-events:none; }
+body.mobile-controls #hotbar::before { content:none; }
+body.mobile-controls #hotbar .hotbar-page { position:absolute; right:0; bottom:calc(184px * var(--mobile-control-scale)); width:calc(80px * var(--mobile-control-scale)); min-height:44px; padding:4px; gap:2px; border:1px solid #b6a47488; border-radius:6px; font-size:12px; pointer-events:auto; }
+body.mobile-controls #hotbar .hotbar-slot { position:absolute; width:calc(44px * var(--mobile-control-scale)); height:calc(44px * var(--mobile-control-scale)); min-width:calc(44px * var(--mobile-control-scale)); min-height:calc(44px * var(--mobile-control-scale)); display:flex; align-items:center; justify-content:center; margin:0; padding:calc(5px * var(--mobile-control-scale)); border:0; border-radius:50%; background:#253e32 url('/ui/mobile/control-ring.png') center/contain no-repeat; color:#fff0c7; overflow:hidden; pointer-events:auto; touch-action:manipulation; }
+body.mobile-controls #hotbar .hotbar-slot::before,body.mobile-controls #hotbar .hotbar-name { display:none; }
+body.mobile-controls #hotbar .hotbar-slot .item-art { width:calc(28px * var(--mobile-control-scale)); height:calc(28px * var(--mobile-control-scale)); flex:none; }
+body.mobile-controls #hotbar .hotbar-cooldown { inset:calc(10px * var(--mobile-control-scale)) 0 auto; font-size:calc(17px * var(--mobile-control-scale)); }
+body.mobile-controls #hotbar .hotbar-count { top:3px; right:calc(6px * var(--mobile-control-scale)); font-size:calc(10px * var(--mobile-control-scale)); }
+body.mobile-controls #hotbar .hotbar-slot.is-empty { visibility:hidden; pointer-events:none; }
+body.mobile-controls #hotbar .hotbar-slot:nth-child(1) { left:calc(66px * var(--mobile-control-scale)); bottom:calc(132px * var(--mobile-control-scale)); }
+body.mobile-controls #hotbar .hotbar-slot:nth-child(2) { left:calc(132px * var(--mobile-control-scale)); bottom:calc(66px * var(--mobile-control-scale)); }
+body.mobile-controls #hotbar .hotbar-slot:nth-child(3) { left:calc(66px * var(--mobile-control-scale)); bottom:0; }
+body.mobile-controls #hotbar .hotbar-slot:nth-child(4) { left:0; bottom:calc(66px * var(--mobile-control-scale)); }
+body.mobile-controls #play-ui .bottom-center > :is(.xp-track,.level-caption) { display:none; }
+body.mobile-controls #casting-bar { position:fixed; left:calc(var(--control-left) + 148px * var(--mobile-control-scale)); right:var(--mobile-chat-right); bottom:calc(var(--control-bottom) + 144px * var(--mobile-control-scale)); width:auto; margin:0; height:calc(36px * var(--mobile-control-scale)); }
+body.mobile-controls #travel-hud { position:fixed; left:var(--control-left); right:auto; bottom:calc(var(--control-bottom) + 148px * var(--mobile-control-scale)); width:calc(104px * var(--mobile-control-scale)); display:block; margin:0; padding:2px 4px; border-radius:3px; background:#152a20e8; pointer-events:none; }
+body.mobile-controls #travel-hud[hidden],body.mobile-controls #mobile-tools button[hidden] { display:none; }
+body.mobile-controls #travel-hud .stamina-meter { max-width:none; padding:0; }
+body.mobile-controls #travel-hud .stamina-meter > div:first-child { display:flex; gap:4px; font-size:12px; line-height:18px; }
+body.mobile-controls #travel-hud #stamina-track { height:8px; margin-top:3px; }
+body.mobile-controls #travel-hud button { display:none; }
+body.mobile-controls #mobile-tools { display:contents; }
+body.mobile-controls #mobile-tools button { position:fixed; z-index:4; width:calc(44px * var(--mobile-control-scale)); height:calc(44px * var(--mobile-control-scale)); min-width:calc(44px * var(--mobile-control-scale)); min-height:calc(44px * var(--mobile-control-scale)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0; padding:3px; border:1px solid #b6a47488; border-radius:50%; background:#233c31e8; color:#fff0c7; font-size:calc(10px * var(--mobile-control-scale)); touch-action:manipulation; }
+body.mobile-controls #mobile-tools :is(.icon,.item-art) { width:calc(20px * var(--mobile-control-scale)); height:calc(20px * var(--mobile-control-scale)); flex:none; }
+body.mobile-controls #mobile-tools button[aria-pressed=true] { background:#736236; border-color:#edd598; }
+body.mobile-controls #mobile-sprint { left:var(--control-left); bottom:calc(var(--control-bottom) + 100px * var(--mobile-control-scale)); }
+body.mobile-controls #jump-button { left:calc(var(--control-left) + 48px * var(--mobile-control-scale)); bottom:calc(var(--control-bottom) + 100px * var(--mobile-control-scale)); }
+body.mobile-controls #mobile-target { right:calc(var(--control-right) + 184px * var(--mobile-control-scale)); bottom:calc(var(--control-bottom) + 100px * var(--mobile-control-scale)); }
+body.mobile-controls #mobile-clear { right:calc(var(--control-right) + 184px * var(--mobile-control-scale)); bottom:calc(var(--control-bottom) + 48px * var(--mobile-control-scale)); }
+body.mobile-controls #mobile-tools #mobile-interact { left:var(--mobile-chat-left); bottom:calc(var(--control-bottom) + 96px * var(--mobile-control-scale)); width:calc(88px * var(--mobile-control-scale)); border-radius:calc(6px * var(--mobile-control-scale)); flex-direction:row; gap:calc(6px * var(--mobile-control-scale)); font-size:calc(12px * var(--mobile-control-scale)); }
+body.mobile-controls #mobile-menu-button { position:fixed; top:max(8px,env(safe-area-inset-top)); right:calc(var(--control-right) + 96px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; width:44px; height:44px; padding:3px; z-index:18; border:1px solid #b6a47488; border-radius:6px; background:#20372cf2; color:#fff0c7; font-size:10px; touch-action:manipulation; }
+body.mobile-controls #mobile-menu-button :is(.icon,.item-art) { width:20px; height:20px; }
+body.mobile-controls :is(#mobile-attack,#mobile-tools button,#hotbar .hotbar-slot):active { filter:brightness(1.3); }
+body.mobile-controls #play-ui .utility { display:none; position:fixed; top:calc(var(--mobile-vtop,0px) + 66px); left:max(12px,env(safe-area-inset-left)); right:max(12px,env(safe-area-inset-right)); bottom:auto; width:auto; max-width:none; height:calc(var(--mobile-vh,100dvh) - 78px - env(safe-area-inset-bottom)); max-height:none; transform:none; margin:0; padding:12px; gap:8px; grid-template-columns:repeat(auto-fit,minmax(96px,1fr)); grid-auto-rows:64px; align-content:start; overflow:auto; overscroll-behavior:contain; z-index:16; background:#162b24fa; border:1px solid #a99666; border-radius:6px; opacity:1; }
+body.mobile-controls.mobile-menu-open #play-ui .utility { display:grid; }
+body.mobile-controls #play-ui .utility::before,body.mobile-controls #play-ui .utility > span { display:none; }
+/* Store's desktop button sits above the utility bar; include it in the mobile grid. */
+body.mobile-controls #play-ui .utility button,body.mobile-controls #play-ui .utility #store-button { position:relative; inset:auto; width:100%; min-width:0; height:64px; min-height:44px; padding:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; background:transparent; border:1px solid #b6a47440; border-radius:4px; }
+body.mobile-controls #play-ui .utility #store-button small { display:none; }
+body.mobile-controls #play-ui .utility button[hidden] { display:none; }
+body.mobile-controls #play-ui .utility button::after { content:attr(data-mobile-label); font-size:13px; line-height:16px; color:#fff0c7; }
+body.mobile-controls #play-ui .utility button > :is(span:not(.item-art),small) { display:none; }
+body.mobile-controls #play-ui .utility button :is(.icon,.item-art,img) { width:26px; height:26px; object-fit:contain; }
+body.mobile-controls #play-ui .utility button:hover { background:#8a8e5340; }
+body.mobile-controls #play-ui .close-button { min-width:44px; min-height:44px; }
+/* Specificity also wins over the boost/party desktop stacking rules. */
+body.mobile-controls #play-ui #unit-frames .unit-frame { top:max(8px,env(safe-area-inset-top)); left:var(--control-left); width:140px; min-width:0; height:44px; }
+body.mobile-controls #play-ui #unit-frames .unit-portrait { top:0; width:44px; height:44px; }
+body.mobile-controls #play-ui #unit-frames .unit-details { left:43px; top:4px; right:6px; gap:1px; }
+body.mobile-controls #play-ui #unit-frames .unit-frame::before { inset:1px 0 1px 16px; }
+body.mobile-controls #play-ui #unit-frames .unit-name { font-size:11px; line-height:13px; }
+body.mobile-controls #play-ui #unit-frames .unit-subtitle { display:none; }
+body.mobile-controls #play-ui #unit-frames .unit-health { height:14px; }
+body.mobile-controls #play-ui #unit-frames .unit-health-values { font-size:10px; line-height:14px; }
+body.mobile-controls #play-ui #unit-frames .unit-level { min-width:18px; width:18px; height:16px; padding:0; right:0; bottom:0; font-size:9px; line-height:16px; }
+body.mobile-controls #play-ui #unit-frames .unit-cast { height:10px; font-size:8px; line-height:8px; }
+body.mobile-controls #play-ui #unit-frames .unit-frame-target { top:calc(max(8px,env(safe-area-inset-top)) + 48px); left:var(--control-left); transform:none; }
+body.mobile-controls #play-ui #unit-frames .unit-frame-focus { top:calc(max(8px,env(safe-area-inset-top)) + 96px); left:var(--control-left); transform:none; }
+body.mobile-controls #play-ui #unit-frames .unit-effects { top:45px; left:24px; right:auto; width:max-content; max-width:min(220px,calc(100vw - 190px)); font-size:10px; line-height:14px; }
+body.mobile-controls #play-ui #party-hud { top:calc(max(8px,env(safe-area-inset-top)) + 48px); left:auto; right:var(--control-right); width:140px; max-width:140px; height:44px; padding:4px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2px 8px; }
+body.mobile-controls #play-ui #party-hud[hidden] { display:none; }
+body.mobile-controls #play-ui .party-hud-title,body.mobile-controls #play-ui .party-hud-hint { display:none; }
+body.mobile-controls #play-ui .party-hud .party-hud-member { min-width:0; margin:0; font-size:10px; line-height:12px; }
+body.mobile-controls #play-ui .party-hud-name { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+body.mobile-controls #play-ui .party-hud .party-health { height:3px; margin-top:1px; }
+body.mobile-controls #play-ui .location { top:max(8px,env(safe-area-inset-top)); right:var(--control-right); width:88px; }
+body.mobile-controls #play-ui #minimap-button { width:88px; height:44px; }
+body.mobile-controls #play-ui :is(.location,#minimap-button) { border:0; border-image:none; background:transparent; box-shadow:none; }
+body.mobile-controls #play-ui #minimap-button::before,body.mobile-controls #play-ui #minimap-button::after { content:none; display:none; }
+body.mobile-controls .location :is(.location-title,.safe-zone,.minimap-compass,#world-time),body.mobile-controls .quest-tracker { display:none; }
+body.mobile-controls #minimap-button .map-location { top:2px; left:2px; right:2px; font-size:10px; line-height:12px; padding:2px; }
+body.mobile-controls #pvp-state { position:fixed; top:calc(max(8px,env(safe-area-inset-top)) + 96px); right:var(--control-right); width:180px; margin:0; padding:3px; font-size:10px; line-height:14px; white-space:nowrap; }
+body.mobile-controls #pvp-detail { display:none; }
+body.mobile-controls #play-ui .realm,body.mobile-controls #play-ui > .footer-note { display:none; }
+body.mobile-controls #play-ui #store-boost-hud { top:calc(max(8px,env(safe-area-inset-top)) + 48px); left:50%; transform:translateX(-50%); max-width:180px; min-width:44px; min-height:44px; }
+body.mobile-controls #play-ui #target-hud { left:var(--mobile-chat-left); right:var(--mobile-chat-right); bottom:calc(var(--control-bottom) + 96px); top:auto; width:auto; max-width:none; transform:none; background:none; border:0; padding:0; pointer-events:none; }
+body.mobile-controls #target-hud .target-heading,body.mobile-controls #interact-prompt { display:none!important; }
+body.mobile-controls #gather-progress { margin:0; }
+body.mobile-controls #play-ui:has(#gather-progress:not([hidden])) #mobile-interact { bottom:calc(var(--control-bottom) + 136px); }
+body.mobile-controls #play-ui #waypoint-hud { top:max(8px,env(safe-area-inset-top)); left:50%; width:164px; height:44px; transform:translateX(-50%); grid-template-columns:24px minmax(0,1fr) 44px; gap:4px; padding:0; border-width:0; font-size:10px; }
+body.mobile-controls #waypoint-arrow { width:24px; height:24px; }
+body.mobile-controls #waypoint-arrow .icon { width:22px; height:22px; }
+body.mobile-controls #waypoint-name { font-size:10px; }
+body.mobile-controls #waypoint-clear { min-width:44px; min-height:44px; }
+body.mobile-controls #play-ui .region-intro { display:none; }
+body.mobile-controls #play-ui #toasts { top:120px; left:50%; width:min(320px,44vw); transform:translateX(-50%); }
+body.mobile-controls #toasts .toast { font-size:12px; line-height:16px; padding:7px 10px; }
+body.mobile-controls :is(.npc-label,.zone-marker) { max-width:150px; font-size:11px; }
+body.mobile-controls:is(.mobile-chat-open,.mobile-panel-open,.mobile-menu-open) #play-ui :is(#mobile-move,#mobile-actions,#mobile-tools button,.bottom-center,#unit-frames,.party-hud,.location,.quest-tracker,#waypoint-hud,#target-hud,#store-boost-hud,.region-intro) { visibility:hidden; pointer-events:none; }
+body.mobile-controls:is(.mobile-chat-open,.mobile-panel-open) #mobile-menu-button { display:none; }
+body.mobile-controls:is(.mobile-chat-open,.mobile-panel-open,.mobile-menu-open) #labels { display:none; }
+
+/* A tablet has room for larger touch targets in either orientation. */
+@media(min-width:700px) and (min-height:600px) {
+ body.mobile-controls { --mobile-control-scale:1.25; }
+}
+
+@media(max-width:560px) {
+ body.mobile-controls #hotbar .hotbar-page { left:auto; right:0; bottom:calc(236px * var(--mobile-control-scale)); }
+ body.mobile-controls #play-ui #waypoint-hud { top:calc(max(8px,env(safe-area-inset-top)) + 48px); left:auto; right:var(--control-right); transform:none; }
+ body.mobile-controls #play-ui #party-hud { top:calc(max(8px,env(safe-area-inset-top)) + 96px); }
+ body.mobile-controls #play-ui #store-boost-hud { top:calc(max(8px,env(safe-area-inset-top)) + 144px); left:auto; right:var(--control-right); transform:none; }
+ body.mobile-controls #pvp-state { top:calc(max(8px,env(safe-area-inset-top)) + 192px); }
+ body.mobile-controls #casting-bar,body.mobile-controls #play-ui #target-hud { left:var(--control-left); right:var(--control-right); bottom:calc(var(--control-bottom) + 284px); }
+ body.mobile-controls #mobile-tools #mobile-interact,body.mobile-controls #play-ui:has(#gather-progress:not([hidden])) #mobile-interact { left:auto; right:var(--control-right); bottom:calc(var(--control-bottom) + 184px); }
+}
+
+@media(orientation:landscape) and (max-height:680px) {
+
+}
+
+/* Short landscape windows need the left column for unit frames and movement. */
+@media(orientation:landscape) and (max-height:360px) {
+ body.mobile-controls #travel-hud { left:calc(var(--control-left) + 148px); top:calc(max(8px,env(safe-area-inset-top)) + 48px); bottom:auto; }
+}

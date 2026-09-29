@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mossvale · World bosses</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#18232b;color:#f6ebce;font:14px/1.5 system-ui,sans-serif}main{display:grid;grid-template-columns:300px 1fr;height:100dvh}aside{padding:24px;background:#1f2b30;border-right:1px solid #44545a;overflow:auto}h1{font-size:25px;line-height:1.2;margin:8px 0 24px}small{color:#cfb678;letter-spacing:.12em}p{color:#bdcace}label{display:block;margin:16px 0 5px}select,button,input{font:inherit;accent-color:#e6c778}select,button{color:inherit;background:#2e3e43;border:1px solid #677979;border-radius:5px;padding:9px;width:100%}button{cursor:pointer;margin-top:14px}select:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #e6c778;outline-offset:3px}input{width:100%}#viewport{min-width:0;min-height:0;position:relative}canvas{display:block;width:100%;height:100%;touch-action:none}#status{position:absolute;bottom:20px;left:20px;right:20px;text-align:center;padding:10px;background:#18232bdd;pointer-events:none}#stats{color:#e6c778}@media(max-width:700px){main{grid-template-columns:1fr;grid-template-rows:auto minmax(300px,1fr)}aside{padding:12px 16px;max-height:40dvh;border:0}h1{font-size:20px;margin:4px 0}label{margin-top:8px}p{margin:6px 0}}
+</style>
+<main><aside>
+<small>MOSSVALE · LOCAL ART PREVIEW</small><h1>World bosses</h1>
+<label for="boss">Encounter</label><select id="boss"><option value="all">All four · Levels 10 / 20 / 30 / 40</option></select>
+<p id="stats"></p><p id="description"></p>
+<label for="attack">Animation</label><select id="attack"><option value="idle">Idle</option><option value="basic">Basic attack</option><option value="0">Special 1</option><option value="1">Special 2</option><option value="2">Special 3</option></select>
+<button id="pause" aria-pressed="false">Pause animation</button>
+<label for="phase">Attack timeline</label><input id="phase" type="range" min="0" max="1000" value="0">
+<p id="ability"></p><p>Drag to orbit · Scroll to zoom. Uses the game’s Blender models and attack effects; combat here is simulated.</p>
+</aside><section id="viewport"><canvas id="preview" tabindex="0" aria-label="Interactive world boss model preview"></canvas><div id="status" role="status">Loading boss models…</div></section></main>
+<script type="module" src="/src/world-boss-preview.ts"></script>
+</html>

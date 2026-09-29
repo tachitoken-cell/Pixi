@@ -1,0 +1,23 @@
+.mobile-layout-safe-area { position:fixed; visibility:hidden; pointer-events:none; padding:calc(112px + env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left)); }
+body.mobile-controls .mobile-layout-control { translate:var(--touch-layout-x,0px) var(--touch-layout-y,0px); }
+#mobile-layout-editor[hidden] { display:none; }
+#mobile-layout-editor { position:fixed; inset:0; z-index:900; touch-action:none; color:#fff0c7; background:#08170d55; }
+.mobile-layout-toolbar { position:absolute; top:calc(var(--mobile-vtop,0px) + max(8px,env(safe-area-inset-top))); left:calc(var(--mobile-vleft,0px) + max(12px,env(safe-area-inset-left))); width:calc(var(--mobile-vw,100vw) - max(12px,env(safe-area-inset-left)) - max(12px,env(safe-area-inset-right))); display:flex; flex-wrap:wrap; align-items:center; gap:6px 16px; padding:8px 12px; box-sizing:border-box; border:1px solid #a99666; background:#162b24; }
+.mobile-layout-toolbar h2 { margin:0; font:600 19px/1.2 Georgia,serif; color:#f1d28b; }
+.mobile-layout-toolbar p { margin:3px 0 0; font-size:12px; line-height:1.35; }
+.mobile-layout-toolbar > div:first-child { flex:1; min-width:190px; }
+.mobile-layout-actions { display:flex; flex-wrap:wrap; gap:6px; }
+.mobile-layout-actions button { min-height:44px; padding:6px 12px; font:inherit; font-size:13px; }
+.mobile-layout-actions [data-layout-save] { background:#405b3b; color:#fff0c7; }
+.mobile-layout-actions button:disabled { opacity:.55; cursor:not-allowed; }
+.mobile-layout-toolbar #mobile-layout-status { flex-basis:100%; margin:0; color:#d7dfbb; }
+.mobile-layout-handle { position:absolute; display:flex; align-items:center; justify-content:center; min-width:44px; min-height:44px; padding:4px; border:2px dashed #e4c878; border-radius:8px; background:#183b2833; color:#fff0c7; touch-action:none; cursor:grab; }
+.mobile-layout-handle span { max-width:100%; padding:5px 7px; border-radius:3px; background:#162b24; font:600 13px/1.2 system-ui,sans-serif; }
+.mobile-layout-handle:active { cursor:grabbing; background:#39553288; }
+.mobile-layout-handle:focus-visible,.mobile-layout-actions button:focus-visible { outline:3px solid #f1d28b; outline-offset:3px; }
+.has-overlap .mobile-layout-handle { border-color:#ffa888; }
+body:not(.mobile-controls) #settings-touch-layout { display:none; }
+body.mobile-layout-editing #play-ui :is(#mobile-move,#mobile-actions,#hotbar,#mobile-sprint,#jump-button,#mobile-target,#mobile-clear) { visibility:visible; }
+body.mobile-layout-editing #mobile-clear[hidden] { display:flex; }
+@media(orientation:landscape) { .mobile-layout-safe-area { padding-top:calc(80px + env(safe-area-inset-top)); } .mobile-layout-toolbar #mobile-layout-help { display:none; } .mobile-layout-toolbar > div:first-child { padding-bottom:18px; } .mobile-layout-toolbar #mobile-layout-status { position:absolute; left:12px; top:31px; width:calc(100% - 306px); font-size:11px; line-height:13px; } }
+@media(max-width:560px) and (orientation:portrait) { .mobile-layout-safe-area { padding-top:calc(180px + env(safe-area-inset-top)); } .mobile-layout-actions { width:100%; } .mobile-layout-actions [data-layout-save] { margin-left:auto; } }

@@ -1,0 +1,345 @@
+{
+  "sources": {
+    "arsenal": "https://claude.ai/artifact/B5ma4eG63QHMF4PH4r4BML",
+    "upgrades": "https://claude.ai/artifact/TXJS8mxpjk4r87mFth7Eaw",
+    "wings": "https://claude.ai/artifact/3Vqc8S4byGvn6bD7iQzhv8"
+  },
+  "files": [
+    {
+      "file": "arsenal/epic-knight-weapon_plus0.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-knight-weapon_plus0.json",
+      "sha256": "dcd03b488fbc2b2cc6fecdfa9eb1bfcd11763ead0a978a89ef0c705dcef6bfa4",
+      "bytes": 138202
+    },
+    {
+      "file": "arsenal/epic-knight-weapon_plus5.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-knight-weapon_plus5.json",
+      "sha256": "b4586a1eb2dfa7f8cb867599ef589fd749cbf5d24135a10c44d61248e90b6830",
+      "bytes": 251708
+    },
+    {
+      "file": "arsenal/epic-knight-weapon_plus9.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-knight-weapon_plus9.json",
+      "sha256": "365ebc67a8a1b7eebbd3fd1000c62af4e86d81db8055858a2e4051a4a9fa8bc1",
+      "bytes": 384625
+    },
+    {
+      "file": "arsenal/epic-ranger-weapon_plus0.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-ranger-weapon_plus0.json",
+      "sha256": "29c30c5446f8eff93cf61bc140284e8b560b9f10a7c1831871945c03bd605e85",
+      "bytes": 130378
+    },
+    {
+      "file": "arsenal/epic-ranger-weapon_plus5.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-ranger-weapon_plus5.json",
+      "sha256": "7fec0c14d322fbebcace654a72a803f8227e4254b7bdcc073fb1e045e87eb8ca",
+      "bytes": 243179
+    },
+    {
+      "file": "arsenal/epic-ranger-weapon_plus9.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-ranger-weapon_plus9.json",
+      "sha256": "204e1a3122ba9b83739d9d903139d123f36cbd216a13e25244b1c088c9815014",
+      "bytes": 383603
+    },
+    {
+      "file": "arsenal/epic-mage-weapon_plus0.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-mage-weapon_plus0.json",
+      "sha256": "9d9557e891f31590299ad8b6367be51cea345551241bc4227eb64bfbe12a210a",
+      "bytes": 88293
+    },
+    {
+      "file": "arsenal/epic-mage-weapon_plus5.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-mage-weapon_plus5.json",
+      "sha256": "87cebe8a04e1f56a4171f5a7f92738b27558d12ecf349f167ce111b093da8b8c",
+      "bytes": 201136
+    },
+    {
+      "file": "arsenal/epic-mage-weapon_plus9.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-mage-weapon_plus9.json",
+      "sha256": "4bc911ac99b8bf98c62065325e6e6382bfbc0dbe42d424a0ae98eccfe9d90025",
+      "bytes": 334441
+    },
+    {
+      "file": "arsenal/epic-cleric-weapon_plus0.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-cleric-weapon_plus0.json",
+      "sha256": "7515fa4eeadac4cbf6aad17480c86c279a52befbd3e646bf7323c30abe73c27f",
+      "bytes": 107890
+    },
+    {
+      "file": "arsenal/epic-cleric-weapon_plus5.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-cleric-weapon_plus5.json",
+      "sha256": "149cd243ab81cb4fc89c9d1c8b301b390576db0b09154b8ad885f06aec12fb83",
+      "bytes": 221093
+    },
+    {
+      "file": "arsenal/epic-cleric-weapon_plus9.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/epic-cleric-weapon_plus9.json",
+      "sha256": "0d12089125ba47ab1ab20bec0578c82e8f2251def9851a38f199ee1eb7801ade",
+      "bytes": 355220
+    },
+    {
+      "file": "arsenal/mythic-knight-weapon_plus0.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-knight-weapon_plus0.json",
+      "sha256": "d7710c95c707a201fce414dac489eb00b0fd1e1c0759c4b13802b6a93142f2a5",
+      "bytes": 147294
+    },
+    {
+      "file": "arsenal/mythic-knight-weapon_plus5.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-knight-weapon_plus5.json",
+      "sha256": "10215277432a95127ac6e4caa378f5c2e791d69234d931158bf180b5e64ca475",
+      "bytes": 261723
+    },
+    {
+      "file": "arsenal/mythic-knight-weapon_plus9.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-knight-weapon_plus9.json",
+      "sha256": "afd8603a5573073b0a57e284b58ed94ee5fba4ce07dba1536515ac2c0df87992",
+      "bytes": 358480
+    },
+    {
+      "file": "arsenal/mythic-ranger-weapon_plus0.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-ranger-weapon_plus0.json",
+      "sha256": "dcb74dd200b37b4b3109a7b429c73d2477fc73fbad22acea1660588067f37a56",
+      "bytes": 160174
+    },
+    {
+      "file": "arsenal/mythic-ranger-weapon_plus5.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-ranger-weapon_plus5.json",
+      "sha256": "659d4f845f9b8c05715e8f86f8d687879f2f44d75df19f6cad5c90c215c95fd1",
+      "bytes": 274159
+    },
+    {
+      "file": "arsenal/mythic-ranger-weapon_plus9.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-ranger-weapon_plus9.json",
+      "sha256": "04700bbb8c8e1e2a938b3a8454a752e3701dfa99a72610ea9685d3b597f3487e",
+      "bytes": 378471
+    },
+    {
+      "file": "arsenal/mythic-mage-weapon_plus0.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-mage-weapon_plus0.json",
+      "sha256": "e2f920f17837f431c10544f5b2cf38e17929bc30915a929422a43d4fdf0325d1",
+      "bytes": 93389
+    },
+    {
+      "file": "arsenal/mythic-mage-weapon_plus5.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-mage-weapon_plus5.json",
+      "sha256": "6260afc817cfe85460f68ce94bd2cbcadf91aaa488952a7f96dd6875f1ed93b7",
+      "bytes": 206969
+    },
+    {
+      "file": "arsenal/mythic-mage-weapon_plus9.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-mage-weapon_plus9.json",
+      "sha256": "cacf448c35ac1725cdd9ce3f04fc52251483df3bb57be1a7dd19261f5f80328a",
+      "bytes": 303895
+    },
+    {
+      "file": "arsenal/mythic-cleric-weapon_plus0.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-cleric-weapon_plus0.json",
+      "sha256": "b62bee3ac29f55a36895fbaa58818ee9b1bd52d90ce23ba59a8c327765297736",
+      "bytes": 111595
+    },
+    {
+      "file": "arsenal/mythic-cleric-weapon_plus5.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-cleric-weapon_plus5.json",
+      "sha256": "97bfd06a775d9a7d629bb46d1632dd0f90674d2b2f7dd98bdb597709322c7c77",
+      "bytes": 224677
+    },
+    {
+      "file": "arsenal/mythic-cleric-weapon_plus9.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/mythic-cleric-weapon_plus9.json",
+      "sha256": "f06fa5c3c13cc96f480ac23eb5111da594595e759974924494bf9353bcfef8f8",
+      "bytes": 321268
+    },
+    {
+      "file": "arsenal/weapons_index.json.gz",
+      "url": "https://51a5d435-f0e6-46f0-9b6a-3fd9e43c916b.frame.claudeusercontent.com/_f/1790554896-683a/weapons_index.json",
+      "sha256": "8bb70e343f4d0b844e80232678002a2c7f046ff8de24fa88f8f34c0b7658e940",
+      "bytes": 7624
+    },
+    {
+      "file": "upgrades/knight/sp_upgrade_channel.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/knight/sp_upgrade_channel.json",
+      "sha256": "f82ad4b7fdbbaf7bc11ecec9a789c76b9e36f66ffff50c3a654522528b86df3d",
+      "bytes": 601778
+    },
+    {
+      "file": "upgrades/knight/sp_upgrade_success.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/knight/sp_upgrade_success.json",
+      "sha256": "916ce1a7b1a48511727c3c6c9194b0fc7873e87f00d541248bb7c36d4748c586",
+      "bytes": 707765
+    },
+    {
+      "file": "upgrades/knight/sp_upgrade_fail.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/knight/sp_upgrade_fail.json",
+      "sha256": "5be700d348e56c3088b725054db0fbae00ada70415289874e51f521e5faea551",
+      "bytes": 603628
+    },
+    {
+      "file": "upgrades/knight/sp_upgrade_break.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/knight/sp_upgrade_break.json",
+      "sha256": "b3bac493615ae49326b3af76251abe0ac20d71fa37de01501c5255611f5ec998",
+      "bytes": 695222
+    },
+    {
+      "file": "upgrades/ranger/sp_upgrade_channel.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/ranger/sp_upgrade_channel.json",
+      "sha256": "37938896797d52a3a251d2dd0d98b2898df45a4764b6403cb66b74ec9d7d0105",
+      "bytes": 586132
+    },
+    {
+      "file": "upgrades/ranger/sp_upgrade_success.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/ranger/sp_upgrade_success.json",
+      "sha256": "a796923d9ddc384e62a39e042ff3cbb7422ea87c63765c2c40f06daacc2fd6ad",
+      "bytes": 692200
+    },
+    {
+      "file": "upgrades/ranger/sp_upgrade_fail.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/ranger/sp_upgrade_fail.json",
+      "sha256": "125bfcea5b3eecf71cdaaa529246ffffb4d4db9716fe69e9c5c2cce251a46895",
+      "bytes": 588250
+    },
+    {
+      "file": "upgrades/ranger/sp_upgrade_break.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/ranger/sp_upgrade_break.json",
+      "sha256": "1ef5618d498a878990c152cbe0c5005683a61923121863afbfd69b7e6490f3ed",
+      "bytes": 679493
+    },
+    {
+      "file": "upgrades/mage/sp_upgrade_channel.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/mage/sp_upgrade_channel.json",
+      "sha256": "02cc582e0f6c65d23cb499c5037f7aaac5e231c2b743ca4d4bcf5341164ea3d0",
+      "bytes": 1995453
+    },
+    {
+      "file": "upgrades/mage/sp_upgrade_success.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/mage/sp_upgrade_success.json",
+      "sha256": "8165e884c0237adddf102bfd82d88ff411af719a8bb2ef51bcfd410f58fdac49",
+      "bytes": 2101569
+    },
+    {
+      "file": "upgrades/mage/sp_upgrade_fail.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/mage/sp_upgrade_fail.json",
+      "sha256": "1be652a1ebed1cbd1c0d76332289c228909b12f605c29b5ac7f13b2da900f547",
+      "bytes": 1997622
+    },
+    {
+      "file": "upgrades/mage/sp_upgrade_break.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/mage/sp_upgrade_break.json",
+      "sha256": "de4db1c44a6aa452ad71bc255e43b2c0cad963fb91a53f7ec55a8ae838d07a7f",
+      "bytes": 2088799
+    },
+    {
+      "file": "upgrades/cleric/sp_upgrade_channel.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/cleric/sp_upgrade_channel.json",
+      "sha256": "58c8f5be256eaf12a238946a582c270af0486884d5abae715f1988747ebc9679",
+      "bytes": 658120
+    },
+    {
+      "file": "upgrades/cleric/sp_upgrade_success.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/cleric/sp_upgrade_success.json",
+      "sha256": "6e61efdb6adf529b540ef2bd9060173198e910a0fda10b8540df666bd19ecfe0",
+      "bytes": 764236
+    },
+    {
+      "file": "upgrades/cleric/sp_upgrade_fail.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/cleric/sp_upgrade_fail.json",
+      "sha256": "6cf23e84d4e237a6d458c994e2881e8bd24171262cad50ccb966edd6d7e152a4",
+      "bytes": 660289
+    },
+    {
+      "file": "upgrades/cleric/sp_upgrade_break.json.gz",
+      "url": "https://d6c8a974-f37f-4cb2-9901-6a123320d654.frame.claudeusercontent.com/_f/1790565350-7837/cleric/sp_upgrade_break.json",
+      "sha256": "c6a8d36839027b093162c136addb304f0caeddbc9a5af274c71609b15a79807f",
+      "bytes": 751466
+    },
+    {
+      "file": "wings/wings_plus01.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus01.json",
+      "sha256": "2220710f82a9fcda3ab6c01cde31c50572eb99784784c60d39ebdf2732946570",
+      "bytes": 31993
+    },
+    {
+      "file": "wings/wings_plus02.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus02.json",
+      "sha256": "d72e8719c27049cb5b6b2a1518ca14672785f46b15c055b58c099c80e092d901",
+      "bytes": 57664
+    },
+    {
+      "file": "wings/wings_plus03.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus03.json",
+      "sha256": "682ddb5b2f172935fb6ab449697a3b3a36b55b1ac51645b33cb683857c34e3b2",
+      "bytes": 85740
+    },
+    {
+      "file": "wings/wings_plus04.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus04.json",
+      "sha256": "a372271be0e9a9d50565aca30271d008d3c889444f7ee2d4cb3fa2e3811bc72b",
+      "bytes": 108909
+    },
+    {
+      "file": "wings/wings_plus05.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus05.json",
+      "sha256": "c21f3f58e9fdce984e75b3e5cba94bbe84b56f420194d93ff8e73bea57153de8",
+      "bytes": 167384
+    },
+    {
+      "file": "wings/wings_plus06.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus06.json",
+      "sha256": "8e5e0895071b14858a5fee565c59905c192a3b3dc2852e1435225c8fcbe6dd6c",
+      "bytes": 191909
+    },
+    {
+      "file": "wings/wings_plus07.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus07.json",
+      "sha256": "d1909a1655f8b51069c6162cd8e02f13d130909bca37694c8f7536a92be46bc8",
+      "bytes": 214188
+    },
+    {
+      "file": "wings/wings_plus08.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus08.json",
+      "sha256": "4bc74129bac20df1256d142b3cb53690eebcb91ffc1f5ebf9e9832368eab73fd",
+      "bytes": 373948
+    },
+    {
+      "file": "wings/wings_plus09.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus09.json",
+      "sha256": "9f202e09a27979436bd9554cade6464e7a87caac913ac596f242851d6c9d8485",
+      "bytes": 397747
+    },
+    {
+      "file": "wings/wings_plus10.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus10.json",
+      "sha256": "6191b9e4ad1eb114aedc4aa9c5bc3afe04d104a967133a7d7c115bef56479d63",
+      "bytes": 465458
+    },
+    {
+      "file": "wings/wings_plus11.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus11.json",
+      "sha256": "6fbc16603465116f1a4439a6830f6af43980a8e9db8f88bc80b7a230fcaeeede",
+      "bytes": 668932
+    },
+    {
+      "file": "wings/wings_plus12.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus12.json",
+      "sha256": "05bb37a0f4501f3b9004829694959028b1b4ba8aa4b890f8473e5788d2316f1d",
+      "bytes": 814792
+    },
+    {
+      "file": "wings/wings_plus13.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus13.json",
+      "sha256": "d7551883371b5abe6021bc4b9275a27d29b72b93d81348265b25b82f60837cbb",
+      "bytes": 904970
+    },
+    {
+      "file": "wings/wings_plus14.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus14.json",
+      "sha256": "cde15cd059942b3ebfbbe33c098c58b1d2146dc3372e5ba91ac97199760f85a8",
+      "bytes": 1271789
+    },
+    {
+      "file": "wings/wings_plus15.json.gz",
+      "url": "https://14390ea3-65dd-4da9-a392-c6ad41dea321.frame.claudeusercontent.com/_f/1790552912-5b88/wings_plus15.json",
+      "sha256": "39c542980786314f706ab9d43b39db82d854d8860c7a11d646051b0b4b6019cf",
+      "bytes": 2120523
+    }
+  ]
+}

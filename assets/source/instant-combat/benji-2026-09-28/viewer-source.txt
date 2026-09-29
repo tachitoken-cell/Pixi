@@ -1,0 +1,382 @@
+<meta charset="utf-8">
+<title>Instant Combat Bestiary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    color-scheme: dark;
+    --ground: #0e0c12;
+    --panel: #16131c;
+    --panel-2: #1d1925;
+    --line: #2d2838;
+    --text: #ebe5ef;
+    --muted: #9c93a9;
+    --bone: #e8d7b0;
+    --void: #b08cff;
+    --danger: #ff5a4a;
+    --safe: #ffd24a;
+    --accent: var(--bone);
+    --display: "Cinzel", Georgia, "Times New Roman", serif;
+    --ui: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  :root[data-arena="void-rift"] { --accent: var(--void); }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { height: 100%; }
+  body { background: var(--ground); color: var(--text); font: 14px/1.5 var(--ui); padding-inline: 16px; padding-block: 16px; }
+  .app { max-width: 1340px; margin: 0 auto; display: grid; gap: 14px; }
+  header { display: flex; flex-wrap: wrap; align-items: end; gap: 8px 24px; }
+  .eyebrow { font: 500 11px/1 var(--mono); letter-spacing: .24em; text-transform: uppercase; color: var(--accent); }
+  h1 { font: 700 clamp(26px, 4vw, 40px)/1.05 var(--display); margin: 6px 0 0; text-wrap: balance; }
+  .meta { color: var(--muted); font: 12px/1.4 var(--mono); }
+  .load { margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  button, select { font: 500 13px/1 var(--ui); color: var(--text); background: var(--panel-2); border: 1px solid var(--line); border-radius: 5px; padding: 9px 12px; cursor: pointer; }
+  button:hover, select:hover { border-color: var(--accent); }
+  button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.primary { background: var(--accent); color: #17121c; border-color: var(--accent); min-width: 84px; }
+  label.check { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); cursor: pointer; }
+  .main { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 14px; align-items: start; }
+  @media (max-width: 920px) { .main { grid-template-columns: 1fr; } .load { margin-left: 0; } }
+  .stage { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .view { position: relative; aspect-ratio: 16 / 10; max-height: 74vh; width: 100%; }
+  .view canvas { display: block; width: 100%; height: 100%; }
+  .overlay { position: absolute; left: 14px; top: 12px; display: grid; gap: 3px; pointer-events: none; }
+  .now { font: 700 21px/1.1 var(--display); }
+  .sub { font: 12px/1.3 var(--mono); color: var(--muted); }
+  .flash { position: absolute; right: 12px; top: 12px; padding: 6px 10px; border-radius: 4px; font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; background: var(--danger); color: #1b0706; opacity: 0; transition: opacity .35s; }
+  .flash.on { opacity: 1; transition: none; }
+  .status { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font: 13px var(--mono); text-align: center; padding: 16px; }
+  .controls { display: grid; gap: 10px; padding: 12px; border-top: 1px solid var(--line); }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  .frame { font: 12px var(--mono); font-variant-numeric: tabular-nums; color: var(--muted); margin-left: auto; }
+  .timeline { position: relative; height: 34px; }
+  .timeline input { position: absolute; inset: 0; width: 100%; margin: 0; accent-color: var(--accent); background: transparent; }
+  .marks { position: absolute; inset: 0 8px; pointer-events: none; }
+  .mark { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--danger); }
+  .mark span { position: absolute; top: -2px; left: 4px; font: 10px/1 var(--mono); color: var(--danger); white-space: nowrap; }
+  aside { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px; display: grid; gap: 16px; max-height: calc(74vh + 130px); overflow: auto; }
+  .group h2 { font: 500 10px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+  .list { display: grid; gap: 3px; }
+  .clip { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; text-align: left; width: 100%; background: transparent; border: 1px solid transparent; padding: 8px; }
+  .clip:hover { background: var(--panel-2); border-color: var(--line); }
+  .clip.active { background: var(--panel-2); border-color: var(--accent); }
+  .clip .name { font: 500 13px/1.25 var(--ui); }
+  .clip .len { font: 11px/1.25 var(--mono); color: var(--muted); }
+  .clip .desc { grid-column: 1 / -1; font: 12px/1.35 var(--ui); color: var(--muted); }
+  .card { border: 1px solid var(--line); border-radius: 6px; padding: 12px; display: grid; gap: 8px; background: var(--panel-2); }
+  .card h3 { font: 700 18px/1.15 var(--display); margin: 0; }
+  .rule { border-left: 3px solid var(--safe); padding-left: 10px; margin: 0; }
+  .fail { border-left: 3px solid var(--danger); padding-left: 10px; margin: 0; color: #ffb2a8; }
+  .tag { font: 600 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 3px; }
+  .stats { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0; font: 12px/1.4 var(--mono); }
+  .stats dt { color: var(--muted); }
+  .stats dd { margin: 0; overflow-wrap: anywhere; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font: 12px var(--ui); color: var(--muted); }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+  .note { color: var(--muted); font-size: 12px; max-width: 75ch; margin: 0; }
+  code { font: 12px var(--mono); color: var(--text); }
+</style>
+
+<div class="app">
+  <header>
+    <div>
+      <div class="eyebrow" id="eyebrow">Mossvale · Instant Combat · animated pack</div>
+      <h1>Instant Combat Bestiary</h1>
+    </div>
+    <div class="meta" id="meta">loading …</div>
+    <div class="load">
+      <label for="model" class="check">Creature</label>
+      <select id="model">
+        <optgroup label="Bone Pit · bosses">
+          <option value="ossuary-tyrant" selected>Ossuary Tyrant</option><option value="marrow-colossus">Marrow Colossus</option>
+          <option value="grave-cantor">Grave Cantor</option><option value="carrion-queen">Carrion Queen</option>
+        </optgroup>
+        <optgroup label="Void Rift · bosses">
+          <option value="rift-sovereign">Rift Sovereign</option><option value="nullweaver">Nullweaver</option>
+          <option value="umbral-behemoth">Umbral Behemoth</option><option value="eclipse-oracle">Eclipse Oracle</option>
+        </optgroup>
+        <optgroup label="Wave creatures">
+          <option value="bone-reaver">Bone Reaver</option><option value="ossuary-scarab">Ossuary Scarab</option>
+          <option value="rift-stalker">Rift Stalker</option><option value="void-cantor">Void Cantor</option>
+        </optgroup>
+        <optgroup label="Objectives">
+          <option value="bone-anchor">Bone Anchor</option><option value="rift-anchor">Rift Anchor</option><option value="brood-nest">Brood Nest</option>
+        </optgroup>
+      </select>
+    </div>
+  </header>
+
+  <div class="main">
+    <section class="stage">
+      <div class="view" id="view">
+        <div class="overlay"><div class="now" id="now">–</div><div class="sub" id="sub"></div></div>
+        <div class="flash" id="flash"></div>
+        <div class="status" id="status">Loading creature …</div>
+      </div>
+      <div class="controls">
+        <div class="timeline"><div class="marks" id="marks"></div><input id="scrub" type="range" min="0" max="1" step="1" value="0" aria-label="Frame"></div>
+        <div class="row">
+          <button class="primary" id="play">Pause</button>
+          <button id="step-back" aria-label="One frame back">‹ Frame</button>
+          <button id="step-fwd" aria-label="One frame forward">Frame ›</button>
+          <label class="check" for="speed">Speed
+            <select id="speed"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select>
+          </label>
+          <label class="check"><input id="repeat" type="checkbox" checked> Repeat</label>
+          <span class="frame" id="frame">0 / 0</span>
+        </div>
+        <div class="legend">
+          <span><i style="background:#ff3b30"></i>danger zone</span><span><i style="background:#ffd24a"></i>safe zone / soak</span>
+          <span><i style="background:#4f86ff"></i>player following the rule</span><span><i style="background:#4f86ff;outline:2px solid #ff3b30"></i>player with a red gem: breaks the rule</span>
+        </div>
+      </div>
+    </section>
+
+    <aside aria-label="Clips and skills">
+      <div class="card" id="skillcard" hidden>
+        <div><span class="tag" id="skilltag">Skill</span><h3 id="skillname">–</h3></div>
+        <p class="rule"><span class="tag">Rule</span><span id="skillrule"></span></p>
+        <p class="fail"><span class="tag">If you break it</span><span id="skillfail"></span></p>
+        <dl class="stats" id="skillstats"></dl>
+      </div>
+      <div id="list"></div>
+    </aside>
+  </div>
+
+  <p class="note">
+    Drag = rotate, mouse wheel = zoom, right-click = pan. Space = play/pause.
+    The base clips keep your names and lengths (<code>idle</code> 60 f, <code>walk</code> 36, <code>auto</code> 30 with the hit on 15,
+    <code>attack</code> 48 with the hit on 24, <code>death</code> 60), so your game plays them unchanged. Skill clips are new:
+    <code>&lt;boss&gt;-skill-&lt;slug&gt;</code>. The red and gold shapes and the blue players only show the rule; in the game your server
+    draws the telegraphs.
+  </p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const DESC = {
+  idle: "Breathing, weight shifts, looking around. Loop.",
+  walk: "Real gait: legs step in pairs or tripods, body bobs and sways. Loop.",
+  auto: "Basic attack: wind-up, hit on frame 15, recoil.",
+  attack: "Heavy attack: big wind-up, trembling hold, hit on frame 24, settle.",
+  death: "Recoil, stagger, collapse to the floor. Ends lying still.",
+};
+const ARENA = { "ossuary-tyrant": "bone-pit", "marrow-colossus": "bone-pit", "grave-cantor": "bone-pit", "carrion-queen": "bone-pit",
+  "bone-reaver": "bone-pit", "ossuary-scarab": "bone-pit", "bone-anchor": "bone-pit", "brood-nest": "bone-pit" };
+
+const view = $("view");
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+view.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0e0c12);
+scene.fog = new THREE.Fog(0x0e0c12, 40, 90);
+const camera = new THREE.PerspectiveCamera(38, 16 / 10, 0.1, 300);
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+scene.add(new THREE.HemisphereLight(0xe8e0f0, 0x16121c, 0.85));
+const key = new THREE.DirectionalLight(0xfff0e0, 1.15); key.position.set(8, 16, 10); scene.add(key);
+const rim = new THREE.DirectionalLight(0xa088ff, 0.5); rim.position.set(-9, 8, -10); scene.add(rim);
+const floor = new THREE.Mesh(new THREE.CircleGeometry(17, 72), new THREE.MeshStandardMaterial({ color: 0x100e14, roughness: 1 }));
+floor.rotation.x = -Math.PI / 2; floor.position.y = -0.01; scene.add(floor);
+const edge = new THREE.Mesh(new THREE.RingGeometry(16.8, 17.1, 96), new THREE.MeshBasicMaterial({ color: 0x3a3346 }));
+edge.rotation.x = -Math.PI / 2; scene.add(edge);
+const grid = new THREE.GridHelper(34, 17, 0x2c2736, 0x221e2a); scene.add(grid);
+
+function resize() {
+  const r = view.getBoundingClientRect();
+  renderer.setSize(r.width, r.height, false);
+  camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(view);
+
+function makeModel(data) {
+  const model = new THREE.Group();
+  const bones = data.skeleton.map((b) => { const o = new THREE.Bone(); o.name = b.name; return o; });
+  data.skeleton.forEach((b, i) => { applyTRS(bones[i], b.rest.t, b.rest.r, b.rest.s); (b.parent < 0 ? model : bones[b.parent]).add(bones[i]); });
+  const skeleton = new THREE.Skeleton(bones, data.skeleton.map((b) => new THREE.Matrix4().fromArray(b.inverse_bind)));
+  const mats = data.materials.map((m) => {
+    if (m.name.includes("telegraph"))                    // telegraphs: see-through, like in the game
+      return new THREE.MeshBasicMaterial({ vertexColors: true, skinning: true, transparent: true, opacity: 0.62, depthWrite: false, side: THREE.DoubleSide });
+    const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, vertexColors: true, roughness: m.roughness, metalness: m.metallic || 0, skinning: true, side: THREE.DoubleSide });
+    if (m.emission_strength > 0 && m.emission_from_vertex_color) {
+      const k = Math.min(m.emission_strength, 4).toFixed(3);
+      mat.onBeforeCompile = (sh) => { sh.fragmentShader = sh.fragmentShader.replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>\n  totalEmissiveRadiance = vColor * ${k};`); };
+      mat.customProgramCacheKey = () => "vc-emissive-" + k;
+    }
+    return mat;
+  });
+  for (const m of data.meshes) {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(m.positions, 3));
+    g.setAttribute("normal", new THREE.Float32BufferAttribute(m.normals, 3));
+    const c = new Float32Array(m.vertex_count * 3);
+    for (let i = 0; i < m.vertex_count; i++) { c[i * 3] = m.colors[i * 4]; c[i * 3 + 1] = m.colors[i * 4 + 1]; c[i * 3 + 2] = m.colors[i * 4 + 2]; }
+    g.setAttribute("color", new THREE.BufferAttribute(c, 3));
+    const idx = new Uint16Array(m.vertex_count * 4), w = new Float32Array(m.vertex_count * 4);
+    m.bone.forEach((b, i) => { idx[i * 4] = b; w[i * 4] = 1; });
+    g.setAttribute("skinIndex", new THREE.Uint16BufferAttribute(idx, 4));
+    g.setAttribute("skinWeight", new THREE.Float32BufferAttribute(w, 4));
+    const all = [], gm = [];
+    for (const sm of m.submeshes) { g.addGroup(all.length, sm.indices.length, gm.length); gm.push(mats[sm.material]); for (const k of sm.indices) all.push(k); }
+    g.setIndex(m.vertex_count > 65535 ? new THREE.Uint32BufferAttribute(all, 1) : new THREE.Uint16BufferAttribute(all, 1));
+    const mesh = new THREE.SkinnedMesh(g, gm);
+    mesh.frustumCulled = false;
+    mesh.bind(skeleton, new THREE.Matrix4());
+    model.add(mesh);
+  }
+  return { model, bones };
+}
+const q = new THREE.Quaternion(), q2 = new THREE.Quaternion(), T = [0, 0, 0], S = [1, 1, 1];
+function applyTRS(b, t, r, s) { b.position.set(t[0], t[1], t[2]); b.quaternion.set(r[0], r[1], r[2], r[3]); b.scale.set(s[0], s[1], s[2]); }
+function sampleCh(arr, i0, i1, a, out) {
+  if (arr.length === 1) { for (let k = 0; k < arr[0].length; k++) out[k] = arr[0][k]; return; }
+  const A = arr[i0], B = arr[i1];
+  for (let k = 0; k < A.length; k++) out[k] = A[k] + (B[k] - A[k]) * a;
+}
+function pose(anim, frame, bs) {
+  const i0 = Math.floor(frame), i1 = Math.min(i0 + 1, anim.frames - 1), a = frame - i0;
+  for (const tr of anim.tracks) {
+    const b = bs[tr.bone];
+    sampleCh(tr.t, i0, i1, a, T); sampleCh(tr.s, i0, i1, a, S);
+    if (tr.r.length === 1) q.fromArray(tr.r[0]); else { q.fromArray(tr.r[i0]); q2.fromArray(tr.r[i1]); q.slerp(q2, a); }
+    b.position.fromArray(T); b.quaternion.copy(q); b.scale.fromArray(S);
+  }
+}
+
+const cache = {};
+const getJson = (url) => cache[url] || (cache[url] = fetch(url).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }));
+const tryJson = (f) => getJson(f).catch(() => getJson(`../export/${f}`));
+let data = null, model = null, fx = null, current = null, frame = 0, fired = -1, playing = true, speed = 1;
+function status(t) { $("status").hidden = !t; if (t) $("status").textContent = t; }
+
+async function loadModel(name) {
+  status("Loading creature …");
+  try {
+    const j = await tryJson(`${name}.json`);
+    if (model) scene.remove(model.model);
+    if (fx) { scene.remove(fx.model); fx = null; }
+    data = j; model = makeModel(j); scene.add(model.model);
+    document.documentElement.dataset.arena = ARENA[name] || "void-rift";
+    buildList(name);
+    const verts = j.meshes.reduce((s, m) => s + m.vertex_count, 0);
+    $("meta").textContent = `${j.skeleton.length} parts · ${verts.toLocaleString("en-US")} vertices · ${Object.keys(j.animations).length} clips · 30 fps`;
+    status("");
+    select(Object.keys(j.animations).find((k) => k.startsWith("skill-")) || "idle");
+  } catch (e) { status(`Could not load ${name}.json (${e.message}).`); }
+}
+function buildList(name) {
+  const list = $("list"); list.innerHTML = "";
+  const groups = [["Base clips (game names)", Object.keys(data.animations).filter((k) => !k.startsWith("skill-"))],
+                  ["Boss skills", Object.keys(data.animations).filter((k) => k.startsWith("skill-"))]];
+  for (const [title, names] of groups) {
+    if (!names.length) continue;
+    const g = document.createElement("div"); g.className = "group";
+    g.innerHTML = `<h2>${title}</h2>`;
+    const l = document.createElement("div"); l.className = "list";
+    for (const n of names) {
+      const a = data.animations[n];
+      const b = document.createElement("button"); b.className = "clip"; b.dataset.name = n;
+      const label = a.skill ? a.skill.name : n;
+      const desc = a.skill ? a.skill.rule : DESC[n] || "";
+      b.innerHTML = `<span class="name">${label}</span><span class="len">${a.frames - 1} F</span><span class="desc">${desc}</span>`;
+      b.addEventListener("click", () => select(n));
+      l.append(b);
+    }
+    g.append(l); list.append(g);
+  }
+}
+let framedFor = "";
+async function select(name) {
+  const a = data.animations[name];
+  current = name; frame = 0; fired = -1; playing = true; $("play").textContent = "Pause";
+  document.querySelectorAll(".clip").forEach((el) => el.classList.toggle("active", el.dataset.name === name));
+  $("now").textContent = a.skill ? a.skill.name : name;
+  $("sub").textContent = `${$("model").selectedOptions[0].text} · ${a.frames - 1} frames · ${(a.duration).toFixed(2)} s · ${a.loop ? "loop" : "once"}`;
+  $("scrub").max = a.frames - 1;
+  $("marks").innerHTML = "";
+  for (const e of a.events) {
+    const m = document.createElement("div"); m.className = "mark";
+    m.style.left = `${(e.frame / (a.frames - 1)) * 100}%`; m.innerHTML = `<span>${e.name}</span>`;
+    $("marks").append(m);
+  }
+  if (fx) { scene.remove(fx.model); fx = null; }
+  $("skillcard").hidden = !a.skill;
+  if (a.skill) {
+    const s = a.skill;
+    $("skillname").textContent = s.name; $("skillrule").textContent = s.rule; $("skillfail").textContent = s.fail;
+    $("skilltag").textContent = `Skill · ${s.seconds} s`;
+    const skip = new Set(["name", "rule", "fail", "clip", "frames", "seconds", "slug"]);
+    $("skillstats").innerHTML = "";
+    for (const [k, v] of [["clip", s.clip], ...Object.entries(s).filter(([k]) => !skip.has(k))]) {
+      const dt = document.createElement("dt"), dd = document.createElement("dd");
+      dt.textContent = k.replace(/_/g, " "); dd.textContent = Array.isArray(v) ? v.join(", ") : v; $("skillstats").append(dt, dd);
+    }
+    try {
+      status("Loading telegraphs …");
+      const j = await tryJson(a.fx_file);
+      if (current !== name) return;
+      fx = makeModel(j); fx.anim = j.animations.skill; scene.add(fx.model);
+      status("");
+    } catch (e) { status(`Could not load ${a.fx_file} (${e.message}).`); }
+  }
+  const k = a.ranged ? "ranged" : a.skill ? "wide" : "close";
+  if (framedFor !== k + $("model").value) {
+    framedFor = k + $("model").value;
+    if (a.ranged) { controls.target.set(0, 1.2, 5); camera.position.set(9, 7, 15); }
+    else if (a.skill) { controls.target.set(0, 0.5, 3); camera.position.set(15, 25, 29); }
+    else { const big = ["ossuary-tyrant", "marrow-colossus", "grave-cantor", "carrion-queen", "rift-sovereign", "nullweaver", "umbral-behemoth", "eclipse-oracle"].includes($("model").value);
+      controls.target.set(0, big ? 2.3 : 1.1, 0); camera.position.set(big ? 7.5 : 4, big ? 5 : 2.8, big ? 11 : 6); }
+    controls.update();
+  }
+}
+function flash(t) { const f = $("flash"); f.textContent = t; f.classList.add("on"); requestAnimationFrame(() => requestAnimationFrame(() => f.classList.remove("on"))); }
+
+$("model").addEventListener("change", (e) => { framedFor = ""; loadModel(e.target.value); });
+$("play").addEventListener("click", () => {
+  if (!current) return;
+  const a = data.animations[current];
+  if (!playing && frame >= a.frames - 1) { frame = 0; fired = -1; }
+  playing = !playing; $("play").textContent = playing ? "Pause" : "Play";
+});
+function step(d) { if (!current) return; playing = false; $("play").textContent = "Play"; frame = Math.max(0, Math.min(data.animations[current].frames - 1, Math.round(frame) + d)); }
+$("step-back").addEventListener("click", () => step(-1));
+$("step-fwd").addEventListener("click", () => step(1));
+$("speed").addEventListener("change", (e) => { speed = parseFloat(e.target.value); });
+$("scrub").addEventListener("input", (e) => { playing = false; $("play").textContent = "Play"; frame = parseFloat(e.target.value); fired = Math.floor(frame); });
+addEventListener("keydown", (e) => { if (e.code === "Space" && !["INPUT", "SELECT", "BUTTON"].includes(e.target.tagName)) { e.preventDefault(); $("play").click(); } });
+
+const clock = new THREE.Clock();
+function tick() {
+  const dt = Math.min(clock.getDelta(), 0.1);
+  if (data && current) {
+    const a = data.animations[current], last = a.frames - 1;
+    if (playing) {
+      frame += dt * 30 * speed;
+      if (frame >= last) {
+        if ($("repeat").checked) { frame = a.loop ? frame % last : 0; fired = -1; }
+        else { frame = last; playing = false; $("play").textContent = "Play"; }
+      }
+      for (const e of a.events) if (e.frame > fired && e.frame <= frame) flash(e.name.replace(/_/g, " "));
+      fired = Math.floor(frame);
+    }
+    pose(a, frame, model.bones);
+    if (fx) pose(fx.anim, Math.min(frame, fx.anim.frames - 1), fx.bones);
+    $("scrub").value = Math.round(frame);
+    $("frame").textContent = `F ${String(Math.round(frame)).padStart(3, " ")} / ${last}`;
+  }
+  controls.update();
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+resize();
+loadModel($("model").value);
+tick();
+</script>

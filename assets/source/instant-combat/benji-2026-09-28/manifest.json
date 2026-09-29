@@ -1,0 +1,307 @@
+{
+  "sourceArtifact": "https://claude.ai/artifact/JWXp8ef7EyrtMQ9bRXXmr5",
+  "sourceMessage": "https://discord.com/channels/@me/1548969548785385513/1553936271754264606",
+  "retrieved": "2026-09-28",
+  "archive": {
+    "file": "mossvale_instant_combat_v12.zip",
+    "sha256": "914b08f4970cc76bf687187184ef6b7ab0930ff376935ad153fe4fe5591891c5",
+    "bytes": 8992425
+  },
+  "format": "gzip-compressed unchanged v12 JSON source; sha256 refers to decompressed bytes",
+  "files": [
+    {
+      "file": "carrion-queen-skill-brood-bomb-fx.json.gz",
+      "archivePath": "v12/export/carrion-queen-skill-brood-bomb-fx.json",
+      "sha256": "887a7265aeed026c88f7e28d2b74ac8a91a82995c123d7a4a4c499423b65ba5b",
+      "bytes": 95705,
+      "compressedBytes": 8894
+    },
+    {
+      "file": "rift-sovereign-skill-polarity-decree-fx.json.gz",
+      "archivePath": "v12/export/rift-sovereign-skill-polarity-decree-fx.json",
+      "sha256": "cb445f2a826f6a133d4e3b3e7a1a9580f3eb3bda1a8b0d6c07fb43f427c40a73",
+      "bytes": 150615,
+      "compressedBytes": 10905
+    },
+    {
+      "file": "bone-reaver.json.gz",
+      "archivePath": "v12/export/bone-reaver.json",
+      "sha256": "6d767b5b44fcc4df4b2c0188a02c459419ad0ebe33f37cc96165b815e10b3a0d",
+      "bytes": 774662,
+      "compressedBytes": 71846
+    },
+    {
+      "file": "ossuary-tyrant-skill-grave-toll-fx.json.gz",
+      "archivePath": "v12/export/ossuary-tyrant-skill-grave-toll-fx.json",
+      "sha256": "b086b3eb94b5dad06dd776119d7ed13e2f52d6522ad90764e0a26046de1c2708",
+      "bytes": 185354,
+      "compressedBytes": 8606
+    },
+    {
+      "file": "carrion-queen.json.gz",
+      "archivePath": "v12/export/carrion-queen.json",
+      "sha256": "5f6cd20f7c0554c2a212f6df569b3c33f44731859d26d150723bf8be3e8c5775",
+      "bytes": 1467896,
+      "compressedBytes": 143977
+    },
+    {
+      "file": "umbral-behemoth-skill-tail-sweep-fx.json.gz",
+      "archivePath": "v12/export/umbral-behemoth-skill-tail-sweep-fx.json",
+      "sha256": "c8d1d6fd4cbd9bbf744d26f9f96f4901b49dab6230eb9f1eafbb67c9704656a7",
+      "bytes": 68786,
+      "compressedBytes": 4715
+    },
+    {
+      "file": "nullweaver-skill-null-tether-fx.json.gz",
+      "archivePath": "v12/export/nullweaver-skill-null-tether-fx.json",
+      "sha256": "6eb4b62c485d31b59453aad1c27d710303b9ebcc8f0cd2ed25e1763a34074c34",
+      "bytes": 117552,
+      "compressedBytes": 8243
+    },
+    {
+      "file": "grave-cantor-skill-dirge-marks-fx.json.gz",
+      "archivePath": "v12/export/grave-cantor-skill-dirge-marks-fx.json",
+      "sha256": "10f0e4441ccee6d10d8c1cbaba9f9436adc81ebe9f3f972025b4738ce65b090a",
+      "bytes": 135566,
+      "compressedBytes": 7401
+    },
+    {
+      "file": "eclipse-oracle-skill-total-eclipse-fx.json.gz",
+      "archivePath": "v12/export/eclipse-oracle-skill-total-eclipse-fx.json",
+      "sha256": "2de1cb9ecb551494d894691e3ddd343b043b4d8d2fd0c6089cb79909452308f0",
+      "bytes": 87197,
+      "compressedBytes": 5872
+    },
+    {
+      "file": "umbral-behemoth.json.gz",
+      "archivePath": "v12/export/umbral-behemoth.json",
+      "sha256": "ce147017965cf5659e1bb1c79363ffc505a2d3f3dc08faa011eceac4176f06e5",
+      "bytes": 1012497,
+      "compressedBytes": 102510
+    },
+    {
+      "file": "ossuary-tyrant-skill-bone-cage-fx.json.gz",
+      "archivePath": "v12/export/ossuary-tyrant-skill-bone-cage-fx.json",
+      "sha256": "3f285ec9659cb5d282b4cc62fcf3150dce04e4354d1f69d337c036d34b99f2c8",
+      "bytes": 181718,
+      "compressedBytes": 11117
+    },
+    {
+      "file": "grave-cantor-skill-last-rites-fx.json.gz",
+      "archivePath": "v12/export/grave-cantor-skill-last-rites-fx.json",
+      "sha256": "a93f9f22a0b2236a7274c1668f1b9dabe110f82f2ee48780171e6735f989fe40",
+      "bytes": 153198,
+      "compressedBytes": 10862
+    },
+    {
+      "file": "marrow-colossus.json.gz",
+      "archivePath": "v12/export/marrow-colossus.json",
+      "sha256": "21eec0cb77f8780a6988cfdc8b2338b9bb1e6b8ced3c5c61b8bbfbcf14e3d1fd",
+      "bytes": 1040893,
+      "compressedBytes": 107047
+    },
+    {
+      "file": "marrow-colossus-skill-earthsplitter-fx.json.gz",
+      "archivePath": "v12/export/marrow-colossus-skill-earthsplitter-fx.json",
+      "sha256": "13a95d037a46c3f8e0e0f717e5f156e366bad682aa8ce6a34f1bf5f6d107b23c",
+      "bytes": 116774,
+      "compressedBytes": 5395
+    },
+    {
+      "file": "rift-sovereign.json.gz",
+      "archivePath": "v12/export/rift-sovereign.json",
+      "sha256": "8ab94a884067349de4bd6b6f7da6e9dd209b53c29f99f0057f406e7ac6a9b831",
+      "bytes": 1431772,
+      "compressedBytes": 147287
+    },
+    {
+      "file": "brood-nest.json.gz",
+      "archivePath": "v12/export/brood-nest.json",
+      "sha256": "730af61d382a32cbacf869839433e0b9a47154a38707313ea0bce1b68409d67a",
+      "bytes": 693276,
+      "compressedBytes": 62759
+    },
+    {
+      "file": "grave-cantor-auto-fx.json.gz",
+      "archivePath": "v12/export/grave-cantor-auto-fx.json",
+      "sha256": "ef0974932048a81cdbc7402b151c2727183de5976823e653fb9a10735400b8ec",
+      "bytes": 51312,
+      "compressedBytes": 5626
+    },
+    {
+      "file": "grave-cantor-skill-silent-requiem-fx.json.gz",
+      "archivePath": "v12/export/grave-cantor-skill-silent-requiem-fx.json",
+      "sha256": "27ba5beebf39c98a7d4d99cb3468679c82ed5e6db98afab959e96c206cf02281",
+      "bytes": 110063,
+      "compressedBytes": 11021
+    },
+    {
+      "file": "rift-sovereign-skill-rift-lances-fx.json.gz",
+      "archivePath": "v12/export/rift-sovereign-skill-rift-lances-fx.json",
+      "sha256": "7f2aa12f46b664c3d12555574d1fb34947b08b60932501cd40d900b6590e8629",
+      "bytes": 118121,
+      "compressedBytes": 6442
+    },
+    {
+      "file": "ossuary-tyrant-skill-verdict-fx.json.gz",
+      "archivePath": "v12/export/ossuary-tyrant-skill-verdict-fx.json",
+      "sha256": "1c2426b6902d2551696a002d164d8f71e21da6e5947b28f7da246b24072711c8",
+      "bytes": 94880,
+      "compressedBytes": 6638
+    },
+    {
+      "file": "nullweaver-skill-cocoon-fx.json.gz",
+      "archivePath": "v12/export/nullweaver-skill-cocoon-fx.json",
+      "sha256": "19066c37bcc1b4ca38ebb5c0ec2a570791915333af82c81c1a976cb546666d32",
+      "bytes": 92236,
+      "compressedBytes": 5495
+    },
+    {
+      "file": "rift-anchor.json.gz",
+      "archivePath": "v12/export/rift-anchor.json",
+      "sha256": "be2a93aa170a8b53a4c66361fd44ab4d9171a3b50a3d519707190b630bbfc17d",
+      "bytes": 295863,
+      "compressedBytes": 29323
+    },
+    {
+      "file": "void-cantor-auto-fx.json.gz",
+      "archivePath": "v12/export/void-cantor-auto-fx.json",
+      "sha256": "63dc145c5ebd9ec708c5b86befbd89fe7ff012158eddb4a23232aae9aae3d746",
+      "bytes": 50574,
+      "compressedBytes": 5557
+    },
+    {
+      "file": "ossuary-scarab.json.gz",
+      "archivePath": "v12/export/ossuary-scarab.json",
+      "sha256": "0f466b2bfbdfeb836db98c8948397ca2e83da2def1019f8e0ce5e71885f3dd27",
+      "bytes": 970217,
+      "compressedBytes": 89555
+    },
+    {
+      "file": "void-cantor.json.gz",
+      "archivePath": "v12/export/void-cantor.json",
+      "sha256": "f292626778890405966859b63d7bdf8641872673d8542c65c024831f7dc68901",
+      "bytes": 782198,
+      "compressedBytes": 74054
+    },
+    {
+      "file": "umbral-behemoth-skill-devour-fx.json.gz",
+      "archivePath": "v12/export/umbral-behemoth-skill-devour-fx.json",
+      "sha256": "b1d0cf9631c2081caa5e9dbb089571f86552aa8e2bdda69aa8de000ae9a8bad7",
+      "bytes": 63345,
+      "compressedBytes": 7473
+    },
+    {
+      "file": "carrion-queen-skill-acid-rain-fx.json.gz",
+      "archivePath": "v12/export/carrion-queen-skill-acid-rain-fx.json",
+      "sha256": "b75cb831a3306de0746295005086f3a16b4049476fcbc9b41c70b55dbe748fe5",
+      "bytes": 80205,
+      "compressedBytes": 6524
+    },
+    {
+      "file": "bone-anchor.json.gz",
+      "archivePath": "v12/export/bone-anchor.json",
+      "sha256": "bcd0686659eb10edb1d8201d5d9f880770e5a4da3ea180c079414356732c3bf1",
+      "bytes": 293527,
+      "compressedBytes": 29318
+    },
+    {
+      "file": "umbral-behemoth-skill-stampede-fx.json.gz",
+      "archivePath": "v12/export/umbral-behemoth-skill-stampede-fx.json",
+      "sha256": "b8d94dbfd20067b7e4a147079fb983fd641717094b4ad3441fab07d145645482",
+      "bytes": 87553,
+      "compressedBytes": 6712
+    },
+    {
+      "file": "rift-sovereign-skill-void-collapse-fx.json.gz",
+      "archivePath": "v12/export/rift-sovereign-skill-void-collapse-fx.json",
+      "sha256": "9c1a10c8cde1cbb6feef14e1db06eecda225e09ee14d2870acacd0bc8c4e93f8",
+      "bytes": 95065,
+      "compressedBytes": 10734
+    },
+    {
+      "file": "eclipse-oracle.json.gz",
+      "archivePath": "v12/export/eclipse-oracle.json",
+      "sha256": "9c53c305bce8df59502b76e8dd1f9432ca7cacd852915c88bca7417a6c8fda3c",
+      "bytes": 658830,
+      "compressedBytes": 71620
+    },
+    {
+      "file": "grave-cantor.json.gz",
+      "archivePath": "v12/export/grave-cantor.json",
+      "sha256": "72b36ea56a552f1951a134bc4e7bea992febd7708c68f6265bc8a59e71edb06c",
+      "bytes": 1107959,
+      "compressedBytes": 120394
+    },
+    {
+      "file": "carrion-queen-skill-venom-stacks-fx.json.gz",
+      "archivePath": "v12/export/carrion-queen-skill-venom-stacks-fx.json",
+      "sha256": "ec94f406912644fc4e082d3897aba761c977c7f2170e490f3900ae9413b37cc9",
+      "bytes": 72013,
+      "compressedBytes": 6122
+    },
+    {
+      "file": "ossuary-tyrant.json.gz",
+      "archivePath": "v12/export/ossuary-tyrant.json",
+      "sha256": "4127b4897d3d9e834bb87c427821124ceb47fc1746991e2f3b1f773cd144f425",
+      "bytes": 1376453,
+      "compressedBytes": 126803
+    },
+    {
+      "file": "index.json.gz",
+      "archivePath": "v12/export/index.json",
+      "sha256": "8c73851608482ef5f16386f5edaa572a5fab386acc9d16e47d89fd89f2b3970b",
+      "bytes": 13318,
+      "compressedBytes": 3458
+    },
+    {
+      "file": "marrow-colossus-skill-marrow-quake-fx.json.gz",
+      "archivePath": "v12/export/marrow-colossus-skill-marrow-quake-fx.json",
+      "sha256": "a2e82083c678b20b9fdad1a6cc94f738a3a9704fa61173238a697958d2c1292b",
+      "bytes": 100422,
+      "compressedBytes": 7106
+    },
+    {
+      "file": "marrow-colossus-skill-crushing-grip-fx.json.gz",
+      "archivePath": "v12/export/marrow-colossus-skill-crushing-grip-fx.json",
+      "sha256": "e09d1e69cd56c079dffa984b662cf6dea606b7eeb34623c17fd27abe2584dd4a",
+      "bytes": 86120,
+      "compressedBytes": 6139
+    },
+    {
+      "file": "eclipse-oracle-skill-sweeping-gaze-fx.json.gz",
+      "archivePath": "v12/export/eclipse-oracle-skill-sweeping-gaze-fx.json",
+      "sha256": "2d5ac5bc9179da4f9d8f49257fd9bbec56262274be7f6f5268a97063d3ba88a0",
+      "bytes": 107368,
+      "compressedBytes": 6999
+    },
+    {
+      "file": "rift-stalker.json.gz",
+      "archivePath": "v12/export/rift-stalker.json",
+      "sha256": "af939c2ea7de7a944ee90c5170fa898ca035e5583be7f0f7e6a094e8bb33a329",
+      "bytes": 780366,
+      "compressedBytes": 71418
+    },
+    {
+      "file": "eclipse-oracle-skill-prophecy-fx.json.gz",
+      "archivePath": "v12/export/eclipse-oracle-skill-prophecy-fx.json",
+      "sha256": "9842e8f247e0ede554135ce15e775f91b4a7e6b3beca35d8bd2a8c6b9815952c",
+      "bytes": 149970,
+      "compressedBytes": 7595
+    },
+    {
+      "file": "nullweaver.json.gz",
+      "archivePath": "v12/export/nullweaver.json",
+      "sha256": "4358f6ec23a829f4ae2e63f3e2d8d212e775b14d067c5d9f92d1ef975ee63fc5",
+      "bytes": 1527522,
+      "compressedBytes": 150048
+    },
+    {
+      "file": "nullweaver-skill-web-snare-fx.json.gz",
+      "archivePath": "v12/export/nullweaver-skill-web-snare-fx.json",
+      "sha256": "7626e8b57ee6c2c1ba59b8385f4c823d9b8f671fc439d10de2300693d6660045",
+      "bytes": 147170,
+      "compressedBytes": 7025
+    }
+  ]
+}

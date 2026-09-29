@@ -1,0 +1,42 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { createEVM } from '@ethereumjs/evm';
+import { createCustomCommon, Mainnet, Hardfork } from '@ethereumjs/common';
+import { Account, bytesToHex, createAddressFromString, hexToBytes } from '@ethereumjs/util';
+import { AbiCoder, Interface, Wallet, ZeroAddress, ZeroHash, id, keccak256, toBeHex } from 'ethers';
+import { compileNftContracts } from './build-nft-contracts.mjs';
+import { SP_NFT_TYPES } from '../src/specialist-nft.ts';
+import { MOSS_TOKEN } from '../src/auction.ts';
+const contracts=compileNftContracts({'SpecialistTest.sol':{content:'pragma solidity 0.8.36; contract SpecialistFees { address public constant paymentToken=0x6742883Eef788E2424CE5a1b0d4303144AaEc0a5; }'}});
+assert.deepEqual(contracts.MossvaleSpecialists,JSON.parse(readFileSync(new URL('../public/contracts/MossvaleSpecialists.json',import.meta.url),'utf8')));
+assert((contracts.MossvaleSpecialists.deployedBytecode.length-2)/2<24576);
+const authority=Wallet.createRandom(),alice=Wallet.createRandom(),bob=Wallet.createRandom(),eve=Wallet.createRandom(),address=value=>createAddressFromString(typeof value==='string'?value:value.address);
+const evm=await createEVM({common:createCustomCommon({chainId:4663},Mainnet,{hardfork:Hardfork.Cancun})});
+for(const wallet of [authority,alice,bob,eve])await evm.stateManager.putAccount(address(wallet),new Account(0n,10n**20n));
+const moss=MOSS_TOKEN.address,erc20=new Interface(['function approve(address,uint256) returns(bool)','function balanceOf(address) view returns(uint256)']);
+await evm.stateManager.putCode(address(moss),hexToBytes(readFileSync(new URL('./fixtures/moss-token-runtime.hex',import.meta.url),'utf8').trim()));
+const coder=AbiCoder.defaultAbiCoder();await evm.stateManager.putStorage(address(moss),hexToBytes(keccak256(coder.encode(['address','uint256'],[bob.address,0]))),hexToBytes(toBeHex(1000000n,32)));
+let timestamp=1000;const block=()=>({header:{number:100n,timestamp:BigInt(timestamp),coinbase:address(ZeroAddress),difficulty:0n,prevRandao:new Uint8Array(32),gasLimit:30000000n,getBlobGasPrice:()=>undefined}});
+async function ok(work){const result=await work;assert.equal(result.execResult.exceptionError,undefined,bytesToHex(result.execResult.returnValue));return result;}
+async function fail(work){assert((await work).execResult.exceptionError,'invalid action must revert');}
+async function deploy(name,args=[]){const compiled=contracts[name],abi=new Interface(compiled.abi),result=await ok(evm.runCall({caller:address(authority),data:hexToBytes(compiled.bytecode+abi.encodeDeploy(args).slice(2)),gasLimit:10000000n,block:block()}));assert.equal(keccak256(await evm.stateManager.getCode(result.createdAddress)),compiled.runtimeCodeHash);return result.createdAddress.toString();}
+const receiver=await deploy('SpecialistFees'),contract=await deploy('MossvaleSpecialists',[authority.address,receiver]),abi=new Interface(contracts.MossvaleSpecialists.abi);
+const call=(name,args=[],wallet=alice)=>evm.runCall({to:address(contract),caller:address(wallet),data:hexToBytes(abi.encodeFunctionData(name,args)),gasLimit:5000000n,block:block()});
+const read=async(name,args=[])=>abi.decodeFunctionResult(name,bytesToHex((await ok(call(name,args))).execResult.returnValue));
+const ercCall=(name,args,wallet=bob)=>evm.runCall({to:address(moss),caller:address(wallet),data:hexToBytes(erc20.encodeFunctionData(name,args)),gasLimit:5000000n,block:block()});
+const balance=async wallet=>erc20.decodeFunctionResult('balanceOf',bytesToHex((await ok(ercCall('balanceOf',[wallet]))).execResult.returnValue))[0];
+const domain={name:'MossvaleSpecialists',version:'1',chainId:4663,verifyingContract:contract};
+let nonce=0;const order=(changes={})=>({orderId:id(`order-${nonce++}`),action:0,tokenId:'42',revision:0,wallet:alice.address,character:id('character-a'),progress:{classId:1,jobXp:2000,upgrade:7,broken:true,attempts:14},deadline:1300,...changes});
+const transition=async(value,wallet=alice,signer=authority,scope=domain)=>call('transition',[value,await signer.signTypedData(scope,SP_NFT_TYPES,value)],wallet);
+const initial=order();await fail(transition(initial,alice,eve));await fail(transition(initial,alice,authority,{...domain,chainId:1}));await fail(transition(initial,bob));await fail(transition({...initial,progress:{...initial.progress,upgrade:16}}));await ok(transition(initial));
+await fail(transition(initial));assert.equal((await read('ownerOf',[42]))[0],alice.address);let card=(await read('cards',[42]));assert.equal(card[0].broken,true);assert.equal(card[1],1n);assert.equal(card[3],false);
+await ok(call('list',[42,10000]));const activation=order({action:1,revision:1});await ok(transition(activation));assert.equal((await read('prices',[42]))[0],0n);await fail(call('transferFrom',[alice.address,bob.address,42]));await fail(call('list',[42,10000]));await fail(transition(order({action:2,revision:2,character:id('other-character')})));
+const sealed=order({action:2,revision:2,progress:{classId:1,jobXp:9000,upgrade:8,broken:false,attempts:20}});await fail(transition({...sealed,progress:{...sealed.progress,jobXp:0}}));await ok(transition(sealed));
+card=await read('cards',[42]);assert.deepEqual(Array.from(card[0]),[1n,9000n,8n,false,20n]);assert.equal(card[1],3n);assert.equal(card[2],ZeroHash);await fail(transition(order({action:1,revision:1})));
+await ok(call('list',[42,10000]));await ok(ercCall('approve',[contract,10000]));await fail(call('buy',[42,alice.address,3,9999],bob));await fail(call('buy',[42,eve.address,3,10000],bob));await fail(call('buy',[42,alice.address,2,10000],bob));await ok(call('buy',[42,alice.address,3,10000],bob));
+assert.equal(await balance(receiver),500n);assert.equal(await balance(alice.address),9500n);assert.equal(await balance(bob.address),990000n);assert.equal((await read('ownerOf',[42]))[0],bob.address);await fail(call('buy',[42,alice.address,3,10000],eve));
+await ok(call('list',[42,20000],bob));await ok(call('safeTransferFrom(address,address,uint256)',[bob.address,eve.address,42],bob));assert.equal((await read('prices',[42]))[0],0n);
+const newActivation=order({action:1,revision:3,wallet:eve.address,character:id('character-eve'),progress:sealed.progress});await ok(transition(newActivation,eve));await fail(call('transferFrom',[eve.address,bob.address,42],eve));
+const metadata=JSON.parse(Buffer.from((await read('tokenURI',[42]))[0].split(',')[1],'base64').toString());assert.equal(metadata.name,'Mossvale Specialist +8');assert.equal((await read('royaltyInfo',[42,10000]))[1],500n);
+timestamp=2000;await fail(transition(order({tokenId:'43'})));assert.equal((await read('totalSupply'))[0],1n);assert.equal((await read('page',[0]))[0].length,1);assert.equal((await read('page',[10]))[0].length,0);
+console.log('Specialist NFT contract: signed domains, revisions, lock/unlock, retained progress, replay, expiry, exact MOSS sale and 5% royalty passed.');

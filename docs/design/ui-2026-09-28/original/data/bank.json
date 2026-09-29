@@ -1,0 +1,327 @@
+{
+ "npc": {
+  "id": "elara",
+  "name": "Elara Mossledger",
+  "role": "Banker",
+  "icon": "bag-main",
+  "color": "#6cb8ff"
+ },
+ "bank": {
+  "max": 48,
+  "items": [
+   {
+    "id": "bow1",
+    "name": "Ranger longbow",
+    "icon": "item-ranger-longbow",
+    "qty": 1,
+    "rarity": "uncommon"
+   },
+   {
+    "id": "chest",
+    "name": "Oakguard vest",
+    "icon": "gear-body",
+    "qty": 1,
+    "rarity": "uncommon"
+   },
+   {
+    "id": "bow2",
+    "name": "Ranger longbow",
+    "icon": "item-ranger-longbow",
+    "qty": 1,
+    "rarity": "uncommon"
+   },
+   {
+    "id": "bow3",
+    "name": "Ranger longbow",
+    "icon": "item-ranger-longbow",
+    "qty": 1,
+    "rarity": "rare"
+   },
+   {
+    "id": "anvil",
+    "name": "Anvil",
+    "icon": "anvil",
+    "qty": 1,
+    "rarity": "rare"
+   },
+   {
+    "id": "vest2",
+    "name": "Oakguard vest",
+    "icon": "gear-body",
+    "qty": 1,
+    "rarity": "rare"
+   },
+   {
+    "id": "boots",
+    "name": "Galewalk boots",
+    "icon": "gear-shoes",
+    "qty": 1,
+    "rarity": "rare"
+   },
+   {
+    "id": "bow4",
+    "name": "Ranger longbow",
+    "icon": "item-ranger-longbow",
+    "qty": 1,
+    "rarity": "rare"
+   },
+   {
+    "id": "neck1",
+    "name": "Lantern charm",
+    "icon": "gear-necklace",
+    "qty": 1,
+    "rarity": "uncommon"
+   },
+   {
+    "id": "vest3",
+    "name": "Warden vest",
+    "icon": "gear-body",
+    "qty": 1,
+    "rarity": "uncommon"
+   },
+   {
+    "id": "legs",
+    "name": "Warden leggings",
+    "icon": "gear-legs",
+    "qty": 1,
+    "rarity": "rare"
+   },
+   {
+    "id": "neck2",
+    "name": "Moonpetal charm",
+    "icon": "gear-necklace",
+    "qty": 1,
+    "rarity": "epic"
+   },
+   {
+    "id": "map",
+    "name": "Treasure map",
+    "icon": "item-treasure-map",
+    "qty": 1,
+    "rarity": "rare"
+   },
+   {
+    "id": "cloak",
+    "name": "Woodland cloak",
+    "icon": "gear-back",
+    "qty": 1,
+    "rarity": "uncommon"
+   },
+   {
+    "id": "cloak2",
+    "name": "Woodland cloak",
+    "icon": "gear-back",
+    "qty": 1,
+    "rarity": "uncommon"
+   },
+   {
+    "id": "relic",
+    "name": "Rootvault relic",
+    "icon": "item-rootvault-relic",
+    "qty": 1,
+    "rarity": "epic"
+   },
+   {
+    "id": "elixir",
+    "name": "Void elixir",
+    "icon": "item-void-elixir",
+    "qty": 1276,
+    "rarity": "epic"
+   },
+   {
+    "id": "map2",
+    "name": "Treasure map",
+    "icon": "item-treasure-map",
+    "qty": 36,
+    "rarity": "rare"
+   },
+   {
+    "id": "pet",
+    "name": "Clover mouse",
+    "icon": "pet-clover-mouse",
+    "qty": 1,
+    "rarity": "rare"
+   },
+   {
+    "id": "frost",
+    "name": "Frost crystal",
+    "icon": "item-frost-crystal",
+    "qty": 1,
+    "rarity": "epic"
+   },
+   {
+    "id": "pelt",
+    "name": "Fur pelt",
+    "icon": "item-fur-pelt",
+    "qty": 55,
+    "rarity": "common"
+   },
+   {
+    "id": "gem",
+    "name": "Slate key",
+    "icon": "item-slate-key",
+    "qty": 2,
+    "rarity": "uncommon"
+   },
+   {
+    "id": "fly",
+    "name": "Dewbell dragonfly",
+    "icon": "pet-dewbell-dragonfly",
+    "qty": 5,
+    "rarity": "rare"
+   }
+  ]
+ },
+ "bag": {
+  "max": 112,
+  "items": [
+   {
+    "id": "berry",
+    "name": "Berry tart",
+    "icon": "item-berry-tart",
+    "qty": 9,
+    "rarity": "common"
+   },
+   {
+    "id": "gourd",
+    "name": "Bog gland",
+    "icon": "item-gourd",
+    "qty": 21,
+    "rarity": "common"
+   },
+   {
+    "id": "fang",
+    "name": "Chipped fang",
+    "icon": "item-fang",
+    "qty": 11,
+    "rarity": "common"
+   },
+   {
+    "id": "crys",
+    "name": "Clouded frost shard",
+    "icon": "item-frost-crystal",
+    "qty": 1079,
+    "rarity": "uncommon"
+   },
+   {
+    "id": "wood",
+    "name": "Wood",
+    "icon": "item-wood",
+    "qty": 744,
+    "rarity": "common"
+   },
+   {
+    "id": "herb",
+    "name": "Wild herb",
+    "icon": "item-wild-herb",
+    "qty": 217,
+    "rarity": "common"
+   },
+   {
+    "id": "pot",
+    "name": "Healing potion",
+    "icon": "item-healing-potion",
+    "qty": 610,
+    "rarity": "common"
+   },
+   {
+    "id": "tonic",
+    "name": "Greater healing tonic",
+    "icon": "item-greater-tonic",
+    "qty": 323,
+    "rarity": "common"
+   },
+   {
+    "id": "stew",
+    "name": "Forest stew",
+    "icon": "item-forest-stew",
+    "qty": 10,
+    "rarity": "common"
+   },
+   {
+    "id": "bread",
+    "name": "Trail bread",
+    "icon": "item-bread",
+    "qty": 2,
+    "rarity": "common"
+   },
+   {
+    "id": "bark",
+    "name": "Gnarled bark",
+    "icon": "item-bark",
+    "qty": 103,
+    "rarity": "common"
+   },
+   {
+    "id": "drum",
+    "name": "Roast drumstick",
+    "icon": "item-roast-drumstick",
+    "qty": 3,
+    "rarity": "common"
+   },
+   {
+    "id": "lan",
+    "name": "Lantern fragment",
+    "icon": "item-lantern-fragment",
+    "qty": 4,
+    "rarity": "rare"
+   },
+   {
+    "id": "gel",
+    "name": "Slime gel",
+    "icon": "item-slime-gel",
+    "qty": 7,
+    "rarity": "common"
+   },
+   {
+    "id": "hide",
+    "name": "Hide scraps",
+    "icon": "item-hide-scraps",
+    "qty": 24,
+    "rarity": "common"
+   },
+   {
+    "id": "void",
+    "name": "Faded void dust",
+    "icon": "item-void-elixir",
+    "qty": 356,
+    "rarity": "uncommon"
+   },
+   {
+    "id": "key",
+    "name": "Slate key",
+    "icon": "item-slate-key",
+    "qty": 1,
+    "rarity": "uncommon"
+   },
+   {
+    "id": "tmap",
+    "name": "Treasure map",
+    "icon": "item-treasure-map",
+    "qty": 2,
+    "rarity": "rare"
+   },
+   {
+    "id": "pelt2",
+    "name": "Fur pelt",
+    "icon": "item-fur-pelt",
+    "qty": 5,
+    "rarity": "common"
+   },
+   {
+    "id": "boots2",
+    "name": "Pathfinder boots",
+    "icon": "gear-shoes",
+    "qty": 1,
+    "rarity": "common"
+   },
+   {
+    "id": "ring",
+    "name": "Copper band",
+    "icon": "gear-ring1",
+    "qty": 1,
+    "rarity": "common"
+   }
+  ]
+ }
+}

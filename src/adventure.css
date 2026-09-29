@@ -1,0 +1,132 @@
+.adventure-list { display:grid; gap:14px; margin:18px 0; }
+.adventure-entry { padding:16px 0; border-bottom:1px solid #7a654d44; min-width:0; }
+.adventure-entry h3 { margin:0; overflow-wrap:anywhere; }
+.adventure-entry-heading { display:flex; gap:12px; align-items:center; }
+.adventure-entry-heading>div { min-width:0; }
+.adventure-entry small, .party-member small { display:block; margin-top:4px; opacity:.8; }
+.adventure-entry-footer, .adventure-actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.adventure-entry-footer { justify-content:space-between; }
+.adventure-entry-footer>.primary-button { margin:0; width:auto; max-width:100%; }
+.adventure-link { background:none; border:0; color:inherit; text-decoration:underline; text-underline-offset:3px; cursor:pointer; padding:8px 0; }
+.craft-materials { display:flex; flex-wrap:wrap; gap:10px 18px; margin:12px 0; }
+.craft-materials > span { display:inline-flex; gap:5px; align-items:center; }
+.party-member { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:10px 0; }
+.party-member>div { min-width:0; flex:1; }
+.party-member strong { overflow-wrap:anywhere; }
+.party-member-actions { display:flex; gap:12px; justify-content:flex-end; flex-wrap:wrap; }
+.party-health { display:block; height:5px; width:100%; background:#17322477; margin-top:5px; }
+.party-health>span { display:block; height:100%; background:#88b96a; }
+.party-hud { position:fixed; top:219px; left:32px; width:210px; z-index:8; color:#f9ebc4; text-align:left; padding:10px 12px; cursor:pointer; }
+.party-hud[hidden] { display:none; }
+.party-hud-title { display:flex; align-items:center; gap:8px; font-size:10px; letter-spacing:1px; }
+.party-hud-member { display:block; margin:8px 0; font-size:11px; overflow-wrap:anywhere; }
+.party-hud .party-health { margin-top:3px; }
+.party-hud .icon { width:18px;height:18px; }
+.chat-heading select { min-width:0; background:#182e23; color:#e7ddb9; border:1px solid #9e895d77; border-radius:3px; font:inherit; font-size:10px; padding:3px; }
+.dungeon-plan { display:grid; gap:12px; margin:20px 0; }
+.dungeon-plan li { margin-left:20px; }
+@media(max-width:1100px){.party-hud{left:20px;width:172px;top:209px;}.utility{gap:3px;padding:7px;}.utility button{width:36px;height:36px;}}
+@media(max-width:800px){.party-hud{top:142px;left:14px;width:132px;padding:7px;}.party-hud-member{font-size:9px;margin:5px 0;}.party-hud-title{font-size:9px;letter-spacing:0;}.utility button{width:29px;height:32px;}.utility{gap:1px;padding:5px;}.utility button .icon{width:18px;height:18px;}.utility kbd{display:none;}.adventure-entry-footer{align-items:stretch;}.adventure-entry-footer>.primary-button{width:100%;}.party-member{flex-wrap:wrap;}.party-member .primary-button{width:auto;}.party-member-actions{flex-basis:100%;}.craft-materials{gap:8px;font-size:12px;}}
+
+.party-health { overflow:hidden; }
+.party-hud { min-width:0; max-width:calc(100vw - 40px); white-space:normal; line-height:1.35; }
+.party-hud-title { min-width:0; align-items:flex-start; }
+.party-hud-title>span:not(.icon), .party-hud-name { min-width:0; max-width:100%; overflow-wrap:anywhere; }
+.party-hud-name { display:block; }
+.party-hud-hint { display:block; margin-top:5px; color:#e0d4b0; font-size:10px; line-height:1.35; overflow-wrap:anywhere; }
+@media(max-width:800px){
+ .party-hud { top:174px; width:min(146px,calc(100vw - 194px)); }
+ .party-hud-member { font-size:10px; line-height:1.3; }
+ .party-hud-title { font-size:10px; gap:5px; }
+ .party-hud-hint { font-size:9px; }
+}
+
+#party-invitation {
+ position:fixed; inset:clamp(100px,18vh,180px) auto auto 50%; transform:translateX(-50%); margin:0;
+ width:360px; max-width:calc(100vw - 24px); max-height:calc(82dvh - 24px); overflow:auto;
+ border:17px solid transparent; border-image:var(--wood-art) 175 fill / 17px / 0 stretch;
+ padding:10px; background:transparent; color:#e9dab9; font-size:14px; line-height:1.5; overflow-wrap:anywhere;
+}
+#party-invitation h2 { display:flex; align-items:center; gap:8px; margin:0 0 12px; font:23px/1.2 'Marcellus',Georgia,serif; color:#f2dfb2; }
+#party-invitation h2 .icon { flex:none; width:26px; height:26px; }
+#party-invitation p { margin:0 0 14px; }
+#party-invitation-note { font-size:12px; color:#d7b779; }
+.party-invitation-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+#party-invitation .primary-button { min-width:0; width:100%; min-height:44px; margin:0; padding:9px; white-space:normal; overflow-wrap:anywhere; }
+#party-invitation button:disabled { opacity:.5; cursor:default; }
+
+/* The recipe book uses the same parchment and wooden controls as the gathering journal. */
+.panel[data-mode="crafting"] { width: 650px; }
+.crafting-book { min-width: 0; color: #51482f; }
+#panel-content .crafting-book p { color: #62553b; }
+#panel-content .crafting-progress > p { margin: 9px 0; font-size: 12px; line-height: 1.6; }
+.crafting-ranks { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 0; list-style: none; margin: 14px 0; padding: 0; }
+.crafting-ranks li { display: flex; flex-direction: column; gap: 5px; padding: 10px 6px; border-bottom: 2px solid #9b835666; color: #776043; min-width: 0; }
+.crafting-ranks .unlocked { color: #4c5e38; border-color: #627948; }
+.crafting-ranks [aria-current="step"] { background: #6d85541c; }
+.crafting-ranks strong { font-size: 12px; }
+.crafting-ranks span { font-size: 11px; }
+.crafting-workshop { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; padding: 10px 0; border-top: 1px solid #8b785333; border-bottom: 1px solid #8b785333; font-size: 12px; }
+.crafting-workshop > span { display: flex; align-items: center; gap: 8px; }
+.crafting-workshop .item-art, .crafting-book .craft-materials .item-art { width: 26px; height: 26px; }
+.crafting-book .craft-materials { margin: 14px 0 8px; font-size: 11px; color: #5a5039; }
+.crafting-gather-link { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 3px 12px; margin-bottom: 14px; font-size: 11px; }
+.crafting-book .adventure-link { display: inline-flex; align-items: center; gap: 5px; color: #485d32; font-size: 12px; min-height: 36px; }
+.crafting-book .adventure-link .item-art { width: 18px; height: 18px; }
+.crafting-rank-section { border-top: 1px solid #92794966; }
+.crafting-rank-section > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 0; cursor: pointer; list-style: none; }
+.crafting-rank-section > summary::-webkit-details-marker { display: none; }
+.crafting-rank-section > summary::after { content: '+'; font-size: 20px; color: #695331; }
+.crafting-rank-section[open] > summary::after { content: '−'; }
+.crafting-rank-section > summary > span:first-child { flex: 1; }
+.crafting-rank-section > summary strong { display: block; font: 20px 'Marcellus',Georgia,serif; color: #53462e; }
+.crafting-rank-section > summary small { display: block; margin-top: 4px; color: #66563c; font-size: 11px; }
+.crafting-rank-section > summary > span:nth-child(2) { color: #6d5d43; font-size: 11px; }
+.crafting-rank-section .adventure-list { display: block; margin: 0 0 14px; }
+.crafting-recipe { padding: 17px 0; }
+.crafting-recipe:first-child { padding-top: 4px; }
+.crafting-recipe:last-child { border: 0; padding-bottom: 0; }
+.crafting-recipe .adventure-entry-heading > .gear-art, .crafting-recipe .adventure-entry-heading > .loot-item-art, .crafting-recipe .adventure-entry-heading > .item-art { width: 54px; height: 54px; object-fit: contain; flex: 0 0 54px; }
+#panel-content .crafting-recipe h3 { margin: 0; font-size: 20px; line-height: 1.35; }
+.crafting-recipe .adventure-entry-heading small { font-size: 11px; line-height: 1.6; opacity: 1; color: #68583b; }
+#panel-content .crafting-recipe .recipe-description { margin: 9px 0 3px; font-size: 12px; line-height: 1.65; }
+#panel-content .crafting-recipe .recipe-output { margin: 3px 0 10px; color: #436031; font-size: 12px; font-weight: 600; }
+.crafting-recipe .recipe-cost { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 18px; list-style: none; margin: 12px 0; padding: 0; }
+.crafting-recipe .recipe-cost li { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; min-height: 36px; padding: 5px 0; border-bottom: 1px solid #8b78532d; min-width: 0; font-size: 11px; }
+.crafting-recipe .recipe-cost li > span { flex: 1; min-width: 0; }
+.crafting-recipe .recipe-cost strong { font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.crafting-recipe .recipe-cost .missing { color: #963d2e; }
+.crafting-recipe .recipe-cost .adventure-link { padding: 0 2px; min-height: 30px; font-size: 11px; }
+.crafting-recipe .recipe-cost .item-art { width: 15px; height: 15px; }
+.recipe-experience { display: flex; flex-direction: column; gap: 4px; color: #67563c; font-size: 11px; line-height: 1.5; }
+.panel .crafting-recipe .primary-button { min-height: 40px; width: auto; padding: 9px 15px; font-size: 12px; }
+#panel-content .crafting-recipe .recipe-reason { margin: 8px 0 0; color: #6d5839; font-size: 11px; line-height: 1.6; }
+@media(max-width:540px) {
+ .crafting-ranks strong { font-size: 10px; }
+ .crafting-ranks span { font-size: 10px; }
+ .crafting-ranks li { padding: 9px 3px; }
+ .crafting-recipe .recipe-cost { grid-template-columns: minmax(0,1fr); }
+ .crafting-rank-section > summary strong { font-size: 18px; }
+ .crafting-rank-section > summary { gap: 8px; }
+ .crafting-rank-section > summary > span:nth-child(2) { max-width: 66px; text-align: right; line-height: 1.5; }
+ .panel .crafting-recipe .primary-button { width: auto; }
+}
+
+.crafting-recipe .recipe-cost .recipe-material-source { flex-basis: 100%; margin: 0 0 5px; font-size: 10px; line-height: 1.6; color: #6b583c; opacity: 1; }
+
+/* Workshop outline: progression beside the recipe ledger, stacked on phones. */
+.crafting-book{display:grid;grid-template-columns:minmax(220px,.65fr) minmax(0,1.35fr);gap:12px 20px;align-items:start}
+.crafting-heading{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid #9f885755}
+.crafting-heading>.item-art{width:54px;height:54px}.crafting-heading>div{min-width:0}.crafting-heading span{font:700 10px/1.4 'DM Sans',sans-serif;letter-spacing:.1em;color:#7d663b}
+#panel-content .crafting-heading h3{margin:3px 0;font:30px/1.15 'Marcellus',Georgia,serif;color:#3c4c2b}#panel-content .crafting-heading p{margin:0;font-size:12px;color:#645838}
+.crafting-book .crafting-progress{grid-column:1;grid-row:2/span 4;padding:16px;background:#d3c39133;border:1px solid #9f89556b;position:sticky;top:0}
+.crafting-book .profession-heading{display:block}.crafting-book .profession-level{display:block;margin-top:8px;font:20px/1.2 'Marcellus',Georgia,serif}
+.crafting-book .profession-progress-label{flex-direction:column;align-items:flex-start;gap:5px}.crafting-book .crafting-ranks{display:grid;grid-template-columns:1fr;gap:0;margin-block:14px}
+.crafting-book .crafting-ranks li{display:flex;justify-content:space-between;align-items:center;padding:8px;border:0;border-bottom:1px solid #8a754b33;min-height:38px;text-align:left}.crafting-book .crafting-ranks li[aria-current=step]{background:#647a3f33;box-shadow:inset 3px 0 #748044}
+.crafting-book>.crafting-workshop,.crafting-book>.craft-materials,.crafting-book>.crafting-gather-link,.crafting-book>.crafting-recipes{grid-column:2;margin:0}
+.crafting-book>.crafting-workshop{padding:12px;border:1px solid #9b835466;background:#7189511a;flex-wrap:wrap}.crafting-book>.craft-materials{padding:10px 0;gap:8px}
+.crafting-book .crafting-rank-section{border:1px solid #9a805266;margin-bottom:12px;background:#e7dcb422;padding:0 14px}.crafting-book .crafting-rank-section>summary{min-height:64px;padding:12px 0}
+.crafting-book .crafting-recipe{padding:18px 0}.crafting-book .crafting-recipe .recipe-cost{grid-template-columns:minmax(0,1fr);padding:8px 10px;background:#5d774414}
+.crafting-book .crafting-recipe .adventure-entry-footer{align-items:center;gap:12px}.crafting-book .crafting-recipe .primary-button{min-height:44px}
+@media(max-width:760px){.crafting-book{display:block}.crafting-heading{margin-bottom:14px}.crafting-book .crafting-progress{position:static;margin-bottom:12px;padding:14px}.crafting-book .crafting-ranks{grid-template-columns:repeat(4,minmax(0,1fr));gap:0}.crafting-book .crafting-ranks li{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:8px 3px;text-align:center}.crafting-book>.crafting-workshop,.crafting-book>.craft-materials,.crafting-book>.crafting-gather-link{margin:10px 0}.crafting-book .crafting-rank-section{padding:0 12px}.crafting-book .crafting-recipe .adventure-entry-footer{flex-wrap:wrap}.crafting-book .crafting-recipe .primary-button{min-width:130px;flex:1}.crafting-book .crafting-gather-link{gap:8px}}
+body.mobile-controls .crafting-book{display:block}body.mobile-controls .crafting-book .crafting-progress{position:static;margin-bottom:12px}

@@ -1,0 +1,1504 @@
+{
+  "summary": {
+    "maps": 39,
+    "regions": 7,
+    "styles": 15,
+    "assets": 102,
+    "usedAssets": 102,
+    "unusedAssets": [],
+    "props": 8675,
+    "directedGates": 70,
+    "gatePairs": 35,
+    "doors": 13,
+    "spawnZones": 232,
+    "nominalCreatures": 1023,
+    "bossZones": 6,
+    "reachableMaps": 39,
+    "rawBytes": 9112062,
+    "bytesByKind": {
+      "world": 59044,
+      "map": 1375393,
+      "thumbnail": 419360,
+      "asset": 7258265
+    },
+    "modelVertices": 101024,
+    "modelMeshes": 249,
+    "skeletonBones": 363,
+    "animationClips": 116,
+    "errors": []
+  },
+  "gateConnections": [
+    {
+      "from": "lanternreach",
+      "fromSide": "E",
+      "to": "greenwood-meadows",
+      "toSide": "W"
+    },
+    {
+      "from": "lanternreach",
+      "fromSide": "N",
+      "to": "old-ruins-crossing",
+      "toSide": "S"
+    },
+    {
+      "from": "lanternreach",
+      "fromSide": "S",
+      "to": "mill-plains",
+      "toSide": "N"
+    },
+    {
+      "from": "lanternreach",
+      "fromSide": "W",
+      "to": "brookside-fields",
+      "toSide": "E"
+    },
+    {
+      "from": "greenwood-meadows",
+      "fromSide": "E",
+      "to": "cindergrove-edge",
+      "toSide": "W"
+    },
+    {
+      "from": "greenwood-meadows",
+      "fromSide": "N",
+      "to": "blightmarsh-border",
+      "toSide": "S"
+    },
+    {
+      "from": "brookside-fields",
+      "fromSide": "N",
+      "to": "frostpeak-foothills",
+      "toSide": "S"
+    },
+    {
+      "from": "old-ruins-crossing",
+      "fromSide": "E",
+      "to": "blightmarsh-border",
+      "toSide": "W"
+    },
+    {
+      "from": "old-ruins-crossing",
+      "fromSide": "W",
+      "to": "frostpeak-foothills",
+      "toSide": "E"
+    },
+    {
+      "from": "blightmarsh-border",
+      "fromSide": "E",
+      "to": "sunscar-outskirts",
+      "toSide": "W"
+    },
+    {
+      "from": "cindergrove-edge",
+      "fromSide": "N",
+      "to": "sunscar-outskirts",
+      "toSide": "S"
+    },
+    {
+      "from": "hollowroot-grove",
+      "fromSide": "E",
+      "to": "rootway-tunnels-1",
+      "toSide": "W"
+    },
+    {
+      "from": "rootway-tunnels-1",
+      "fromSide": "E",
+      "to": "rootway-tunnels-2",
+      "toSide": "W"
+    },
+    {
+      "from": "rootway-tunnels-2",
+      "fromSide": "N",
+      "to": "mushroom-glade",
+      "toSide": "S"
+    },
+    {
+      "from": "mushroom-glade",
+      "fromSide": "E",
+      "to": "heartwood-hollow",
+      "toSide": "W"
+    },
+    {
+      "from": "ember-fields",
+      "fromSide": "E",
+      "to": "magma-mine-1",
+      "toSide": "W"
+    },
+    {
+      "from": "magma-mine-1",
+      "fromSide": "E",
+      "to": "magma-mine-2",
+      "toSide": "W"
+    },
+    {
+      "from": "magma-mine-2",
+      "fromSide": "N",
+      "to": "cinder-caves",
+      "toSide": "S"
+    },
+    {
+      "from": "cinder-caves",
+      "fromSide": "E",
+      "to": "cinder-peak",
+      "toSide": "W"
+    },
+    {
+      "from": "rotting-fen",
+      "fromSide": "E",
+      "to": "bogwater-crossing",
+      "toSide": "W"
+    },
+    {
+      "from": "bogwater-crossing",
+      "fromSide": "E",
+      "to": "sunken-crypt-1",
+      "toSide": "W"
+    },
+    {
+      "from": "sunken-crypt-1",
+      "fromSide": "N",
+      "to": "sunken-crypt-2",
+      "toSide": "S"
+    },
+    {
+      "from": "sunken-crypt-2",
+      "fromSide": "E",
+      "to": "hags-hollow",
+      "toSide": "W"
+    },
+    {
+      "from": "rimefang-slopes",
+      "fromSide": "E",
+      "to": "ice-cave-1",
+      "toSide": "W"
+    },
+    {
+      "from": "ice-cave-1",
+      "fromSide": "E",
+      "to": "ice-cave-2",
+      "toSide": "W"
+    },
+    {
+      "from": "ice-cave-2",
+      "fromSide": "N",
+      "to": "ice-cave-3",
+      "toSide": "S"
+    },
+    {
+      "from": "ice-cave-3",
+      "fromSide": "E",
+      "to": "frozen-peak",
+      "toSide": "W"
+    },
+    {
+      "from": "scorched-dunes",
+      "fromSide": "E",
+      "to": "canyon-pass",
+      "toSide": "W"
+    },
+    {
+      "from": "canyon-pass",
+      "fromSide": "E",
+      "to": "sun-temple-1",
+      "toSide": "W"
+    },
+    {
+      "from": "sun-temple-1",
+      "fromSide": "N",
+      "to": "sun-temple-2",
+      "toSide": "S"
+    },
+    {
+      "from": "sun-temple-2",
+      "fromSide": "E",
+      "to": "wyrms-rest",
+      "toSide": "W"
+    },
+    {
+      "from": "vault-gardens",
+      "fromSide": "E",
+      "to": "rune-labyrinth-1",
+      "toSide": "W"
+    },
+    {
+      "from": "rune-labyrinth-1",
+      "fromSide": "E",
+      "to": "rune-labyrinth-2",
+      "toSide": "W"
+    },
+    {
+      "from": "rune-labyrinth-2",
+      "fromSide": "N",
+      "to": "rune-labyrinth-3",
+      "toSide": "S"
+    },
+    {
+      "from": "rune-labyrinth-3",
+      "fromSide": "E",
+      "to": "floating-sanctum",
+      "toSide": "W"
+    }
+  ],
+  "doors": [
+    {
+      "from": "greenwood-meadows",
+      "kind": "realm-door",
+      "asset": "realm-door-greenwood",
+      "x": 77.83,
+      "y": 3,
+      "z": 49.89,
+      "ry": 0.525,
+      "arrive": [
+        80.34,
+        54.22
+      ],
+      "to_region": "hollowroot",
+      "to": "hollowroot-grove",
+      "label": "Hollowroot",
+      "levels": "1-6"
+    },
+    {
+      "from": "mill-plains",
+      "kind": "dungeon",
+      "asset": "sp-gate",
+      "x": 32.5,
+      "y": 4,
+      "z": 34.5,
+      "ry": 1.373,
+      "note": "SP trials (v8)"
+    },
+    {
+      "from": "old-ruins-crossing",
+      "kind": "realm-door",
+      "asset": "realm-door-ruins",
+      "x": 46.06,
+      "y": 2,
+      "z": 42.57,
+      "ry": -0.257,
+      "arrive": [
+        44.79,
+        47.41
+      ],
+      "to_region": "shattered-vault",
+      "to": "vault-gardens",
+      "label": "The Shattered Vault",
+      "levels": "22-30"
+    },
+    {
+      "from": "frostpeak-foothills",
+      "kind": "realm-door",
+      "asset": "realm-door-frostpeak",
+      "x": 63.66,
+      "y": 8,
+      "z": 49.65,
+      "ry": -2.667,
+      "arrive": [
+        61.38,
+        45.2
+      ],
+      "to_region": "rimefang",
+      "to": "rimefang-slopes",
+      "label": "Rimefang",
+      "levels": "14-21"
+    },
+    {
+      "from": "blightmarsh-border",
+      "kind": "realm-door",
+      "asset": "realm-door-blightmarsh",
+      "x": 62.11,
+      "y": 1,
+      "z": 53.08,
+      "ry": -2.474,
+      "arrive": [
+        59.01,
+        49.15
+      ],
+      "to_region": "rotting-maw",
+      "to": "rotting-fen",
+      "label": "The Rotting Maw",
+      "levels": "10-17"
+    },
+    {
+      "from": "cindergrove-edge",
+      "kind": "realm-door",
+      "asset": "realm-door-cindergrove",
+      "x": 36.93,
+      "y": 3,
+      "z": 41.4,
+      "ry": -0.379,
+      "arrive": [
+        35.08,
+        46.04
+      ],
+      "to_region": "emberdeep",
+      "to": "ember-fields",
+      "label": "Emberdeep",
+      "levels": "4-10"
+    },
+    {
+      "from": "sunscar-outskirts",
+      "kind": "realm-door",
+      "asset": "realm-door-sunscar",
+      "x": 47.68,
+      "y": 3,
+      "z": 41.54,
+      "ry": -0.955,
+      "arrive": [
+        43.6,
+        44.43
+      ],
+      "to_region": "sun-wyrm",
+      "to": "scorched-dunes",
+      "label": "Temple of the Sun Wyrm",
+      "levels": "18-26"
+    },
+    {
+      "from": "hollowroot-grove",
+      "kind": "return",
+      "asset": "realm-return-greenwood",
+      "x": 6.5,
+      "y": 4,
+      "z": 48.5,
+      "ry": 1.5707963267948966,
+      "arrive": [
+        10.0,
+        48.5
+      ],
+      "to_region": "overworld",
+      "to": "greenwood-meadows",
+      "label": "Greenwood Meadows"
+    },
+    {
+      "from": "ember-fields",
+      "kind": "return",
+      "asset": "realm-return-cindergrove",
+      "x": 6.5,
+      "y": 7,
+      "z": 48.5,
+      "ry": 1.5707963267948966,
+      "arrive": [
+        10.0,
+        48.5
+      ],
+      "to_region": "overworld",
+      "to": "cindergrove-edge",
+      "label": "Cindergrove Edge"
+    },
+    {
+      "from": "rotting-fen",
+      "kind": "return",
+      "asset": "realm-return-blightmarsh",
+      "x": 6.5,
+      "y": 2,
+      "z": 48.5,
+      "ry": 1.5707963267948966,
+      "arrive": [
+        10.0,
+        48.5
+      ],
+      "to_region": "overworld",
+      "to": "blightmarsh-border",
+      "label": "Blightmarsh Border"
+    },
+    {
+      "from": "rimefang-slopes",
+      "kind": "return",
+      "asset": "realm-return-frostpeak",
+      "x": 6.5,
+      "y": 10,
+      "z": 48.5,
+      "ry": 1.5707963267948966,
+      "arrive": [
+        10.0,
+        48.5
+      ],
+      "to_region": "overworld",
+      "to": "frostpeak-foothills",
+      "label": "Frostpeak Foothills"
+    },
+    {
+      "from": "scorched-dunes",
+      "kind": "return",
+      "asset": "realm-return-sunscar",
+      "x": 6.5,
+      "y": 4,
+      "z": 48.5,
+      "ry": 1.5707963267948966,
+      "arrive": [
+        10.0,
+        48.5
+      ],
+      "to_region": "overworld",
+      "to": "sunscar-outskirts",
+      "label": "Sunscar Outskirts"
+    },
+    {
+      "from": "vault-gardens",
+      "kind": "return",
+      "asset": "realm-return-ruins",
+      "x": 6.5,
+      "y": 4,
+      "z": 48.5,
+      "ry": 1.5707963267948966,
+      "arrive": [
+        10.0,
+        48.5
+      ],
+      "to_region": "overworld",
+      "to": "old-ruins-crossing",
+      "label": "Old Ruins Crossing"
+    }
+  ],
+  "bossZones": [
+    {
+      "map": "heartwood-hollow",
+      "advertisedLevels": "5-6",
+      "x": 73.5,
+      "z": 37.5,
+      "r": 8,
+      "count": 1,
+      "level": [
+        6,
+        8
+      ],
+      "boss": true
+    },
+    {
+      "map": "cinder-peak",
+      "advertisedLevels": "8-10",
+      "x": 64.5,
+      "z": 61.5,
+      "r": 8,
+      "count": 1,
+      "level": [
+        10,
+        12
+      ],
+      "boss": true
+    },
+    {
+      "map": "hags-hollow",
+      "advertisedLevels": "15-17",
+      "x": 71.5,
+      "z": 52.5,
+      "r": 8,
+      "count": 1,
+      "level": [
+        17,
+        19
+      ],
+      "boss": true
+    },
+    {
+      "map": "frozen-peak",
+      "advertisedLevels": "19-21",
+      "x": 28.5,
+      "z": 59.5,
+      "r": 8,
+      "count": 1,
+      "level": [
+        21,
+        23
+      ],
+      "boss": true
+    },
+    {
+      "map": "wyrms-rest",
+      "advertisedLevels": "24-26",
+      "x": 68.5,
+      "z": 53.5,
+      "r": 8,
+      "count": 1,
+      "level": [
+        26,
+        28
+      ],
+      "boss": true
+    },
+    {
+      "map": "floating-sanctum",
+      "advertisedLevels": "28-30",
+      "x": 58.5,
+      "z": 40.5,
+      "r": 8,
+      "count": 1,
+      "level": [
+        30,
+        32
+      ],
+      "boss": true
+    }
+  ],
+  "maps": [
+    {
+      "id": "lanternreach",
+      "name": "Lanternreach",
+      "region": "overworld",
+      "type": "town",
+      "style": "town",
+      "levels": "\u2014",
+      "size": [
+        84,
+        84
+      ],
+      "safe": true,
+      "props": 186,
+      "gates": 4,
+      "doors": 0,
+      "spawnZones": 0,
+      "nominalCreatures": 0,
+      "surfaceCounts": {
+        "g": 6199,
+        "c": 857
+      },
+      "minHeight": 1,
+      "maxHeight": 10
+    },
+    {
+      "id": "greenwood-meadows",
+      "name": "Greenwood Meadows",
+      "region": "overworld",
+      "type": "field",
+      "style": "greenwood",
+      "levels": "1-5",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 264,
+      "gates": 3,
+      "doors": 1,
+      "spawnZones": 0,
+      "nominalCreatures": 0,
+      "surfaceCounts": {
+        "g": 7642,
+        "p": 518,
+        "s": 384,
+        "w": 672
+      },
+      "minHeight": 0,
+      "maxHeight": 14
+    },
+    {
+      "id": "mill-plains",
+      "name": "Mill Plains",
+      "region": "overworld",
+      "type": "field",
+      "style": "greenwood",
+      "levels": "2-6",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 263,
+      "gates": 1,
+      "doors": 1,
+      "spawnZones": 0,
+      "nominalCreatures": 0,
+      "surfaceCounts": {
+        "g": 7975,
+        "p": 185,
+        "s": 384,
+        "w": 672
+      },
+      "minHeight": 0,
+      "maxHeight": 14
+    },
+    {
+      "id": "brookside-fields",
+      "name": "Brookside Fields",
+      "region": "overworld",
+      "type": "field",
+      "style": "greenwood",
+      "levels": "3-7",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 270,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 0,
+      "nominalCreatures": 0,
+      "surfaceCounts": {
+        "g": 7781,
+        "s": 384,
+        "w": 672,
+        "p": 379
+      },
+      "minHeight": 0,
+      "maxHeight": 14
+    },
+    {
+      "id": "old-ruins-crossing",
+      "name": "Old Ruins Crossing",
+      "region": "overworld",
+      "type": "field",
+      "style": "ruins",
+      "levels": "20-28",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 188,
+      "gates": 3,
+      "doors": 1,
+      "spawnZones": 0,
+      "nominalCreatures": 0,
+      "surfaceCounts": {
+        "g": 8711,
+        "p": 505
+      },
+      "minHeight": 1,
+      "maxHeight": 14
+    },
+    {
+      "id": "frostpeak-foothills",
+      "name": "Frostpeak Foothills",
+      "region": "overworld",
+      "type": "field",
+      "style": "frostpeak",
+      "levels": "12-18",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 333,
+      "gates": 2,
+      "doors": 1,
+      "spawnZones": 0,
+      "nominalCreatures": 0,
+      "surfaceCounts": {
+        "g": 8828,
+        "p": 388
+      },
+      "minHeight": 3,
+      "maxHeight": 19
+    },
+    {
+      "id": "blightmarsh-border",
+      "name": "Blightmarsh Border",
+      "region": "overworld",
+      "type": "field",
+      "style": "blightmarsh",
+      "levels": "9-15",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 290,
+      "gates": 3,
+      "doors": 1,
+      "spawnZones": 7,
+      "nominalCreatures": 35,
+      "surfaceCounts": {
+        "g": 8598,
+        "p": 618
+      },
+      "minHeight": 1,
+      "maxHeight": 6
+    },
+    {
+      "id": "cindergrove-edge",
+      "name": "Cindergrove Edge",
+      "region": "overworld",
+      "type": "field",
+      "style": "cindergrove",
+      "levels": "4-9",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 324,
+      "gates": 2,
+      "doors": 1,
+      "spawnZones": 0,
+      "nominalCreatures": 0,
+      "surfaceCounts": {
+        "g": 8812,
+        "p": 404
+      },
+      "minHeight": 1,
+      "maxHeight": 15
+    },
+    {
+      "id": "sunscar-outskirts",
+      "name": "Sunscar Outskirts",
+      "region": "overworld",
+      "type": "field",
+      "style": "sunscar",
+      "levels": "16-24",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 248,
+      "gates": 2,
+      "doors": 1,
+      "spawnZones": 0,
+      "nominalCreatures": 0,
+      "surfaceCounts": {
+        "g": 8859,
+        "p": 357
+      },
+      "minHeight": 1,
+      "maxHeight": 41
+    },
+    {
+      "id": "hollowroot-grove",
+      "name": "Hollowroot Grove",
+      "region": "hollowroot",
+      "type": "field",
+      "style": "greenwood",
+      "levels": "1-2",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 342,
+      "gates": 1,
+      "doors": 1,
+      "spawnZones": 7,
+      "nominalCreatures": 28,
+      "surfaceCounts": {
+        "g": 8876,
+        "p": 340
+      },
+      "minHeight": 2,
+      "maxHeight": 14
+    },
+    {
+      "id": "rootway-tunnels-1",
+      "name": "Rootway Tunnels 1",
+      "region": "hollowroot",
+      "type": "cave",
+      "style": "rootway",
+      "levels": "2-3",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 61,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 37,
+      "surfaceCounts": {
+        " ": 1400,
+        "W": 1435,
+        "f": 2349
+      },
+      "minHeight": 0,
+      "maxHeight": 6
+    },
+    {
+      "id": "rootway-tunnels-2",
+      "name": "Rootway Tunnels 2",
+      "region": "hollowroot",
+      "type": "cave",
+      "style": "rootway",
+      "levels": "3-4",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 61,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 39,
+      "surfaceCounts": {
+        " ": 1448,
+        "W": 1411,
+        "f": 2325
+      },
+      "minHeight": 0,
+      "maxHeight": 6
+    },
+    {
+      "id": "mushroom-glade",
+      "name": "Mushroom Glade",
+      "region": "hollowroot",
+      "type": "field",
+      "style": "glade",
+      "levels": "4-5",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 339,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 7,
+      "nominalCreatures": 35,
+      "surfaceCounts": {
+        "g": 8869,
+        "p": 347
+      },
+      "minHeight": 1,
+      "maxHeight": 12
+    },
+    {
+      "id": "heartwood-hollow",
+      "name": "Heartwood Hollow",
+      "region": "hollowroot",
+      "type": "peak",
+      "style": "greenwood",
+      "levels": "5-6",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 342,
+      "gates": 1,
+      "doors": 0,
+      "spawnZones": 7,
+      "nominalCreatures": 30,
+      "surfaceCounts": {
+        "g": 8691,
+        "p": 525
+      },
+      "minHeight": 2,
+      "maxHeight": 16
+    },
+    {
+      "id": "ember-fields",
+      "name": "Ember Fields",
+      "region": "emberdeep",
+      "type": "field",
+      "style": "cindergrove",
+      "levels": "4-5",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 401,
+      "gates": 1,
+      "doors": 1,
+      "spawnZones": 7,
+      "nominalCreatures": 30,
+      "surfaceCounts": {
+        "g": 8896,
+        "p": 320
+      },
+      "minHeight": 1,
+      "maxHeight": 15
+    },
+    {
+      "id": "magma-mine-1",
+      "name": "Magma Mine 1",
+      "region": "emberdeep",
+      "type": "mine",
+      "style": "magma-mine",
+      "levels": "5-6",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 208,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 44,
+      "surfaceCounts": {
+        " ": 1164,
+        "W": 1567,
+        "f": 2251,
+        "l": 202
+      },
+      "minHeight": 0,
+      "maxHeight": 4
+    },
+    {
+      "id": "magma-mine-2",
+      "name": "Magma Mine 2",
+      "region": "emberdeep",
+      "type": "mine",
+      "style": "magma-mine",
+      "levels": "6-7",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 181,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 36,
+      "surfaceCounts": {
+        " ": 1487,
+        "W": 1584,
+        "f": 1936,
+        "l": 177
+      },
+      "minHeight": 0,
+      "maxHeight": 4
+    },
+    {
+      "id": "cinder-caves",
+      "name": "Cinder Caves",
+      "region": "emberdeep",
+      "type": "cave",
+      "style": "cinder-cave",
+      "levels": "7-8",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 44,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 33,
+      "surfaceCounts": {
+        " ": 1183,
+        "W": 1489,
+        "f": 2312,
+        "l": 200
+      },
+      "minHeight": 0,
+      "maxHeight": 6
+    },
+    {
+      "id": "cinder-peak",
+      "name": "Peak of Mt. Cinder",
+      "region": "emberdeep",
+      "type": "peak",
+      "style": "cindergrove",
+      "levels": "8-10",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 392,
+      "gates": 1,
+      "doors": 0,
+      "spawnZones": 7,
+      "nominalCreatures": 23,
+      "surfaceCounts": {
+        "g": 8668,
+        "p": 548
+      },
+      "minHeight": 1,
+      "maxHeight": 18
+    },
+    {
+      "id": "rotting-fen",
+      "name": "Rotting Fen",
+      "region": "rotting-maw",
+      "type": "field",
+      "style": "blightmarsh",
+      "levels": "10-11",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 351,
+      "gates": 1,
+      "doors": 1,
+      "spawnZones": 7,
+      "nominalCreatures": 33,
+      "surfaceCounts": {
+        "g": 8899,
+        "p": 317
+      },
+      "minHeight": 1,
+      "maxHeight": 6
+    },
+    {
+      "id": "bogwater-crossing",
+      "name": "Bogwater Crossing",
+      "region": "rotting-maw",
+      "type": "field",
+      "style": "blightmarsh",
+      "levels": "11-12",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 334,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 7,
+      "nominalCreatures": 34,
+      "surfaceCounts": {
+        "g": 7738,
+        "s": 384,
+        "w": 672,
+        "p": 422
+      },
+      "minHeight": 0,
+      "maxHeight": 6
+    },
+    {
+      "id": "sunken-crypt-1",
+      "name": "Sunken Crypt 1",
+      "region": "rotting-maw",
+      "type": "crypt",
+      "style": "crypt",
+      "levels": "12-14",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 69,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 40,
+      "surfaceCounts": {
+        " ": 1157,
+        "W": 1577,
+        "f": 2450
+      },
+      "minHeight": 0,
+      "maxHeight": 4
+    },
+    {
+      "id": "sunken-crypt-2",
+      "name": "Sunken Crypt 2",
+      "region": "rotting-maw",
+      "type": "crypt",
+      "style": "crypt",
+      "levels": "14-15",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 65,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 35,
+      "surfaceCounts": {
+        " ": 1269,
+        "W": 1571,
+        "f": 2344
+      },
+      "minHeight": 0,
+      "maxHeight": 4
+    },
+    {
+      "id": "hags-hollow",
+      "name": "Hag's Hollow",
+      "region": "rotting-maw",
+      "type": "field",
+      "style": "blightmarsh",
+      "levels": "15-17",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 353,
+      "gates": 1,
+      "doors": 0,
+      "spawnZones": 7,
+      "nominalCreatures": 22,
+      "surfaceCounts": {
+        "g": 9030,
+        "p": 186
+      },
+      "minHeight": 0,
+      "maxHeight": 6
+    },
+    {
+      "id": "rimefang-slopes",
+      "name": "Rimefang Slopes",
+      "region": "rimefang",
+      "type": "field",
+      "style": "frostpeak",
+      "levels": "14-15",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 440,
+      "gates": 1,
+      "doors": 1,
+      "spawnZones": 7,
+      "nominalCreatures": 32,
+      "surfaceCounts": {
+        "g": 8891,
+        "p": 325
+      },
+      "minHeight": 3,
+      "maxHeight": 19
+    },
+    {
+      "id": "ice-cave-1",
+      "name": "Ice Cave 1",
+      "region": "rimefang",
+      "type": "cave",
+      "style": "ice-cave",
+      "levels": "15-16",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 44,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 40,
+      "surfaceCounts": {
+        " ": 1571,
+        "W": 1444,
+        "f": 2169
+      },
+      "minHeight": 0,
+      "maxHeight": 6
+    },
+    {
+      "id": "ice-cave-2",
+      "name": "Ice Cave 2",
+      "region": "rimefang",
+      "type": "cave",
+      "style": "ice-cave",
+      "levels": "16-18",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 51,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 36,
+      "surfaceCounts": {
+        " ": 1090,
+        "W": 1558,
+        "f": 2536
+      },
+      "minHeight": 0,
+      "maxHeight": 6
+    },
+    {
+      "id": "ice-cave-3",
+      "name": "Ice Cave 3",
+      "region": "rimefang",
+      "type": "cave",
+      "style": "ice-cave",
+      "levels": "18-19",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 52,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 36,
+      "surfaceCounts": {
+        " ": 1015,
+        "W": 1595,
+        "f": 2574
+      },
+      "minHeight": 0,
+      "maxHeight": 6
+    },
+    {
+      "id": "frozen-peak",
+      "name": "Frozen Peak",
+      "region": "rimefang",
+      "type": "peak",
+      "style": "frostpeak",
+      "levels": "19-21",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 418,
+      "gates": 1,
+      "doors": 0,
+      "spawnZones": 7,
+      "nominalCreatures": 23,
+      "surfaceCounts": {
+        "g": 8641,
+        "p": 575
+      },
+      "minHeight": 3,
+      "maxHeight": 23
+    },
+    {
+      "id": "scorched-dunes",
+      "name": "Scorched Dunes",
+      "region": "sun-wyrm",
+      "type": "field",
+      "style": "sunscar",
+      "levels": "18-19",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 311,
+      "gates": 1,
+      "doors": 1,
+      "spawnZones": 7,
+      "nominalCreatures": 31,
+      "surfaceCounts": {
+        "g": 8856,
+        "p": 360
+      },
+      "minHeight": 2,
+      "maxHeight": 12
+    },
+    {
+      "id": "canyon-pass",
+      "name": "Canyon Pass",
+      "region": "sun-wyrm",
+      "type": "field",
+      "style": "sunscar",
+      "levels": "19-21",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 304,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 7,
+      "nominalCreatures": 33,
+      "surfaceCounts": {
+        "g": 8872,
+        "p": 344
+      },
+      "minHeight": 1,
+      "maxHeight": 40
+    },
+    {
+      "id": "sun-temple-1",
+      "name": "Sun Temple 1",
+      "region": "sun-wyrm",
+      "type": "temple",
+      "style": "temple",
+      "levels": "21-22",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 101,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 31,
+      "surfaceCounts": {
+        " ": 1238,
+        "W": 1487,
+        "f": 1218,
+        "t": 1241
+      },
+      "minHeight": 0,
+      "maxHeight": 5
+    },
+    {
+      "id": "sun-temple-2",
+      "name": "Sun Temple 2",
+      "region": "sun-wyrm",
+      "type": "temple",
+      "style": "temple",
+      "levels": "22-24",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 91,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 34,
+      "surfaceCounts": {
+        " ": 1064,
+        "W": 1631,
+        "f": 1243,
+        "t": 1246
+      },
+      "minHeight": 0,
+      "maxHeight": 5
+    },
+    {
+      "id": "wyrms-rest",
+      "name": "Wyrm's Rest",
+      "region": "sun-wyrm",
+      "type": "field",
+      "style": "sunscar",
+      "levels": "24-26",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 311,
+      "gates": 1,
+      "doors": 0,
+      "spawnZones": 7,
+      "nominalCreatures": 32,
+      "surfaceCounts": {
+        "g": 9002,
+        "p": 214
+      },
+      "minHeight": 1,
+      "maxHeight": 12
+    },
+    {
+      "id": "vault-gardens",
+      "name": "Vault Gardens",
+      "region": "shattered-vault",
+      "type": "field",
+      "style": "ruins",
+      "levels": "22-23",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 227,
+      "gates": 1,
+      "doors": 1,
+      "spawnZones": 7,
+      "nominalCreatures": 36,
+      "surfaceCounts": {
+        "g": 8842,
+        "p": 374
+      },
+      "minHeight": 1,
+      "maxHeight": 14
+    },
+    {
+      "id": "rune-labyrinth-1",
+      "name": "Rune Labyrinth 1",
+      "region": "shattered-vault",
+      "type": "lab",
+      "style": "lab",
+      "levels": "23-25",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 61,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 32,
+      "surfaceCounts": {
+        "W": 1733,
+        " ": 1756,
+        "t": 745,
+        "f": 653,
+        "l": 297
+      },
+      "minHeight": 0,
+      "maxHeight": 4
+    },
+    {
+      "id": "rune-labyrinth-2",
+      "name": "Rune Labyrinth 2",
+      "region": "shattered-vault",
+      "type": "lab",
+      "style": "lab",
+      "levels": "25-26",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 66,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 32,
+      "surfaceCounts": {
+        "W": 1686,
+        " ": 1678,
+        "t": 809,
+        "f": 705,
+        "l": 306
+      },
+      "minHeight": 0,
+      "maxHeight": 4
+    },
+    {
+      "id": "rune-labyrinth-3",
+      "name": "Rune Labyrinth 3",
+      "region": "shattered-vault",
+      "type": "lab",
+      "style": "lab",
+      "levels": "26-28",
+      "size": [
+        72,
+        72
+      ],
+      "safe": false,
+      "props": 45,
+      "gates": 2,
+      "doors": 0,
+      "spawnZones": 8,
+      "nominalCreatures": 33,
+      "surfaceCounts": {
+        " ": 2132,
+        "W": 1547,
+        "t": 659,
+        "f": 576,
+        "l": 270
+      },
+      "minHeight": 0,
+      "maxHeight": 4
+    },
+    {
+      "id": "floating-sanctum",
+      "name": "Floating Sanctum",
+      "region": "shattered-vault",
+      "type": "peak",
+      "style": "ruins",
+      "levels": "28-30",
+      "size": [
+        96,
+        96
+      ],
+      "safe": false,
+      "props": 244,
+      "gates": 1,
+      "doors": 0,
+      "spawnZones": 7,
+      "nominalCreatures": 28,
+      "surfaceCounts": {
+        "g": 8706,
+        "p": 510
+      },
+      "minHeight": 2,
+      "maxHeight": 15
+    }
+  ]
+}

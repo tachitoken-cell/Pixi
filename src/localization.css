@@ -1,0 +1,8 @@
+.language-picker { display:flex;align-items:center;justify-content:space-between;gap:16px;color:inherit;font-size:13px; }
+.language-picker select { min-height:40px;padding:7px 30px 7px 12px;border:1px solid #bca87566;border-radius:4px;background:#243d31;color:#f7edcc;font:inherit; }
+.language-picker select:focus-visible { outline:2px solid #f4d28a;outline-offset:3px; }
+.login-language { position:absolute;top:max(16px,env(safe-area-inset-top));right:max(20px,env(safe-area-inset-right));z-index:3;color:#f7edcc; }
+.roster-language { margin:12px 0; }
+html:lang(zh-CN) body { font-family:'PingFang SC','Microsoft YaHei','Noto Sans CJK SC',sans-serif; }
+html:lang(zh-CN) :is(h1,h2,h3,button,label,.eyebrow,.quest-tracker,.world-label) { letter-spacing:normal; }
+@media(max-width:600px) { .login-language { top:max(8px,env(safe-area-inset-top));right:12px; }.login-language .language-picker>span { position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%); }.login-language select { min-height:36px; } }

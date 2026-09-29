@@ -1,0 +1,24 @@
+{
+  "name": "Bramble Badger",
+  "description": "A striped woodland badger with slate fur, a leafy bramble mantle and tiny ruby berries. This Mossvale Pets NFT grants its current verified wallet holder access to this cosmetic companion in Mossvale. Selling or transferring it moves that access to the new holder.",
+  "image": "https://mossvale.world/ui/pets/bramble-badger.png",
+  "external_url": "https://mossvale.world",
+  "attributes": [
+    {
+      "trait_type": "Species",
+      "value": "Bramble Badger"
+    },
+    {
+      "trait_type": "Game asset",
+      "value": "bramble-badger"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "epic"
+    },
+    {
+      "trait_type": "Source",
+      "value": "bramble-wolf"
+    }
+  ]
+}

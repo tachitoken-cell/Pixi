@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mossvale arena contract setup</title>
+<style>body{max-width:700px;margin:48px auto;padding:0 24px;font:16px/1.5 system-ui;color:#e8e3d1;background:#172520}h1{font:30px Georgia;color:#e8c985}label{display:block;margin:22px 0 8px}input,button{font:inherit;padding:12px;background:#243b30;color:inherit;border:1px solid #81967c;border-radius:4px}input{box-sizing:border-box;width:100%}button{margin:16px 10px 0 0;cursor:pointer}button:hover:enabled{background:#314c3c}button:disabled{opacity:.5;cursor:default}:focus-visible{outline:3px solid #e8c985;outline-offset:3px}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:#0c1913}a{color:#e8c985}small{display:block;color:#b2c0b0}#status{overflow-wrap:anywhere}#recovery{margin-top:28px;padding-top:8px;border-top:1px solid #81967c}@media(max-width:480px){body{margin:24px auto;padding:0 16px}button{width:100%;margin-right:0}}</style></head>
+<body><main><h1>Arena contract setup</h1>
+<p>Deploy the separate MOSS arena escrow on Robinhood Chain mainnet (4663). Your deployment wallet pays ETH gas. This page needs public addresses only.</p>
+<p>Equal 1v1 stakes, with a 5% tax on the combined pot. Of that tax, 80% burns, 10% goes to the treasury and 10% goes to the fixed developer wallet. At 100 MOSS each, the winner receives 190 MOSS.</p>
+<small>Fixed developer recipient: <a href="https://robinhoodchain.blockscout.com/address/0x6D96b833C760774175Cc6E2c4F7424122EA3798f" target="_blank" rel="noopener">0x6D96b833C760774175Cc6E2c4F7424122EA3798f</a></small>
+<label for="authority">Game signing authority · public address</label><input id="authority" autocomplete="off" spellcheck="false" aria-describedby="authority-help"><small id="authority-help">Use the public address of MOSS_ARENA_AUTHORITY_KEY. Keep that private key in server secrets. This authority is permanent.</small>
+<label for="treasury">Existing Mossvale treasury · public contract address</label><input id="treasury" autocomplete="off" spellcheck="false" aria-describedby="treasury-help"><small id="treasury-help">Use the existing TREASURE_TREASURY_CONTRACT address. This recipient is permanent.</small>
+<button id="connect">Connect deployment wallet</button><button id="deploy" disabled>Deploy arena contract</button>
+<p id="status" role="status" aria-live="polite">No wallet connected. No deployment submitted.</p>
+<section id="recovery" hidden aria-label="Deployment recovery"><p id="pending"></p><p>Keep this browser’s saved deployment details. If the wallet request was interrupted, recover its transaction hash from wallet activity or <a id="explorer" target="_blank" rel="noopener">the explorer</a> before proceeding.</p><label for="hash">Deployment transaction hash</label><input id="hash" autocomplete="off" spellcheck="false"><button id="verify">Check deployment</button></section>
+<pre id="result" hidden></pre>
+<p><a href="/contracts/MossvaleArena.json" target="_blank" rel="noopener">Compiled contract and ABI</a> · <a href="https://docs.robinhood.com/chain/add-network-to-wallet/" target="_blank" rel="noopener">Robinhood network settings</a></p>
+</main><script type="module">
+const $=id=>document.getElementById(id), address=/^0x[\da-f]{40}$/i, hash=/^0x[\da-f]{64}$/i;
+const key='mossvale-arena-deployment:4663', token='0x6742883Eef788E2424CE5a1b0d4303144AaEc0a5', developer='0x6D96b833C760774175Cc6E2c4F7424122EA3798f';
+const selectors={authority:'0xbf7e214f',treasury:'0x61d027b3',paymentToken:'0x3013ce29',devTeam:'0xd3dcc175',TAX_BPS:'0x68f4a786',name:'0x06fdde03',symbol:'0x95d89b41',decimals:'0x313ce567'};
+let account, busy=false;
+const same=(a,b)=>typeof a==='string'&&typeof b==='string'&&a.toLowerCase()===b.toLowerCase();
+const nonzero=value=>address.test(value)&&!/^0x0{40}$/i.test(value);
+const word=value=>BigInt(value).toString(16).padStart(64,'0');
+const stringData=value=>'0x'+word(32)+word(value.length)+Array.from(value,c=>c.charCodeAt(0).toString(16).padStart(2,'0')).join('').padEnd(Math.ceil(value.length/32)*64,'0');
+const request=(method,params=[])=>{if(!window.ethereum)throw Error('Open this page in a browser with an Ethereum wallet extension.');return window.ethereum.request({method,params});};
+const saved=()=>JSON.parse(localStorage.getItem(key)||'null');
+function persist(value){const text=JSON.stringify(value);localStorage.setItem(key,text);if(localStorage.getItem(key)!==text)throw Error('Browser recovery storage is unavailable. No new deployment can be submitted.');}
+function controls(){
+  const state=saved();
+  for(const id of ['connect','verify'])$(id).disabled=busy;
+  for(const id of ['authority','treasury'])$(id).disabled=busy||!!state;
+  $('deploy').disabled=busy||!account||!!state;
+  $('recovery').hidden=!state;
+  if(state){$('pending').textContent=`Deployment wallet: ${state.transaction.from}`;$('explorer').href=`https://robinhoodchain.blockscout.com/${state.hash?'tx/'+state.hash:'address/'+state.transaction.from}`;if(state.hash)$('hash').value=state.hash;}
+}
+async function run(work){if(busy)return;busy=true;try{controls();await work();}catch(error){$('status').textContent=error.message;}finally{busy=false;try{controls();}catch{for(const id of ['connect','deploy','verify'])$(id).disabled=true;}}}
+async function locked(work){if(!navigator.locks)throw Error('Use a wallet browser that supports Web Locks for safe deployment recovery.');await navigator.locks.request(key,{ifAvailable:true},async lock=>{if(!lock)throw Error('Another tab is handling this deployment.');await work();});}
+async function network(){
+  if(BigInt(await request('eth_chainId'))!==4663n){
+    try{await request('wallet_switchEthereumChain',[{chainId:'0x1237'}]);}
+    catch(error){if(error.code!==4902)throw error;await request('wallet_addEthereumChain',[{chainId:'0x1237',chainName:'Robinhood Chain',rpcUrls:['https://rpc.mainnet.chain.robinhood.com'],blockExplorerUrls:['https://robinhoodchain.blockscout.com'],nativeCurrency:{name:'Ether',symbol:'ETH',decimals:18}}]);await request('wallet_switchEthereumChain',[{chainId:'0x1237'}]);}
+  }
+  if(BigInt(await request('eth_chainId'))!==4663n)throw Error('Select Robinhood Chain mainnet (4663).');
+}
+async function artifact(){const response=await fetch('/contracts/MossvaleArena.json',{cache:'no-store'});if(!response.ok)throw Error('Arena contract artifact unavailable.');const value=await response.json();if(value.contractName!=='MossvaleArena'||!/^0x(?:[\da-f]{2})+$/i.test(value.bytecode)||!/^0x(?:[\da-f]{2})+$/i.test(value.deployedBytecode))throw Error('Wrong arena contract artifact.');return value;}
+const read=(to,name)=>request('eth_call',[{to,data:selectors[name]},'latest']);
+async function preflight(treasury){
+  if(await request('eth_getCode',[token,'latest'])==='0x')throw Error('The MOSS token is unavailable on this network.');
+  if(await request('eth_getCode',[treasury,'latest'])==='0x')throw Error('Use the existing Mossvale treasury contract address.');
+  const [name,symbol,decimals]=await Promise.all(['name','symbol','decimals'].map(name=>read(token,name)));
+  if(!same(name,stringData('Mossvale'))||!same(symbol,stringData('MOSS'))||BigInt(decimals)!==18n)throw Error('The fixed token does not match MOSS.');
+}
+async function verifyDeployment(){
+  const state=saved();if(!state)throw Error('There is no saved deployment to check.');
+  const submitted=$('hash').value.trim()||state.hash;if(!hash.test(submitted))throw Error('Enter the full deployment hash from wallet activity or the explorer.');
+  if(state.hash&&!same(state.hash,submitted))throw Error('Check the saved transaction hash; do not replace a known submission.');
+  await network();const compiled=await artifact();
+  if(!nonzero(state.authority)||!nonzero(state.treasury)||!nonzero(state.transaction.from)||state.transaction.data!==compiled.bytecode+word(state.authority)+word(state.treasury))throw Error('Saved deployment does not match this artifact. Keep its hash and verify the original artifact.');
+  const receipt=await request('eth_getTransactionReceipt',[submitted]);
+  if(!receipt)throw Error('Deployment is still pending. Keep its hash and check again; do not deploy again.');
+  const tx=await request('eth_getTransactionByHash',[submitted]);
+  if(!tx||!same(tx.hash,submitted)||!same(receipt.transactionHash,submitted)||tx.to!==null||receipt.to!==null||!same(tx.from,state.transaction.from)||!same(receipt.from,state.transaction.from)||!same(tx.input,state.transaction.data)||BigInt(tx.value)!==0n||BigInt(tx.chainId)!==4663n||tx.blockNumber!==receipt.blockNumber||!same(tx.blockHash,receipt.blockHash)||!hash.test(receipt.blockHash))throw Error('That hash is not the exact saved deployment. Keep the pending record and recover the correct hash.');
+  if(receipt.status!=='0x1'||!nonzero(receipt.contractAddress))throw Error('Deployment did not succeed. Keep its hash and check the confirmed failure before starting another deployment.');
+  const deployed=receipt.contractAddress;
+  if(!same(await request('eth_getCode',[deployed,'latest']),compiled.deployedBytecode))throw Error('Deployed arena runtime does not match. Do not configure this address.');
+  for(const [name,expected] of Object.entries({authority:state.authority,treasury:state.treasury,paymentToken:token,devTeam:developer,TAX_BPS:500}))if(BigInt(await read(deployed,name))!==BigInt(expected))throw Error(`Deployed ${name} does not match. Do not configure this address.`);
+  await preflight(state.treasury);
+  const canonical=await request('eth_getBlockByNumber',[receipt.blockNumber,false]);
+  if(!same(canonical?.hash,receipt.blockHash)||canonical.number!==receipt.blockNumber||BigInt(await request('eth_chainId'))!==4663n)throw Error('Deployment chain changed during verification. Keep the hash and check again.');
+  state.hash=submitted;state.contract=deployed;persist(state);
+  $('result').hidden=false;$('result').textContent=`MOSS_ARENA_CONTRACT=${deployed}\nMOSS_ARENA_RPC_URL=https://robinhood-mainnet.g.alchemy.com/v2/<SERVER_ALCHEMY_API_KEY>\nTREASURE_TREASURY_CONTRACT=${state.treasury}\n\nKeep MOSS_ARENA_AUTHORITY_KEY in server secrets only. Its public address must be ${state.authority}.\nDeployment transaction: ${submitted}`;
+  $('status').textContent='Deployment mined and verified. First release the compatible game code to EU, US and Asia with arena settings empty; then activate these settings through the production workflow. Wagers enable after current canonical chain verification; saved wager recovery records remain until finalized.';
+}
+$('connect').onclick=()=>run(async()=>{await network();[account]=await request('eth_requestAccounts');if(!nonzero(account))throw Error('Choose a deployment wallet.');$('status').textContent=`Connected ${account}. Review both public addresses before deploying.`;});
+$('deploy').onclick=()=>run(()=>locked(async()=>{
+  if(saved())throw Error('Recover or verify the saved deployment before continuing.');
+  const authority=$('authority').value.trim(),treasury=$('treasury').value.trim();
+  if(!nonzero(authority)||!nonzero(treasury))throw Error('Enter valid, nonzero public authority and treasury addresses.');
+  await network();await preflight(treasury);const compiled=await artifact();
+  const transaction={from:account,data:compiled.bytecode+word(authority)+word(treasury),value:'0x0',chainId:'0x1237'};
+  const estimate=BigInt(await request('eth_estimateGas',[transaction]));if(estimate<=0n)throw Error('A usable deployment gas estimate is required.');transaction.gas='0x'+((estimate*120n+99n)/100n).toString(16);
+  if(BigInt(await request('eth_chainId'))!==4663n||!same((await request('eth_accounts'))[0],account))throw Error('Wallet account or network changed. Connect again.');
+  const state={authority,treasury,transaction,startedAt:Date.now()};persist(state);
+  $('status').textContent='Review the arena contract deployment and ETH gas fee in your wallet.';
+  let submitted;try{submitted=await request('eth_sendTransaction',[transaction]);}catch(error){if(error.code===4001)persist(null);throw error;}
+  if(!hash.test(submitted))throw Error('The wallet returned no usable hash. Recover it from wallet activity before continuing.');
+  state.hash=submitted;persist(state);$('hash').value=submitted;
+  $('status').textContent=`Deployment submitted: ${submitted}. Use Check deployment after it is mined.`;
+}));
+$('verify').onclick=()=>run(()=>locked(verifyDeployment));
+window.addEventListener('storage',()=>{controls();$('status').textContent='Saved deployment changed in another tab. Check the existing deployment before continuing.';});
+try{const state=saved();persist(state);if(state){$('authority').value=state.authority;$('treasury').value=state.treasury;$('status').textContent='A deployment was already requested. Check or recover its transaction hash.';}controls();}catch(error){$('status').textContent=error.message;for(const id of ['connect','deploy','verify'])$(id).disabled=true;}
+</script></body></html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mossvale · Dungeon preview</title>
+  <style>
+    *{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:#241c3c;color:#fff3d1;font:14px/1.45 system-ui,sans-serif}canvas{display:block;width:100vw;height:100vh;touch-action:none}aside{position:fixed;left:18px;top:18px;max-width:min(390px,calc(100vw - 36px));padding:14px 16px;background:#141a1bea;border:1px solid #667565;border-radius:8px;box-shadow:0 4px 28px #0006}strong{font-size:11px;letter-spacing:.1em;color:#dfc68e}h1{font-size:18px;margin:5px 0 10px}p{margin:8px 0 0;color:#bdc9bc;font-size:12px}select,button{font:inherit;color:inherit;background:#29372f;border:1px solid #687868;border-radius:4px;padding:6px 8px}select{width:100%;margin:4px 0 8px}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}button:focus-visible,select:focus-visible{outline:2px solid #ffd37c;outline-offset:2px}.buttons{display:flex;gap:6px;flex-wrap:wrap}#status{color:#f5d596}#gates{font-size:11px}#loading{position:fixed;inset:50% 0 auto;text-align:center;pointer-events:none}
+  </style>
+  <style>
+    .room-portal-label{position:fixed;transform:translate(-50%,-100%);width:max-content;max-width:min(190px,calc(100vw - 16px));padding:5px 9px;background:#101a37e8;border:1px solid #81afff;color:#eef5ff;font-size:12px;text-align:center;z-index:1}.room-portal-label:disabled{opacity:1;color:#c3d8ff;cursor:default}aside{z-index:2}
+  </style>
+</head>
+<body>
+  <canvas id="preview" aria-label="Local Mossvale dungeon preview. Drag to orbit, scroll to zoom, WASD to walk." tabindex="0"></canvas>
+  <aside>
+    <strong>LOCAL PREVIEW · SIMULATED ENCOUNTER STATE</strong>
+    <h1>The Rootvault</h1>
+    <label for="dungeon">Choose dungeon</label><select id="dungeon"></select><button id="view">Inspect entrance</button>
+    <p id="identity"></p>
+    <div id="room-controls"><label for="room">Inspect room</label><select id="room"></select></div>
+    <div class="buttons" id="encounters"><button id="clear">Clear encounter</button><button id="seals">Activate seals</button><button id="reset">Reset</button></div>
+    <div class="buttons" id="demo-controls"><button id="overview">Layout overview</button><button id="mechanic">Try mob mechanic</button></div>
+    <p id="mechanic-note" role="status"></p>
+    <p id="status" role="status">Loading real dungeon assets…</p>
+    <p id="gates"></p>
+    <p>Drag to orbit · Scroll to zoom · WASD to walk · E to teleport<br>Room selection moves the preview adventurer. No live game data.</p>
+  </aside>
+  <div id="loading">Loading dungeon and character assets…</div>
+  <script type="module" src="/src/dungeon-preview.ts"></script>
+</body>
+</html>

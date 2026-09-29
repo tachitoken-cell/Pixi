@@ -1,0 +1,117 @@
+{
+  "status": "DRAFT_FOR_OWNER_REVIEW_NO_SUBMISSION",
+  "appId": "6811825860",
+  "package": "world.mossvale.game",
+  "products": [
+    {
+      "productId": "world.mossvale.game.store_embermane",
+      "gameProductId": "store-embermane",
+      "name": "Embermane",
+      "type": "consumable",
+      "referenceUsdPrice": 40,
+      "description": "A flame-crowned steed in ember-forged armor. Requires level 25 and riding training to summon.",
+      "entitlement": "character",
+      "pricingStatus": "draft-for-owner-review",
+      "locale": "en-US",
+      "appleDescription": "Flame-crowned mount. Requires level 25."
+    },
+    {
+      "productId": "world.mossvale.game.store_cinderfang",
+      "gameProductId": "store-cinderfang",
+      "name": "Cinderfang",
+      "type": "consumable",
+      "referenceUsdPrice": 40,
+      "description": "An armored ash wolf with a blazing mane. Requires level 25 and riding training to summon.",
+      "entitlement": "character",
+      "pricingStatus": "draft-for-owner-review",
+      "locale": "en-US",
+      "appleDescription": "Armored ash wolf mount. Requires level 25."
+    },
+    {
+      "productId": "world.mossvale.game.store_ashwing",
+      "gameProductId": "store-ashwing",
+      "name": "Ashwing",
+      "type": "consumable",
+      "referenceUsdPrice": 20,
+      "description": "A little ember drake with a crown of fire. A cosmetic companion for your travels.",
+      "entitlement": "character",
+      "pricingStatus": "draft-for-owner-review",
+      "locale": "en-US",
+      "appleDescription": "An ember drake companion for one character."
+    },
+    {
+      "productId": "world.mossvale.game.store_cinder_kit",
+      "gameProductId": "store-cinder-kit",
+      "name": "Cinder Kit",
+      "type": "consumable",
+      "referenceUsdPrice": 20,
+      "description": "A curious fox with twin ember tails. A cosmetic companion for your travels.",
+      "entitlement": "character",
+      "pricingStatus": "draft-for-owner-review",
+      "locale": "en-US",
+      "appleDescription": "An ember fox companion for one character."
+    },
+    {
+      "productId": "world.mossvale.game.store_profession_xp",
+      "gameProductId": "store-profession-xp",
+      "name": "Profession XP Boost",
+      "type": "consumable",
+      "referenceUsdPrice": 2,
+      "description": "+50% profession XP for 1 hour. Includes gathering and crafting. Activate after delivery; time continues while offline.",
+      "entitlement": "character",
+      "pricingStatus": "draft-for-owner-review",
+      "locale": "en-US",
+      "appleDescription": "50% more profession XP for 1 hour."
+    },
+    {
+      "productId": "world.mossvale.game.store_combat_xp",
+      "gameProductId": "store-combat-xp",
+      "name": "XP Boost",
+      "type": "consumable",
+      "referenceUsdPrice": 2,
+      "description": "+50% character XP for 1 hour. Activate after delivery; time continues while offline.",
+      "entitlement": "character",
+      "pricingStatus": "draft-for-owner-review",
+      "locale": "en-US",
+      "appleDescription": "50% more character XP for 1 hour."
+    },
+    {
+      "productId": "world.mossvale.game.store_damage",
+      "gameProductId": "store-damage",
+      "name": "Damage Power Up",
+      "type": "consumable",
+      "referenceUsdPrice": 2,
+      "description": "+20% damage for 1 hour. Activate after delivery; time continues while offline.",
+      "entitlement": "character",
+      "pricingStatus": "draft-for-owner-review",
+      "locale": "en-US",
+      "appleDescription": "20% more damage for 1 hour."
+    },
+    {
+      "productId": "world.mossvale.game.store_defense",
+      "gameProductId": "store-defense",
+      "name": "Defense Power Up",
+      "type": "consumable",
+      "referenceUsdPrice": 2,
+      "description": "+20% defense for 1 hour. Activate after delivery; time continues while offline.",
+      "entitlement": "character",
+      "pricingStatus": "draft-for-owner-review",
+      "locale": "en-US",
+      "appleDescription": "20% more defense for 1 hour."
+    },
+    {
+      "productId": "world.mossvale.game.store_cosmetic_box",
+      "gameProductId": "store-cosmetic-box",
+      "name": "Cinder Cosmetic Box",
+      "type": "consumable",
+      "referenceUsdPrice": 5,
+      "description": "One random, unowned Cinder mount or pet. Equal odds for every remaining reward. No duplicates, trading or cash-out. Opens after payment is confirmed.",
+      "entitlement": "character",
+      "pricingStatus": "draft-for-owner-review",
+      "locale": "en-US",
+      "appleDescription": "One random unowned Cinder mount or pet."
+    }
+  ],
+  "scope": "Fixed-price game-store consumables only. Auction House checkout is deferred.",
+  "pricingNote": "Reference USD prices are copied from the existing game catalog. The owner must review actual store price points, taxes and territories before activation."
+}

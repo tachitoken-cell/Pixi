@@ -1,0 +1,99 @@
+{
+	admin off
+	auto_https off
+	# Access logging stays off. Keep failures useful without callback URLs or credentials.
+	log {
+		format filter {
+			wrap json
+			fields {
+				request>uri delete
+				request>headers delete
+			}
+		}
+	}
+}
+
+http://auth.mossvale.world:8087 {
+	bind 127.0.0.1
+	@http not header X-Forwarded-Proto https
+	redir @http https://auth.mossvale.world{uri} 308
+	reverse_proxy 192.168.0.148:80 {
+		header_up Host 347997b7-50dd-490b-aa22-a2627e0732e8.bba.tools
+		header_up X-Forwarded-Host auth.mossvale.world
+		header_up X-Forwarded-Proto https
+		header_up X-Forwarded-Port 443
+	}
+}
+
+http://:8087 {
+	bind 127.0.0.1
+	@accountHttp {
+		host account.mossvale.world
+		not header X-Forwarded-Proto https
+	}
+	redir @accountHttp https://account.mossvale.world{uri} 308
+	@http not header X-Forwarded-Proto https
+	redir @http https://mossvale.world{uri} 308
+	@www host www.mossvale.world
+	redir @www https://mossvale.world{uri} 308
+	@accountEntry {
+		host account.mossvale.world
+		path / /index.html
+	}
+	# Preserve OAuth query parameters before replacing the upstream BBA Host.
+	rewrite @accountEntry /account.html
+
+	@entry {
+		method GET HEAD
+		expression `{http.request.orig_uri}.matches('^/(index[.]html)?([?].*)?$') && (header_regexp('Accept', '(?i)\\btext/html\\b') || header({'Sec-Fetch-Mode': 'navigate'}))`
+		header !Upgrade
+		header !Authorization
+	}
+	handle @entry {
+		reverse_proxy 192.168.0.148:80 {
+			header_up Host 00edc49e-6028-442d-9417-673a2251a662.bba.tools
+			# Loopback accepts the dedicated cloudflared tunnel only. Empty secret leaves country untrusted.
+			header_up X-Mossvale-Country {http.request.header.CF-IPCountry}
+			header_up X-Mossvale-Country-Token {$STATS_COUNTRY_SECRET:disabled}
+			header_up X-Forwarded-Proto {http.request.header.X-Forwarded-Proto}
+			transport http {
+				# ponytail: bound the response headers, not a streaming body; use an absolute deadline only if needed.
+				response_header_timeout 5s
+			}
+			@restarting status 5xx
+			handle_response @restarting {
+				root * /srv/mossvale
+				rewrite * /realm-restarting.html
+				header Cache-Control no-store
+				header Retry-After 5
+				header Referrer-Policy no-referrer
+				header X-Content-Type-Options nosniff
+				file_server {
+					status 503
+				}
+			}
+		}
+	}
+	handle {
+		reverse_proxy 192.168.0.148:80 {
+			header_up Host 00edc49e-6028-442d-9417-673a2251a662.bba.tools
+			# Loopback accepts the dedicated cloudflared tunnel only. Empty secret leaves country untrusted.
+			header_up X-Mossvale-Country {http.request.header.CF-IPCountry}
+			header_up X-Mossvale-Country-Token {$STATS_COUNTRY_SECRET:disabled}
+			header_up X-Forwarded-Proto {http.request.header.X-Forwarded-Proto}
+		}
+	}
+	handle_errors 5xx {
+		handle @entry {
+			root * /srv/mossvale
+			rewrite * /realm-restarting.html
+			header Cache-Control no-store
+			header Retry-After 5
+			header Referrer-Policy no-referrer
+			header X-Content-Type-Options nosniff
+			file_server {
+				status 503
+			}
+		}
+	}
+}

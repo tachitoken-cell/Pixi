@@ -1,0 +1,2568 @@
+[
+  {
+    "id": "2026-09-29-client-startup-performance",
+    "date": "2026-09-29",
+    "title": "Smoother startup and dungeon cameras",
+    "summary": "Added an immediate loading screen, reduced dungeon camera overhead, and removed the unfinished explorable World Atlas.",
+    "changes": [
+      "The loading message now appears immediately while the game downloads, instead of a blank green screen.",
+      "Camera collision checks now avoid scanning every stone triangle each frame. Walls, openings and overhead arches keep their existing camera collision, appearance and movement rules.",
+      "Removed the unfinished explorable World Atlas. The M map and minimap remain available. Characters last saved in the atlas return to their previous location in the main world."
+    ],
+    "guides": [
+      "dungeons",
+      "audio-and-settings",
+      "world"
+    ]
+  },
+  {
+    "id": "2026-09-29-dungeon-restart-after-clear",
+    "date": "2026-09-29",
+    "title": "Start a fresh dungeon after clearing it",
+    "summary": "Leaving a completed dungeon no longer keeps you stuck in the cleared run because completion rewards were left unclaimed.",
+    "changes": [
+      "After everyone deliberately leaves a completed run, entering again starts a fresh dungeon. Party members who have finished leaving are told to wait for the remaining adventurers instead of being sent back into cleared rooms.",
+      "Unclaimed completion rewards follow you out as personal loot beside the entrance for five minutes, keeping the same items and any partial claims. Ordinary boss and cache loot stays in the dungeon.",
+      "Disconnect recovery still preserves the existing run for ten minutes after its last member leaves."
+    ],
+    "guides": [
+      "dungeons"
+    ]
+  },
+  {
+    "id": "2026-09-29-movement-stall-recovery",
+    "date": "2026-09-29",
+    "title": "Reduce movement snap-back after server lag",
+    "summary": "Recently moving adventurers can catch up after a brief realm stall without being pulled back for otherwise valid movement.",
+    "changes": [
+      "Walking, sprinting and riding now account for a brief delay measured on the server when processing movement already in flight. Movement speed, stamina, collisions and blocked routes remain authoritative. Idle time and client-reported timing cannot provide extra movement allowance."
+    ],
+    "guides": [
+      "getting-started",
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-29-world-update-performance",
+    "date": "2026-09-29",
+    "title": "Reduce overworld server delays",
+    "summary": "Reduced unnecessary work when preparing world updates for adventurers in the overworld.",
+    "changes": [
+      "The realm now skips terrain-height checks for monsters and resources that are already too far away to appear in your world update. Nearby visibility, height checks and dungeon updates stay the same."
+    ],
+    "guides": [
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-29-update-recovery",
+    "date": "2026-09-29",
+    "title": "Repair interrupted game updates",
+    "summary": "Fixed automatic updates getting stuck after the arena wallet configuration changed.",
+    "changes": [
+      "Automatic updates now accept the arena wallet settings and can reuse verified downloads from the failed update. The previous complete game remains available until the replacement is ready.",
+      "Restored verified treasury payout and balance figures on the public statistics page when the network provider cannot look up older block headers by number."
+    ],
+    "guides": [
+      "getting-started",
+      "statistics"
+    ]
+  },
+  {
+    "id": "2026-09-29-realm-entry-timeouts",
+    "date": "2026-09-29",
+    "title": "More reliable realm entry during busy reconnects",
+    "summary": "Reduced connection timeouts when several adventurers sign in or change realms together.",
+    "changes": [
+      "Reduced unnecessary waits while loading accounts, helping simultaneous sign-ins and realm changes finish before the connection times out. Account ownership, deletion safeguards and saved progress remain protected."
+    ],
+    "guides": [
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-29-remote-terrain-height",
+    "date": "2026-09-29",
+    "title": "Keep other adventurers aligned with terrain steps",
+    "summary": "Grounded adventurers no longer briefly hover while walking up or down terrain steps.",
+    "changes": [
+      "Fixed other players briefly appearing above or inside ordinary terrain steps while walking. Their feet now follow the terrain at their displayed position."
+    ],
+    "guides": [
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-29-dungeon-checkpoint-movement",
+    "date": "2026-09-29",
+    "title": "Move freely after returning to a dungeon checkpoint",
+    "summary": "Sanctuary checkpoints no longer trap returning adventurers inside their floating markers.",
+    "changes": [
+      "Fixed players being unable to move after resuming a dungeon, respawning or recovering from a party wipe at an activated sanctuary checkpoint, including Veilhaven Monastery.",
+      "Checkpoint glyphs and rings are passable. Dungeon floors, walls, chests and other solid scenery keep their collision."
+    ],
+    "guides": [
+      "dungeons"
+    ]
+  },
+  {
+    "id": "2026-09-29-reward-wallet-reviews",
+    "date": "2026-09-29",
+    "title": "Clearer reward and wallet reviews",
+    "summary": "See expedition rewards and recognized MOSS arena transaction terms before continuing.",
+    "changes": [
+      "Treasure-map journals show Gold, potions, ancient coins and the voucher chance together above the expedition action. Rewards remain reserved for the map owner.",
+      "Recognized MOSS arena wallet requests show the stake, opponent, pot, tax and refund deadlines. Unrecognized transactions keep their full transaction review."
+    ],
+    "guides": [
+      "treasure-maps",
+      "colosseum"
+    ]
+  },
+  {
+    "id": "2026-09-29-quest-ui-layout",
+    "date": "2026-09-29",
+    "title": "A complete interface, on desktop and mobile",
+    "summary": "Clearer game windows and touch controls in Mossvale’s familiar forest and gold style.",
+    "changes": [
+      "Story quests now have an active/completed list, a detailed objective sheet, live progress and reward details. Track an objective to pin it to the HUD; ready quests show a route back to their giver.",
+      "The desktop HUD separates a centered ability bar from a compact menu dock. Paused specialist XP stays out of the HUD. Saved HUD size settings remain available.",
+      "Backpack opens directly to your bags, with item search, capacity tabs and grid/list views. Filtering does not move or change your items.",
+      "Trainer filters show counts for available, upcoming and learned abilities. Merchant and trainer details sit beside the list on desktop and beneath the selected row on phones.",
+      "Touch controls now place five skills around Attack, with four pages for your twenty slots. A compact quest tracker stays visible, and Menu opens a full-screen grid with labelled buttons.",
+      "Bank shows your bags beside stored items on desktop, with search and sorting. Auction item details follow the selected row on phones, and the NFT collection separates houses, pets and mounts.",
+      "Spellbook search includes learned and upcoming abilities. Mobile Skill Tree branches, workshop progression, collection filters, friend groups and achievement progress make larger catalogs easier to browse.",
+      "Arena highlights your highest bracket and next rank. Dungeons, Instant Combat and raids show their requirements, stages and rewards more clearly. Sign-in, loading and wallet pages keep the existing secure actions and Mossvale artwork."
+    ],
+    "guides": [
+      "getting-started",
+      "story",
+      "bags-and-bank",
+      "combat-and-loot",
+      "dungeons",
+      "instant-combat",
+      "horned-apostle",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-29-chat-translation",
+    "date": "2026-09-29",
+    "title": "Read chat in your language",
+    "summary": "Choose a chat language on realms with translation enabled.",
+    "changes": [
+      "Chat now has an optional language picker for Google Translate, with 24 languages and a preference saved on this device.",
+      "World, party and incoming whisper messages can be translated automatically. Select Original beside a translated message to read what the player wrote; sending and reporting messages keep the original text.",
+      "Translation is off by default and requires the realm to enable it. If translation is unavailable or its limit is reached, original messages remain readable."
+    ],
+    "guides": [
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-29-lower-game-data",
+    "date": "2026-09-29",
+    "title": "Lower data usage while playing and loading",
+    "summary": "Smaller world downloads and more efficient game updates reduce data usage.",
+    "changes": [
+      "World updates use stronger compression and reuse repeated data on supported connections, with the same update frequency.",
+      "Your connection receives your own personal loot drops, reducing background data from other players’ uncollected loot.",
+      "World collision downloads now use lossless compression, reducing the data needed when loading uncached areas.",
+      "The browser reuses verified files it just loaded when saving the game for your next visit, avoiding a second background download of those files.",
+      "Friends and Achievements header artwork loads when you open those panels instead of during startup."
+    ],
+    "guides": [
+      "getting-started",
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-29-wallet-background-checks",
+    "date": "2026-09-29",
+    "title": "Lighter background wallet checks",
+    "summary": "Verified empty NFT wallets use fewer background chain requests.",
+    "changes": [
+      "After all NFT collections verify that a linked wallet is empty, automatic ownership checks run about once a minute. Open Pets & Mounts to refresh immediately after receiving your first NFT.",
+      "Wallets holding NFT pets, mounts or house deeds keep their frequent ownership checks. Transferred-away collectibles still lose access, and minting and payment verification keep their existing checks."
+    ],
+    "guides": [
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-29-collision-memory",
+    "date": "2026-09-29",
+    "title": "Reduced collision memory growth",
+    "summary": "Lower memory pressure as players travel across the world and visit dungeon instances.",
+    "changes": [
+      "Collision data shares one cache limit across overworld and dungeon areas. Older cached areas release their memory for reuse before new areas are loaded, reducing server memory pressure while keeping solid collision active.",
+      "Reduced server work when adventurers are spread across the world by skipping unnecessary monster detection checks for distant players. Aggro ranges and safe areas are unchanged."
+    ],
+    "guides": [
+      "travel"
+    ]
+  },
+  {
+    "id": "2026-09-29-terrain-autostep",
+    "date": "2026-09-29",
+    "title": "Automatic steps across terrain",
+    "summary": "Moving across ordinary terrain rises lifts your character onto the next tile again.",
+    "changes": [
+      "Moving across overworld terrain automatically lifts you onto ordinary rises of up to 1.5 meters.",
+      "Solid scenery, walls and ceilings retain their collision. Climbing remains disabled."
+    ],
+    "guides": [
+      "travel"
+    ]
+  },
+  {
+    "id": "2026-09-29-climbing-removed",
+    "date": "2026-09-29",
+    "title": "Climbing removed, solid surfaces retained",
+    "summary": "Run around scenery without grabbing it, while keeping physical walls, floors and supported tops.",
+    "changes": [
+      "Climbing is disabled. Moving into portals, chests, walls or other scenery no longer starts a climb or drains climbing stamina.",
+      "Solid objects still block movement. Walking, jumping, small steps, ceilings and standing on supported surfaces remain in place."
+    ],
+    "guides": [
+      "travel"
+    ]
+  },
+  {
+    "id": "2026-09-29-climbing-stonework",
+    "date": "2026-09-29",
+    "title": "Smoother walking around solid scenery",
+    "summary": "Move around obstacles and step away from an opening chest while keeping solid surfaces.",
+    "changes": [
+      "When running past a portal, chest or other solid object, walking tries to slide around it.",
+      "Opening a chest beside your character no longer traps you against its moving lid. You can walk back out while the chest stays solid."
+    ],
+    "guides": [
+      "travel"
+    ]
+  },
+  {
+    "id": "2026-09-29-collision-lag",
+    "date": "2026-09-29",
+    "title": "Reduced collision stalls",
+    "summary": "Smaller collision areas reduce pauses while moving around detailed scenery and when players are spread across the world.",
+    "changes": [
+      "Reduced pauses near detailed scenery and when players are spread across towns. Solid surfaces, open doorways and ceilings retain their collision behavior."
+    ],
+    "guides": [
+      "travel"
+    ]
+  },
+  {
+    "id": "2026-09-28-world-atlas",
+    "date": "2026-09-28",
+    "title": "Explore the World Atlas",
+    "summary": "An additional world of 39 connected maps, with six realm routes and saved travel.",
+    "changes": [
+      "Open the map while in a town and choose Explore the World Atlas. Your character, equipment and existing progress travel with you; return from the Lanternreach arrival point.",
+      "Walk through map gates or interact with realm doors to travel. Each map has its own terrain, collision, map markers and shared multiplayer space. Reconnecting resumes your atlas location.",
+      "The atlas currently supports exploration. Its shops, quests, monster encounters and SP trials are not yet available; the existing world remains available for these activities."
+    ],
+    "guides": [
+      "world"
+    ]
+  },
+  {
+    "id": "2026-09-28-stories-interface",
+    "date": "2026-09-28",
+    "title": "Stories and chambers along the road",
+    "summary": "82 one-time quests, six story chambers and clearer windows in Mossvale’s established style.",
+    "changes": [
+      "Mossvale keeps its original forest, parchment and gold frames and lettering. Merchant and trainer lists share a window with item details; mobile controls and story actions remain usable.",
+      "82 non-specialist story quests add NPC dialogue with accept/decline choices, ordered objectives, 54 placed objects, 40 named or area-specific enemy spawns, and two personal rescue or escort encounters. The journal can track story objects and chamber entrances.",
+      "Six quest chambers unlock at levels 7, 10, 14, 18, 24 and 44. Follow their seals, keys and mechanisms in order. Three timed wave encounters last thirty seconds; protect the Hollow Door lantern from inside its six-meter circle.",
+      "Return to the quest giver for one-time XP, materials, profession XP or gear. Select a reward when a weapon or armor choice is offered. Story chambers have no repeatable completion chest or leaderboard. The required Ashbound and optional Sun chamber treasures each grant one ancient coin per character.",
+      "Heatproofing awards a Heatproof tonic. Drink it for 20% less fire damage for five minutes, with the shared ten-second consumable cooldown. Another tonic refreshes the duration without stacking.",
+      "Matching supplied loot and resource artwork and optional UI sounds support existing game actions. NPC services still require visiting their locations; quest rewards and purchases remain controlled by the realm."
+    ],
+    "guides": [
+      "getting-started",
+      "story",
+      "dungeons",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-28-boss-art-combat",
+    "date": "2026-09-28",
+    "title": "Boss combat and weapon artwork",
+    "summary": "Distinct Instant Combat skills, updated Apostle animations and Epic/Mythic weapon art.",
+    "changes": [
+      "The eight Instant Combat bosses each use three distinct skills with authoritative ground warnings, stacking/spreading, rescue targets, tank swaps and status effects. Their existing 70% and 35% shield objectives remain.",
+      "The Horned Apostle uses updated forms and spell effects, with separate emergence, transition, sustained channel and final-enrage animations.",
+      "Epic and Mythic weapons use class-specific animated artwork at their base and +5 stages. Equipment upgrades still stop at +5, with item stats and drop rates retained.",
+      "Specialist upgrade visuals now show the channel and saved success, unchanged or fracture result on your current character."
+    ],
+    "guides": [
+      "instant-combat",
+      "horned-apostle",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-28-specialist-pause",
+    "date": "2026-09-28",
+    "title": "Specialist classes paused",
+    "summary": "Current SP classes are disabled while owned cards and progression are preserved.",
+    "changes": [
+      "Specialist cards cannot be equipped and no longer grant combat power, defense, specialist wings or Job XP. Previously equipped cards are also inactive.",
+      "Cards, saved Job XP, upgrade ranks and NFT ownership are retained. Claiming, upgrading, repairing and trading cards remain available. Apostle cosmetic wings and base classes are unchanged.",
+      "The current realm keeps its level-60 cap."
+    ],
+    "guides": [
+      "horned-apostle",
+      "classes",
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-28-solid-world-climbing",
+    "date": "2026-09-28",
+    "title": "Climb and stand on solid scenery",
+    "summary": "Climb terrain and solid scenery using stamina, with physical surfaces and climbing animations for every playable character model.",
+    "changes": [
+      "Hold movement toward a solid surface while on foot to climb, using the keyboard or touch joystick. Climb onto rocks, trees, buildings, walls and other scenery, stand on their tops, and jump or fall off. Doorways remain open and ceilings stop jumps. Dungeon portals and match boundaries still control access.",
+      "Climbing drains the existing stamina bar at 20 energy per second and stops stamina recovery. Running out of energy makes you drop; recover to 25 before climbing again. The realm controls climbing height, movement and energy use.",
+      "All nine races, both body variants and all four classes use a Blender-authored climbing cycle. Weapons and tools are tucked away while climbing, and nearby players see the same climbing state."
+    ],
+    "guides": [
+      "travel"
+    ]
+  },
+  {
+    "id": "2026-09-28-desktop-chat-size",
+    "date": "2026-09-28",
+    "title": "Smaller chat with its own size control",
+    "summary": "Desktop chat is more compact and can be resized independently from the hotbar and menu.",
+    "changes": [
+      "Desktop chat defaults to 80% size. Adjust Chat size from 60% to 125% in Settings → Graphics without changing the hotbar or menu.",
+      "Your chat size is saved on this device. Reset restores 80%; the chat window still supports mouse and keyboard resizing, channel tabs and scrolling.",
+      "Changing chat size preserves your reading position. Mobile chat keeps its existing layout."
+    ],
+    "guides": [
+      "getting-started",
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-28-pet-drop-eligibility",
+    "date": "2026-09-28",
+    "title": "Pet drops require level 10 monsters",
+    "summary": "Slimes and monsters below level 10 no longer drop pets.",
+    "changes": [
+      "Pets can drop only from their eligible source monsters at level 10 or higher. Slimes cannot drop pets at any level.",
+      "Clover Mouse no longer drops. Existing pets stay available to their owners; unlearned copies remain usable and tradable."
+    ],
+    "guides": [
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-28-class-specification-update",
+    "date": "2026-09-28",
+    "title": "Updated spells and talent trees",
+    "summary": "New passives, revised spell tuning and resurrection for Clerics.",
+    "changes": [
+      "All four classes use the updated 137-spell and 130-talent catalogues, with twenty new spell and talent icons. The downloadable workshops contain the same playable settings and artwork.",
+      "Rangers gain Precise Shots, Primal Focus and Natural Gift. Mages gain Heated Haste, Magic Focus and Sharp Mind. Updated Knight and Cleric passives grant critical chance, total damage, maximum health, healing pulses and timed defense as described in their trees.",
+      "Ricochet Shot makes five impacts and can hit an enemy repeatedly, retaining 85% damage on each repeat against that target. Adamant Guardian reduces damage by 40% and immediately counterattacks at most once per second. Hold the Line adds 5% or 10% of absorbed damage to its reflection.",
+      "Clerics can use Revivify to return nearby fallen group allies to full health in place. It is instant with no spell cooldown, follows the normal global cooldown, requires a clear path and cannot restore eliminated arena fighters.",
+      "Updated healing, shield and attack spell timings and strength match the revised class catalogue. Retired spells are removed from spellbooks and their hotbar slots without resetting other assignments. Compatible talent builds remain allocated; valid builds whose prerequisites changed receive their points back."
+    ],
+    "guides": [
+      "classes",
+      "class-ranger",
+      "class-knight",
+      "class-mage",
+      "class-cleric"
+    ]
+  },
+  {
+    "id": "2026-09-28-discord-bug-fixes",
+    "date": "2026-09-28",
+    "title": "Spellbook, raid and input recovery fixes",
+    "summary": "More reliable spell selection, raid controls, mobile input and audio recovery.",
+    "changes": [
+      "Spell details now have their own space below the spell lists, keeping every skill selectable.",
+      "Leaving a raid while dead restores the normal revive prompt. Live raid updates preserve expanded guides, invite controls, focus and scroll position.",
+      "Mobile movement stops when a touch ends outside the joystick or the device rotates, with independent handling for the other thumb.",
+      "A new user interaction can retry audio recovery even when the browser left an earlier resume request pending.",
+      "Active shields show their remaining absorption and time. Blessed Armor and Adamant Guardian also show their active effects.",
+      "Overworld enemies use obstacle detours around trees and rocks while retaining collision, movement-speed and safe-area restrictions."
+    ],
+    "guides": [
+      "getting-started",
+      "audio-and-settings",
+      "classes"
+    ]
+  },
+  {
+    "id": "2026-09-28-desktop-hud-size",
+    "date": "2026-09-28",
+    "title": "A smaller desktop HUD with adjustable size",
+    "summary": "The desktop hotbar, XP bars and connected menu start 60% smaller.",
+    "changes": [
+      "The joined desktop HUD defaults to 40% of its previous size, leaving more of the world visible.",
+      "Adjust Hotbar size in Settings → Graphics from 30% to 100%. The hotbar, XP bars and connected menu resize together immediately, and your choice is saved on this device. Reset restores 40%.",
+      "Chat stays readable at its existing text size. Mobile and touch controls keep their existing size and layout."
+    ],
+    "guides": ["getting-started", "audio-and-settings"]
+  },
+  {
+    "id": "2026-09-28-auction-item-scrolling",
+    "date": "2026-09-28",
+    "title": "Auction item details keep your place",
+    "summary": "Live market updates no longer reset the selected item's scrollbar.",
+    "changes": [
+      "Scroll through an auction item's stats without jumping back to the top when listings refresh.",
+      "Selecting a different listing starts its item details at the top."
+    ],
+    "guides": ["equipment"]
+  },
+  {
+    "id": "2026-09-28-desktop-hud-reference",
+    "date": "2026-09-28",
+    "title": "A joined woodland desktop HUD",
+    "summary": "The desktop action bar and menu now share the proportions of the woodland HUD artwork.",
+    "changes": [
+      "Desktop chat sits above a wide action bar with forest-green backgrounds, cyan character XP, gold specialist Job XP, ten larger ability slots and two stacked bank buttons.",
+      "The menu rises from the right end of the action bar in a four-by-four grid. Its arrow collapses the menu; account and game-master controls remain accessible beside it.",
+      "Mobile and touch controls keep their existing layout."
+    ],
+    "guides": [
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-27-required-mobile-app-updates",
+    "date": "2026-09-27",
+    "title": "Required mobile app updates at startup",
+    "summary": "Mobile startup can require an available app update before entering Mossvale. Activation is separate for each store.",
+    "changes": [
+      "Outdated mobile apps show an Update required screen with App Store or Google Play and Check again actions. There is no Skip option; TestFlight installations update through TestFlight.",
+      "The native startup check runs before opening the game, with a matching sign-in check for older installed apps loading the updated website. Supported versions and browser players continue normally.",
+      "Returning from the store rechecks while the native update screen is open. Connection failures keep the game blocked and offer retry. Required versions stay disabled until the matching store releases are available and the policy is activated."
+    ],
+    "guides": [
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-27-instant-combat-defense-bypass",
+    "date": "2026-09-27",
+    "title": "Instant Combat attacks pierce more defense each round",
+    "summary": "Creature attacks ignore a growing share of defense as the event advances.",
+    "changes": [
+      "Instant Combat creatures bypass 30%, 40%, 50%, 60% and 70% of defense in rounds 1 through 5, including the creature groups before the final boss.",
+      "The bypass applies to normal and special creature attacks against players and combat companions. Boss ground warnings and failed mechanics retain their existing health-based damage.",
+      "Defense still protects you, so heavily armored characters can still take minimum damage from a weak early attack. World monsters and PvP keep their existing defense rules."
+    ],
+    "guides": [
+      "instant-combat"
+    ]
+  },
+  {
+    "id": "2026-09-27-mobile-notifications",
+    "date": "2026-09-27",
+    "title": "More visible mobile alerts and daily return reminders",
+    "summary": "Push delivery is enabled for supported mobile apps, with more frequent event and invitation alerts. A new app build and device permission are required.",
+    "changes": [
+      "A one-time prompt offers Enable events & invites, Add daily reminders too or Not now. Device permission is requested only after you choose to enable alerts. Your saved choices, including opt-outs, are remembered on this device across sign-outs.",
+      "Settings → Notifications lets you change World events, Invites and Come back to Mossvale separately. Events and invites are suggested for a first setup; daily return reminders are optional. Android alerts use prominent banners, sound and vibration when device settings allow.",
+      "Instant Combat signup alerts take priority over nearby world-boss alerts. Other world events are limited to one every five minutes per device, and invitations to one every ten seconds. Existing invitation eligibility and expiry rules still apply.",
+      "Optional return reminders begin after 24 hours away, then arrive at most once per day. Playing on any realm resets the absence. Notifications are suppressed while the app is open, and tapping one resumes the game."
+    ],
+    "guides": [
+      "audio-and-settings",
+      "instant-combat"
+    ]
+  },
+  {
+    "id": "2026-09-27-instant-combat-reinforcements",
+    "date": "2026-09-27",
+    "title": "Three enemy groups per round and ten-slot ability banks",
+    "summary": "More enemies in Instant Combat, faster pressure and a centered action bar.",
+    "changes": [
+      "Each Instant Combat round now has three successive enemy groups. The fifth round ends with the rotating boss after two creature groups. The existing 30-minute time limit remains.",
+      "Instant Combat monsters move twice as fast and attack 25% faster. Boss warning times remain readable, and each boss keeps its required mechanics.",
+      "All eight event bosses now have distinct attack and ritual animations, timed to their ground warnings and impacts.",
+      "Personal rewards are active after all three groups in each round are defeated. Surviving players have 20 seconds to collect their pickup, or 30 seconds after the boss. Individual monsters still drop no loot or XP.",
+      "Each desktop ability bank now has ten slots, with keys 1–9 and 0. Existing assignments stay in their original bank. Touch controls offer five pages of four slots.",
+      "The action bar is centered, and Hide/Menu at the bottom right collapses or restores the side menu."
+    ],
+    "guides": [
+      "instant-combat",
+      "getting-started",
+      "classes"
+    ]
+  },
+  {
+    "id": "2026-09-27-world-chat-hud",
+    "date": "2026-09-27",
+    "title": "A woodland action bar and chat in the world",
+    "summary": "A clearer bottom HUD, conversation above your abilities, and speech bubbles over nearby adventurers.",
+    "changes": [
+      "The desktop action bar has a leafy frame, cyan character XP and gold specialist Job XP, two selectable banks, and a compact menu grid. Existing ability assignments and touch controls are preserved.",
+      "Recent messages appear as colored channel and player lines above the HUD. Open chat to read history or type without opening a separate modal or hiding touch combat controls.",
+      "World messages appear briefly in a speech bubble above nearby players. Whispers and party messages stay in their own chat channels.",
+      "Friends and Who lists stay still during a touch gesture, so incoming updates cannot move a different request under the Accept button.",
+      "Update downloads bypass stale browser HTTP cache entries while retaining already verified files from interrupted downloads."
+    ],
+    "guides": [
+      "getting-started",
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-27-updater-image-repair",
+    "date": "2026-09-27",
+    "title": "Game update download repair",
+    "summary": "Game updates can finish downloading the latest arena and HUD artwork.",
+    "changes": [
+      "Fixed an image delivery problem that prevented the latest game update from installing and left players on an older version."
+    ],
+    "guides": ["audio-and-settings"]
+  },
+  {
+    "id": "2026-09-27-instant-combat-wave-rewards",
+    "date": "2026-09-27",
+    "title": "Instant Combat wave rewards and arena fixes",
+    "summary": "Survive escalating waves, collect personal timed rewards, and join events even while a game panel is open.",
+    "changes": [
+      "Waves begin gently, build pressure in Wave 3 and become denser and more dangerous in Wave 4 before the final boss. Difficulty stays based on the starting group, so losses matter in later rounds.",
+      "Clearing a wave creates personal Gold and supply pickups for surviving participants. Collect within twenty seconds after Waves 1–4 and thirty seconds after the boss. Unclaimed pickups expire; other players cannot take yours. Individual enemies still grant no kill XP or ordinary drops.",
+      "Total Gold across all five pickups is 100, 200 or 300 for levels 16–30, 31–45 or 46–60. Early waves provide potions; later waves add Greater Tonics and crafting materials. The final pickup includes crystals, relics and a 20% Rare-or-better equipment roll. The boss clear also grants 600, 1,200 or 1,800 XP by bracket, following normal specialist progression and XP boosts.",
+      "Instant Combat monsters continually attack the closest living adventurer and pursue across the arena. Players can jump over low obstacles on both maps; tall scenery and the boundary remain solid.",
+      "Event invitations remain visible and usable above open game panels, including GM-triggered signups. Long chat messages stay inside the scrolling history without covering the input area.",
+      "Interrupted updates retain verified downloaded files for the next attempt. Stalled downloads time out and retry while the last complete version stays available."
+    ],
+    "guides": [
+      "instant-combat",
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-27-compact-chat-menus",
+    "date": "2026-09-27",
+    "title": "Forest frames and a compact game menu",
+    "summary": "The game panels follow the supplied forest artwork more closely, with aligned chat tabs and a smaller game menu.",
+    "changes": [
+      "World, System, Whispers and Party now use matching live tabs, with a clear selected border that stays aligned when chat is resized.",
+      "The game menu uses a compact icon grid, including Store and Arena, with keyboard hints and a separate labelled touch menu. Chat tabs and Back also fit the narrowest phone screens.",
+      "Friends, Referral Rewards and the Adventure Board use matching gold controls and clearer reward sections. Referral progress, payouts and quest rewards continue to show live game values.",
+      "The spellbook has framed collections of skills to learn and learned abilities, with selected skill details and hotbar editing below. Inventory equipment and bag tabs use the matching emerald frames, and the character preview uses a woodland backdrop.",
+      "The Adventure Board has working Active, Noticeboard and Completed tabs. Open a contract for its own objective, progress and rewards view, then track its destination or return to the board. Existing acceptance, claim and cancellation rules remain unchanged.",
+      "The player HUD uses the supplied portrait, name and title frames with live green health and blue casting bars. Referral Rewards uses its compact lantern-and-banner layout, and desktop chat has a labelled Hide and Show control."
+    ],
+    "guides": [
+      "getting-started",
+      "audio-and-settings",
+      "contracts"
+    ]
+  },
+  {
+    "id": "2026-09-27-instant-combat",
+    "date": "2026-09-27",
+    "title": "Scheduled Instant Combat arenas",
+    "summary": "Register from anywhere for five rounds of cooperative combat in your level bracket.",
+    "changes": [
+      "Instant Combat runs every two hours on each realm, starting at 00:00, 02:00 and every even hour UTC. A server warning and a compact arena-art invitation open registration five minutes before each start. The invitation shows the map, boss, bracket and countdown, with Join Event and Decline buttons. Decline dismisses this event; you can still register or withdraw through the Instant Combat menu before signup closes.",
+      "At registration close, eligible entrants are assigned by their current level: 16–30, 31–45 or 46–60. Each private arena holds up to twenty players; larger brackets split into additional arenas. Your group gets ninety seconds to prepare before the first of five combat rounds, with ten-second breaks between rounds.",
+      "Instant Combat is available from level 16. Characters below level 16 do not receive the join invitation and cannot register.",
+      "Be alive and finish any duel, arena match or pending save before entry. Registration is available from anywhere; accepted entrants return through their current activity’s safe exit before moving to the event. No late entries or rejoins are allowed. Leaving, dying or disconnecting ends your participation and returns you to the world; belongings are retained.",
+      "Bone Pit and Void Rift use their authored arena maps and new themed monsters. Each map rotates through four final bosses, with the same map and boss assigned to every arena in a scheduled event.",
+      "Targeted spells use each arena’s full playable boundaries, including its outer edges.",
+      "Four creature waves lead to the selected boss. Each boss has its own shielded mechanic at 70% and 35% health: breaking chains, soaking stomps, following musical notes, clearing broods, sealing rifts, escaping webs, baiting charges or turning away from a gaze. Complete each shielded mechanic before its countdown ends, with a harder version at the second health gate and extra charge travel time when needed. Read the boss attack shapes and move clear before they strike.",
+      "Game masters can open Realm events in the GM menu and start an extra five-minute Instant Combat signup. Players join voluntarily, and the regular two-hour UTC schedule stays unchanged.",
+      "Event teammates can heal and support one another without joining a four-player party. Event XP, gold and collectible rewards are not available yet."
+    ],
+    "guides": [
+      "instant-combat"
+    ]
+  },
+  {
+    "id": "2026-09-27-touch-scrolling",
+    "date": "2026-09-27",
+    "title": "Smoother scrolling in bags and auctions",
+    "summary": "Touch scrolling stays steady through background updates, with fewer accidental item actions.",
+    "changes": [
+      "Background updates to bags and Auction House lists wait for an active swipe to finish before redrawing, and unchanged bag contents keep their scrolling elements through ordinary game updates.",
+      "Touch controls distinguish a completed tap from a scrolling gesture. Scrolling through item lists and wallet settings no longer triggers an action when the touched control has moved with the list."
+    ],
+    "guides": [
+      "bags-and-bank",
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-27-progress-purchases-item-locks",
+    "date": "2026-09-27",
+    "title": "Dungeon recovery, safer purchases and item locks",
+    "summary": "Keep dungeon progress after a disconnect, understand pending payments, protect valuable items and use less gameplay data.",
+    "changes": [
+      "Defeating the final dungeon boss now opens the completion results and return portal even when boss adds or optional side rooms remain. Completion rewards are still awarded once.",
+      "An unfinished run stays available on the same realm for ten minutes after its last adventurer leaves. Original participants can return through its entrance to the reached checkpoint without repeating cleared rooms. Disconnect recovery also preserves unclaimed completion rolls during that grace period. Realm restarts still end these temporary runs.",
+      "Auction purchases now distinguish reservation, wallet review, submission and uncertain payment states. Payment evidence takes precedence over an expired payment window. Proven failures before transaction submission can be retried; uncertain submitted requests stay protected from duplicate payment.",
+      "Lock items from the backpack or bank to prevent accidental selling, dropping, auction listing or player trade. Locks follow bank transfers and equipment upgrades. Stack locks protect every unit of that item type; normal use and crafting remain available.",
+      "Ongoing world updates now use WebSocket compression where supported, reducing gameplay network traffic without lowering the update rate. Initial artwork downloads are separate."
+    ],
+    "guides": [
+      "dungeons",
+      "equipment",
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-27-referral-five-tiers",
+    "date": "2026-09-27",
+    "title": "Five referral reward tiers",
+    "summary": "Qualified invitations now unlock five levels of MOSS Auction House rewards.",
+    "changes": [
+      "Referrers now earn 0.10%, 0.25%, 0.50%, 0.75% and 1.00% of their qualified referrals\u2019 later eligible MOSS purchase volume at 1, 10, 25, 50 and 100 qualified referrals. The Wayfinder Sprite and Wayfarer Stag still unlock at ten and twenty-five.",
+      "The total MOSS seller fee remains 5%. Treasury and developer each receive 1.25% of the purchase price; the remaining 2.50% burns before referral rewards. Rewards reduce only burning, down to 1.50% at the highest tier. Sellers still receive 95%, and buyers pay the listed price.",
+      "Existing listings carry over. Already-signed payments keep their original contract and fee terms, and previous MOSS proceeds remain collectible from their original contracts."
+    ],
+    "guides": [
+      "referrals",
+      "equipment",
+      "gold-economy"
+    ]
+  },
+  {
+    "id": "2026-09-27-referral-contract-compatibility",
+    "date": "2026-09-27",
+    "title": "Prepare referral settlement continuity",
+    "summary": "Keep Auction House payments and proceeds recoverable during the referral contract rollout.",
+    "changes": [
+      "Added support for the next referral settlement contract while keeping the current contract active for new purchases. Existing orders retain their signed terms, and proceeds remain collectible from the contract that earned them."
+    ],
+    "guides": [
+      "referrals",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-27-ui-icons-layouts",
+    "date": "2026-09-27",
+    "title": "New menu icons and forest UI layouts",
+    "summary": "Updated navigation artwork and clearer spell, inventory, social and adventure panels.",
+    "changes": [
+      "The game menu now uses the new illustrated icons for bags, quests, character gear, combat skills, talents, crafting, Arena, achievements, Friends, Referrals, pets, Store, NFTs, settings and account. Wallet and Specialist panels use their matching icons.",
+      "Friends and Referral Rewards use forest-and-gold frames, clearer rows and visible progress. Referral amounts continue to follow the active contract schedule.",
+      "The spellbook separates skills to learn from learned abilities, shows selected ability details and keeps the editable hotbar beneath the library. Inventory retains its character preview, gear slots, bags and item actions within the updated frame.",
+      "The Adventure Board groups live adventure choices beside their details, with noticeboard contracts below. Chat uses larger readable text and the new frame while retaining channels, drafts and its mobile Back control."
+    ],
+    "guides": [
+      "getting-started",
+      "classes",
+      "contracts",
+      "referrals"
+    ]
+  },
+  {
+    "id": "2026-09-27-raid-ui-referrals",
+    "date": "2026-09-27",
+    "title": "Raid recovery, clearer mobile controls and referral tiers",
+    "summary": "Raids can continue through disconnects, mobile combat leaves more room to see, and referral rewards show the active fee schedule.",
+    "changes": [
+      "A raid can begin once ten living level-60 adventurers are ready, without choosing roles or meeting a tank/healer quota. Extra online members do not all need to be ready; they join and count toward the starting difficulty. Offline invitees are left out at the first start. The leader can appoint a co-leader to invite or remove members, and leadership passes to an online co-leader or member when the leader disconnects.",
+      "Offline members no longer block cleared-room gates or checkpoint retries. The remaining group can retry below ten players while retaining the starting difficulty and completion clock. Members can leave or be removed at cleared checkpoints and after wipes; reconnecting during combat preserves their health and position.",
+      "The mobile hotbar shows four skills at a time across four pages, preserving all sixteen saved assignments. Raid information is more compact, with a collapsible roster and visible personal mechanic warnings. The bottom menu keeps its icons and labels inside their buttons. Selected combat targets clear when they die, become invisible or leave targeting range, and friendly characters overlapping a monster no longer block selecting that monster.",
+      "The referral panel shows the active reward schedule, current tier and progress. Referral entry accepts either a code or a copied invite link. On the new tiered settlement, 1, 10, 25, 50 and 100 qualified referrals unlock 0.10%, 0.25%, 0.50%, 0.75% and 1.00% of their later MOSS Auction House purchase volume. The Wayfinder Sprite and Wayfarer Stag still unlock at ten and twenty-five.",
+      "The new settlement keeps the total auction fee at 5%, with 1.25% each for treasury and developer. Referral rewards come from the remaining 2.50% burn share. Earlier contracts retain their original fee schedule, referral terms and withdrawals; purchase reviews show the applicable split. New rates become available only when the new settlement is activated."
+    ],
+    "guides": [
+      "horned-apostle",
+      "getting-started",
+      "referrals",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-26-auction-wallet-listings",
+    "date": "2026-09-26",
+    "title": "Keep your auctions open when linking a wallet",
+    "summary": "Unsold listings automatically move to your verified wallet without cancellation or relisting.",
+    "changes": [
+      "Verifying a linked wallet automatically moves your character’s unsold MOSS and ETH listings to it. Items, quantities, prices and listing IDs stay the same; no cancellation or relisting is needed. New listings and purchases also use that wallet.",
+      "Reserved auction payments and pending store or NFT orders keep their wallet protections until they finish. Signed payments and proceeds already earned retain their original wallet. My auctions explains the automatic migration."
+    ],
+    "guides": [
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-26-referral-program",
+    "date": "2026-09-26",
+    "title": "Invite friends to Mossvale",
+    "summary": "This release enables Auction House referrals, fee rewards and exclusive companion unlocks through the updated settlement contract.",
+    "changes": [
+      "The activation release enables invite links and progress tracking in Referrals from the game menu. The panel shows whether the program is available on your realm. Each new referred account must reach level 20, play on two different UTC dates and spend at least $10 worth of MOSS on finalized Auction House purchases. All three requirements must be met; PvP spending is excluded.",
+      "One qualified referral unlocks 5% of the burn portion of fees from your qualified referrals’ future Auction House purchases. At 50, the share increases to 10%. The updated settlement credits rewards without changing the buyer price or seller proceeds. Collect them through Collect MOSS. Existing pending payments keep their signed terms, and balances from both older MOSS contracts remain separately collectible.",
+      "Ten qualified referrals unlock the exclusive Wayfinder Sprite, with ornate compass wings and a glowing lantern. Twenty-five unlock the Wayfarer Stag, with branching antlers, travel gear and two detailed saddles. Both have new models and portraits. Invite a nearby friend onto the account-bound stag; they accept and can leave at any time."
+    ],
+    "guides": [
+      "referrals",
+      "pets",
+      "travel"
+    ]
+  },
+  {
+    "id": "2026-09-25-longer-pvp-fights",
+    "date": "2026-09-25",
+    "title": "Longer PvP fights",
+    "summary": "Player-versus-player damage is reduced by 80% to give fighters more time to react.",
+    "changes": [
+      "Private arenas, friendly duels and the public colosseum now reduce damage between players and combat companions by 80% after defense. This includes basic attacks, spells, damage over time, pet attacks and reflected damage.",
+      "Eagle’s Eye, Power Shot, Venom Arrow and Viper Strike instead receive 90% PvP damage reduction, including their poison ticks. Venom Detonation keeps the extra reduction when consuming those poisons.",
+      "Hits deal at least 1 damage before shields. PvE damage, healing, shield strength and arena stun rules are unchanged."
+    ],
+    "guides": ["colosseum"]
+  },
+  {
+    "id": "2026-09-25-auction-balance-check",
+    "date": "2026-09-25",
+    "title": "Smoother Auction House purchases",
+    "summary": "Pending purchases appear in your bags while payment confirms, and the market stays available to browse.",
+    "changes": [
+      "The Auction House checks your linked wallet's MOSS balance before enabling Buy and checks again before reserving the listing. An unavailable balance check keeps the purchase disabled while other market actions remain usable.",
+      "After adding MOSS, choose Refresh market to check your balance again.",
+      "Pending purchases appear separately in your bags and in the Auction House Purchases tab. They cannot be used, learned, minted, traded or sold until payment is confirmed. You can keep browsing and open your bags while payment is pending.",
+      "Listings awaiting payment leave the public Browse and Exchange results. Pending items survive reconnects; an expired payment window still waits for verified payment or unpaid expiry before clearing.",
+      "Successful payments are checked promptly, reducing an avoidable delay before delivery."
+    ],
+    "guides": ["equipment"]
+  },
+  {
+    "id": "2026-09-25-rejected-action-realm-stability",
+    "date": "2026-09-25",
+    "title": "Realm stability and accurate ping readings",
+    "summary": "Safer reconnects during voucher checks and more accurate timing for the ping display.",
+    "changes": [
+      "Leaving, reconnecting or changing tabs during an action now waits for that action to finish without treating an ordinary refusal as a realm storage failure.",
+      "A failed voucher eligibility check still keeps the voucher and daily allowance. Genuine save failures continue to stop the realm to protect player progress.",
+      "Ping now starts timing when its request is sent, excluding browser delay before the request. This corrects inflated readings on busy frames; it does not change network speed."
+    ],
+    "guides": ["getting-started", "treasure-maps"]
+  },
+  {
+    "id": "2026-09-25-auction-wallet-auto-link",
+    "date": "2026-09-25",
+    "title": "Auction House prepares Mossvale Wallet automatically",
+    "summary": "Opening the Auction House gets your Mossvale Wallet ready for MOSS trading without a separate wallet button.",
+    "changes": [
+      "Opening the Auction House or choosing Refresh market prepares your Mossvale Wallet and requests an ownership approval only if its address is not already linked to your character.",
+      "If you decline or wallet setup fails, background market updates will not repeat the prompt. Choose Refresh market or reopen the Auction House when ready to retry.",
+      "Active wallet listings, reserved payments, store orders and NFT claims must still be finished before changing your linked wallet. Every purchase still needs your approval."
+    ],
+    "guides": ["equipment"]
+  },
+  {
+    "id": "2026-09-25-old-auction-wallet-selection",
+    "date": "2026-09-25",
+    "title": "Recover old auction proceeds with another wallet",
+    "summary": "Old auction recovery helps you choose a wallet that supports Robinhood Chain.",
+    "changes": [
+      "Settings → Wallet → Recover old auction proceeds opens the wallet picker and asks your selected wallet to switch to Robinhood Chain, adding the network when supported.",
+      "If the wallet cannot switch, the picker opens again. Choose a compatible wallet using the same address that received your original sales. Withdrawals return to that address and use its ETH for network fees."
+    ],
+    "guides": ["getting-started", "equipment"]
+  },
+  {
+    "id": "2026-09-25-new-pet-rotation",
+    "date": "2026-09-25",
+    "title": "New wild companions and Common pickup",
+    "summary": "Eight new wild pets have a 0.025% drop chance, and pets can now pick up Common loot.",
+    "changes": [
+      "Bramble Badger, Duskwind Raven, Ember Axolotl, Geode Hedgehog, Clover Mouse, Dewbell Dragonfly, Snowcap Stoat and Suncrest Peacock replace the previous wild-drop lineup with new Blender models and matching portraits. Each has a 0.025% chance (1 in 4,000) per eligible kill. Suncrest Peacock is exclusive to the level 40 Ashen Crown Titan world boss.",
+      "Fern Lynx, Moonveil Gryphlet, Cinder Salamander, Amethyst Terrapin, Blossom Jackalope, Lantern Sprite, Rime Red Panda and Crown Pangolin no longer drop. All existing learned pets, wallet-owned pets, summons and unlearned copies remain valid, including the original retired lineup. Existing NFT species numbers are preserved; the new species append to the expanded collection.",
+      "In Pets → Minimum item rarity, choose Common and better to include Common loot in automatic pickup. The choice is saved for your character. Uncommon remains the default, gold is always collected, and items that do not fit stay available for manual collection."
+    ],
+    "guides": [
+      "pets",
+      "combat-and-loot"
+    ]
+  },
+  {
+    "id": "2026-09-25-brave-wallet-sign-in",
+    "date": "2026-09-25",
+    "title": "Safer Brave wallet sign-in",
+    "summary": "Wallet sign-in opens a normal browser tab to avoid a Brave crash with MetaMask.",
+    "changes": [
+      "Google, Apple and wallet sign-in open a separate browser tab while the game stays open. This avoids the popup-window crash triggered by MetaMask’s sidebar in Brave.",
+      "Reconnect game session also opens a normal browser tab. Sign-in still returns you to the game, and Continue in this tab remains available when the browser blocks a new sign-in tab."
+    ],
+    "guides": ["getting-started"]
+  },
+  {
+    "id": "2026-09-25-apostle-approach",
+    "date": "2026-09-25",
+    "title": "The road to the Horned Apostle",
+    "summary": "Six void chambers and Morgrath now lead into the Apostle raid.",
+    "changes": [
+      "Clear 24 distinct creatures across the Void Garden, Umbral Kennels, Hollow Hive, Silent Ossuary, Black Forge and Fallen Citadel. Each creature has a detailed Blender model and its own special ability, with visible windups, strikes, spell releases and recovery poses.",
+      "Morgrath’s repaired rig keeps his sword, horns and armor attached through each attack, with distinct Cleave, Rift and Rupture animations. Fight him in his throne court. Avoid his sword cleave and void lane, enter the safe center of Rupture, and defeat the two Grave Knights he summons at half health.",
+      "Each cleared chamber opens its north gate. The leader rallies and restores the party before advancing. Wipes restart the current room, preserving cleared rooms and the original roster, roles and difficulty for this raid session.",
+      "Layered stonework, carved ruins, roots, chitin, ossuary reliefs, forge props and a shattered throne give the seven approach rooms distinct void silhouettes. Creature spells use Blender motifs, particles, glow and shape-matched impact effects; essential boundaries remain visible with Effects Off.",
+      "The full-route timer continues through the approach and retries. Personal raid rewards are awarded only after the Apostle falls."
+    ],
+    "guides": [
+      "horned-apostle"
+    ]
+  },
+  {
+    "id": "2026-09-25-arena-moss-wagers",
+    "date": "2026-09-25",
+    "title": "MOSS wagers in 1v1 arenas",
+    "summary": "Optional equal MOSS stakes for direct 1v1 challenges, with a 5% tax on the combined pot.",
+    "changes": [
+      "Set a MOSS stake per player in the browser Arena finder. Both fighters review and accept the same stake, pot, tax and winner payout, then approve funding in the integrated Mossvale Wallet before entering. Arena screens keep the amounts and actions together with less helper text. Entry uses verified deposits in the current chain state (soft confirmation) without waiting for finality. A rare chain reorganization can cancel a match and leave remaining deposits refundable; recovery records are kept until finalized.",
+      "A 100-MOSS stake from each player pays the winner 190 MOSS, including their own stake. The 10-MOSS tax burns 8 MOSS and sends 1 MOSS each to the treasury and developer. Network fees are separate.",
+      "Forfeits and disconnects after entry, including countdown, lose the stake. Draws and cancelled entries return funded stakes without tax. Open MOSS wagers & payouts for saved results and refunds. Winners must collect before the displayed final refund deadline, currently one hour after accepted terms; afterward both stakes become refundable.",
+      "Rated matchmaking, 2v2, 3v3 and ordinary duels stay free. Gold is unchanged. MOSS wagering requires a configured, verified arena contract and is unavailable in native apps; this code update does not deploy the contract."
+    ],
+    "guides": ["colosseum"]
+  },
+  {
+    "id": "2026-09-25-class-spells-edicts",
+    "date": "2026-09-25",
+    "title": "Class movement spells and Cleric Edicts",
+    "summary": "Updated talent paths, three movement spells and Cleric Edict combinations follow the latest class designs.",
+    "changes": [
+      "Rangers learn a twelve-meter Roll at level 9. Mages learn a fifteen-meter Blink at level 11 that removes slows. Clerics learn Lighspeed at level 9 to remove slows and move 50% faster for five seconds. Roll and Blink stop at obstacles.",
+      "Cleric healing, shielding and damage can now mark targets with Edicts of Light, Protection and Harm. Bouncing, Blanket and Renewable Edicts add bounded chains, weaker spread and reapplication.",
+      "New talent abilities add Edict of the Dawn’s healing over time and reactive pulses, Titan’s Edict’s reflecting shield, and Eternal Edict’s eight-second window of repeated activations.",
+      "Talent positions, prerequisites and branch requirements match the revised designs. Existing builds that remain valid are kept; previously valid builds affected by stricter requirements receive their points back.",
+      "Roll, Blink, Lighspeed, Poison Cloud and the three active Edicts have distinct Blender-made spell effects with moving leaves, portal fragments, wings, fungal blooms, solar pages, shield plates and hourglass rings. Thirteen detailed rendered icons cover those abilities and the six passive Edict talents, including the offline workshops.",
+      "Utility tooltips describe movement and Edict functions. Low effects retain recognizable spell forms while Off preserves essential combat cues."
+    ],
+    "guides": ["combat-and-loot", "class-ranger", "class-mage", "class-cleric"]
+  },
+  {
+    "id": "2026-09-25-rated-arena",
+    "date": "2026-09-25",
+    "title": "Rated Solo, 2v2 and 3v3 arena",
+    "summary": "Queue from anywhere, climb separate arena ranks and fight with reduced damage and chained-stun protection.",
+    "changes": [
+      "The Arena finder now offers rated Solo (1v1), 2v2 and 3v3. Team leaders queue a preformed party of exactly two or three. Everyone accepts before entering, and no arena-entrance visit is required.",
+      "Each bracket starts at 1,000 MMR with saved win, loss and draw records. Matchmaking uses team average MMR, with a wider search over time. Climb Bronze, Silver, Gold, Platinum, Diamond and Master; results show your rating change. Forfeits and disconnects count as team losses.",
+      "Private arena damage is reduced by 50%, including damage over time and companions. Stuns are 20% shorter, with chained stuns using 100%, 75%, 50%, 25% and then 0% duration. Immune appears above the target at 0%. The chain resets 15 seconds after the last successful stun ends.",
+      "Direct 1v1, 2v2 and 3v3 challenges are unrated practice matches and can start away from the entrance. Ordinary duels and public-ring PvP keep their existing combat rules."
+    ],
+    "guides": [
+      "colosseum"
+    ]
+  },
+  {
+    "id": "2026-09-25-apostle-sanctum",
+    "date": "2026-09-25",
+    "title": "The Apostle’s void sanctum",
+    "summary": "A fractured void sanctum and detailed Blender spell models bring the Horned Apostle raid into the abyss.",
+    "changes": [
+      "Fight on an obsidian platform surrounded by fractured monoliths, floating shards and violet/cyan runes. The open combat floor, movement bounds and ability ranges remain unchanged.",
+      "The Apostle now uses distinct casting poses for claws, stars, palms, judgment, chains, wings, Black Sun, Soul Harvest, clones and phase transitions. Detailed Blender spell models add jointed spectral hands, fractured stars, torn claw blades, layered feathers, soul skulls and eclipse coronas, all following the actual spell timing.",
+      "Void sparks, luminous trails, impact shockwaves and inward soul spirals now animate around the spell models. Chains carry traveling energy, seals pulse as they charge, and portals radiate soft glow. Effects quality controls particles; Bloom controls the added glow.",
+      "Four Hands highlights its safe opening. Suit symbols appear during their judgment phase, and Soul Chains show linked rings. Essential combat cues stay visible at every effects quality."
+    ],
+    "guides": ["horned-apostle"]
+  },
+  {
+    "id": "2026-09-25-sign-in-privacy-choice",
+    "date": "2026-09-25",
+    "title": "Choose your advertising preference before signing in",
+    "summary": "New browser visits ask for an explicit Allow or Decline choice before sign-in or character selection.",
+    "changes": [
+      "Choose Allow X cookies or Decline X cookies to continue. Both choices let you play, and your saved choice is remembered.",
+      "Native apps and browsers requesting no tracking skip the prompt and keep tracking off. If your choice cannot be saved, play continues with tracking off for that visit."
+    ],
+    "guides": ["audio-and-settings"]
+  },
+  {
+    "id": "2026-09-25-clearer-advertising-choice",
+    "date": "2026-09-25",
+    "title": "Clearer advertising choice",
+    "summary": "A larger advertising notice explains what opting in to X cookies means.",
+    "changes": [
+      "The notice explains how visits help show and measure Mossvale ads, what information X receives, and how to change your choice.",
+      "Allow X cookies and Decline X cookies are equally visible. You can play either way, and your saved choice is kept.",
+      "The notice is available in English, Simplified Chinese and Indonesian."
+    ],
+    "guides": ["audio-and-settings"]
+  },
+  {
+    "id": "2026-09-24-pet-and-gear-drop-rates",
+    "date": "2026-09-24",
+    "title": "Rarer equipment and updated pet drops",
+    "summary": "Existing equipment drop chances are halved, and the eight established drop companions share a 0.05% chance.",
+    "changes": [
+      "The eight established drop companions, including Crown Pangolin, now have a 0.05% chance per eligible kill (1 in 2,000). Source monsters and Crown Pangolin's level-40 world-boss requirement remain the same. The new Horned Apostle rewards use their own raid rules.",
+      "Equipment drop chances are reduced by 50% across existing monsters, world bosses, dungeon caches and completion rewards. Original-dungeon caches and completion rewards now have a 50% equipment chance. Themed-dungeon side caches, midpoint bosses and final completions have 20%, 27.5% and 35% chances respectively.",
+      "Gear rarity and item stats are unchanged. Each eligible source still rolls independently, so multiple equipment drops remain possible in one dungeon run."
+    ],
+    "guides": [
+      "combat-and-loot",
+      "dungeons",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-24-horned-apostle",
+    "date": "2026-09-24",
+    "title": "The Horned Apostle raid",
+    "summary": "A level-60 raid for 10–20 players brings coordinated phases, personal rewards and specialist progression.",
+    "changes": [
+      "Form a raid, select roles and ready the group. The Horned Apostle brings Death Marks, Shadow Crystals, clones, Four Suits, a split Death Realm and a final 90-second Death Counter. Reconnects retain raid state, and wipes allow another attempt.",
+      "Collect Apostle’s Souls, raid wings, a Death Apostle pet, Death Horns, Black Aura, a weapon skin, Sigils, Evolution Cores and the Death Defier title. Equip cosmetics and evolve your pet in Raid collection.",
+      "Raid clear rewards spin and stop on your saved prizes. Detailed Blender models bring carved Apostle armor, runes, layered wings and ornate encounter objects; attack boundaries retain the existing targeting and range system without the new red filled sight.",
+      "Claim a class specialist after Veilhaven or a raid clear at level 60. Earn separate job XP and upgrade to +15 using gameplay materials, with protection and repair items that preserve progression. The character cap remains 60.",
+      "Protection Rolls, Soul Revival Cores and Specialist Cases use reviewed MOSS-store purchases and can be traded for gold. Specialist NFT minting, activation, transfer and MOSS listings are available when the new collection contract is deployed and configured; this code update does not deploy that contract."
+    ],
+    "guides": [
+      "horned-apostle",
+      "pets",
+      "store"
+    ]
+  },
+  {
+    "id": "2026-09-24-moss-gates-dungeon-clears",
+    "date": "2026-09-24",
+    "title": "Moss Gates, clear times and dungeon leaderboards",
+    "summary": "Varied chamber routes and full-clear results bring timed expeditions and per-dungeon rankings.",
+    "changes": [
+      "Regional Moss Gates glow green. Large chambers vary in proportion and connect through one to three exits, with short side-room chains. Floor tiles stop at room edges so gaps remain clear. Combat exits stay sealed until the room is clear; sanctuary and wipe recovery remain available.",
+      "The timer starts when the first player leaves preparation for combat and continues through wipes. Defeat every combat room, including side chambers, to finish; killing the final boss alone does not grant completion rewards.",
+      "Full-clear results use Mossvale’s carved-wood frame, forest-green surfaces and rarity-bordered item slots, with time, monsters killed, wipes and four personal rewards: XP, the equipment roll, crystals and relics. The reward reels spin and stop one by one on your prizes, with an instant reveal for reduced motion. Claim items together or separately before leaving; rolls do not repeat, and full bags or failed saves keep items available.",
+      "Each dungeon has top-20 leaderboards for solo and parties of two, three or four across the public realms. Rankings require the original party throughout the timed run and exclude game-master assistance."
+    ],
+    "guides": [
+      "dungeons"
+    ]
+  },
+  {
+    "id": "2026-09-24-advertising-privacy",
+    "date": "2026-09-24",
+    "title": "Optional advertising cookies",
+    "summary": "Browser players can choose whether to share website visits with X for Mossvale advertising.",
+    "changes": [
+      "X advertising stays off until you choose Allow. Decline to keep playing without the advertising tag.",
+      "Change your choice from the Privacy link on the sign-in screen or Account menu. Declining also stops the tag in other open tabs on the same website by reloading them.",
+      "The website tag is disabled in native apps and respects browser no-tracking signals."
+    ],
+    "guides": [
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-24-faster-world-startup",
+    "date": "2026-09-24",
+    "title": "Faster world startup",
+    "summary": "Reduced the time needed to prepare the world when starting the game.",
+    "changes": [
+      "The game prepares its existing terrain, towns and gathering spots more quickly."
+    ],
+    "guides": ["audio-and-settings"]
+  },
+  {
+    "id": "2026-09-24-asia-loot-travel-sales",
+    "date": "2026-09-24",
+    "title": "Smoother dungeon travel and merchant sales",
+    "summary": "Loot saves no longer hold up dungeon portals, and merchant sales can be queued.",
+    "changes": [
+      "Dungeon room portals, rune seals, caches, entrances and exits remain usable while your manual or pet loot saves. Guardian, range and item ownership checks still apply.",
+      "Select your next merchant sale while earlier sales save. Pending rows leave the merchant list immediately; gold and inventory update only after the server confirms the sale. Failed or interrupted sales restore unconfirmed rows without automatically reselling them."
+    ],
+    "guides": [
+      "dungeons",
+      "combat-and-loot",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-24-single-auction-purchase",
+    "date": "2026-09-24",
+    "title": "Buy MOSS auctions in one step",
+    "summary": "One Buy confirmation covers your auction purchase.",
+    "changes": [
+      "MOSS auction purchases show one Buy modal with the item and exact MOSS price. The token approval and purchase run together in one sponsored transaction; if either call reverts, both are rolled back.",
+      "Payments that fail before submission show the actual error and let you retry Buy instead of staying pending. An older unfinished wallet action shows a recovery instruction; uncertain submissions remain protected against duplicate payments."
+    ],
+    "guides": ["equipment"]
+  },
+  {
+    "id": "2026-09-24-paid-payment-verification",
+    "date": "2026-09-24",
+    "title": "More reliable MOSS payment checks",
+    "summary": "Game servers use the configured Alchemy service for chain verification to avoid shared public RPC limits.",
+    "changes": [
+      "Auction, store, voucher and NFT checks use the game's private Alchemy connection when configured. Pending payments keep their existing verification and duplicate-payment protections."
+    ],
+    "guides": ["equipment", "gold-economy", "store", "pets"]
+  },
+  {
+    "id": "2026-09-24-remote-movement-recovery",
+    "date": "2026-09-24",
+    "title": "Smoother movement when updates arrive late",
+    "summary": "Other players recover smoothly from delayed or uneven realm updates.",
+    "changes": [
+      "Other players no longer keep stopping and jumping forward after connection latency increases. The client adjusts its short movement buffer and catches up gradually when delivery improves.",
+      "Fixed brief idle-animation flickers between movement updates. Players still stop at their last received position if updates stop; teleports and world transitions remain immediate."
+    ],
+    "guides": ["audio-and-settings"]
+  },
+  {
+    "id": "2026-09-24-indonesian-language",
+    "date": "2026-09-24",
+    "title": "Play in Bahasa Indonesia",
+    "summary": "Indonesian joins English and Simplified Chinese in the game language selector.",
+    "changes": [
+      "Choose Bahasa Indonesia before signing in, during character selection or in Settings → Language for translated interface text and game content.",
+      "Indonesian browser language preferences are detected automatically when no language is saved. Your choice stays on this device, and switching languages keeps you connected.",
+      "Player names and chat stay as written. Text without a translation continues to use English."
+    ],
+    "guides": [
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-24-dungeon-pillar-combat",
+    "date": "2026-09-24",
+    "title": "Fight around dungeon pillars",
+    "summary": "Dungeon foes can pursue you around pillars, and an unreachable selected monster no longer blocks spells against nearby foes.",
+    "changes": [
+      "Dungeon enemies route around pillars and other obstacles while chasing you, keeping their normal movement speed and respecting walls and closed gates.",
+      "Targeted offensive spells keep your selected monster when it is within range and has a clear path. Otherwise they choose the nearest reachable monster within spell range.",
+      "Tame Beast and explicitly selected opposing players or companions keep their chosen target."
+    ],
+    "guides": [
+      "classes",
+      "dungeon-veilhaven"
+    ]
+  },
+  {
+    "id": "2026-09-24-compact-bags-auction-purchases",
+    "date": "2026-09-24",
+    "title": "Smaller bags and simpler auction purchases",
+    "summary": "Compact inventory windows show your MOSS beside gold, and auction purchases keep a focused item-and-price approval.",
+    "changes": [
+      "Desktop character inventory and bag overview windows use about 70% of their previous maximum width and height. Item lists still scroll, and phone controls retain their touch targets.",
+      "Both bag views show the primary Mossvale Wallet MOSS balance beside gold. The balance refreshes while bags are open; an unavailable balance is shown as a dash instead of zero.",
+      "Removed the auction payment-status and unpaid-purchase recovery buttons and instructions. Buy opens the item-and-MOSS approval; pending purchases are checked automatically without sending another payment.",
+      "Wallet transfers distinguish insufficient MOSS from missing ETH for the network fee. Manual transfers continue to use the player’s ETH."
+    ],
+    "guides": [
+      "bags-and-bank",
+      "equipment",
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-24-processed-payments",
+    "date": "2026-09-24",
+    "title": "Use purchases as soon as payment is processed",
+    "summary": "Verified successful transactions no longer wait for Ethereum finality before delivering game rewards.",
+    "changes": [
+      "Auction items, Gold Exchange lots, store rewards and voucher claims complete when the game verifies successful processing on the current canonical chain. Purchased items can be used or traded immediately after delivery.",
+      "Pet and mount mints, NFT transfers and house-deed ownership become available after current ownership is verified. A submitted transaction hash, failed transaction or unverified receipt does not grant a reward.",
+      "Completed off-chain rewards remain saved if the chain later reverses their payment; Mossvale accepts that settlement risk. NFT access continues to follow verified current ownership.",
+      "Unpaid expiry, retry safeguards, pricing and treasury funding still use finalized proofs to prevent duplicate claims and premature escrow release."
+    ],
+    "guides": ["equipment", "gold-economy", "store", "pets", "travel"]
+  },
+  {
+    "id": "2026-09-24-auction-game-wallet",
+    "date": "2026-09-24",
+    "title": "A clearer auction house with Mossvale Wallet",
+    "summary": "Browse categories, compare listings and review your purchase beside the market. MOSS auctions use your built-in game wallet.",
+    "changes": [
+      "Auction trading uses Mossvale Wallet directly, with no browser-wallet selector. The wallet reuses your game sign-in and renews an expired wallet session automatically when that sign-in is still valid.",
+      "The auction house now has category navigation, search above the listings, and an item-and-price panel beside the selected auction. Equipment also has class, rarity and minimum/maximum level filters, with rarity sorting and level requirements visible in the results. Phone layouts keep the same controls available.",
+      "Linking a wallet still requires a one-time ownership approval, and every payment requires your approval. New MOSS listings and purchases require the linked address to match your Mossvale Wallet.",
+      "Back up wallet now reveals only the primary wallet account’s private key in Turnkey’s secure export view, instead of a recovery phrase. The game does not receive the plaintext key.",
+      "Old balances, NFTs and signed purchases stay with their original wallet. Finish or cancel old commitments before switching. Settings → Wallet includes recovery for MOSS sale proceeds held by an old external wallet; these withdrawals use that wallet’s ETH."
+    ],
+    "guides": [
+      "equipment",
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-24-stats-cleanup",
+    "date": "2026-09-24",
+    "title": "A clearer statistics page",
+    "summary": "Compact totals and a player chart up front make the statistics page easier to scan.",
+    "changes": [
+      "Removed repeated subtitles and metric descriptions, with essential definitions available under About this data.",
+      "Seven-day and longer player charts retain measured averages during partial hours, including updates. All-time averages are weighted by the number of recorded samples. Dashed lines identify partial coverage; hours with no readings remain empty.",
+      "Unavailable and stale data remain labelled. Time ranges, chart inspection and CSV downloads remain available on desktop and mobile."
+    ],
+    "guides": [
+      "statistics"
+    ]
+  },
+  {
+    "id": "2026-09-24-browser-connection-recovery",
+    "date": "2026-09-24",
+    "title": "Fewer false disconnects after browser freezes",
+    "summary": "The connection check gives delayed server replies time to arrive after a browser freeze before reconnecting.",
+    "changes": [
+      "Long browser freezes and computer-clock changes no longer immediately trigger a reconnect before queued server replies can be processed. Connections that remain unresponsive still reconnect automatically."
+    ],
+    "guides": [
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-24-wallet-fee-sponsorship",
+    "date": "2026-09-24",
+    "title": "Wallet fee sponsorship",
+    "summary": "Mossvale Wallet uses your game login and pays eligible network fees directly within the game's limits, without depositing a withdrawable gas allowance.",
+    "changes": [
+      "Fixed returning browsers keeping an older game version, missing Mossvale Wallet or repeatedly showing the update window; the normal game updater can recover without a hard refresh.",
+      "Fixed eligible wallet actions being rejected when sponsored gas is available.",
+      "Eligible purchases, sale withdrawals, voucher claims and pet NFT mints can have their network fees paid directly within the game's limits. No gas allowance is deposited into the player wallet or available to withdraw.",
+      "Players still approve each action and provide its purchase amount. Unsupported actions or unavailable sponsorship stop without automatically charging the player's ETH. Manual wallet transfers continue to use the player's own ETH.",
+      "Pending sponsored payments are tracked across retries; item delivery and payouts still require successful on-chain verification.",
+      "Wallet actions follow the selected realm. Returning to character selection or switching realms closes open wallet reviews; pending payments can be checked again after entering the game."
+    ],
+    "guides": ["getting-started", "equipment", "treasure-maps", "pets", "store"]
+  },
+  {
+    "id": "2026-09-23-meadgod-pons-lover",
+    "date": "2026-09-23",
+    "title": "MEADGod and the Pons Lover title",
+    "summary": "Meet MEADGod in Willowbrook and unlock Pons Lover through his one-time gold quest.",
+    "changes": [
+      "MEADGod, a giant cottage spirit with a mossy roof and oversized glasses, now stands in Willowbrook, Greenwood.",
+      "Speak with MEADGod while nearby and out of combat, then pay exactly 100,000 gold to complete Pons Lover. The payment permanently unlocks the Pons Lover title for that character. Each character can complete the quest once.",
+      "Insufficient gold prevents payment. If saving fails, your gold and title ownership stay unchanged and you can retry in the dialogue.",
+      "Select Pons Lover from the title selector in Achievements after unlocking it. Your currently selected title stays unchanged until you choose another."
+    ],
+    "guides": [
+      "meadgod",
+      "achievements-and-titles"
+    ]
+  },
+  {
+    "id": "2026-09-23-bag-views",
+    "date": "2026-09-23",
+    "title": "New character inventory and bag overview",
+    "summary": "A refreshed inventory brings bag tabs, larger item grids and a separate overview to desktop and mobile.",
+    "changes": [
+      "The character inventory places equipment and stats beside a combined item grid, with gold, capacity and tabs for individual equipped bags. In portrait, the character appears above the inventory.",
+      "Switch to the bag overview to see the backpack and each equipped bag in separate rows. Filter Equipment, Materials, Consumables, Quest or Misc, and sort each bag by Type, Name or Quantity.",
+      "Filtering and sorting keep saved item positions and bag contents unchanged. Choose All and Custom to rearrange slots. Existing item details, upgrades, equipping and bag management remain available."
+    ],
+    "guides": [
+      "bags-and-bank"
+    ]
+  },
+  {
+    "id": "2026-09-23-optional-mossvale-wallet",
+    "date": "2026-09-23",
+    "title": "Optional Mossvale Wallet",
+    "summary": "Prepared an optional wallet using your Mossvale login, with inline management in Settings and game-funded network fees for eligible actions; it requires wallet and gas-funding setup before use.",
+    "changes": [
+      "Choose Mossvale Wallet when available and continue with your existing game account to create or reopen your wallet. Your linked Mossvale wallet is used automatically, with no account selector. Linking and each transaction still require your approval. Existing browser wallet apps remain available.",
+      "For eligible auction purchases, sale withdrawals, voucher collection, pet NFT mints and MOSS store purchases, the game can top up the ETH shortfall for network fees within its limits; existing ETH counts toward those fees. You still supply the purchase amount and meet normal eligibility rules. Unavailable funding or unsupported actions stop without automatically spending your own ETH; external wallets keep their usual fee requirements.",
+      "Existing balances, NFT ownership and auction proceeds stay with their original wallet. Finish pending wallet purchases and listings before changing the linked address; saved voucher payouts must still be collected by their original recipient.",
+      "Settings → Wallet appears immediately below Graphics and opens your connected wallet directly to balances and controls inside Settings: view MOSS and ETH, copy a deposit address, send MOSS or ETH, view and transfer owned Mossvale NFTs, check pending transactions, and open explorer activity. Transfers show the recipient and maximum network fee before approval and use your own ETH. Back up wallet opens a separate recovery-phrase view. The optional wallet is unavailable in native wallet handoffs. Native MOSS auctions and NFT minting remain unavailable; mobile vouchers retain their existing external-wallet approval flow.",
+      "Wallet selection, sign-in, transaction review and backup dialogs use Mossvale’s timber frames, forest-green surfaces, brass buttons and cream text.",
+      "Where Mossvale Wallet is enabled, auction purchase reviews show the item, quantity and exact MOSS price; voucher approvals show the exact MOSS amount you will receive, and pet mint approvals show the pet’s image and name without unrelated item icons."
+    ],
+    "guides": [
+      "getting-started",
+      "equipment",
+      "treasure-maps",
+      "pets",
+      "store"
+    ]
+  },
+  {
+    "id": "2026-09-23-dungeon-room-combat-lockdown",
+    "date": "2026-09-23",
+    "title": "Clear the room to unlock its portals",
+    "summary": "Every portal in a dungeon combat room stays sealed until all of that room’s monsters are defeated.",
+    "changes": [
+      "Defeat every monster in your current chamber to unlock its outgoing portals, including the return portal. This also applies to optional side rooms.",
+      "Leaving or removing a living party member cannot be used to escape an uncleared combat chamber.",
+      "Forward portals still require their listed encounters and rune seals. The protected arrival sanctuary’s first room portal remains available immediately."
+    ],
+    "guides": ["dungeons"]
+  },
+  {
+    "id": "2026-09-23-dungeon-chambers-and-spike-traps",
+    "date": "2026-09-23",
+    "title": "Larger dungeon rooms, portals and spike traps",
+    "summary": "Dungeons now have larger enclosed chambers connected by real teleport portals, richer themed details and timed spike beds. The world view follows your current room.",
+    "changes": [
+      "All seven dungeons receive larger, fully enclosed combat chambers with checkered stone floors, framed walls and glowing lanterns. Their themed encounters, rune seals, checkpoints and rewards remain.",
+      "All seven dungeons gain distinct architectural details: Rootvault root carvings and leaf clasps, Cindercrypt bronze grates and ember panels, Frosthollow ice crowns and silver runes, Nightroot thorn roots and crescent wards, Plagueworks specimen shelves and pipe valves, Emberfall furnace ribs and molten channels, and Veilhaven gold crests, amber lanterns and carved bell shrines.",
+      "Rootvault, Cindercrypt, Frosthollow and Nightroot receive eight distinct models for their sanctuary encounter leaders and final bosses, each with idle, walking, basic attack, special attack and death animations.",
+      "Only your current chamber and its occupants appear in the world view. Teleports, backtracking and checkpoint returns switch the visible room; the dungeon map retains its full layout.",
+      "Room teleports have stepped stone rings, glowing rims and blue vortices that look recessed into the floor. Locked portals hold floating chains and locks inside translucent blue domes until they unlock.",
+      "Use Interact (E by default) beside a floor portal to teleport between rooms. Forward portals require their listed encounters and rune seals; return portals allow backtracking. Clearing a main room opens its optional side chambers.",
+      "Every dungeon now starts in a protected arrival sanctuary, with a portal into the first combat room. Room arrivals leave clear space around portals and spike beds.",
+      "Fixed spike beds cycle through four seconds retracted, a 1.6-second warning and 2.4 seconds raised. Follow the clear center aisles or cross while the spikes are down; nearby beds can be at different points in their cycle.",
+      "Raised spikes can hit adventurers and combat companions once per bed per cycle, starting at 12% of maximum health before defense and shields. Entry, checkpoint and interaction spaces stay clear. Completing a run retracts its traps, and dream visits have no active spike traps."
+    ],
+    "guides": [
+      "dungeons"
+    ]
+  },
+  {
+    "id": "2026-09-23-dungeon-companion-stability",
+    "date": "2026-09-23",
+    "title": "Dungeon stability",
+    "summary": "Fixed a server crash during companion combat in dungeons.",
+    "changes": ["Dungeon attacks targeting a Hunter companion no longer cause a server crash that disconnects players across the realm."],
+    "guides": []
+  },
+  {
+    "id": "2026-09-23-bot-security",
+    "date": "2026-09-23",
+    "title": "Bot security update",
+    "summary": "Improved protection against automated play.",
+    "changes": [
+      "Updated bot security."
+    ],
+    "guides": []
+  },
+  {
+    "id": "2026-09-22-smaller-game-updates",
+    "date": "2026-09-22",
+    "title": "Smaller game downloads",
+    "summary": "Game updates reuse saved files and compress downloads to reduce data usage.",
+    "changes": [
+      "Returning browsers reuse unchanged models and other saved game files instead of downloading the whole game again for each update.",
+      "New and changed game files download with lossless compression when supported. Saved files also load directly during play instead of being downloaded again.",
+      "An interrupted update keeps the previous complete version available. First visits and cleared browser storage still require downloading the game files."
+    ],
+    "guides": ["getting-started"]
+  },
+  {
+    "id": "2026-09-22-instance-loading-screen",
+    "date": "2026-09-22",
+    "title": "Arrive in a fully drawn world",
+    "summary": "A loading screen covers instance transitions while your destination is prepared.",
+    "changes": [
+      "Entering a dungeon, dream or private arena, and returning outdoors, now shows a loading screen until the destination scenery, characters and first rendered view are ready.",
+      "Movement and gameplay controls stay paused during the transition. If an area cannot load, Reload world lets you try again."
+    ],
+    "guides": [
+      "getting-started",
+      "dungeons",
+      "colosseum"
+    ]
+  },
+  {
+    "id": "2026-09-22-instant-loot-pickups",
+    "date": "2026-09-22",
+    "title": "Pick up loot without waiting",
+    "summary": "Collect consecutive drops immediately while earlier pickups finish saving in the background.",
+    "changes": [
+      "Collect another corpse or its remaining items without waiting for the previous pickup or your pet to finish saving. Pending loot appears in your bags immediately, and you can keep moving and fighting.",
+      "Pickups accepted while you are beside the corpse keep saving after you move away. New items become usable once their save succeeds; failed pickups leave the uncollected loot available.",
+      "Bags are full remains the only loot error popup. Other loot collection errors appear in System chat."
+    ],
+    "guides": [
+      "combat-and-loot",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-22-regional-loot-delay",
+    "date": "2026-09-22",
+    "title": "Less waiting between loot pickups",
+    "summary": "Reduced background synchronization delays that affect loot collection, especially on Asia.",
+    "changes": [
+      "Movement and health saves no longer trigger unnecessary refreshes on other realms, and remaining refreshes require fewer database round trips.",
+      "Loot and gold still become usable only after a successful save. Full-bag warnings remain unchanged."
+    ],
+    "guides": [
+      "combat-and-loot",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-22-mount-items-and-nfts",
+    "date": "2026-09-22",
+    "title": "Collectible mount drops and mount NFTs",
+    "summary": "Keep extra mount drops to trade, and optionally mint eligible mounts in a separate Mossvale Mounts collection when enabled.",
+    "changes": [
+      "Verdant Revenant keeps its 1 in 10,000 personal drop chance from the final Veiled Abbess encounter. Successful rolls now leave a mount item in personal loot, including for players who already own the mount.",
+      "Collect and learn a mount item, trade it, or list extra copies on the auction house. Mount items require bag space and cannot be sold to NPC merchants.",
+      "When the separate Mossvale Mounts NFT collection is enabled, eligible carried mount items and learned mounts can be converted into wallet-owned NFTs. Riding level and training are still required; transferring the NFT transfers its mount access.",
+      "Embermane and Cinderfang keep their store source. Finalized MOSS purchases can be converted when mount minting is enabled; refundable native-store purchases remain character-bound.",
+      "Briar Horse and Moonfang Wolf remain gold-vendor unlocks and cannot be minted."
+    ],
+    "guides": [
+      "travel",
+      "dungeon-veilhaven",
+      "store"
+    ]
+  },
+  {
+    "id": "2026-09-22-moss-voucher-rewards-and-minimum",
+    "date": "2026-09-22",
+    "title": "MOSS voucher rewards and wallet minimum",
+    "summary": "New voucher redemptions award $2–$10 and require at least $30 USD worth of MOSS in the linked wallet.",
+    "changes": [
+      "New redemptions have a 90% chance of $2–$5 and a 10% chance of $6–$10 USD worth of MOSS. Each cent amount within a range is equally likely.",
+      "The linked wallet must hold at least $30 USD worth of MOSS before a new redemption. This balance is checked without spending or burning MOSS. Failed checks keep your voucher and daily redemption available.",
+      "Previously saved payouts keep their assigned rewards and remain available to refresh, collect or check without the new minimum. The one-redemption-per-account daily limit still resets at 00:00 UTC."
+    ],
+    "guides": [
+      "treasure-maps"
+    ]
+  },
+  {
+    "id": "2026-09-22-pet-manual-loot-pickup",
+    "date": "2026-09-22",
+    "title": "Reliable collection beside pets",
+    "summary": "Manual loot collection waits for an ongoing pet pickup instead of rejecting the click.",
+    "changes": [
+      "Collecting loot while your pet is saving a pickup now waits for that pickup to finish. Pets pause new pickups while your manual collection is waiting.",
+      "Full-bag warnings remain as popups. Other loot collection errors stay in System chat, and unsuccessful collection restores any pending loot display without a generic loot-save popup."
+    ],
+    "guides": [
+      "combat-and-loot",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-22-mount-collection-compatibility",
+    "date": "2026-09-22",
+    "title": "Mount collection preparation",
+    "summary": "Prepares realm compatibility for collectible mount items and the separate mount NFT collection.",
+    "changes": [
+      "Adds support for future mount items and saved mount NFT claims while preserving current mount rewards during the compatibility rollout."
+    ],
+    "guides": [
+      "travel"
+    ]
+  },
+  {
+    "id": "2026-09-22-repeat-gear-drops",
+    "date": "2026-09-22",
+    "title": "Gear can drop again",
+    "summary": "Owning a piece of gear no longer prevents another copy from dropping.",
+    "changes": [
+      "Fixed gear rewards can drop even when another copy is equipped, carried, banked, auctioned or waiting to be collected.",
+      "Each drop is a separate item with the original name, stats, rarity and sale value. Keep it, sell it to a merchant, trade it or list it at auction."
+    ],
+    "guides": [
+      "combat-and-loot",
+      "bags-and-bank",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-22-native-startup-recovery",
+    "date": "2026-09-22",
+    "title": "Mobile startup recovery",
+    "summary": "Prepared a native app fix for connections stuck on Opening the lantern roads...; it requires installing a new app build.",
+    "changes": [
+      "A stalled startup connection shows a timeout and Reconnect after 15 seconds, even when the phone does not finish cancelling the request. Late results from an expired attempt cannot interrupt a newer connection.",
+      "The app retries every 15 seconds while active. Reconnect and returning to the app retry immediately.",
+      "This fix requires a new installed Android or iOS app binary. A game or wiki deployment does not update existing app binaries."
+    ],
+    "guides": [
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-22-mounted-merchant-stability",
+    "date": "2026-09-22",
+    "title": "Steady mounted trading",
+    "summary": "Fixed repeated rider jumps and camera shaking while buying or selling at NPC merchants on a mount.",
+    "changes": [
+      "Standing still while a purchase or sale saves no longer causes repeated position resets.",
+      "Position corrections preserve the rider's saddle height and camera framing."
+    ],
+    "guides": ["travel", "equipment"]
+  },
+  {
+    "id": "2026-09-22-loot-combat-recovery",
+    "date": "2026-09-22",
+    "title": "Keep fighting while loot saves",
+    "summary": "Loot saves quietly in the background without interrupting skills and attacks.",
+    "changes": [
+      "Skills, auto attacks and combat companions stay responsive while manual or pet loot pickups save.",
+      "Routine saving messages no longer interrupt loot collection. Failed saves still show an error and return any pending loot to its previous display.",
+      "A rejected auto-attack request no longer leaves the controls showing an attack that never started; you can retry without resetting the target or hotbar.",
+      "Collected items and gold still require save confirmation before they can be used, spent or traded. If saving fails, any remaining loot can be collected again."
+    ],
+    "guides": [
+      "combat-and-loot",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-22-gear-copy-compatibility",
+    "date": "2026-09-22",
+    "title": "Gear storage compatibility",
+    "summary": "Prepare gear storage to retain separate copies of the same fixed equipment.",
+    "changes": [
+      "Gear storage can retain individually identified copies through saves, upgrades, banks and auctions. Repeat fixed gear drops are enabled in a following release after all realms support these copies."
+    ],
+    "guides": [
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-22-realm-statistics-stability",
+    "date": "2026-09-22",
+    "title": "Realm and statistics stability",
+    "summary": "Stalled connections no longer build an unlimited backlog of world updates, and live statistics recover more reliably.",
+    "changes": [
+      "World updates catch up without retaining every outdated snapshot when a connection falls behind. A stalled connection can be disconnected before its backlog affects other players.",
+      "An abandoned statistics transaction can no longer keep all three realms' player counts frozen indefinitely.",
+      "A fresh realm count recorded while the statistics page loads stays available instead of briefly appearing offline.",
+      "Treasury totals use a working statistics-service RPC route while retaining fresh block, contract and finality verification."
+    ],
+    "guides": [
+      "getting-started",
+      "statistics"
+    ]
+  },
+  {
+    "id": "2026-09-22-responsive-loot-pickup",
+    "date": "2026-09-22",
+    "title": "Faster-feeling loot pickups",
+    "summary": "See collected loot in your bags immediately while it saves.",
+    "changes": [
+      "Manual loot pickups appear in your bags and disappear from the corpse immediately. Movement stays responsive while the pickup saves.",
+      "New loot becomes usable after confirmation. If saving fails, pending bag changes are reversed and remaining loot can be collected again."
+    ],
+    "guides": [
+      "combat-and-loot"
+    ]
+  },
+  {
+    "id": "2026-09-22-player-loot-tracing",
+    "date": "2026-09-22",
+    "title": "Better investigation of missing loot",
+    "summary": "Game masters can temporarily trace a character’s loot to investigate reported missing drops.",
+    "changes": [
+      "Game masters can start and stop temporary loot diagnostics for a selected online character, then download a report of drop rolls, collection decisions, saving results and expired loot.",
+      "Tracing leaves loot chances and rewards unchanged."
+    ],
+    "guides": [
+      "equipment",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-22-auction-tax",
+    "date": "2026-09-22",
+    "title": "MOSS auction tax",
+    "summary": "This release activates a 5% seller tax on MOSS auction sales, split 80% to burning, 10% to the treasury and 10% to the dev team.",
+    "changes": [
+      "The buyer pays the listed total. A 100 MOSS sale leaves 95 MOSS for the seller, burns 4 MOSS and sends 0.5 MOSS each to the treasury and dev team; ETH network fees remain separate.",
+      "Selling and purchase review show the auction tax split and seller proceeds. The tax also applies to MOSS paid for Gold Exchange lots, alongside the existing separate gold fee.",
+      "Open MOSS listings carry over without relisting, preserving their items, quantities and listed prices. Already-signed payments keep their original contract terms until paid or confirmed expired. Withdraw previous MOSS proceeds collects seller balances held by the original contract. Completed past sales are unchanged."
+    ],
+    "guides": [
+      "equipment",
+      "gold-economy"
+    ]
+  },
+  {
+    "id": "2026-09-22-class-workshop-rework",
+    "date": "2026-09-22",
+    "title": "Class workshop rework and reliable hunter attacks",
+    "summary": "The workshop class designs now drive new Knight talents, poison and fire spell changes, and hunter targeting.",
+    "changes": [
+      "Knight talents add Wide Swing and Fine Cuts, a held Powerful Throw with shield recovery, Guard and Hold the Line, Adamant Guardian, Courageous Call and Into the Fray, and Lord of Battle. Changed Knight builds that no longer satisfy their prerequisites receive a free point refund.",
+      "The downloadable talent workshop starts with all 115 current talents and the updated Knight tree.",
+      "Knight trainers teach Charge at level 3 and Taunt at level 1. Taunt can choose an enemy attacking an ally when no target is chosen or the selected enemy already attacks you.",
+      "Rangers learn Poison Cloud at level 33. Starfall Arrow hits at most four enemies. Combined Assault requires a living companion already in melee range of its target. Mage Flamewave now leaves its authored burn.",
+      "Poison Cloud and the seven new Knight spells have detailed woodland spell models inspired by Mossvale creatures, with layered bark, mossy armor, antlers and fungal growth. Distinct casting poses, trails and impacts include a spinning ricochet shield and Adamant Guardian's stored-damage burst.",
+      "Starting auto attack with T or the mobile Attack button selects the closest valid enemy. Released hunter arrows still land after movement, switching targets, stopping auto attack or beginning another action; death and leaving the combat instance still clear them."
+    ],
+    "guides": [
+      "combat-and-loot",
+      "class-knight",
+      "class-ranger",
+      "class-mage",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-22-pet-nft-activation",
+    "date": "2026-09-22",
+    "title": "All 18 pet NFTs enabled",
+    "summary": "The expandable Mossvale Pets collection is enabled with optional migration for original NFTs.",
+    "changes": [
+      "All 18 current pets can use the expanded NFT collection. Eligible learned pets and finalized MOSS store-pet rewards can be converted from the NFT panel.",
+      "Original NFTs remain usable. Holders may optionally migrate each original token into the expanded collection; review the permanent lock and wallet gas fee before approving.",
+      "Future species can be added to this same contract. The existing OpenSea collection URL remains subject to a separate support-assisted migration."
+    ],
+    "guides": [
+      "pets",
+      "store"
+    ]
+  },
+  {
+    "id": "2026-09-22-expandable-pet-nfts",
+    "date": "2026-09-22",
+    "title": "Expanded pet NFTs and optional migration",
+    "summary": "Expanded collection support covers all 18 pets and lets original NFT holders migrate when enabled.",
+    "changes": [
+      "When the expanded collection is enabled, all 18 pet species support NFTs, including the eight new drop companions, Ashwing and Cinder Kit. New drop pets can still be learned normally.",
+      "You can explicitly convert a learned drop pet or eligible pet reward from a finalized MOSS store purchase. The review reserves the selected item or character unlock; an unpaid claim safely returns it after expiry. Refundable native-store rewards stay character-bound.",
+      "Original NFTs remain usable. Optional migration approves one original token, permanently locks it, and creates one replacement with the same token number and species. Wallet approval and network gas are required.",
+      "Future pet species can be added to the expanded collection without replacing its contract. Keeping the existing OpenSea collection URL requires a separate change by OpenSea support."
+    ],
+    "guides": [
+      "pets",
+      "store"
+    ]
+  },
+  {
+    "id": "2026-09-21-mobile-loading-recovery",
+    "date": "2026-09-21",
+    "title": "More reliable mobile loading",
+    "summary": "Updated mobile builds give slow page loads and app switching time to finish connecting.",
+    "changes": [
+      "Page loading continues while download progress advances. Opening a new page receives a fresh timeout instead of inheriting the previous page's deadline.",
+      "The page-loading timeout pauses while Mossvale is in the background. Returning gives the existing page time to finish; stalled loads still offer Reconnect and retry automatically.",
+      "These fixes require an app update through your installation channel. A game-server update alone does not change the installed mobile app."
+    ],
+    "guides": [
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-21-fair-play-guards",
+    "date": "2026-09-21",
+    "title": "Stronger fair-play and gold safeguards",
+    "summary": "Account-level abuse protection and transaction checks help protect player progress.",
+    "changes": [
+      "Repeated invalid requests now apply a one-minute account safety cooldown that survives reconnects and realm changes.",
+      "Unusually regular input is flagged for game master review without an automatic ban. Normal automatic attacks and pet pickups are excluded from this timing check.",
+      "Gold saves must balance recorded rewards, spending, transfers and escrow. Transactions with unexplained gold changes are rejected before they commit.",
+      "Inventory transactions now recheck account availability at their shared entry points and validate participating saves before committing."
+    ],
+    "guides": [
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-21-simplified-chinese-and-player-countries",
+    "date": "2026-09-21",
+    "title": "Simplified Chinese and player country statistics",
+    "summary": "Choose Simplified Chinese for the game and see aggregate player countries on the statistics page.",
+    "changes": [
+      "Choose English or Simplified Chinese before signing in, at character selection, or in Settings → Language. The preference stays on this device and updates the interface without reconnecting.",
+      "Game menus, quests, abilities and system messages have a Simplified Chinese translation catalog with English fallback. Player names and chat remain as written; new names can include Chinese characters.",
+      "The statistics page shows unique active accounts by approximate connection country, deduplicated across realms, with an explicit Unknown count and coverage. New country history begins when tracking is enabled; historical countries are not inferred."
+    ],
+    "guides": [
+      "audio-and-settings",
+      "character-creation"
+    ]
+  },
+  {
+    "id": "2026-09-21-merchant-bulk-sale-warnings",
+    "date": "2026-09-21",
+    "title": "Quicker stack sales and valuable-item warnings",
+    "summary": "Sell stacked items directly at merchants and review valuable sales before confirming.",
+    "changes": [
+      "Select a stack at a merchant to use Sell all, with the quantity and gold payout shown on the button. Gathered materials retain their 1,000,000-per-sale limit.",
+      "Selling Legendary or Mythic items at merchants requires an explicit confirmation. Pets remain protected from merchant sales.",
+      "Auction listings for unlearned pet items or Legendary and Mythic items require confirming a warning before the listing is created."
+    ],
+    "guides": [
+      "equipment",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-21-clickable-quest-boards",
+    "date": "2026-09-21",
+    "title": "Clickable quest boards",
+    "summary": "Select quest boards directly from either side.",
+    "changes": [
+      "Quest boards can once again be selected and right-clicked directly on the board from either side. E and the Interact button still work."
+    ],
+    "guides": [
+      "contracts"
+    ]
+  },
+  {
+    "id": "2026-09-21-daily-moss-voucher-limit",
+    "date": "2026-09-21",
+    "title": "One MOSS voucher redemption per day",
+    "summary": "Each account can redeem one MOSS voucher per day at Veyl’s counter.",
+    "changes": [
+      "The limit is shared across all characters and realms on your account and resets every day at 00:00 UTC.",
+      "Saving a new voucher payout uses the daily redemption. You can still refresh its quote, collect, check or retry a saved payout after reaching the limit.",
+      "Veyl shows when the daily limit has been reached. Extra vouchers stay in your bags for another day. Gold merchant round payouts are unchanged."
+    ],
+    "guides": ["treasure-maps"]
+  },
+  {
+    "id": "2026-09-20-merchant-wallet-link-recovery",
+    "date": "2026-09-20",
+    "title": "Recover a waiting merchant wallet link",
+    "summary": "Refresh your merchant requirements even when a wallet ownership prompt is stuck.",
+    "changes": [
+      "While linking a wallet at the gold merchant, choose Cancel link & refresh to stop waiting and check the wallet already saved to your character.",
+      "Wallet connection attempts now expire even when the wallet has not returned an account. Late replies from cancelled attempts cannot submit an ownership signature."
+    ],
+    "guides": [
+      "gold-economy"
+    ]
+  },
+  {
+    "id": "2026-09-20-polling-booths",
+    "date": "2026-09-20",
+    "title": "Have your say at the polling booth",
+    "summary": "Mossvale-style polling booths bring community votes to all six towns.",
+    "changes": [
+      "Visit the green-roofed oak polling booth south of any town hall, or find it on the world map.",
+      "Read proposals, choose Yes, No or Skip, review your answers, and submit one final ballot per account across all characters and realms.",
+      "Results become visible after voting closes. A question passes with at least 70% Yes among Yes and No votes; Skip does not count toward that percentage.",
+      "The first proposal, “Stake MOSS?”, asks whether staking should be added to the game. It is a community proposal; staking is not available through this update. Voting closes on 27 September 2026 at 19:30 UTC."
+    ],
+    "guides": [
+      "world"
+    ]
+  },
+  {
+    "id": "2026-09-20-skill-damage-companion-pathing",
+    "date": "2026-09-20",
+    "title": "Skill damage bonuses and companion movement",
+    "summary": "Skill damage now benefits primary-scaling abilities, and combat companions walk around pillars.",
+    "changes": [
+      "Fixed Skill damage bonuses from equipment and passive talents being ignored by Eagle’s Eye and other abilities that scale from Attack damage. The fix also applies to their channels, damage-over-time ticks, healing and shields; abilities already using Magic count the bonus once.",
+      "The spellbook explains that displayed power already includes equipped gear and applicable passive talents. All-damage bonuses remain included once, before skill multipliers and percentage bonuses.",
+      "Combat companions now walk around nearby pillars and cover when following you or pursuing an enemy instead of pausing against the obstacle."
+    ],
+    "guides": ["combat-and-loot", "equipment", "class-ranger", "pets"]
+  },
+  {
+    "id": "2026-09-20-obstacle-corner-movement",
+    "date": "2026-09-20",
+    "title": "Smoother movement around corners",
+    "summary": "Move around obstacles without repeated snapbacks.",
+    "changes": [
+      "Fixed movement updates cutting across obstacle corners and pulling you back while walking, sprinting or riding around them."
+    ],
+    "guides": [
+      "travel"
+    ]
+  },
+  {
+    "id": "2026-09-20-moss-auction-trading",
+    "date": "2026-09-20",
+    "title": "MOSS returns to item auctions",
+    "summary": "List items for gold or MOSS in a refreshed Mossvale auction house.",
+    "changes": [
+      "Browser players can choose MOSS again when listing items, alongside gold. Gold item sales retain their displayed seller fee, and Gold Exchange keeps its existing rules.",
+      "The auction house uses forest-green panels, brass accents and clearer trading controls.",
+      "Type quantities and prices directly. Background market refreshes keep your draft amounts while you prepare a listing."
+    ],
+    "guides": [
+      "equipment",
+      "gold-economy"
+    ]
+  },
+  {
+    "id": "2026-09-20-created-gold-statistics",
+    "date": "2026-09-20",
+    "title": "Simpler gold statistics",
+    "summary": "The gold section on the statistics page now focuses on Created gold.",
+    "changes": [
+      "View gold created through gameplay over the last 24 hours, 7 days and 30 days, excluding administrative grants.",
+      "Removed the other gold figures from the statistics display."
+    ],
+    "guides": [
+      "statistics",
+      "gold-economy"
+    ]
+  },
+  {
+    "id": "2026-09-20-pet-mints-and-reconnection",
+    "date": "2026-09-20",
+    "title": "Pet minting, vouchers and mobile sign-in",
+    "summary": "The eight new drop companions gain optional NFT minting, with fixes for voucher verification and slow mobile sign-in.",
+    "changes": [
+      "When minting is available, Fern Lynx, Moonveil Gryphlet, Cinder Salamander, Amethyst Terrapin, Blossom Jackalope, Lantern Sprite, Rime Red Panda and Crown Pangolin offer Mint NFT directly in Pets & Mounts and bag details. You can still learn an unlearned drop normally.",
+      "Already learned new companions can also be converted. Review the claim and confirm in your wallet; after minting, access follows NFT ownership. A claim that expires without minting restores the reserved companion after verification.",
+      "Fixed MOSS voucher verification failing when the public chain provider returned an old finalized block. Claims still require verified chain state and wallet confirmation.",
+      "Mobile sign-in allows more time for the app connection to become ready and preserves saved sign-in during a temporary startup failure. The native app also makes its connection available earlier while loading."
+    ],
+    "guides": [
+      "pets",
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-20-smoother-movement",
+    "date": "2026-09-20",
+    "title": "Smoother movement and lighter rendering",
+    "summary": "Other adventurers move more smoothly, pet loot no longer interrupts walking, and large dungeons render less distant detail.",
+    "changes": [
+      "Other players move and turn smoothly between realm updates, with steadier movement updates from your client. Teleports, seating and travel still reset their position immediately.",
+      "Distant players and mounts skip animation work outside your graphics draw distance.",
+      "Landscape and large dungeon scenery use smaller batches so off-screen terrain, trees and rooms can be skipped. Nearby artwork keeps its detail; defeated monsters stop animation work after falling.",
+      "You can keep walking while your pet saves collected monster loot and dungeon-cache rewards. Item actions remain protected until saving finishes.",
+      "Clicking or dragging player names no longer accidentally highlights their text."
+    ],
+    "guides": [
+      "audio-and-settings",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-20-verdant-revenant",
+    "date": "2026-09-20",
+    "title": "The Verdant Revenant",
+    "summary": "A jade spirit dragon mount haunts the final sanctum of Veilhaven Monastery.",
+    "changes": [
+      "The Verdant Revenant levitates above the ground with relaxed dangling claws while idle and tucked legs while gliding, stepped jade scales, ancient brass armor, an animated spirit-flame mane, a downward-flowing tail that slithers left and right, and trailing emerald particles.",
+      "The Veiled Abbess has a personal 1 in 10,000 (0.01%) chance to unlock the mount for each living adventurer credited with her defeat in Veilhaven Monastery. Nearby party members must be within 14 meters of the boss.",
+      "A successful drop adds the mount directly to your character’s collection. It does not use a backpack slot or create a tradable item, and characters that already own it do not roll again.",
+      "Browse it in the Mounts journal. Summoning requires level 25 and riding training, and uses your learned riding speed.",
+      "Game masters can choose their own character, Give item, Mounts, then Verdant Revenant to grant it from the admin menu."
+    ],
+    "guides": [
+      "travel",
+      "dungeon-veilhaven",
+      "monster-veiled-abbess"
+    ]
+  },
+  {
+    "id": "2026-09-20-pets-fetch-loot",
+    "date": "2026-09-20",
+    "title": "Pets fetch nearby loot",
+    "summary": "Your summoned companion runs to nearby loot and unlocked chests, then returns to follow you.",
+    "changes": [
+      "Pets now fetch your loot within 12 meters and collect it only after reaching it. You can stay where you are while your companion makes the trip.",
+      "Pets open unlocked dungeon and dream chests and collect your personal share. They also collect uncovered treasure-map chests after the guardian is defeated, while you are out of combat and dismounted.",
+      "Existing rarity filters, bag space, loot ownership, death animations and dungeon locks still apply. Pets need a clear, dry path and stop fetching if you move out of range. Treasure-map reward bundles stay intact when your bags are full."
+    ],
+    "guides": [
+      "pets",
+      "combat-and-loot",
+      "treasure-maps"
+    ]
+  },
+  {
+    "id": "2026-09-20-detailed-pet-collection",
+    "date": "2026-09-20",
+    "title": "Eight new woodland companions",
+    "summary": "Meet eight more detailed companions while keeping every pet you already own.",
+    "changes": [
+      "Fern Lynx, Moonveil Gryphlet, Cinder Salamander, Amethyst Terrapin, Blossom Jackalope, Lantern Sprite, Rime Red Panda and Crown Pangolin arrive with detailed new models.",
+      "The new companions replace the original eight pets in monster drops at the same sources and chances: seven at 0.1%, with Crown Pangolin at 0.01% from the level 40 Ashen Crown Titan world boss.",
+      "Moss Fox, Moon Owl, Ember Drake, Crystal Tortoise, Bloom Hare, Lantern Moth, Frost Cub and Golden Pig no longer drop. Existing pets keep their original models; unlearned copies in backpacks, banks and auctions remain usable and tradable.",
+      "Ashwing and Cinder Kit remain available through the store.",
+      "New drop companions can be learned and traded even when pet NFT claims are enabled. The original eight keep their existing NFT ownership rules.",
+      "After a temporary NFT ownership-check interruption, your selected pet returns once ownership is verified again. Selling or transferring the pet, or changing the linked wallet, still removes that access."
+    ],
+    "guides": [
+      "pets",
+      "combat-and-loot",
+      "world-bosses"
+    ]
+  },
+  {
+    "id": "2026-09-19-gold-merchant-rounds",
+    "date": "2026-09-19",
+    "title": "Offer gold to the traveling merchant",
+    "summary": "Funded merchant rounds buy gold from the lowest asking prices, with editable offers and MOSS collection after closing.",
+    "changes": [
+      "When a funded round opens, level-30 adventurers holding at least $25 worth of MOSS in a linked wallet can offer gold and set a price per 1,000 gold. Each account has one offer per round.",
+      "Merchant settlement checks no longer delay sign-in on realms without a configured payout service.",
+      "Offered gold is locked until you update or cancel before the deadline. Updates receive a new place in the queue for equal prices.",
+      "After closing, the merchant buys the cheapest gold first and pays each winner their asking price. Offers can fill partially; all unbought gold is returned, including while you are offline.",
+      "The round keeps a fixed USD budget while estimated MOSS changes with its price. At closing, one verified price locks every winning dollar payout into MOSS. Funding delays and later collection cannot change those amounts or the offer’s recipient wallet.",
+      "Each round starts manually. Adding MOSS to the treasury does not open bidding or start another round automatically.",
+      "The merchant now uses the MOSS price displayed by Pons for its $25 wallet requirement. Pricing failures leave the requirement unverified. Recent transfers still need final confirmation; round payouts and store pricing keep their existing references."
+    ],
+    "guides": [
+      "equipment",
+      "gold-economy"
+    ]
+  },
+  {
+    "id": "2026-09-19-planned-restart-notices",
+    "date": "2026-09-19",
+    "title": "Clearer notices for planned updates",
+    "summary": "Restart notices distinguish advance warning from the moment a realm needs to close.",
+    "changes": [
+      "Scheduled updates still give at least five minutes of notice and save your character before restarting.",
+      "A pending update notice lets you keep playing while the realm waits to restart. If that restart is cancelled, the notice clears."
+    ],
+    "guides": ["getting-started"]
+  },
+  {
+    "id": "2026-09-19-voucher-payout-reference",
+    "date": "2026-09-19",
+    "title": "Refresh MOSS payouts while keeping your USD reward",
+    "summary": "Voucher rewards stay fixed in USD, up to $30, while you can refresh the MOSS amount before collecting.",
+    "changes": [
+      "Each voucher assigns a $5–$30 USD reward, capped at $30. The USD amount and payout probabilities stay unchanged when you refresh.",
+      "Choose Refresh MOSS amount before collecting to use a fresh ask-side price quote. This consumes no extra voucher and does not open your wallet. An actual sale may return less, and the token’s dollar value can change later.",
+      "Saved signed payouts remain collectible without a new price quote. Older payouts without an assigned USD reward keep their original MOSS amount. Submitted payments cannot be refreshed; use Check payout to follow their status."
+    ],
+    "guides": [
+      "treasure-maps"
+    ]
+  },
+  {
+    "id": "2026-09-19-pet-auto-loot",
+    "date": "2026-09-19",
+    "title": "Pets collect nearby gold and items",
+    "summary": "Summoned pets now collect your personal loot, with a minimum item rarity you can choose in the Pets collection.",
+    "changes": [
+      "Your summoned collection pet automatically picks up gold and items within six meters on a clear, dry path after the death animation.",
+      "Choose Uncommon, Rare, Epic, Legendary or Mythic as the minimum item rarity in the Pets tab. Your preference is saved for your character and applies to every collection pet.",
+      "Gold is always collected. Lower-rarity loot and items that do not fit in your backpack remain available for manual collection."
+    ],
+    "guides": [
+      "pets",
+      "combat-and-loot"
+    ]
+  },
+  {
+    "id": "2026-09-19-pets-mounts-journal",
+    "date": "2026-09-19",
+    "title": "A new Pets & Mounts journal",
+    "summary": "Browse your companions in a shared forest-green and brass journal with a collection list and a large, rotatable 3D preview.",
+    "changes": [
+      "Switch between Pets and Mounts inside the same journal, and select any companion to inspect its model, ownership status and source.",
+      "Rotate the selected companion’s preview without summoning it or changing your preferred mount.",
+      "Learn, summon, dismiss and review available pet NFT claims beside the selected companion. Mount riding requirements and unavailable actions remain visible."
+    ],
+    "guides": [
+      "pets",
+      "travel"
+    ]
+  },
+  {
+    "id": "2026-09-19-distinct-living-cities",
+    "date": "2026-09-19",
+    "title": "Distinct cities and services in every region",
+    "summary": "Every city now offers banking and auctions, with reworked residential streets, detailed buildings and local townsfolk.",
+    "changes": [
+      "Find a named banker and auctioneer in all six cities. Bankers access the same personal storage, and all auctioneers share the same market.",
+      "Regional residential districts now have different arrangements and connected paths, while homes, trainers, city gates and airship docks remain reachable.",
+      "Roads now join continuously at crossings and narrow lanes, follow doorway ramps, and use regional stone patterns with raised edges and recessed joints.",
+      "Building walls have raised stonework, timber framing and recessed openings. Clear window panes reveal real interiors instead of painted window panels.",
+      "Local residents wear regional colors, follow different walking rhythms and pause to look around or gesture."
+    ],
+    "guides": [
+      "world",
+      "bags-and-bank",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-19-social-sign-in",
+    "date": "2026-09-19",
+    "title": "Google and Apple sign-in on every realm",
+    "summary": "Choose Google or Apple directly on the in-game sign-in screen in Europe, North America and Asia.",
+    "changes": [
+      "Restored the Google and Apple buttons on the title screen and account page. In a browser, provider sign-in opens a separate window and returns you to character selection in the game."
+    ],
+    "guides": [
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-19-moss-wallet-detection",
+    "date": "2026-09-19",
+    "title": "Reliable MOSS wallet checks",
+    "summary": "The gold merchant detects your linked wallet’s MOSS balance even when dollar pricing is unavailable.",
+    "changes": [
+      "The merchant now shows the verified MOSS amount alongside its estimated dollar value. A temporary pricing failure keeps the balance visible and leaves the $25 requirement unverified.",
+      "Read-only requirement checks use a conservative bid estimate during wide market spreads. Store purchases, payouts and wallet ownership checks keep their existing safeguards."
+    ],
+    "guides": ["equipment"]
+  },
+  {
+    "id": "2026-09-19-hunter-companion-combat",
+    "date": "2026-09-19",
+    "title": "Hunter companions lead the charge",
+    "summary": "Combined Assault sends your combat companion into melee while you shoot from bow range, and other players can target combat companions.",
+    "changes": [
+      "Combined Assault now commands your living companion to approach the selected foe and deliver its empowered strike on arrival. The hunter can stay at bow range.",
+      "Combat companions can be selected to see their health and attacked by opposing players in duels, the colosseum and arena matches. Their health is separate from their owner; defeating a pet does not defeat the hunter or award creature loot."
+    ],
+    "guides": [
+      "class-ranger",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-19-greenwood-gold-caravan",
+    "date": "2026-09-19",
+    "title": "A gold merchant outside Greenwood",
+    "summary": "A guarded merchant caravan has arrived just outside Lanternreach’s south gate in Greenwood.",
+    "changes": [
+      "Find the traveling gold merchant beside his secured carriage, two horses and three armed guards east of the south gate approach.",
+      "Speak to the merchant to hear: \"I'm waiting for a new shipment of MOSS.\" His checklist requires level 30 and at least $25 USD worth of MOSS held in a verified linked wallet.",
+      "Link your wallet and check both requirements inside the conversation. The merchant is still awaiting his shipment; linking and checking do not spend MOSS.",
+      "The escorts’ hands fit around their sword, halberd and crossbow grips."
+    ],
+    "guides": [
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-19-touch-page-controls",
+    "date": "2026-09-19",
+    "title": "Reliable touch page controls",
+    "summary": "Hotbar switching and merchant pages respond once to each completed tap.",
+    "changes": [
+      "Fixed mobile page controls advancing twice from one tap, including merchants skipping page two and the hotbar immediately switching back.",
+      "The hotbar bank button stays responsive when your character updates while a finger is held on its label or arrow."
+    ],
+    "guides": [
+      "classes",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-19-statistics-recovery",
+    "date": "2026-09-19",
+    "title": "Statistics connection recovery",
+    "summary": "Improved recovery from database errors in the public statistics collector.",
+    "changes": [
+      "Failed statistics database connections are discarded before retrying, preventing broken connections or lingering locks from delaying player-count updates. Missing readings remain unavailable rather than appearing as zero."
+    ],
+    "guides": []
+  },
+  {
+    "id": "2026-09-19-panel-scroll-frames",
+    "date": "2026-09-19",
+    "title": "Panel scrolling fixes",
+    "summary": "Window frames and backgrounds stay in place while scrolling long lists and item details.",
+    "changes": [
+      "Fixed Friends lists and bag item details appearing outside their wooden frame while scrolling. The same fix keeps mobile Achievements, Bank, Loot and game master panels framed, and keeps inspected character sheets covered."
+    ],
+    "guides": ["parties", "bags-and-bank", "equipment"]
+  },
+  {
+    "id": "2026-09-19-discord-bug-fixes",
+    "date": "2026-09-19",
+    "title": "Map, merchant, arena and loot fixes",
+    "summary": "Reachable mobile controls, safer colosseum seating, quicker saved loot actions and more reliable wallet and character loading.",
+    "changes": [
+      "The mobile world map keeps its navigation card beside the map in landscape and below it in portrait. Map controls and the close button remain reachable on small screens.",
+      "Mobile merchants keep item quantities, Buy and Sell inside the screen in portrait and landscape. Lists and details scroll within the panel without hiding the transaction controls.",
+      "Loot and backpack changes use fewer database round trips, reducing delay on distant realms while still waiting for your progress to save.",
+      "Voucher collection can add Robinhood Chain to a compatible wallet and lets you choose your wallet again on retry. If a wallet returns an uncertain submission result, Mossvale checks the saved payout without sending another transaction.",
+      "Character models retry a failed or outdated cached download once using the current game build. Persistent failures still show the loading error and Retry option.",
+      "Fixed gaps along the colosseum’s outer wall that could drop spectators beneath the stands and trap them. Characters saved in those corners return to the terrace when reconnecting."
+    ],
+    "guides": [
+      "travel",
+      "treasure-maps",
+      "colosseum",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-19-talent-workshop-and-mobile-store",
+    "date": "2026-09-19",
+    "title": "Offline talent workshop and mobile Store fixes",
+    "summary": "Experiment with talent redesigns in a downloadable workshop, and browse the Store more comfortably on phones.",
+    "changes": [
+      "The Talent Workshop at /talent-editor.html contains the current trees for all four classes. Edit talent names, descriptions, effects for each rank, positions and prerequisites, and freely allocate points while designing. Export and import JSON designs, or save a self-contained HTML copy that opens locally without installing anything. Workshop drafts do not change your game character.",
+      "Mobile Store cards no longer overlap reward details or checkout on short landscape screens. Portrait categories sit above wider cards, with checkout below the details. Restore purchases and checkout remain reachable by scrolling."
+    ],
+    "guides": ["classes", "store"]
+  },
+  {
+    "id": "2026-09-19-talent-redesign-and-beastmaster",
+    "date": "2026-09-19",
+    "title": "Redesigned talents and Beastmaster companions",
+    "summary": "All four classes receive updated talent layouts, while Rangers gain permanent combat companions and new ways to build around Twinshot.",
+    "changes": [
+      "Updated talent positions, prerequisites and rank effects across Ranger, Knight, Mage and Cleric. Valid builds from the previous layout receive a one-time free point refund so you can choose your new build.",
+      "Beastmaster replaces the Ranger’s Pathfinder branch. Tame Beast has a three-second cast, eight-meter range and ten-second cooldown, and saves one permanent combat companion from a living eligible creature at or below your level. World bosses, dungeon bosses and training dummies cannot be tamed. Taming leaves the wild creature in place and awards no loot; companion stats scale to its level.",
+      "Your combat companion can fight while your cosmetic pet follows. Recall, revive or dismiss it outside combat while keeping the saved tame. Heals you receive also heal your companion. Refunding Beastmaster or changing class deactivates the companion without deleting the saved tame.",
+      "Everlasting Bond makes a companion basic hit empower your next basic attack with 10% or 20% extra damage, then heal your companion for 5% or 10% of its maximum health. Combined Assault deals 1.5 times your basic damage plus 1.5 times your companion’s basic damage, with a sixteen-second cooldown.",
+      "Arrowstorm grants 5% or 10% basic-attack speed per successful Twinshot proc, stacking five times and refreshing its ten-second duration. The active Twinshot ability is now named Double Tap and retains its cooldown-reset and instant-cast proc.",
+      "Lingering Venom now extends Toxic Arrows to five seconds at rank one and six seconds at rank two. Reapplication continues to preserve the remaining poison damage."
+    ],
+    "guides": [
+      "classes",
+      "class-ranger",
+      "class-knight",
+      "class-mage",
+      "class-cleric",
+      "combat-and-loot",
+      "pets"
+    ]
+  },
+  {
+    "id": "2026-09-19-in-game-sign-in",
+    "date": "2026-09-19",
+    "title": "A smoother sign-in",
+    "summary": "Browser account sign-in stays on the Mossvale title screen, with fewer page changes.",
+    "changes": [
+      "Sign in with email, create an account, reset your password and complete two-factor prompts in the game’s title screen. Your existing Keycloak account and characters stay the same.",
+      "Returning browsers check for an existing session silently. Sign-in uses one compact card, without a second background, logo or duplicate heading. If your browser cannot show the embedded form, Open sign-in page remains available.",
+      "Google, Apple and wallet sign-in now start from the same login card and finish in a separate sign-in window while the game stays open. Cancel or switch methods without losing your place; browsers that block the window can continue in the current tab. Native apps keep their secure system sign-in and encrypted session storage."
+    ],
+    "guides": [
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-18-dungeon-creatures-and-loot",
+    "date": "2026-09-18",
+    "title": "More dungeon creatures and level-matched loot",
+    "summary": "The three themed dungeons now contain 36 distinct creature models, with varied attacks, aligned weapon grips and chance-based gear rewards.",
+    "changes": [
+      "Each themed dungeon now has ten different regular enemy types and two unique bosses. New creatures include plague vermin, forge constructs, winged spirits and armed guardians, with their own Blender models and five animations. Square voxel anatomy, distinct faces, layered armor and clothing, and themed details match Mossvale’s visual style.",
+      "New enemies appear throughout the main route and optional wings. Distinct attack warnings include erupting vents, spectral formations and bursting scarabs. The expanded maps and protected arrival sanctuaries remain available.",
+      "Held weapons and curled fingers move together through the dungeon creatures’ animations, with staff grips positioned clear of the body.",
+      "Ordinary enemies have a 30% gear chance, side caches 40%, midpoint bosses 55% and final completion 70%. Boss rewards use a single gear roll and can award no equipment. Completion rewards refresh the corpse’s five-minute collection window.",
+      "When gear drops, side caches and midpoint bosses award Rare or better; final completion awards Epic or better. Each reward has a small chance of Legendary or Mythic gear.",
+      "New themed-dungeon gear matches its encounter level, capped at your character level. Equipment scales between the level-25, level-40 and level-50 sets. Existing items and the original four dungeons keep their previous rules."
+    ],
+    "guides": [
+      "dungeon-plagueworks",
+      "dungeon-emberfall",
+      "dungeon-veilhaven",
+      "monsters",
+      "combat-and-loot",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-18-dungeon-exploration-expansion",
+    "date": "2026-09-18",
+    "title": "Larger dungeons and exploration wings",
+    "summary": "The Plagueworks, Emberfall Foundry and Veilhaven Monastery expand with three times the enemies and much larger branching maps.",
+    "changes": [
+      "Each new dungeon begins with a protected arrival sanctuary where your party can prepare before stepping into combat.",
+      "All three new dungeons now offer at least three times their original walkable area, with connected side wings, alternate paths and guarded treasure destinations.",
+      "Each dungeon has 24 encounters: eight on the main route and sixteen optional exploration encounters. The Plagueworks and Emberfall each contain 93 enemies; Veilhaven contains 96. Each retains its two unique bosses.",
+      "Optional encounters remain available after the final boss while the instance is occupied. Unexplored encounters are not automatically cleared by reaching a checkpoint.",
+      "The dungeon map, minimap, movement boundaries, checkpoint and final return portal follow each expanded layout."
+    ],
+    "guides": [
+      "dungeons",
+      "dungeon-plagueworks",
+      "dungeon-emberfall",
+      "dungeon-veilhaven"
+    ]
+  },
+  {
+    "id": "2026-09-18-distinct-spell-animations",
+    "date": "2026-09-18",
+    "title": "Distinct spell animations for every class",
+    "summary": "All 129 Ranger, Knight, Mage and Cleric abilities now have individually constructed shapes and animation sequences.",
+    "changes": [
+      "Each ability now has a separately authored Blender model and animation sequence, including the five talent capstones. Layered fire, fractured ice, carved metal, feathers, books and other solid forms give spells distinct silhouettes.",
+      "Frostbolt travels as serrated ice, Nova grows a branching snowflake, Pyroblast opens a furnace iris, Arcane Restoration pours an hourglass of light, and Knight, Ranger and Cleric abilities have equally distinct constructions. Casts, projectiles, area effects and impacts follow each ability’s combat timing and targets.",
+      "Soft radiance, moving motes, luminous trails and animated surfaces add magical detail. Bloom controls spell glow; Effects quality scales decoration while preserving essential combat cues. Spell power, range, targeting and cooldowns keep their existing values.",
+      "Twinshot gains a gold hotbar highlight and an Instant label while its instant-cast proc is active. The highlight ends when the proc is consumed or expires."
+    ],
+    "guides": ["classes", "combat-and-loot", "audio-and-settings"]
+  },
+  {
+    "id": "2026-09-18-weapon-hand-grips",
+    "date": "2026-09-18",
+    "title": "Weapons stay gripped during animations",
+    "summary": "Hands and fingers now follow held weapon rotations throughout combat and movement.",
+    "changes": [
+      "Fixed bows, swords, shields, staves, maces and tomes turning independently of the gripping fingers. All races now keep their hands aligned with held equipment, including during basic attacks, spells and gathering.",
+      "Fingers fit around each handle instead of intersecting a solid palm. Stowing equipment and returning from other animations restores the hand pose.",
+      "Mages now carry their staff forward and outside the body, keeping the standing staff shaft clear of the forearm and clothing."
+    ],
+    "guides": [
+      "equipment",
+      "character-creation"
+    ]
+  },
+  {
+    "id": "2026-09-18-three-themed-dungeons",
+    "date": "2026-09-18",
+    "title": "The Plagueworks, Emberfall and Veilhaven",
+    "summary": "Three new dungeons extend the adventure through level 55 with twelve new creatures, six distinct bosses and authored Blender environments.",
+    "changes": [
+      "The Plagueworks opens at level 30: explore infested catacombs and toxic laboratories, confront Broodmother Vex, and destroy the Plague Abomination.",
+      "Emberfall Foundry opens at level 40: breach the volcanic forge, defeat the Anvil Warden and challenge Pyrelord Ignivar among runic stonework and molten machinery.",
+      "Veilhaven Monastery opens at level 50: pass through haunted jade shrines and lantern halls to face Bellkeeper Shen and the Veiled Abbess.",
+      "Each dungeon has eight encounters, two rune seals, four personal caches and a sanctuary checkpoint. Midpoint and final bosses have distinct attacks with visible warnings.",
+      "All twelve new creatures have their own Blender models and authored idle, movement, basic attack, special attack and death animations."
+    ],
+    "guides": [
+      "dungeons",
+      "dungeon-plagueworks",
+      "dungeon-emberfall",
+      "dungeon-veilhaven",
+      "monsters"
+    ]
+  },
+  {
+    "id": "2026-09-18-gear-drops-through-60",
+    "date": "2026-09-18",
+    "title": "Gear drops through level 60",
+    "summary": "Endgame equipment rolls now scale through level 60 while existing rarity chances stay the same.",
+    "changes": [
+      "New rolled equipment extends level-50 gear into levels 51–60 with stronger base stats and level-appropriate bonus ranges. Drops remain limited by your level and the defeated monster’s level plus two; level-60 gear requires a level-60 character and a monster of at least level 58.",
+      "Overworld equipment rolls remain Common through Epic at the same chances. Legendary and Mythic remain dungeon-only, with rewards limited by the existing dungeon levels.",
+      "Existing equipment and fixed drop-table rewards keep their stats and levels. New endgame rolls retain their set bonuses and appearance, and preserve their level and attributes through upgrades, banking and trading."
+    ],
+    "guides": ["combat-and-loot", "equipment"]
+  },
+  {
+    "id": "2026-09-18-inventory-drag-recovery",
+    "date": "2026-09-18",
+    "title": "Inventory drag recovery",
+    "summary": "Interrupted item drags no longer leave the backpack stuck waiting for the drag to finish.",
+    "changes": [
+      "Interrupted item drags recover on your next click without reloading the game, including bags opened from the auction house. Moving, swapping and equipping items remain usable through inventory updates."
+    ],
+    "guides": ["bags-and-bank"]
+  },
+  {
+    "id": "2026-09-18-unified-profile-inventory",
+    "date": "2026-09-18",
+    "title": "Character, backpack and upgrades together",
+    "summary": "Manage equipment and inspect or upgrade items from one profile screen while your backpack stays visible.",
+    "changes": [
+      "Your character model, equipped gear and compact stats sit beside the backpack. Selecting an item updates its details and actions immediately, without opening another page or requiring Back to Backpack.",
+      "Upgrade opens in the selected item’s detail panel, with compact current-to-next stat comparisons and a horizontal row of required/owned gold and materials. Missing costs are highlighted so you can see what is needed.",
+      "Item lore is tucked into Details. Landscape keeps character and inventory side by side; portrait places the character above the backpack and item details in a bottom sheet."
+    ],
+    "guides": [
+      "bags-and-bank",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-18-combat-specializations",
+    "date": "2026-09-18",
+    "title": "Deeper combat specializations and tougher monsters",
+    "summary": "Rangers and Mages gain signature talent mechanics and five new capstone spells. Ordinary monsters now grow stronger throughout leveling.",
+    "changes": [
+      "Row-three Ranger talents add Twinshot with a rising chance after missed procs, or Toxic Arrows that carry unspent poison damage into the next application. Their capstones unlock a resetting Twinshot spell and a nearby poison detonation.",
+      "Mage specializations now build around repeating Arcane Missiles, Burning Heat that speeds spell casts and damage-over-time ticks, or Chilled targets that empower and reset Ice Lance. Row-five capstones add Arcane Volley, Combustion and Shatter.",
+      "Valid existing talent builds receive a one-time refund so you can choose the new mechanics. Capstone spells unlock through talents, appear in the spellbook and can be placed in either hotbar bank without buying a trainer lesson. Skill-tree arrows clearly connect the new same-tier prerequisites across desktop and mobile layouts.",
+      "Ordinary fighting monsters gain health and damage from level 2 onward, with stronger scaling through level 60. Dungeon health uses the same level curve before group and boss modifiers. Level-1 creatures, world bosses, training dummies, treasure-goblin escape encounters and reward formulas keep their existing values."
+    ],
+    "guides": [
+      "classes",
+      "class-ranger",
+      "class-mage",
+      "combat-and-loot",
+      "monsters",
+      "dungeons"
+    ]
+  },
+  {
+    "id": "2026-09-18-gold-economy",
+    "date": "2026-09-18",
+    "title": "Gold economy and player-funded exchange",
+    "summary": "New economy rules activate together after the coordinated realm update.",
+    "changes": [
+      "The economy update protects 100 existing gold per account and removes 90% of the excess, including pending gold proceeds. Items, progression and paid entitlements remain.",
+      "On updated realms, reduced repeatable gold rewards make gold scarcer. Resources, loot, equipment and bags sell for half their former NPC values, rounded down with a minimum of one gold for sellable items. Crafting, flights, talent resets, boosts and class changes use the displayed gold prices. Campaign rewards, XP and rare MOSS vouchers remain.",
+      "New gameplay-item auctions use gold and burn a 5% seller fee. The browser Gold Exchange reserves player gold for whole-lot MOSS purchases, delivering net gold after finality and burning 0.5%. Existing listings and purchases keep their terms."
+    ],
+    "guides": [
+      "gold-economy",
+      "store",
+      "contracts",
+      "items-and-crafting",
+      "travel",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-18-native-voucher-wallet",
+    "date": "2026-09-18",
+    "title": "Collect MOSS vouchers from the mobile app",
+    "summary": "Updated mobile builds can link a payout wallet and collect vouchers through wallet approval.",
+    "changes": [
+      "Veyl now opens your selected wallet for ownership proof and voucher collection, then returns the result to the game app. Wallet sign-in and payout linking are separate steps.",
+      "Collecting sends the saved payout transaction on Robinhood Chain and needs ETH for the network fee. Cancelled or interrupted approvals keep the saved payout available; Check payout recovers a submitted payment.",
+      "Older app builds show update instructions instead of searching for browser wallet extensions."
+    ],
+    "guides": [
+      "treasure-maps"
+    ]
+  },
+  {
+    "id": "2026-09-18-apple-purchase-preparation",
+    "date": "2026-09-18",
+    "title": "Apple purchase preparation",
+    "summary": "Apple purchases remain unavailable while store review is prepared.",
+    "changes": [
+      "Payment setup now uses the same five-minute restart warnings and final saves as game updates. This preparation does not open Apple checkout."
+    ],
+    "guides": [
+      "store"
+    ]
+  },
+  {
+    "id": "2026-09-18-auction-sales-recovery",
+    "date": "2026-09-18",
+    "title": "See your completed auction sales",
+    "summary": "Review your latest completed sales in the auction house’s Sold tab.",
+    "changes": [
+      "The new Sold tab records your character’s latest 100 completed auction sales, showing the item, quantity, total price, currency, buyer and date. History starts with this update and follows you between realms; MOSS and ETH sales are recorded after payment finalizes."
+    ],
+    "guides": [
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-18-retired-store-title",
+    "date": "2026-09-18",
+    "title": "Burned title retired from the store",
+    "summary": "Burned is no longer available for new store purchases.",
+    "changes": [
+      "Removed the Burned title and Titles category from the browser and mobile store. Existing owners can still equip the title in Achievements, and previous purchases continue to be delivered.",
+      "Store categories and item cards stay inside their panel on shorter screens, keeping the checkout controls clear.",
+      "The Store button stays inside the mobile Menu so it can be opened on phones and tablets.",
+      "On short landscape screens, scroll the store to reach its item cards and checkout controls."
+    ],
+    "guides": [
+      "store",
+      "achievements-and-titles"
+    ]
+  },
+  {
+    "id": "2026-09-18-wallet-cancel-recovery",
+    "date": "2026-09-18",
+    "title": "Retry cancelled MOSS wallet actions",
+    "summary": "Auction withdrawals and store purchases recover after wallet cancellation.",
+    "changes": [
+      "Cancelling an auction-proceeds withdrawal no longer leaves the auction window busy after a market update. Retry Withdraw MOSS proceeds immediately; cancelling the wallet prompt leaves the proceeds available.",
+      "MOSS store purchases can be retried after more types of explicit wallet cancellation. Uncertain submissions still use Check delivery to avoid repeating a burn.",
+      "Voucher payouts keep track of a transaction that finishes submitting after you close the counter or switch characters, so returning to the original claim can recover its payment status."
+    ],
+    "guides": [
+      "equipment",
+      "store"
+    ]
+  },
+  {
+    "id": "2026-09-18-combat-touch-controls",
+    "date": "2026-09-18",
+    "title": "More room for your controls",
+    "summary": "Arrange your mobile controls, save more hotbar abilities and approach melee enemies with one attack action.",
+    "changes": [
+      "Mobile controls can be rearranged from Settings → Controls. Drag the movement and combat groups into position, save the layout on this device or reset it to the default. Editing blocks gameplay input and keeps controls inside the visible screen.",
+      "Each character now has two saved banks of eight hotbar slots. Switch banks with the hotbar button or the new remappable shortcut; number keys activate the visible bank. Existing slot assignments and custom keybindings are preserved.",
+      "Right-clicking a selected PvE enemy, or tapping Attack on mobile, now lets Knight and Cleric characters approach it and start their normal auto attacks. Movement keys or the joystick cancel approach; Stop, Escape, target changes, death and disconnects stop it too. Blocked routes show a message. Selecting an enemy alone does not start movement."
+    ],
+    "guides": [
+      "getting-started",
+      "classes",
+      "combat-and-loot",
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-18-auction-processed-delivery",
+    "date": "2026-09-18",
+    "title": "Faster auction item delivery",
+    "summary": "Wallet auction purchases now arrive when payment is processed, with safe rollback if the payment is removed from the chain.",
+    "changes": [
+      "MOSS and ETH auction items are delivered at processed payment instead of waiting for finality. Gear can be equipped immediately; full bags keep the purchase reserved until there is room.",
+      "Purchased quantities cannot be consumed, sold, dropped, banked, crafted with or transferred until payment is finalized. Finalization unlocks them without delivering duplicates.",
+      "If payment is removed from the chain, the temporary items are reverted. RPC outages preserve them while checks retry, and delivery tracking survives reconnects and realm changes."
+    ],
+    "guides": [
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-18-public-statistics",
+    "date": "2026-09-18",
+    "title": "Mossvale player and auction statistics",
+    "summary": "Follow live players, hourly activity and MOSS auction volume at stats.mossvale.world.",
+    "changes": [
+      "The public statistics dashboard shows players online across Europe, North America and Asia, registered accounts, recorded player peaks and confirmed MOSS auction purchases.",
+      "Explore concurrent-player charts and unique active accounts per UTC hour, switch time ranges and download hourly history as CSV. Player history starts when tracking is enabled; missing realm readings are shown as unavailable."
+    ],
+    "guides": [
+      "statistics"
+    ]
+  },
+  {
+    "id": "2026-09-18-automatic-graphics",
+    "date": "2026-09-18",
+    "title": "Graphics that adapt to your device",
+    "summary": "A short performance check selects the highest graphics quality that runs smoothly on your device.",
+    "changes": [
+      "Auto graphics now runs a short check after you enter the world, trying High first and stepping down to Medium or Low until the current scene runs at around 50 FPS. It uses conservative settings while the world loads and quickly abandons a tier that performs very poorly.",
+      "The check ignores open menus and background pauses, saves its result for your next launch and can be repeated with Run performance check or Check again in Graphics settings. If later gameplay stays slow, Auto can lower quality without repeatedly raising it again.",
+      "Existing saved manual graphics choices are preserved. Choose Auto or Defaults to queue the check; changing a preset or any individual option returns control to you. Combat cues remain visible at every quality level."
+    ],
+    "guides": [
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-17-mobile-character-creation",
+    "date": "2026-09-17",
+    "title": "Create and turn your adventurer",
+    "summary": "A guided character creator with direct control of the preview.",
+    "changes": [
+      "Character creation now uses four short steps: Class, Look, Colors and Name. The live woodland preview stays visible, and Back and Next preserve your choices without a long scrolling options panel.",
+      "Drag across the character preview to spin it, or hold either rotation arrow for continuous turning. This works in both character creation and selection; tapping the arrows still rotates one step."
+    ],
+    "guides": [
+      "character-creation"
+    ]
+  },
+  {
+    "id": "2026-09-17-mobile-character-select",
+    "date": "2026-09-17",
+    "title": "A full-screen welcome on mobile",
+    "summary": "Choose your adventurer against the living world, with clearer controls and more room on phones and tablets.",
+    "changes": [
+      "The character selection scene now fills the screen on phones and tablets, with larger character previews and compact realm and entry controls.",
+      "Character lists scroll independently so selecting, creating and deleting characters remain within reach in landscape and portrait layouts.",
+      "The updated native app draws the game edge to edge while keeping controls clear of camera cutouts and the home indicator. This requires installing the new app build."
+    ],
+    "guides": [
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-17-mobile-sessions-backpack",
+    "date": "2026-09-17",
+    "title": "Smoother sign-in and backpack actions",
+    "summary": "Keep routine rewards quiet and improve backpack actions, dropping items and returning to the game.",
+    "changes": [
+      "Reduced database round trips and background polling so loading characters, saving backpack actions and changing regions spend less time waiting. Abandoned connection retries no longer claim an account after their socket has closed.",
+      "Movement during an item save no longer spams the purchase, auction or trade warning. A repeated action gets a single visible Saving your changes message while its save finishes.",
+      "Returning browsers remember to check their existing sign-in session. The updated native app securely remembers wallet and email sessions between launches; this part requires installing the new app build and signing in once.",
+      "Routine loot, gathering and combat rewards remain in System history without repeatedly replacing chat previews, adding unread badges or playing reward sounds. Level-ups and other milestones still announce themselves.",
+      "Dropping an item now uses a Mossvale confirmation with Keep item and Drop item buttons, instead of the Android browser popup. It clearly states that the item is permanently destroyed.",
+      "Unequipped starter equipment, including the level-1 bow, can now be dropped. Equipped gear and bags must still be unequipped first."
+    ],
+    "guides": [
+      "getting-started",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-17-realm-connection-recovery",
+    "date": "2026-09-17",
+    "title": "Realm connection recovery",
+    "summary": "Recover from interrupted connections and change regions while characters are still loading.",
+    "changes": [
+      "Changing regions before your character list loads no longer waits for a save confirmation from a session that has not joined.",
+      "If a region change cannot confirm your save, the game automatically reconnects to the original region so you can safely try again.",
+      "Background saves and account checks no longer build up a queue that can delay character loading or region changes, particularly in Asia."
+    ],
+    "guides": [
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-17-regional-contracts-and-ranged-combat",
+    "date": "2026-09-17",
+    "title": "Regional contracts and ranged combat fixes",
+    "summary": "Complete the Elderwood patrol and keep your hits and loot when fighting at range.",
+    "changes": [
+      "The Elderwood Reach patrol now asks for eight level-24-or-higher Woodland Slimes that spawn in the region. Existing accepted contracts keep their progress.",
+      "Killing an ordinary monster from long range now always grants the killing player XP, kill credit and personal loot. Nearby party sharing still uses its 14-meter range.",
+      "Moving, jumping or cancelling just after a spell finishes casting no longer interrupts its completed release. Movement still interrupts unfinished casts and channels.",
+      "Ranged auto-attack projectiles still hit after you move out of weapon range. Moving out of range pauses new auto attacks; melee swings still require contact range."
+    ],
+    "guides": [
+      "contracts",
+      "combat-and-loot",
+      "parties"
+    ]
+  },
+  {
+    "id": "2026-09-17-class-change",
+    "date": "2026-09-17",
+    "title": "Change class with MOSS",
+    "summary": "Burn $50 worth of MOSS to change your character’s class while keeping your progress and items.",
+    "changes": [
+      "Activated the browser store’s class-change purchase on the updated MOSS burn contract. Existing store payments remain recoverable.",
+      "The browser store offers one class change for $50 worth of MOSS at the quoted price. The credit is ready when the burn is processed; choose and confirm a different class when out of combat and travel.",
+      "Class changes keep level, XP, quests, professions, gold and owned items. All learned abilities and talent choices reset on every swap, including switching back. The new class receives its starter ability and basic gear.",
+      "Previously equipped gear moves into your inventory, with overflow sent to the bank. If there is not enough combined storage space, the change waits and your credit remains available."
+    ],
+    "guides": [
+      "classes",
+      "store",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-16-worlds-fishing-and-character-styles",
+    "date": "2026-09-16",
+    "title": "New places, fishing, dreams and character styles",
+    "summary": "Explore Slimefen and Sugarbloom Orchard, cast a fishing line and discover dream worlds with more ways to shape your character.",
+    "changes": [
+      "Added Slimefen and Sugarbloom Orchard, hidden curios and named gathering sites with shared claims and faster replenishment.",
+      "Fishing joins the gathering professions, with shoreline shoals, four fish tiers and catches you can eat outside combat or sell.",
+      "Resting in a reachable bed restores health and can lead to a private pleasant dream or nightmare. Collect keepsakes, wake at a portal or return safely when the dream ends.",
+      "Catfolk, Dogfolk and Lizardfolk join the character creator. Added four hairstyles, hair highlights, arbitrary colors and separate head, body, leg, shoe and back dyes.",
+      "Talents now grant 20 points by level 60. Existing allocations are refunded once, and builds can be reset outside combat. Class talents and two-piece and four-piece gear effects now support distinct spell styles.",
+      "Mage combat adds fire damage over time, frost shatter combinations and arcane executes. Repeatable core hard casts no longer add a cooldown after completion.",
+      "Your damage-over-time effects show remaining duration, out-of-range abilities show a red cue and objective arrows follow safe ground routes.",
+      "Updated the race, hairstyle and world prop models with detailed Blender assets."
+    ],
+    "guides": [
+      "world",
+      "professions",
+      "classes",
+      "equipment",
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-16-pet-mint-recovery",
+    "date": "2026-09-16",
+    "title": "Clearer pet NFT claims and cancellation",
+    "summary": "Review a pet claim before reserving the drop, with clearer wallet cancellation and recovery.",
+    "changes": [
+      "Pet NFT claims now show a review before reserving the drop. Your selected wallet stays with the claim.",
+      "Canceled wallet requests explain when an unminted drop can return after permission expiry and network confirmation; keep a free bag slot.",
+      "Pet inventory actions open the matching NFT claim, and Settings can be dismissed by clicking its backdrop."
+    ],
+    "guides": []
+  },
+  {
+    "id": "2026-09-16-item-roll-details",
+    "date": "2026-09-16",
+    "title": "Clearer item rolls and waypoint recovery",
+    "summary": "Inspect your gear rolls and keep useful directions after Zeppelin travel.",
+    "changes": [
+      "Open Roll details in item inspection with touch or keyboard to see the actual bonus and its possible range.",
+      "Compare an item with equipped gear, including level, calling, upgrades and stat differences.",
+      "The same details are available in bags, bank storage and auction inspection. Existing item stats and rolls are unchanged.",
+      "Auction inspection fits phone screens and keeps the market list available while viewing roll details on desktop.",
+      "Waypoints rebuild their route from the landing position after Zeppelin travel, so custom markers do not point back along an old route."
+    ],
+    "guides": []
+  },
+  {
+    "id": "2026-09-16-controls-and-profession-guides",
+    "date": "2026-09-16",
+    "title": "Larger tablet controls and profession guides",
+    "summary": "More comfortable touch controls, readable stamina and clearer guidance for training and updates.",
+    "changes": [
+      "Tablet movement, combat and utility controls are 25% larger by default.",
+      "Mobile stamina stays visible above the movement controls, with numbers and ready, sprinting, exhausted or recovering text.",
+      "Professions show current and maximum levels. Each profession now has an in-game guide with training advice, resource unlocks, gathering regions and relevant recipes. Resource waypoints remain separate actions.",
+      "Settings now explains automatic game updates and when an app-store update is needed. New native app builds can report their installed version and build; older builds explain where to find those details."
+    ],
+    "guides": [
+      "professions",
+      "travel"
+    ]
+  },
+  {
+    "id": "2026-09-16-explicit-wallet-selection",
+    "date": "2026-09-16",
+    "title": "Choose your wallet when linking",
+    "summary": "Wallet linking now asks which wallet app to use instead of following the browser preference.",
+    "changes": [
+      "Wallet sign-in and in-game linking now show an explicit wallet chooser, even when only one wallet is detected.",
+      "NFTs, the MOSS store, auctions and voucher payouts keep your chosen wallet through the connection and signing steps.",
+      "Cancel closes the chooser without opening a wallet request."
+    ],
+    "guides": []
+  },
+  {
+    "id": "2026-09-16-city-training-dummies-and-talent-tooltips",
+    "date": "2026-09-16",
+    "title": "City training dummies and talent tooltips",
+    "summary": "Practice attacks and spells in every city, with clearer talent details beside the pointer.",
+    "changes": [
+      "Added a training dummy in each of the six cities, with a handcrafted woodland model and animated reactions to hits.",
+      "Training dummies have 100,000 HP, never fall below 1 HP and recover to full health after 10 seconds without damage.",
+      "Dummies support attacks and damaging spells, never attack back and give no rewards or kill progress.",
+      "Talent tooltips now appear beside the mouse pointer and stay within the screen."
+    ],
+    "guides": [
+      "monster-training-dummy",
+      "classes"
+    ]
+  },
+  {
+    "id": "2026-09-16-inventory-item-options",
+    "date": "2026-09-16",
+    "title": "Inventory item options",
+    "summary": "Inspect equipment and manage carried items from their context menu.",
+    "revision": "be31b3d76e3d36f66d56a2474bc923d7ef54e668",
+    "changes": [
+      "Right-click an inventory item to open its options. Equipment also offers Inspect.",
+      "Drop permanently destroys one item after confirmation. Starter equipment and equipped items are protected.",
+      "Item options also support the keyboard context-menu key and Shift+F10."
+    ],
+    "guides": [
+      "bags-and-bank",
+      "equipment"
+    ]
+  },
+  {
+    "id": "2026-09-16-regional-towns-and-parties",
+    "date": "2026-09-16",
+    "title": "Regional towns and easier party management",
+    "summary": "Distinctive regional landmarks, corrected NPC stations and party controls in Friends.",
+    "revision": "959448498f3054cb69d1c386f78c84afe4c97374",
+    "changes": [
+      "The five regional towns now have distinctive buildings, gardens and animated landmarks, including Amberwild’s harvest windmill and Frostmarch’s ice orrery.",
+      "Trainers, mount sellers and town service NPCs now stand at their intended stations.",
+      "Manage invitations and party members from the Who tab in Friends. Press P to open Who, or O for Friends.",
+      "Fixed roads and markers drawing outside the minimap."
+    ],
+    "guides": [
+      "world",
+      "parties",
+      "getting-started"
+    ]
+  },
+  {
+    "id": "2026-09-15-performance-and-vouchers",
+    "date": "2026-09-15",
+    "title": "Performance indicators and voucher improvements",
+    "summary": "Optional performance displays, smoother city rendering and clearer voucher payouts.",
+    "revision": "004fdbcbac655ad57ec6d6571d0b31ec2ac8fe60",
+    "changes": [
+      "Settings now offers optional FPS and game-server ping indicators.",
+      "Reduced repeated city rendering work and minimap allocations to improve frame consistency.",
+      "Voucher payouts complete in the merchant interface once the payout is included, while confirmation continues in the background."
+    ],
+    "guides": [
+      "audio-and-settings"
+    ]
+  },
+  {
+    "id": "2026-09-15-treasure-hunts-and-realms",
+    "date": "2026-09-15",
+    "title": "Treasure hunts, Asia realm and mobile improvements",
+    "summary": "Hidden caches and fleeing treasure goblins join the world, with a new realm and mobile fixes.",
+    "revision": "ded35beb20b08ade64e3a4c36c8f62d22e48cef3",
+    "changes": [
+      "Find treasure maps in monster loot, follow their clues, uncover hidden caches and defeat their guardians. Expedition progress is saved.",
+      "Rare treasure goblins flee when approached. Catch them before they escape for a chance at a MOSS voucher.",
+      "Added Asia realm support.",
+      "Improved mobile HUD layout, double-tap jumping, actions while moving, starter potion access and wallet sign-in recovery."
+    ],
+    "guides": [
+      "treasure-maps",
+      "monster-treasure-goblin",
+      "world"
+    ]
+  }
+]

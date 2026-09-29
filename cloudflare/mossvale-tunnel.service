@@ -1,0 +1,18 @@
+[Unit]
+Description=Mossvale Cloudflare Tunnel
+Wants=network-online.target mossvale-proxy.service
+After=network-online.target mossvale-proxy.service
+
+[Service]
+DynamicUser=yes
+LoadCredential=tunnel-token:/etc/mossvale-edge/tunnel-token
+ExecStart=/usr/local/bin/cloudflared tunnel --config /dev/null --no-autoupdate --metrics 127.0.0.1:2027 run --token-file ${CREDENTIALS_DIRECTORY}/tunnel-token
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+
+[Install]
+WantedBy=multi-user.target

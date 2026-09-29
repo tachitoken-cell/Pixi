@@ -1,0 +1,24 @@
+{
+  "name": "Moon Owl",
+  "description": "A silver-feathered owl with a crescent crown and luminous eyes. This Mossvale Pets NFT grants its current verified wallet holder access to this cosmetic companion in Mossvale. Selling or transferring it moves that access to the new holder.",
+  "image": "https://mossvale.world/ui/pets/moon-owl.png",
+  "external_url": "https://mossvale.world",
+  "attributes": [
+    {
+      "trait_type": "Species",
+      "value": "Moon Owl"
+    },
+    {
+      "trait_type": "Game asset",
+      "value": "moon-owl"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "epic"
+    },
+    {
+      "trait_type": "Source",
+      "value": "Retired from drops"
+    }
+  ]
+}

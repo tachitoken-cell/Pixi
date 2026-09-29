@@ -1,0 +1,664 @@
+{
+  "models": {
+    "bone-reaver": {
+      "height": 2.3,
+      "width": 1.5217,
+      "depth": 0.8082,
+      "parts": 6,
+      "polygons": 2254,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": -0.0
+        }
+      }
+    },
+    "ossuary-scarab": {
+      "height": 1.55,
+      "width": 2.173,
+      "depth": 2.0443,
+      "parts": 8,
+      "polygons": 2788,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        }
+      }
+    },
+    "rift-stalker": {
+      "height": 1.85,
+      "width": 1.0632,
+      "depth": 3.1111,
+      "parts": 7,
+      "polygons": 2226,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        }
+      }
+    },
+    "void-cantor": {
+      "height": 2.45,
+      "width": 1.6704,
+      "depth": 0.6307,
+      "parts": 5,
+      "polygons": 2264,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        }
+      }
+    },
+    "ossuary-tyrant": {
+      "height": 4.8,
+      "width": 3.8711,
+      "depth": 1.9143,
+      "parts": 5,
+      "polygons": 3884,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": -0.0
+        },
+        "cleave": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "barrage": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "cross": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "anchors": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        }
+      }
+    },
+    "marrow-colossus": {
+      "height": 4.8,
+      "width": 5.1477,
+      "depth": 2.1393,
+      "parts": 6,
+      "polygons": 2796,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "ring": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "cleave": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "stomps": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        }
+      }
+    },
+    "grave-cantor": {
+      "height": 4.8,
+      "width": 2.9419,
+      "depth": 1.126,
+      "parts": 5,
+      "polygons": 2942,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": -0.0
+        },
+        "cross": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "barrage": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "ring": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "notes": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        }
+      }
+    },
+    "carrion-queen": {
+      "height": 4.4,
+      "width": 6.3048,
+      "depth": 5.3821,
+      "parts": 10,
+      "polygons": 3916,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": -0.0
+        },
+        "barrage": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "ring": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "cleave": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "brood": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        }
+      }
+    },
+    "rift-sovereign": {
+      "height": 4.9,
+      "width": 4.1209,
+      "depth": 2.5996,
+      "parts": 5,
+      "polygons": 3750,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": -0.0
+        },
+        "cross": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "cleave": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "barrage": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "rifts": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        }
+      }
+    },
+    "nullweaver": {
+      "height": 4.4,
+      "width": 6.4688,
+      "depth": 4.4648,
+      "parts": 11,
+      "polygons": 3974,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": -0.0
+        },
+        "barrage": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "cross": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "webs": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        }
+      }
+    },
+    "umbral-behemoth": {
+      "height": 4.7,
+      "width": 4.0483,
+      "depth": 6.9786,
+      "parts": 7,
+      "polygons": 2558,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "ring": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "cleave": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "barrage": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        },
+        "charge": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": 0.0
+        }
+      }
+    },
+    "eclipse-oracle": {
+      "height": 4.9,
+      "width": 3.4059,
+      "depth": 1.0151,
+      "parts": 3,
+      "polygons": 1646,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": -0.0
+        },
+        "ring": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "cross": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "gaze": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        }
+      }
+    },
+    "bone-anchor": {
+      "height": 2.2,
+      "width": 1.1068,
+      "depth": 0.898,
+      "parts": 2,
+      "polygons": 752,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": -0.0
+        }
+      }
+    },
+    "rift-anchor": {
+      "height": 2.2,
+      "width": 1.1068,
+      "depth": 0.898,
+      "parts": 2,
+      "polygons": 752,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": -0.0
+        }
+      }
+    },
+    "brood-nest": {
+      "height": 1.5,
+      "width": 2.5993,
+      "depth": 2.0085,
+      "parts": 2,
+      "polygons": 1912,
+      "clips": {
+        "idle": {
+          "seconds": 2.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "walk": {
+          "seconds": 1.2,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "auto": {
+          "seconds": 1.0,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "attack": {
+          "seconds": 1.6,
+          "min_ground": 0.0,
+          "final_ground": 0.0
+        },
+        "death": {
+          "seconds": 2.0,
+          "min_ground": -0.0,
+          "final_ground": -0.0
+        }
+      }
+    }
+  },
+  "clips": 104,
+  "materials": 2,
+  "bytes": 7105576,
+  "axes": "GLB +Y up / +Z front, feet at Y=0",
+  "original_art": true
+}

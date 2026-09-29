@@ -1,0 +1,24 @@
+{
+  "name": "Dewbell Dragonfly",
+  "description": "A delicate dragonfly with four pale, etched leaf wings, turquoise eyes and an icy dewdrop bell. This Mossvale Pets NFT grants its current verified wallet holder access to this cosmetic companion in Mossvale. Selling or transferring it moves that access to the new holder.",
+  "image": "https://mossvale.world/ui/pets/dewbell-dragonfly.png",
+  "external_url": "https://mossvale.world",
+  "attributes": [
+    {
+      "trait_type": "Species",
+      "value": "Dewbell Dragonfly"
+    },
+    {
+      "trait_type": "Game asset",
+      "value": "dewbell-dragonfly"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "epic"
+    },
+    {
+      "trait_type": "Source",
+      "value": "grove-spider"
+    }
+  ]
+}

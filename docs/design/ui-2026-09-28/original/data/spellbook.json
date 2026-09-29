@@ -1,0 +1,326 @@
+{
+ "cls": "Ranger",
+ "level": 60,
+ "combat": [
+  {
+   "id": "power-shot",
+   "name": "Power Shot",
+   "icon": "skill-1",
+   "tag": "ranged",
+   "desc": "A charged arrow that hits hard and marks the target.",
+   "stats": "1,420 damage · 0.8 s cast · 15 m range · 6 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "eagles-eye",
+   "name": "Eagle's Eye",
+   "icon": "skill-eagles-eye",
+   "tag": "ranged",
+   "desc": "Your hawk dives at the target and stuns it for 1 s.",
+   "stats": "980 damage · Instant · 18 m range · 10 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "frost-arrow",
+   "name": "Frost Arrow",
+   "icon": "skill-frost-arrow",
+   "tag": "ranged",
+   "desc": "Slows the target by 30% for 3 s.",
+   "stats": "760 damage · Instant · 15 m range · 8 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "venom-arrow",
+   "name": "Venom Arrow",
+   "icon": "skill-4",
+   "tag": "ranged",
+   "desc": "Applies a strong poison for 6 s.",
+   "stats": "310 + 1,200 poison · Instant · 15 m range · 5 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "poison-cloud",
+   "name": "Poison Cloud",
+   "icon": "skill-5",
+   "tag": "ranged",
+   "desc": "A toxic cloud that roots the first enemy for 2 s.",
+   "stats": "640 damage per second · 1 s cast · 12 m range · 14 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "viper-strike",
+   "name": "Viper Strike",
+   "icon": "skill-6",
+   "tag": "ranged",
+   "desc": "A poison that spreads when the target dies.",
+   "stats": "1,050 damage · Instant · 15 m range · 12 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "forest-ward",
+   "name": "Forest Ward",
+   "icon": "skill-forest-ward",
+   "tag": "utility",
+   "desc": "A shield that absorbs 20% of your max HP.",
+   "stats": "Absorbs 248 · Instant · Self · 30 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "wild-renewal",
+   "name": "Wild Renewal",
+   "icon": "skill-8",
+   "tag": "healing",
+   "desc": "Heals you and your companion over 5 s.",
+   "stats": "Heals 620 · Instant · Self · 20 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "quick-shot",
+   "name": "Quick Shot",
+   "icon": "spell-quick-shot",
+   "tag": "ranged",
+   "desc": "An instant arrow for steady single-target pressure.",
+   "stats": "894 damage · Instant · 13.5 m range · 0.55 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "triple-shot",
+   "name": "Triple Shot",
+   "icon": "skill-triple-shot",
+   "tag": "ranged",
+   "desc": "Three arrows at up to three targets.",
+   "stats": "3 × 520 damage · Instant · 15 m range · 9 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "fire-arrow",
+   "name": "Fire Arrow",
+   "icon": "skill-fire-arrow",
+   "tag": "ranged",
+   "desc": "Sets the target on fire for 4 s.",
+   "stats": "700 + 900 fire · Instant · 15 m range · 7 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "piercing-bolt",
+   "name": "Piercing Bolt",
+   "icon": "spell-piercing-bolt",
+   "tag": "ranged",
+   "desc": "Goes through every enemy in a line.",
+   "stats": "1,150 damage · 1 s cast · 20 m line · 11 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "thorn-burst",
+   "name": "Thorn Burst",
+   "icon": "spell-thorn-burst",
+   "tag": "ranged",
+   "desc": "Thorns explode around the target.",
+   "stats": "840 damage in 5 m · Instant · 12 m range · 10 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "twin-vipers",
+   "name": "Twin Vipers",
+   "icon": "spell-twin-vipers",
+   "tag": "ranged",
+   "desc": "Two snakes bite the target and one nearby enemy.",
+   "stats": "2 × 560 damage · Instant · 12 m range · 12 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "vine-bow",
+   "name": "Vine Bow",
+   "icon": "spell-vine-bow",
+   "tag": "utility",
+   "desc": "Your next 3 shots root for 1 s.",
+   "stats": "Instant · Self · 25 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "mushroom-ring",
+   "name": "Mushroom Ring",
+   "icon": "spell-mushroom-ring",
+   "tag": "utility",
+   "desc": "A ring of spores that slows enemies inside by 40%.",
+   "stats": "6 m ring · 1 s cast · 15 m range · 18 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "cocoon",
+   "name": "Silk Cocoon",
+   "icon": "spell-cocoon",
+   "tag": "utility",
+   "desc": "Wrap yourself for 2 s: immune to damage, can't act.",
+   "stats": "Instant · Self · 90 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "moonfall-arrow",
+   "name": "Moonfall Arrow",
+   "icon": "spell-moonfall-arrow",
+   "tag": "ranged",
+   "desc": "Falls from the sky after 1 s and knocks down.",
+   "stats": "1,300 damage · Instant · 18 m range · 16 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "storm-cloud",
+   "name": "Storm Cloud",
+   "icon": "spell-storm-cloud",
+   "tag": "ranged",
+   "desc": "Rains arrows on an area for 4 s.",
+   "stats": "420 damage per second · 1.5 s cast · 15 m range · 20 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "starfall",
+   "name": "Starfall",
+   "icon": "spell-starfall",
+   "tag": "ranged",
+   "desc": "Ultimate: a star-charged arrow that stuns everyone it hits.",
+   "stats": "2,600 damage · 1.2 s cast · 20 m range · 60 s cooldown",
+   "learned": true
+  },
+  {
+   "id": "heartwood-bond",
+   "name": "Heartwood Bond",
+   "icon": "spell-heartwood-bond",
+   "tag": "healing",
+   "desc": "Links you to an ally; 20% of your healing is shared.",
+   "stats": "Instant · 20 m range · 45 s cooldown",
+   "learned": false,
+   "level": 60,
+   "where": "Class trainer"
+  },
+  {
+   "id": "iron-trap",
+   "name": "Iron Trap",
+   "icon": "spell-iron-trap",
+   "tag": "utility",
+   "desc": "A hidden trap that roots for 3 s.",
+   "stats": "Instant · 1 m · 16 s cooldown",
+   "learned": false,
+   "level": 60,
+   "where": "Class trainer"
+  },
+  {
+   "id": "arrow-fan",
+   "name": "Arrow Fan",
+   "icon": "spell-arrow-fan",
+   "tag": "ranged",
+   "desc": "A fan of 7 arrows in front of you.",
+   "stats": "7 × 380 damage · Instant · 10 m cone · 14 s cooldown",
+   "learned": false,
+   "level": 60,
+   "where": "Class trainer"
+  },
+  {
+   "id": "hydra-shot",
+   "name": "Hydra Shot",
+   "icon": "spell-hydra-shot",
+   "tag": "ranged",
+   "desc": "Three serpent heads bite three targets.",
+   "stats": "3 × 690 damage · Instant · 15 m range · 15 s cooldown",
+   "learned": false,
+   "level": 60,
+   "where": "Class trainer"
+  }
+ ],
+ "professions": [
+  {
+   "id": "gather-herbs",
+   "name": "Gather herbs",
+   "icon": "item-wild-herb",
+   "tag": "gathering",
+   "desc": "Pick wild herbs and moonpetals.",
+   "stats": "Gathering 1 · 2 s",
+   "learned": true
+  },
+  {
+   "id": "chop-wood",
+   "name": "Chop wood",
+   "icon": "item-wood",
+   "tag": "gathering",
+   "desc": "Cut timber from marked trees.",
+   "stats": "Gathering 1 · 3 s",
+   "learned": true
+  },
+  {
+   "id": "mine-fragments",
+   "name": "Mine lantern fragments",
+   "icon": "item-lantern-fragment",
+   "tag": "gathering",
+   "desc": "Break lantern crystals for fragments.",
+   "stats": "Gathering 5 · 3 s",
+   "learned": true
+  },
+  {
+   "id": "skin",
+   "name": "Skinning",
+   "icon": "item-fur-pelt",
+   "tag": "gathering",
+   "desc": "Take pelts and hide from beasts.",
+   "stats": "Gathering 8 · 2 s",
+   "learned": true
+  },
+  {
+   "id": "cook",
+   "name": "Campfire cooking",
+   "icon": "item-forest-stew",
+   "tag": "crafting",
+   "desc": "Cook simple food at any campfire.",
+   "stats": "Crafting 3",
+   "learned": true
+  },
+  {
+   "id": "brew",
+   "name": "Field alchemy",
+   "icon": "item-healing-potion",
+   "tag": "crafting",
+   "desc": "Brew potions without a workshop.",
+   "stats": "Crafting 15",
+   "learned": false,
+   "level": 15,
+   "where": "Workshop master"
+  }
+ ],
+ "bars": [
+  [
+   "power-shot",
+   "eagles-eye",
+   "frost-arrow",
+   "venom-arrow",
+   "poison-cloud",
+   "viper-strike",
+   "forest-ward",
+   "wild-renewal",
+   null,
+   null
+  ],
+  [
+   "quick-shot",
+   "triple-shot",
+   "fire-arrow",
+   "moonfall-arrow",
+   "storm-cloud",
+   null,
+   "cocoon",
+   "mushroom-ring",
+   null,
+   "starfall"
+  ]
+ ],
+ "keys": [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "0"
+ ]
+}

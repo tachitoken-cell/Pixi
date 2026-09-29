@@ -1,0 +1,125 @@
+#panel[data-mode="story-quest"] { max-width: 640px; }
+#panel[data-mode="story-quest"]::backdrop { background: rgb(9 14 19 / 78%); backdrop-filter: grayscale(.85) blur(2px); }
+.story-conversation { padding: 8px 4px 4px; }
+.story-speaker { margin: 0 0 8px; color: var(--gold, #dfc783); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; }
+.story-conversation h3 { margin: 0 0 16px; }
+.story-dialogue-line { min-height: 72px; font-size: 18px; line-height: 1.65; }
+.story-objectives, .story-journal-quest ul { padding-left: 20px; line-height: 1.6; }
+.story-objectives li, .story-journal-quest li { padding: 4px 0; }
+.story-objectives b, .story-journal-quest li b { white-space: nowrap; color: #e2cf9d; }
+.story-quest-rewards { display: grid; gap: 6px; padding: 14px; margin: 18px 0; border: 1px solid #67583a; background: #332d2059; border-radius: 8px; }
+.story-quest-rewards span { font-size: 12px; text-transform: uppercase; color: #c4bca8; }
+.story-dialogue-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.story-dialogue-actions button { min-height: 44px; }
+.story-reward-choice { margin:18px 0; padding:10px 14px; border:1px solid #9b9950; }
+.story-reward-choice legend { padding:0 6px; color:#eed391; font:17px/1.3 'Marcellus',Georgia,serif; }
+.story-reward-choice label { display:inline-flex; align-items:center; gap:8px; min-height:44px; margin-right:20px; cursor:pointer; }
+.story-reward-choice input { width:18px; height:18px; margin:0; accent-color:#d5b66e; }
+.story-npc-quests, .story-journal { margin: 20px 0; padding-top: 16px; border-top: 1px solid #6b624244; }
+.story-npc-quests h3, .story-journal h3 { margin: 0 0 12px; }
+.story-quest-choice { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px; margin: 8px 0; text-align: left; color: inherit; background: #1b261e; border: 1px solid #526341; border-radius: 8px; cursor: pointer; }
+.story-quest-choice:hover, .story-quest-choice:focus-visible { background: #2a392a; border-color: #d1bb71; }
+.story-quest-symbol { font-size: 26px; font-weight: 800; color: #edcf72; min-width: 18px; text-align: center; }
+.story-quest-choice small { display: block; margin-top: 4px; color: #b5bdb0; }
+.story-journal-quest { padding: 12px 0; border-bottom: 1px solid #6b624233; }
+.story-journal-quest h4 { margin: 0; }
+.story-journal-quest .complete { color: #9abe88; }
+.story-journal-summary { font-size: 12px; color: #acb8a6; }
+@media (max-width: 600px) { .story-dialogue-line { font-size: 16px; } .story-dialogue-actions button { flex: 1 1 140px; } }
+
+/* The journal is a bound quest folio: a selectable index beside one live quest sheet. */
+.story-journal, #panel .story-journal[data-story-journal] {
+ --story-paper:#f5e7bd;--story-muted:#bfcea9;--story-gold:#dbc176;--story-line:#75864b;--story-forest:#08291d;
+ width:100%;min-width:0;box-sizing:border-box;margin:20px 0;padding:0;border:1px solid var(--story-line);border-radius:2px;
+ background:var(--story-forest);color:var(--story-paper);overflow:hidden;
+}
+.story-journal *, .story-journal *::before, .story-journal *::after {box-sizing:border-box}
+.story-journal-heading {display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid var(--story-line);background:#113b28}
+.story-journal .story-detail-kicker {margin:0 0 5px;color:var(--story-gold);font:700 10px/1.4 'DM Sans',sans-serif;letter-spacing:1.3px;text-transform:uppercase}
+.story-journal .story-journal-heading h3 {margin:0;color:var(--story-paper);font:25px/1.2 'Marcellus',Georgia,serif}
+.story-journal-tally {flex:none;font:12px/1.5 'DM Sans',sans-serif;color:var(--story-muted);font-variant-numeric:tabular-nums;text-align:right}
+.story-journal-filters {display:flex;gap:4px;padding:9px 14px;border-bottom:1px solid var(--story-line);background:#062318}
+.story-journal-filters button {display:flex;align-items:center;justify-content:center;gap:12px;min-width:120px;min-height:44px;padding:8px 14px;border:1px solid transparent;border-radius:2px;background:transparent;color:var(--story-muted);font:16px/1.3 'Marcellus',Georgia,serif;cursor:pointer}
+.story-journal-filters button[aria-pressed=true] {border-color:var(--story-gold);background:#224b2d;color:#fff0c4;box-shadow:inset 0 0 0 2px #0d2d1f}
+.story-journal-filters button span {display:grid;place-items:center;min-width:23px;height:23px;padding:0 5px;border:1px solid #80965a;border-radius:50%;font:11px/1 'DM Sans',sans-serif;font-variant-numeric:tabular-nums}
+.story-journal-body {display:grid;grid-template-columns:minmax(190px,.85fr) minmax(0,1.5fr);min-height:340px}
+.story-journal-list {min-width:0;max-height:520px;overflow-y:auto;overscroll-behavior:contain;padding:10px;border-right:1px solid var(--story-line);background:#061f16;scrollbar-color:#b49b52 #061f16}
+.story-journal-entry {display:grid;grid-template-columns:34px minmax(0,1fr) 12px;align-items:center;gap:10px;width:100%;min-height:88px;margin:0 0 7px;padding:12px 10px;border:1px solid #435d3d;border-radius:2px;background:#0b2b1d;color:var(--story-paper);text-align:left;cursor:pointer}
+.story-journal-entry[aria-pressed=true] {border-color:var(--story-gold);background:#1b422c;box-shadow:inset 3px 0 var(--story-gold),inset 0 0 0 2px #0c2a1c}
+.story-journal-entry:hover {background:#1a412b;border-color:#c8b56e}
+.story-entry-seal {display:grid;place-items:center;width:34px;height:40px;border:0 solid transparent;border-image:var(--ornate-slot-art) 28 fill / 5px / 0 stretch;background:#08261a}
+.story-entry-seal .item-art {display:block;width:27px;height:27px}
+.story-entry-copy {display:block;min-width:0}
+.story-entry-copy strong {display:block;font:17px/1.25 'Marcellus',Georgia,serif;overflow-wrap:anywhere}
+.story-entry-copy small {display:block;margin:5px 0;font:10px/1.4 'DM Sans',sans-serif;color:var(--story-muted)}
+.story-entry-status {display:block;font:11px/1.4 'DM Sans',sans-serif;color:#b5c998;font-variant-numeric:tabular-nums}
+.story-entry-status.is-ready {color:#ffe298;font-weight:700}
+.story-entry-arrow {color:var(--story-gold);font:24px/1 Georgia,serif}
+.story-journal-detail {min-width:0;padding:22px;background:linear-gradient(135deg,#123923 0%,#092a1d 62%);outline-offset:-4px}
+.story-detail-heading {display:grid;grid-template-columns:48px minmax(0,1fr);gap:13px;align-items:center;margin-bottom:16px;padding-bottom:17px;border-bottom:1px solid #7d8144}
+.story-detail-crest {display:grid;place-items:center;width:48px;height:56px;border:0 solid transparent;border-image:var(--ornate-slot-art) 28 fill / 7px / 0 stretch;background:#09291b}
+.story-detail-crest .item-art {width:38px;height:38px}
+.story-journal .story-detail-heading h4 {margin:0 0 7px;font:26px/1.15 'Marcellus',Georgia,serif;color:#fff0c4;overflow-wrap:anywhere}
+.story-journal .story-detail-giver {margin:0;font:11px/1.5 'DM Sans',sans-serif;color:var(--story-muted)}
+.story-journal .story-detail-hook {margin:0 0 20px;font:16px/1.6 'Marcellus',Georgia,serif;color:#e0dec1}
+.story-detail-section-title {display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.story-journal h5 {margin:0;color:var(--story-gold);font:700 11px/1.5 'DM Sans',sans-serif;letter-spacing:.6px;text-transform:uppercase}
+.story-detail-section-title>span {color:var(--story-muted);font:11px/1.4 'DM Sans',sans-serif;font-variant-numeric:tabular-nums}
+.story-detail-objectives {margin:0;padding:0;list-style:none}
+.story-detail-objectives li {display:grid;grid-template-columns:24px minmax(0,1fr) auto;align-items:start;gap:10px;margin:0;padding:12px 0;border-top:1px solid #52624066;color:#dddcc2;font:13px/1.5 'DM Sans',sans-serif}
+.story-objective-mark {display:grid;place-items:center;width:22px;height:22px;border:1px solid #718154;border-radius:50%;color:var(--story-muted);font-size:11px}
+.story-detail-objectives .is-complete {color:#afcd94}
+.story-detail-objectives .is-complete .story-objective-mark {background:#31592f;border-color:#adc278;color:#e2efbc}
+.story-detail-objectives .is-current .story-objective-mark {border-color:var(--story-gold);color:#ffe294}
+.story-detail-objectives b {padding-top:1px;white-space:nowrap;color:var(--story-gold);font-size:11px;font-variant-numeric:tabular-nums}
+.story-detail-objectives progress {display:block;width:100%;height:4px;margin-top:8px;border:0;border-radius:0;background:#28462d;accent-color:#c4b664}
+.story-detail-objectives progress::-webkit-progress-bar {background:#28462d}
+.story-detail-objectives progress::-webkit-progress-value {background:#c4b664}
+.story-detail-objectives progress::-moz-progress-bar {background:#c4b664}
+.story-detail-reward {display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:center;margin:20px 0;padding:13px 12px;border:0 solid transparent;border-image:var(--ornate-slot-art) 28 fill / 6px / 0 stretch;background:#102b1b}
+.story-detail-reward .item-art {display:block;width:28px;height:28px}
+.story-journal .story-detail-reward p {margin:4px 0 0;color:#f0dfa6;font:13px/1.6 'DM Sans',sans-serif;overflow-wrap:anywhere}
+.story-journal-actions {display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.story-journal-actions button {display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;max-width:100%;padding:10px 14px;white-space:normal;font:600 12px/1.4 'DM Sans',sans-serif}
+.story-journal-actions .primary-button {flex:1 1 160px;margin:0;border:0 solid transparent;border-image:var(--ornate-tab-selected-art) 48 32 24 32 fill / 10px 8px 6px 8px / 0 stretch;background:#29633b;color:#fff0c4}
+.story-journal-actions .primary-button::before {display:none}
+.story-journal-actions .secondary-button {flex:1 1 110px;background:#173e29;color:var(--story-paper);border:1px solid #7d8b52;border-radius:2px}
+.story-journal-actions .item-art {width:22px;height:22px;flex:none}
+.story-journal .story-journal-note {margin:10px 0 0;font:11px/1.5 'DM Sans',sans-serif;color:var(--story-muted)}
+.story-journal-back {display:none}
+.story-journal-empty {grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:280px;padding:30px;text-align:center}
+.story-journal-empty>.item-art,.story-journal-empty>span>.item-art {display:block;width:58px;height:58px;margin-bottom:15px}
+.story-journal .story-journal-empty h4 {margin:0 0 10px;font:24px/1.25 'Marcellus',Georgia,serif;color:var(--story-paper)}
+.story-journal .story-journal-empty p {max-width:390px;margin:0 0 18px;font:13px/1.65 'DM Sans',sans-serif;color:var(--story-muted)}
+.story-journal-empty button {min-height:44px;padding:10px 20px}
+.story-journal button:focus-visible {outline:3px solid #ffe495;outline-offset:2px}
+@media(max-width:650px){
+ .story-journal-heading {align-items:flex-start;flex-direction:column;gap:7px;padding:15px}
+ .story-journal .story-journal-heading h3 {font-size:23px}
+ .story-journal-tally {text-align:left}
+ .story-journal-filters {padding:8px 10px}.story-journal-filters button {flex:1;min-width:0;font-size:15px}
+ .story-journal-body {display:block;min-height:0}.story-journal-list {max-height:52dvh;border:0;padding:10px}
+ .story-journal[data-story-view=list] .story-journal-detail {display:none}
+ .story-journal[data-story-view=detail] .story-journal-list {display:none}
+ .story-journal-detail {padding:14px}
+ .story-journal-back {display:flex;align-items:center;gap:7px;min-height:44px;margin:-4px 0 12px;padding:5px 0;border:0;background:none;color:var(--story-gold);font:13px/1.4 'DM Sans',sans-serif;cursor:pointer}
+ .story-journal-back .item-art {width:22px;height:22px}
+ .story-detail-heading {grid-template-columns:38px minmax(0,1fr);gap:10px}.story-detail-crest {width:38px;height:46px}.story-detail-crest .item-art {width:30px;height:30px}
+ .story-journal .story-detail-heading h4 {font-size:23px}.story-journal .story-detail-hook {font-size:15px}
+ .story-detail-objectives li {gap:8px;font-size:12px}.story-journal-empty {padding:24px 18px;min-height:250px}
+}
+
+/* Keep the folio header compact and the objective sheet's actions within reach. */
+#panel[data-mode=journal]>.panel-heading{margin-bottom:12px;padding-bottom:12px}
+#panel-content .story-journal-heading{padding:12px 16px}
+#panel-content .story-journal-heading h3{margin:0;font:22px/1.2 'Marcellus',Georgia,serif}
+#panel-content .story-journal .story-detail-kicker{margin:0 0 5px;font:700 10px/1.4 'DM Sans',sans-serif}
+#panel-content .story-journal .story-detail-hook{margin:0 0 14px;font:15px/1.5 'Marcellus',Georgia,serif}
+#panel-content .story-journal .story-detail-giver{margin:0;font:11px/1.5 'DM Sans',sans-serif}
+@media(min-width:651px){
+ #panel-content .story-journal{margin-top:12px}
+ #panel-content .story-journal-detail{padding:16px}
+ #panel-content .story-detail-heading{margin-bottom:12px;padding-bottom:12px}
+ #panel-content .story-detail-objectives{max-height:220px;overflow-y:auto;scrollbar-color:#b49b52 #061f16}
+ #panel-content .story-detail-objectives li{padding:9px 0}
+}

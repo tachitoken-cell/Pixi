@@ -1,0 +1,24 @@
+{
+  "name": "Embermane",
+  "description": "A flame-crowned steed in ember-forged armor. This Mossvale Mounts NFT grants its current verified wallet holder access to this mount in Mossvale. Riding level and training are still required. Selling or transferring it moves that access to the new holder.",
+  "image": "https://mossvale.world/ui/mount-store-embermane.png",
+  "external_url": "https://mossvale.world",
+  "attributes": [
+    {
+      "trait_type": "Mount",
+      "value": "Embermane"
+    },
+    {
+      "trait_type": "Game asset",
+      "value": "store-embermane"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "epic"
+    },
+    {
+      "trait_type": "Source",
+      "value": "Store purchase"
+    }
+  ]
+}

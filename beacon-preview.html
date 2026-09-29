@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mossvale · Beacons</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#18231f;color:#f6ebce;font:14px/1.5 system-ui,sans-serif}main{display:grid;grid-template-columns:260px 1fr;height:100dvh}aside{padding:28px 24px;background:#202c26;border-right:1px solid #435449}small{color:#cbb782;letter-spacing:.12em}h1{font-size:30px;line-height:1.2;margin:10px 0 24px}p{color:#bac8bc}strong{color:#f6ebce}button{font:inherit;color:inherit;background:#354b3c;border:1px solid #758775;border-radius:5px;padding:10px 14px;width:100%;cursor:pointer;margin:5px 0}button:disabled{opacity:.5;cursor:wait}button:focus-visible,canvas:focus-visible{outline:2px solid #e6c778;outline-offset:-3px}#viewport{min-width:0;min-height:0;position:relative}canvas{display:block;width:100%;height:100%;touch-action:none}#status{position:absolute;bottom:20px;left:20px;right:20px;text-align:center;padding:10px;background:#18231fdd;pointer-events:none}@media(max-width:700px){main{grid-template-columns:1fr;grid-template-rows:auto minmax(300px,1fr)}aside{padding:14px 18px;border:0}h1{font-size:23px;margin:4px 0}p{margin:7px 0}button{width:auto;margin-right:5px}}
+</style>
+<main><aside>
+<small>MOSSVALE · ART PREVIEW</small><h1>Frontier beacons</h1>
+<p><strong>Amberwild</strong> on the left.<br><strong>Frostmarch</strong> on the right.</p>
+<button id="light" aria-pressed="true" disabled>Extinguish beacons</button>
+<button id="reset" disabled>Reset view</button>
+<p>Drag to orbit · Scroll to zoom.<br>Arrow keys pan the view.</p>
+</aside><section id="viewport" aria-label="Beacon model viewer"><canvas id="preview" tabindex="0" aria-label="Interactive Amberwild and Frostmarch beacons"></canvas><div id="status" role="status">Loading beacon models…</div></section></main>
+<script type="module" src="/src/beacon-preview.ts"></script>
+</html>

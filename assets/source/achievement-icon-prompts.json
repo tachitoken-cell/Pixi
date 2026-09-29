@@ -1,0 +1,186 @@
+{
+  "method": "Built-in image generation",
+  "style": "Painted woodland fantasy achievement icons with transparent backgrounds",
+  "assets": [
+    {
+      "id": "growing-roots",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: living oak seedling",
+      "output": "public/ui/achievements/growing-roots.png",
+      "sha256": "a1792f993887747643435017d7666a8f5ad752269e9f8b08ea419893ed4c9b3b"
+    },
+    {
+      "id": "seasoned-adventurer",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: weathered leather adventurer boots",
+      "output": "public/ui/achievements/seasoned-adventurer.png",
+      "sha256": "932abcf1fbb1a9c941776bf9138973b4df4bfbc3c120ccf62535c71ae498d35d"
+    },
+    {
+      "id": "road-veteran",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: battle-scarred teal shield with gold oak motif",
+      "output": "public/ui/achievements/road-veteran.png",
+      "sha256": "d58152028f29f4c5ea4a40d76b3f720db372956d58ea586b64205ef5fe2de239"
+    },
+    {
+      "id": "living-legend",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: regal gold crown with emerald",
+      "output": "public/ui/achievements/living-legend.png",
+      "sha256": "0c802bcac491670b6f3f581b6b203139f0061bf1054036001ee67d4c2117c5e3"
+    },
+    {
+      "id": "saddle-up",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: handsome chestnut horse head in bridle",
+      "output": "public/ui/achievements/saddle-up.png",
+      "sha256": "ab0d2664f75c31e403fc515e87aaeedcbf60a1d41ede011ec5d3011073681c38"
+    },
+    {
+      "id": "first-victory",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: steel sword with gold hilt",
+      "output": "public/ui/achievements/first-victory.png",
+      "sha256": "4c91a83ac2ff06da9d7e106f9a28bb892ea6aac318676a8030e904489c8cfbeb"
+    },
+    {
+      "id": "trail-warden",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: crossed swords and oak leaves",
+      "output": "public/ui/achievements/trail-warden.png",
+      "sha256": "e27ef9ac36ca665a60232b7351ac01d659cab99f3ba25af542f9ef2bc109a5fe"
+    },
+    {
+      "id": "realm-defender",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: tower shield with red heraldic inset",
+      "output": "public/ui/achievements/realm-defender.png",
+      "sha256": "b266092279486a863d046595ad0096dd5796bac3fa18147aa94da7e54aae85db"
+    },
+    {
+      "id": "bane-of-monsters",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: fearsome monster skull pierced by sword. The skull is ancient clean dry ivory bone, weathered long after its defeat. The blade passes through old empty bone: no blood, gore, flesh, liquid, wounds, or drips.",
+      "output": "public/ui/achievements/bane-of-monsters.png",
+      "sha256": "b7aad6b2a76155b1f9e10c78079b0d02c82f15138c953c92c478401faea63a70"
+    },
+    {
+      "id": "giant-slayer",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: broken horned giant skull with tiny sword for scale",
+      "output": "public/ui/achievements/giant-slayer.png",
+      "sha256": "397e56482d7a078836704b189bca7bf4e975204e21697aaeb4083d43f6317041"
+    },
+    {
+      "id": "first-chapter",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: open illuminated book with blank cream pages",
+      "output": "public/ui/achievements/first-chapter.png",
+      "sha256": "6c9e319e5ca39cbb7ec40bf9f53eb93338a81367ac557b842600ad9f31744200"
+    },
+    {
+      "id": "lantern-bearer",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: brass lantern warm amber glow",
+      "output": "public/ui/achievements/lantern-bearer.png",
+      "sha256": "0b74ee2db31b8a9a2aadfd30fe21c1aab02106d27f2f4872550a1ce65f0dd91d"
+    },
+    {
+      "id": "mossvale-hero",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: legendary green-and-gold lantern surrounded by oak leaves and radiance",
+      "output": "public/ui/achievements/mossvale-hero.png",
+      "sha256": "b1f16fbdcbbcf807d26d3069c15374cf3543024fae6598ebb0f7a6398bcdcaad"
+    },
+    {
+      "id": "helping-hand",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: rolled parchment contract with red wax seal and quill",
+      "output": "public/ui/achievements/helping-hand.png",
+      "sha256": "b836ffabfa8336a932448289aa70f7985f00519b70920fd4ec3fb4567617a858"
+    },
+    {
+      "id": "trusted-by-townsfolk",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: stack of sealed contracts tied with emerald ribbon",
+      "output": "public/ui/achievements/trusted-by-townsfolk.png",
+      "sha256": "d8a3d0b3adb9b6218d3dec6aec82639fe1a79205916992a16414f6304269c4df"
+    },
+    {
+      "id": "beyond-the-grove",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: rustic two-way wooden trail sign with oak leaves",
+      "output": "public/ui/achievements/beyond-the-grove.png",
+      "sha256": "f6c59fefc66ae610e27b8b8738b094a2a62483659c35b8eb2b644a2622cf4808"
+    },
+    {
+      "id": "lantern-roads",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: unfurled parchment trail map with small lantern",
+      "output": "public/ui/achievements/lantern-roads.png",
+      "sha256": "634147fab47b68fbe1f8f2f6cb8bca53dd8b28141a40461cec61bf75eb9abf42"
+    },
+    {
+      "id": "far-horizons",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: antique gold compass with emerald center",
+      "output": "public/ui/achievements/far-horizons.png",
+      "sha256": "c9f0ba81df35294b47ab2c80106ace66ec214112ecc46a949989292e26749b01"
+    },
+    {
+      "id": "skyway-scout",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: small elegant ivory-and-teal fantasy zeppelin",
+      "output": "public/ui/achievements/skyway-scout.png",
+      "sha256": "cb27b298a4dd15071f28686f1fb0f3a8045134eff0944328d66e2c2cb3f445e1"
+    },
+    {
+      "id": "hands-on",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: worn iron pickaxe and a small crystal",
+      "output": "public/ui/achievements/hands-on.png",
+      "sha256": "496ddb38cec141ef61c377b07e0da6b6743704ab062af080d2ca422c75b8a4f1"
+    },
+    {
+      "id": "rich-harvest",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: a woven wicker harvest basket overflowing with ripe red berries, golden wheat and green herbs",
+      "output": "public/ui/achievements/rich-harvest.png",
+      "sha256": "28c79c582d269690abad97e3d81b8cf272f80075fbfe304e0b5913cf5d352f61"
+    },
+    {
+      "id": "skilled-gatherer",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: a beautiful clustered crown of icy teal and amethyst crystals with small golden mineral veins",
+      "output": "public/ui/achievements/skilled-gatherer.png",
+      "sha256": "e7b51b55b1955dee20c6f6f45e36e08b23729006d582f5d74c4cf2cd93697b21"
+    },
+    {
+      "id": "workshop-regular",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: a worn iron blacksmith anvil with a gold ornament and a hammer above it",
+      "output": "public/ui/achievements/workshop-regular.png",
+      "sha256": "9cdfae7e7f0029c52e83a17129cc628c597c7323937a4c01ba714f1710f6ad65"
+    },
+    {
+      "id": "made-by-hand",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: a woodworkers mallet resting diagonally across a neatly crafted small oak box",
+      "output": "public/ui/achievements/made-by-hand.png",
+      "sha256": "9dc959056567c31a64709316538aecc77871de50702e83cb4efccb66db410dbb"
+    },
+    {
+      "id": "rootvault-conqueror",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: an ancient stone gateway grasped by thick living tree roots, with a luminous teal crystal within",
+      "output": "public/ui/achievements/rootvault-conqueror.png",
+      "sha256": "e99ea17dce55f155806f13462e8b47019a6ad68eb3328acde2d7f6946671b14b"
+    },
+    {
+      "id": "frosthollow-conqueror",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: an icy ancient stone arch encased in jagged pale blue crystals with a silver snowflake within",
+      "output": "public/ui/achievements/frosthollow-conqueror.png",
+      "sha256": "b58e15a6733ce01b8a59ffda642f104f9df76504527f926c2b1b2c7a9d0dfad7"
+    },
+    {
+      "id": "cindercrypt-conqueror",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: a scorched stone crypt arch around a fierce orange flame and ember-red gemstone",
+      "output": "public/ui/achievements/cindercrypt-conqueror.png",
+      "sha256": "a24a66a871b05f7b90d5f93bbbc898be72b333c1ae2cbdecdcb102599813d191"
+    },
+    {
+      "id": "nightroot-conqueror",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: a mysterious violet eye-shaped gem held by twisted dark roots, framed by a few luminous purple leaves",
+      "output": "public/ui/achievements/nightroot-conqueror.png",
+      "sha256": "47fd3610dc35a866b29b2e727dc2016771e54653239a11f888a8e1d285a13428"
+    },
+    {
+      "id": "achievement-emblem",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: an ornate antique gold trophy cup with emerald enamel and a graceful wreath of living oak leaves, a proud achievement emblem",
+      "output": "public/ui/achievement-emblem.png",
+      "sha256": "52a08e156c621abf1352fd5517587934c99d7e1dea80c3e09b8d9f2d6923814d"
+    },
+    {
+      "id": "apprentice-gatherer",
+      "prompt": "Create one polished hand-painted fantasy MMORPG achievement inventory icon for Mossvale. Square composition with transparent alpha background, not a sheet. A single bold readable centered symbol with 12% clear margin on all four sides. Painterly game illustration, rich brushwork, convincing weathered metal and natural materials, strong silhouette, warm upper-left light, deep forest greens, antique gold, cream and restrained jewel colors. Small-size readability at 48px is essential. Detailed but uncluttered, cozy adventurous medieval woodland mood. No text, letters, numbers, captions, watermarks, UI frame, pedestal, background scenery, cast shadow outside the symbol, Blender render, low-poly appearance, plastic, or photorealism. Output a 256x256 transparent PNG if supported; otherwise a square transparent PNG. Subject: a sturdy iron pickaxe crossed with an oak-handled gathering sickle, tied with simple green cloth",
+      "output": "public/ui/achievements/apprentice-gatherer.png",
+      "sha256": "151aa49a8f23516691fe224b86eaa57a06313de5112a672a927542aae7e36164"
+    }
+  ]
+}

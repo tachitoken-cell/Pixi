@@ -1,0 +1,24 @@
+{
+  "name": "Moonveil Gryphlet",
+  "description": "A moonlit gryphon fledgling with layered flight feathers, a silver crest and tiny golden talons. This Mossvale Pets NFT grants its current verified wallet holder access to this cosmetic companion in Mossvale. Selling or transferring it moves that access to the new holder.",
+  "image": "https://mossvale.world/ui/pets/moonveil-gryphlet.png",
+  "external_url": "https://mossvale.world",
+  "attributes": [
+    {
+      "trait_type": "Species",
+      "value": "Moonveil Gryphlet"
+    },
+    {
+      "trait_type": "Game asset",
+      "value": "moonveil-gryphlet"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "epic"
+    },
+    {
+      "trait_type": "Source",
+      "value": "Retired from drops"
+    }
+  ]
+}

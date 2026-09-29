@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { registerHooks } from 'node:module';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import * as THREE from 'three';
+const hook=registerHooks({resolve(specifier,context,next){return next(context.parentURL?.includes('/src/')&&/^\.\/[\w-]+$/.test(specifier)?`${specifier}.ts`:specifier,context);}});
+const buffer=readFileSync(new URL('../public/models/world-feedback-kit.glb',import.meta.url));
+const asset=await new GLTFLoader().parseAsync(buffer.buffer.slice(buffer.byteOffset,buffer.byteOffset+buffer.byteLength),'');
+const originalLoad=GLTFLoader.prototype.loadAsync;GLTFLoader.prototype.loadAsync=async()=>asset;
+try{
+ const {createStoryWorld}=await import('../src/story-world.ts');
+ const {STORY_OBJECTS}=await import('../src/story-world-data.ts');
+ const {storyQuestById}=await import('../src/story-quests.ts');
+ const id='story-the-wounded-caravan',quest=storyQuestById(id),completed=[];
+ function add(current){for(const prerequisite of storyQuestById(current).requires??[])if(!completed.includes(prerequisite)){add(prerequisite);completed.push(prerequisite);}}add(id);
+ const player={level:60,storyQuests:{active:{[id]:[1,0]},completed},instanceId:null};
+ const origin=STORY_OBJECTS.find(object=>object.id==='story-caravan-survivors');
+ const observer=new THREE.Vector3(origin.x-3,0,origin.z-2),scene=new THREE.Scene(),world=await createStoryWorld(scene);
+ let sharedDisposed=0,instancesDisposed=0,ownedDisposed=0;
+ const shared=new Set();asset.scene.traverse(node=>{if(node instanceof THREE.Mesh){shared.add(node.geometry);for(const material of [].concat(node.material))shared.add(material);}});
+ for(const resource of shared)resource.addEventListener('dispose',()=>sharedDisposed++);
+ const own=new Set();scene.traverse(node=>{if(node instanceof THREE.InstancedMesh)node.addEventListener('dispose',()=>instancesDisposed++);else if(node instanceof THREE.Mesh&&!shared.has(node.geometry)){own.add(node.geometry);for(const material of [].concat(node.material))own.add(material);}});
+ for(const resource of own)resource.addEventListener('dispose',()=>ownedDisposed++);
+ const view={id:'story-escort-caravan',objectId:origin.id,x:origin.x,z:origin.z,hp:100,phase:'fighting',wave:1,waves:2};
+ world.update(player,view,1,observer);const model=world.models.get(origin.id),avatar=model.children.find(child=>child.userData.storyTraveler);assert(model.visible&&world.targets().some(target=>target.id===origin.id));
+ world.update(player,{...view,phase:'moving',x:origin.x+.5},1.1,observer);assert(Math.abs(avatar.rotation.y-Math.PI/2)<1e-7,'moving traveler faces displacement, not observer');
+ observer.set(origin.x+4,0,origin.z-6);world.update(player,{...view,phase:'moving',x:origin.x+.5},1.15,observer);assert(Math.abs(avatar.rotation.y-Math.PI/2)<1e-7,'between snapshots walking heading remains stable');
+ scene.updateMatrixWorld(true);scene.traverse(node=>assert(node.matrixWorld.elements.every(Number.isFinite)));
+ world.update({...player,instanceId:'dungeon:test'},view,2,observer);assert.equal(world.targets().length,0,'overworld story targets hidden inside instances');
+ world.update(player,view,3,new THREE.Vector3(origin.x+150,0,origin.z));assert.equal(world.targets().length,0,'far targets culled');
+ world.update({...player,storyQuests:{...player.storyQuests,active:{[id]:[1,1]}}},null,4,observer);assert.equal(world.targets().length,0,'completed encounter target disappears');
+ world.update(player,view,4.5,observer);assert(model.visible);
+ world.update(undefined,null,5,observer);assert.equal(world.targets().length,0,'no character exposes no targets');assert([...world.models.values()].every(model=>!model.visible),'disconnected character also hides each model for main label loop');
+ world.dispose();assert.equal(scene.children.length,0);assert.equal(world.models.size,0);assert.equal(sharedDisposed,0,'disposing world preserves shared GLB assets');assert(instancesDisposed>0,'private avatar instance buffers released');assert(ownedDisposed>0,'world-owned geometry/materials released');const count=ownedDisposed;world.dispose();assert.equal(ownedDisposed,count,'dispose is idempotent');
+ console.log('PASS: real story-world module and authored prop kit, moving NPC heading across snapshots, instance/distance/completion visibility, finite avatar transforms, shared asset preservation and owned/instance buffer disposal.');
+}finally{GLTFLoader.prototype.loadAsync=originalLoad;hook.deregister();}

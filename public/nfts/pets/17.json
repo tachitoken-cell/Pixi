@@ -1,0 +1,24 @@
+{
+  "name": "Ashwing",
+  "description": "An obsidian drake with a molten crown, ember scales and broad wings of living fire. This Mossvale Pets NFT grants its current verified wallet holder access to this cosmetic companion in Mossvale. Selling or transferring it moves that access to the new holder.",
+  "image": "https://mossvale.world/ui/pets/store-ashwing.png",
+  "external_url": "https://mossvale.world",
+  "attributes": [
+    {
+      "trait_type": "Species",
+      "value": "Ashwing"
+    },
+    {
+      "trait_type": "Game asset",
+      "value": "store-ashwing"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "epic"
+    },
+    {
+      "trait_type": "Source",
+      "value": "Store purchase"
+    }
+  ]
+}

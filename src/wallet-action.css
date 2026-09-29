@@ -1,0 +1,24 @@
+.wallet-action-page { color:#f7edce;line-height:1.5; }
+.wallet-action-page * { box-sizing:border-box; }
+.wallet-action-page .login-screen { position:relative;min-height:100dvh;padding:100px max(24px,env(safe-area-inset-right)) max(40px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left)); }
+.wallet-action-page .login-content { width:min(460px,100%);margin:0 auto; }
+.wallet-action-page .login-wordmark { width:min(250px,65vw); }
+.wallet-action-page .login-card { padding:0;text-shadow:none; }
+.wallet-action-page .eyebrow { display:block; }
+.wallet-action-page .login-card p { font-size:15px; }
+.wallet-action-page .primary-button { border:1px solid #819777;border-radius:4px;background:#36543e;color:#f7edcc;cursor:pointer; }
+.wallet-action-page .primary-button:hover { background:#45654a; }
+.wallet-action-page button { font:inherit; }
+.wallet-action-page [hidden] { display:none!important; }
+.wallet-action-page .wallet-message h2 { font-size:14px;font-weight:500; }
+.wallet-action-page .wallet-message pre { max-height:220px;font-size:12px; }
+.wallet-action-page .login-card .wallet-address { font-size:13px; }
+.wallet-action-page #wallet-return a { display:inline-flex;align-items:center;min-height:44px;font-size:16px; }
+.wallet-action-page #wallet-transaction { overflow-wrap:anywhere;font:12px/1.6 monospace; }
+@media(max-height:520px) and (orientation:landscape) {
+  .wallet-action-page .login-screen { padding-top:76px;padding-bottom:16px; }
+  .wallet-action-page .login-wordmark { width:200px;top:12px; }
+  .wallet-action-page .login-card p { margin:8px 0; }
+  .wallet-action-page .login-actions { gap:4px;margin-top:12px; }
+  .wallet-action-page .login-actions button { min-height:44px;padding-top:9px;padding-bottom:9px; }
+}

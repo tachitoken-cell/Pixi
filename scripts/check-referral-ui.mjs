@@ -1,0 +1,92 @@
+import assert from 'node:assert/strict';
+import { mkdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { createServer } from 'vite';
+
+// Use an existing Playwright installation; this check adds no game dependency.
+const { chromium } = await import(process.env.MOSSVALE_PLAYWRIGHT || 'playwright');
+const root = fileURLToPath(new URL('../', import.meta.url));
+const output = `${root}artifacts/referrals`;
+const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><p>Local social UI fixture — sample accounts</p><button id="friends-button">Friends</button><dialog id="panel" class="panel" data-mode="referrals" open><header class="panel-heading"><div><p class="eyebrow"></p><h2>Invite friends</h2></div><button class="close-button" aria-label="Close">×</button></header><div id="panel-content"></div></dialog><script type="module">
+import '/src/style.css';import '/src/art.css';import '/src/referrals.css';
+import {mountReferralUI} from '/src/referral-ui.ts';
+import {mountRideInvitation} from '/src/mount-invitation.ts';
+import {mountFriendsUI} from '/src/friends-ui.ts';
+window.sent=[];window.state={code:'abcdefabcdefabcdefabcdef',canBind:false,referredBy:true,qualifiedCount:25,feeShareBps:50,feeVersion:2,petUnlocked:true,mountUnlocked:true,payoutWallet:'0x1111111111111111111111111111111111111111',programEnabled:true,referralsEnabled:true,progress:{level:20,daysPlayed:2,spentUsdCents:1000,qualified:true}};
+window.ui=mountReferralUI({send:m=>sent.push(m),content:()=>document.querySelector('#panel-content'),active:()=>true,show:()=>{},origin:'https://mossvale.world'});
+window.invite=mountRideInvitation(m=>sent.push(m));
+window.friendsUI=mountFriendsUI({send:m=>sent.push(m),allowed:()=>true,trigger:document.querySelector('#friends-button'),onOpen:()=>{},onWhisper:p=>sent.push({whisper:p.id}),onInvite:id=>sent.push({invite:id}),onPartyRespond:()=>{},onPartyChat:()=>{},onDungeon:()=>{}});
+window.friendState={type:'friends',friends:Array.from({length:12},(_,i)=>({id:'friend-'+i,name:['Willow','Amberleaf','Thorn of Greenwood'][i%3]+(i>2?' '+i:''),level:60,className:['Ranger','Knight','Mage'][i%3],online:i<8,zone:'greenwood'})),ignored:[],incoming:[{id:'new-friend',name:'Rowan'}],outgoing:[]};
+ui.open();ui.update(state);document.body.dataset.ready='true';
+</script><style>body{position:static;overflow:auto;background:#1d3025;color:#e6dfc7;padding:20px;font:14px/1.6 sans-serif}body>p{font-size:11px}*,*:before,*:after{box-sizing:border-box}</style></body></html>`;
+const server = await createServer({ root, logLevel: 'error', server: { host: '127.0.0.1', port: 0 }, plugins: [{ name: 'referral-fixture', configureServer(server) { server.middlewares.use('/__referral-check', (_req, res) => { res.setHeader('Content-Type', 'text/html'); res.end(html); }); } }] });
+let browser;
+try {
+  await mkdir(output, { recursive: true }); await server.listen();
+  browser = await chromium.launch({ headless: true, ...(process.env.MOSSVALE_CHROME ? { executablePath: process.env.MOSSVALE_CHROME } : {}) });
+  const page = await browser.newPage({ viewport: { width: 1280, height: 1050 } });
+  const errors = []; page.on('pageerror', error => errors.push(error.message));
+  await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/__referral-check`); await page.waitForSelector('[data-ready="true"]');
+  await page.waitForFunction(() => [...document.querySelectorAll('.referral-rewards img')].every(image => image.complete && image.naturalWidth > 0));
+  assert.equal(await page.locator('.is-unlocked').count(), 3);
+  assert.match(await page.locator('#referral-link').inputValue(), /^https:\/\/mossvale.world\/\?ref=abcdef/);
+  assert.equal(await page.locator('#referral-bind').count(), 0);
+  await page.screenshot({ path: `${output}/desktop.png`, fullPage: true });
+  await page.setViewportSize({ width: 390, height: 844 }); await page.screenshot({ path: `${output}/mobile.png`, fullPage: true });
+  assert.equal(await page.evaluate(() => {const panel=document.querySelector('#panel');const box=panel.getBoundingClientRect();return panel.scrollWidth<=panel.clientWidth&&box.left>=0&&box.right<=innerWidth&&box.bottom<=innerHeight;}), true);
+  assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('#panel')).backgroundColor), 'rgb(9, 45, 35)');
+  assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector('.referrals>p')).color), 'rgb(230, 223, 199)');
+  await page.evaluate(() => { ui.update({ ...state, qualifiedCount: 50, feeShareBps: 75, referralsEnabled: false }); });
+  assert.equal(await page.locator('.is-unlocked').count(), 4); assert.match(await page.locator('.referral-count').innerText(), /0\.75%/);
+  assert.match(await page.locator('.referral-notice').innerText(), /not active/);
+  await page.evaluate(() => ui.update({ ...state, qualifiedCount: 100, feeShareBps: 100 }));
+  assert.equal(await page.locator('.is-unlocked').count(),5);assert.match(await page.locator('.referral-count').innerText(),/1.00% of their purchase price/);
+  await page.evaluate(() => ui.update({ ...state, feeVersion: 1, qualifiedCount: 50, feeShareBps: 1000 }));
+  assert.equal(await page.locator('.referral-rewards li').count(),4);assert.match(await page.locator('.referral-count').innerText(),/10.00% of their burn share/);
+  await page.evaluate(() => { const legacy={ ...state, qualifiedCount:50, feeShareBps:1000 }; delete legacy.feeVersion; ui.update(legacy); });
+  assert.equal(await page.locator('.referral-rewards li').count(),4,'An older realm snapshot without feeVersion retains legacy tiers.');
+  assert.match(await page.locator('.referral-count').innerText(),/10.00% of their burn share/,'Missing version never relabels old burn rewards as purchase-volume rewards.');
+
+
+  await page.evaluate(() => ui.update({ ...state, programEnabled: false, canBind: true, referredBy: false }));
+  assert.match(await page.locator('.referral-notice').innerText(), /not available/);
+  assert.equal(await page.locator('#referral-bind, #referral-link, [data-referral-copy]').count(), 0);
+  await page.evaluate(() => ui.update({ ...state, canBind: true, referredBy: false, error: '<img src=x onerror=alert(1)>' }));
+  assert.equal(await page.locator('#referral-status img').count(), 0);
+  await page.fill('#referral-code', 'https://mossvale.world/?ref=ABCDEFABCDEFABCDEFABCDEF'); await page.click('#referral-bind button');
+  assert.equal(await page.locator('#referral-bind button').isDisabled(), true);
+  assert.deepEqual(await page.evaluate(() => sent.at(-1)), { type: 'referralBind', code: 'abcdefabcdefabcdefabcdef' });
+  await page.evaluate(() => ui.update({ ...state, canBind: true, referredBy: false, error: 'Saving failed. Try again.' }));
+  assert.equal(await page.locator('#referral-bind button').isDisabled(), false);
+  assert.equal(await page.locator('#referral-code').inputValue(), 'https://mossvale.world/?ref=ABCDEFABCDEFABCDEFABCDEF');
+  await page.focus('[data-referral-refresh]'); await page.evaluate(() => {document.querySelector('.referral-details').open=true;ui.update(state);});
+  assert.equal(await page.locator('[data-referral-refresh]').evaluate(node => node===document.activeElement), true);
+  assert.equal(await page.locator('.referral-details').evaluate(node => node.open), true);
+  await page.evaluate(() => invite({ playerId: 'driver', name: '<img src=x>', expiresAt: Date.now() + 30000 }));
+  assert.equal(await page.locator('#mount-invitation img').count(), 0);
+  await page.focus('[data-ride-accept]'); await page.keyboard.press('Tab'); assert.equal(await page.locator('[data-ride-decline]').evaluate(node => node === document.activeElement), true);
+  await page.click('[data-ride-accept]'); assert.deepEqual(await page.evaluate(() => sent.at(-1)), { type: 'mountAccept', playerId: 'driver' });
+  assert.equal(await page.locator('#mount-invitation').isVisible(), false);
+  await page.evaluate(() => {ui.reset();ui.update({...state,canBind:true,referredBy:false});});
+  assert.equal(await page.locator('#referral-code').inputValue(), ''); assert.equal(await page.locator('.referral-details').evaluate(node=>node.open), false);
+  // The supplied Friends concept remains a live keyboard/touch list at both sizes.
+  await page.evaluate(() => {document.querySelector('#panel').close();friendsUI.update(friendState);friendsUI.open('friends');});
+  await page.setViewportSize({width:1280,height:1050});
+  await page.waitForFunction(() => [...document.querySelectorAll('#friends-window img')].every(image=>image.complete&&image.naturalWidth>0));
+  assert.equal(await page.locator('#friends-window .friend-row').count(),12);
+  await page.screenshot({path:`${output}/friends-desktop.png`,fullPage:true});
+  await page.locator('[data-friend-id="friend-0"]').click();await page.locator('[data-friends-whisper]').click();
+  assert.deepEqual(await page.evaluate(()=>sent.at(-1)),{whisper:'friend-0'});
+  await page.locator('#friends-tab').focus();await page.keyboard.press('ArrowRight');
+  assert.equal(await page.locator('#who-tab').getAttribute('aria-selected'),'true');
+  await page.locator('#friends-tab').click();await page.fill('#friends-name','Keep my draft');
+  await page.evaluate(()=>friendsUI.update({...friendState,request:'list'}));
+  assert.equal(await page.locator('#friends-name').inputValue(),'Keep my draft');
+  await page.setViewportSize({width:390,height:844});await page.screenshot({path:`${output}/friends-mobile.png`,fullPage:true});
+  assert.equal(await page.evaluate(()=>{const panel=document.querySelector('#friends-window'),box=panel.getBoundingClientRect();return panel.scrollWidth<=panel.clientWidth&&box.left>=0&&box.right<=innerWidth&&box.bottom<=innerHeight;}),true);
+  await page.setViewportSize({width:844,height:390});
+  await page.locator('#friends-name').scrollIntoViewIfNeeded();
+  assert.equal(await page.locator('#friends-name').isVisible(),true,'Short landscapes retain reachable form controls.');
+  await page.locator('[data-friends-close]').click();assert.equal(await page.locator('#friends-window').isVisible(),false);
+  assert.deepEqual(errors, []); console.log(`Social UI passed: supplied Friends/referral frames, desktop/mobile/short viewport, Friends actions/drafts/keyboard tabs, milestones, link, qualification, unavailable state, bind/retry, escaping, passenger consent and mobile layout. Screenshots: ${output}`);
+} finally { await browser?.close(); await server.close(); }

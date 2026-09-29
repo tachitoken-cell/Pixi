@@ -1,0 +1,63 @@
+{
+  "chainId": 4663,
+  "sources": [
+    "https://developers.uniswap.org/deployments.json",
+    "https://sourcify.dev/server/v2/contract/4663/0x8Dc178eFB8111BB0973Dd9d722ebeFF267c98F94?fields=abi,sources"
+  ],
+  "blockNumber": 62965198,
+  "blockHash": "0x998308af9feacc4878fe2101c2b54fb40e83079bca5dcc3589b61a357e2244e2",
+  "contracts": {
+    "router": {
+      "address": "0x06AfBA43Fd06227fA663b0DAecF536f6EaA6bf99",
+      "codeHash": "0xbe8e8191bb42d843c2e948a5a55772eaab864ce01e54dcd47c9d089170b302d5"
+    },
+    "v4Quoter": {
+      "address": "0x8Dc178eFB8111BB0973Dd9d722ebeFF267c98F94",
+      "codeHash": "0xd707b1da8cb165e5ea35a3b4450d971eb562ec171e23492aa117036b78a868f6"
+    },
+    "permit2": {
+      "address": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+      "codeHash": "0x5208783f52488f7d3493e5e38311ab707c1d75457fe472a19b0b4d57d66a7fca"
+    },
+    "manager": {
+      "address": "0x8366a39CC670B4001A1121B8F6A443A643e40951",
+      "codeHash": "0xbd3881180b547f5fe817545743cfb4343e96b1bc6640dcd70c106b0066e95626"
+    },
+    "hook": {
+      "address": "0xE5e702641Ea86F4ae6cC3cDaeD2B886f976Be044",
+      "codeHash": "0xc21b1e6c1b45403e81a581f22ed6d9c747997af1cfdac1b1dc9f4b1d346a10db"
+    },
+    "rblx": {
+      "address": "0xF0C4BF4C582cb3836e98394b1d4e7B7281101bE8",
+      "codeHash": "0x6c1fdd40002dcb440c7fff6a84171404d279ccb057803b65826f7546acd65630"
+    },
+    "moss": {
+      "address": "0x6742883Eef788E2424CE5a1b0d4303144AaEc0a5",
+      "codeHash": "0x41881f8aa07050b6e0432355047d8c4fa6ea3648afbe5b6945ce96502b4c1542"
+    },
+    "weth": {
+      "address": "0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73",
+      "codeHash": "0x5706be52f64875fee65a2cec0d80e47a23d8793cbe85d214b48445e2d05f5353"
+    },
+    "v3Quoter": {
+      "address": "0x33e885eD0Ec9bF04EcfB19341582aADCb4c8A9E7",
+      "codeHash": "0x3db0868d945e9304c9bc6a8b2181948109ea617647142f3c4083e14393496a28"
+    },
+    "v3Factory": {
+      "address": "0x1f7d7550B1b028f7571E69A784071F0205FD2EfA",
+      "codeHash": "0xec72b1abd1f2faee020cfea9c646bd8994f9fb389054f6e574f103a895091739"
+    },
+    "rblxBeacon": {
+      "address": "0xe10b6f6B275de231345c20D14Ab812db62151b00",
+      "codeHash": "0x8b465c0b53a2ba499566e9b4ca67d8c90ed6131743df806a570d156956a7e90e"
+    },
+    "rblxImplementation": {
+      "address": "0xb35490d6f9163DE4F80d88dc75c3516eb64C5aE2",
+      "codeHash": "0xdc07e86ee482f99641bdafb9a0d772846b167401e094d90a666b94dbdcd1eec7"
+    },
+    "v3Pool": {
+      "address": "0x6d25417718A8D6c529130a8ccC4BfBf0a18219D3",
+      "codeHash": "0xae921c883774c28bd3b052e759decde694c10bab5c5c238c8873946fc49f461d"
+    }
+  }
+}

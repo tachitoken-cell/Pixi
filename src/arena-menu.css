@@ -1,0 +1,79 @@
+.utility #arena-button { position:absolute; right:0; bottom:calc(100% + 8px); width:auto; min-width:100px; height:44px; padding:8px 12px; gap:7px; background:var(--glass); border:1px solid #c8b67c66; }
+.utility #arena-button > span:not(.item-art) { font-size:12px; font-weight:600; }
+.utility #arena-button :is(.icon,.item-art) { width:18px; height:18px; }
+.utility #arena-button kbd { display:inline; position:static; font-size:9px; opacity:.8; }
+
+/* The same carved oak, forest leather and brass as Friends and merchants. */
+.panel[data-mode="arena"] { position:fixed; inset:126px auto auto 18px; margin:0; z-index:55; isolation:isolate; width:430px; height:700px; max-width:calc(100vw - 36px); max-height:calc(100dvh - 152px); padding:18px; border:0; border-image:none; border-radius:0; background:none; box-shadow:none; color:#ead8b1; overflow:hidden; }
+.panel[data-mode="arena"][open] { display:flex; flex-direction:column; }
+.panel[data-mode="arena"]::before { content:''; position:absolute; inset:0; z-index:-1; border:14px solid transparent; border-image:var(--wood-art) 175 fill / 14px / 0 stretch; pointer-events:none; }
+.panel[data-mode="arena"]::backdrop { background:transparent; backdrop-filter:none; }
+.panel[data-mode="arena"] .panel-heading { flex:none; gap:9px; margin:0 0 12px; padding:2px 0 10px; border-bottom:1px solid #bba06460; }
+.panel[data-mode="arena"] .panel-heading > div { min-width:0; }
+.panel[data-mode="arena"] #panel-title { margin:3px 0 0; color:#f6dfab; font:25px/1.2 'Marcellus',Georgia,serif; }
+.panel[data-mode="arena"] .eyebrow { color:#c7c8a6; font-size:10px; letter-spacing:.5px; }
+#panel[data-mode="arena"] #panel-eyebrow { display:none; }
+.panel[data-mode="arena"] .close-button { flex:none; width:36px; height:36px; border:0; border-radius:0; padding:6px; color:#ead8b1; background:transparent; }
+.panel[data-mode="arena"] .close-button :is(.icon,.item-art) { width:22px; height:22px; }
+.panel[data-mode="arena"] #panel-content { display:flex; flex:1; min-height:0; }
+#panel-content .arena-finder { display:flex; flex-direction:column; flex:1; min-width:0; min-height:0; gap:10px; font-size:12px; line-height:1.4; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:#998450 #162a21; }
+#panel-content .arena-finder h3 { margin:0; color:#f1deb4; font:17px/1.25 'Marcellus',Georgia,serif; }
+#panel-content .arena-finder p { margin:0; color:#c7c8a6; font-size:11px; line-height:1.45; }
+.arena-finder small { display:block; color:#c7c8a6; font-size:11px; line-height:1.35; overflow-wrap:anywhere; }
+.panel[data-mode="arena"] .arena-finder button { display:flex; align-items:center; justify-content:center; gap:5px; width:auto; min-width:0; min-height:36px; margin:0; padding:6px 9px; border:1px solid #bba06465; border-image:none; border-radius:2px; background:#d3ad3f18; color:#ead8b1; font:12px/1.3 'DM Sans',sans-serif; text-decoration:none; }
+.panel[data-mode="arena"] .arena-finder button::before { content:none; }
+.panel[data-mode="arena"] .arena-finder button:not(:disabled):hover { background:#d3ad3f38; }
+.panel[data-mode="arena"] .arena-finder button:disabled { opacity:.5; cursor:default; }
+.panel[data-mode="arena"] :is(button,input,.arena-finder-players):focus-visible { outline:2px solid #f4d17d; outline-offset:2px; }
+.arena-finder button :is(.icon,.item-art) { width:20px; height:20px; }
+.arena-finder-search { flex:none; display:flex; flex-direction:column; gap:9px; }
+.arena-finder-brackets { display:grid; gap:5px; }
+.arena-finder-bracket { display:grid; grid-template-columns:minmax(0,1fr) auto auto; align-items:center; gap:3px 10px; padding:9px; border:1px solid #bba06460; border-left:3px solid #998450; background:linear-gradient(100deg,#10271ff0,#273421b0); }
+.arena-finder-bracket.is-searching { border-color:#b7d785; background:#354d2dbb; }
+.arena-finder-rating { text-align:right; font-variant-numeric:tabular-nums; }
+.arena-finder-rating strong { color:#f4d17d; font-size:16px; }
+.arena-finder-rating strong span { font-size:9px; font-weight:400; }
+.arena-finder-rating small { color:#e1d1a6; }
+.arena-finder-record { grid-column:1 / 3; font-size:10px; }
+.arena-finder-bracket-status { grid-column:1 / -1; color:#bbd997; }
+.arena-finder-bracket-status:empty { display:none; }
+.arena-finder-heading { display:flex; align-items:center; gap:8px; }
+.arena-finder-heading > :is(.icon,.item-art) { width:32px; height:32px; }
+.panel[data-mode="arena"] [data-arena-queue="join"] { background:#55763d75; min-width:94px; }
+.arena-finder-roster { display:flex; flex-direction:column; flex:1 0 auto; min-height:140px; }
+.arena-finder-section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
+.arena-finder-section-heading > span { flex:none; color:#c7c8a6; font-size:11px; }
+#panel-content .arena-finder-hint { margin:4px 0 8px; }
+.arena-finder-wager { display:flex; align-items:center; justify-content:space-between; gap:8px; margin:7px 0; color:#f1deb4; font-size:12px; }
+.arena-finder-wager input { width:120px; min-width:0; min-height:40px; padding:6px 8px; border:1px solid #bba06465; border-radius:2px; background:#10271f; color:#f4d17d; font:inherit; font-variant-numeric:tabular-nums; }
+.panel[data-mode="arena"] [data-arena-wagers] { margin:0 0 8px; }
+.arena-finder-players { flex:1; min-height:80px; max-height:240px; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:#998450 #162a21; border:1px solid #bba06445; background:#10271f66; }
+.arena-finder-player { padding:10px 8px; border-bottom:1px solid #bba06435; }
+.arena-finder-player:last-child { border-bottom:0; }
+.arena-finder-player header { display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px; }
+.arena-finder-player header strong { min-width:0; color:#f1deb4; font-size:13px; font-weight:600; overflow-wrap:anywhere; }
+.arena-finder-player header small { flex:none; font-size:10px; }
+.arena-finder-challenges { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.panel[data-mode="arena"] .arena-finder-challenges button { width:100%; }
+.arena-finder-challenges small { margin-top:5px; font-size:10px; }
+.arena-finder-duel { display:flex; align-items:center; gap:8px; margin-top:7px; }
+.panel[data-mode="arena"] .arena-finder-duel button { min-width:58px; flex:none; }
+.arena-finder-duel small { font-size:10px; }
+#panel-content .arena-finder-empty { display:grid; place-content:center; min-height:100%; padding:20px 16px; text-align:center; font-size:12px; }
+.arena-finder-party { flex:none; display:flex; align-items:center; gap:10px; padding:2px 0 10px; border-bottom:1px solid #bba06445; }
+.panel[data-mode="arena"] [data-open-party] { flex:none; }
+@media(max-width:760px),(max-height:680px) {
+ .panel[data-mode="arena"] { inset:82px auto auto 8px; width:370px; max-width:calc(100vw - 16px); max-height:calc(100dvh - 100px); padding:14px; }
+ .panel[data-mode="arena"] .panel-heading { margin-bottom:10px; padding-bottom:8px; }
+ .panel[data-mode="arena"] #panel-title { font-size:22px; }
+ .panel[data-mode="arena"] .arena-finder button { min-height:40px; }
+ .arena-finder-player header { flex-wrap:wrap; gap:3px 8px; }
+}
+/* A rank overview anchors the same live per-bracket queue controls. */
+#panel-content .arena-overview{display:flex;align-items:center;gap:18px;padding:14px;background:#263d28;border-bottom:1px solid #bba06460}
+.arena-rank-emblem{display:grid;place-items:center;width:70px;height:80px;flex:none;border:1px solid #bba064;background:#122b20}
+.arena-rank-emblem :is(.icon,.item-art){width:48px;height:48px}
+#panel-content .arena-overview h3{font-size:26px;margin:3px 0}.arena-overview strong{font-size:20px;color:#f4d17d}.arena-overview strong small{display:inline;font-size:11px}
+.arena-rank-progress{display:grid;gap:5px;padding:0 4px;font-size:11px;color:#d7d0ad}.arena-rank-progress progress{width:100%;height:7px;accent-color:#aaba72}
+@media(min-width:801px) and (min-height:681px){.panel[data-mode="arena"]{width:720px}.arena-finder-brackets{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.arena-finder-bracket{grid-template-columns:1fr;text-align:center;gap:9px}.arena-finder-rating{text-align:center}.arena-finder-record{grid-column:auto}.arena-finder-bracket-status{grid-column:auto}.arena-finder-bracket button{width:100%!important}.arena-finder-players{max-height:300px}}
+body.mobile-controls #panel-content .arena-overview{padding:10px;gap:12px}body.mobile-controls .arena-rank-emblem{width:54px;height:62px}body.mobile-controls .arena-rank-emblem :is(.icon,.item-art){width:34px;height:34px}body.mobile-controls .panel[data-mode="arena"] .arena-finder button{min-height:44px}

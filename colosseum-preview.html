@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thornring Arena · Local preview</title>
+<style>
+  *{box-sizing:border-box}body{margin:0;background:#61734d;color:#f9efd1;font:14px system-ui}canvas{display:block;touch-action:none}
+  aside{position:fixed;z-index:1;top:20px;left:20px;max-width:430px;padding:15px 18px;background:#15231bf2;border:1px solid #b39965;border-radius:4px;box-shadow:0 8px 30px #0003}
+  h1{font-size:22px;margin:6px 0 8px}small{color:#d6bc80;font-size:10px;letter-spacing:.12em}p{margin:8px 0 0;color:#dfd9bd;line-height:1.45}
+  nav{display:flex;gap:6px;flex-wrap:wrap}button{font:inherit;color:inherit;background:#364832;border:1px solid #8d956a;border-radius:3px;padding:8px 11px;min-height:38px;cursor:pointer}
+  button[aria-pressed=true]{background:#dac58d;color:#182719;border-color:#f2dfaf}button:hover{border-color:#f2dfaf}button:focus-visible,canvas:focus-visible{outline:3px solid #efd698;outline-offset:3px}
+  #status{font-size:12px;max-width:370px}#walk-pad{position:fixed;z-index:1;right:20px;bottom:20px;display:grid;grid-template-columns:repeat(3,44px);gap:5px}#walk-pad[hidden]{display:none}#walk-pad button{padding:10px;touch-action:none;background:#15231bf2}#walk-pad [data-key=w]{grid-column:2}#walk-pad [data-key=a]{grid-column:1}#walk-pad #jump{grid-column:1/4}
+  @media(max-width:600px){aside{top:10px;left:10px;right:10px;max-width:none;padding:11px 13px}h1{font-size:18px}button{font-size:12px;padding:7px 9px}#walk-pad{right:12px;bottom:12px}}
+</style>
+<aside aria-label="Arena preview controls">
+  <small>LOCAL GAME RENDER · NO LIVE PLAYERS</small>
+  <h1>Thornring Arena</h1>
+  <nav aria-label="Camera view">
+    <button data-view="overview" aria-pressed="true">Overview</button>
+    <button data-view="floor" aria-pressed="false">Fighting floor</button>
+    <button data-view="seats" aria-pressed="false">Terraces</button>
+    <button data-view="layout" aria-pressed="false">Layout</button>
+    <button data-view="walk" aria-pressed="false">Walk the arena</button>
+  </nav>
+  <p id="status" role="status">Loading the Mossvale world…</p>
+</aside>
+<div id="walk-pad" aria-label="Walk controls" hidden>
+  <button data-key="w" aria-label="Walk forward">↑</button>
+  <button data-key="a" aria-label="Walk left">←</button>
+  <button data-key="s" aria-label="Walk backward">↓</button>
+  <button data-key="d" aria-label="Walk right">→</button>
+  <button id="jump">Jump</button>
+</div>
+<script type="module" src="/src/colosseum-preview.ts"></script>
+</html>

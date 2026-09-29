@@ -1,0 +1,10 @@
+.treasure-counter{max-width:600px;margin:0 auto;padding:20px;color:#3d392a;line-height:1.55}
+.treasure-counter h3{margin:0 0 8px;color:#49381c;font-family:Georgia,serif;font-size:1.25rem}
+.treasure-intro{display:flex;align-items:center;gap:18px;margin-bottom:24px}.treasure-intro img{flex:none;object-fit:contain;image-rendering:auto}.treasure-intro p{margin:0}
+.treasure-wallet{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:24px}.treasure-actions{display:flex;gap:10px;flex-wrap:wrap}
+.treasure-payout{padding-block:18px;border-block:1px solid #716445;margin-bottom:18px}.treasure-payout h3{font-size:1.75rem}.treasure-status{min-height:1.6em;color:#58431d}
+.treasure-counter details{margin-top:22px;color:#4d442e}.treasure-counter summary{cursor:pointer;min-height:44px;display:list-item}.treasure-counter button{min-height:44px}.treasure-counter :focus-visible{outline:2px solid #2f614b;outline-offset:3px}.treasure-counter button:disabled{opacity:.55;cursor:default}
+@media(max-width:600px){.treasure-counter{padding:12px}.treasure-intro{gap:10px}.treasure-intro img{width:64px;height:64px}.treasure-actions>*{flex:1}.treasure-wallet{align-items:flex-start}}
+.enemy.treasure-goblin strong{color:#f9d576}.enemy.treasure-goblin .enemy-cast i{background:#70e4bc}
+
+.treasure-counter>p,.treasure-payout p,.treasure-counter details p{margin-block:12px}.panel[data-mode="treasure"]{z-index:32;width:min(660px,calc(100vw - 24px));max-height:calc(100dvh - 32px)}

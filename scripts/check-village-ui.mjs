@@ -1,0 +1,67 @@
+import {CITY,CITY_VENDORS} from '../src/city.ts';
+import { TRAINER_NPCS } from '../src/training.ts';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {stripTypeScriptTypes} from 'node:module';
+import {runInNewContext} from 'node:vm';
+import {VILLAGES,VILLAGE_NPCS,SHADY_MERCHANT} from '../src/settlements.ts';
+import {GOLD_MERCHANT} from '../src/gold-merchant.ts';
+import {HEARTHLING_NPC} from '../src/hearthling.ts';
+import {NPCS} from '../src/content.ts';
+import {waterAt} from '../src/landscape.ts';
+import {NPC_SERVICE_COSTS} from '../src/shared.ts';
+import {toWorld,WORLD_COLLIDERS,canTraverse} from '../src/realm.ts';
+import {onboardingFeatureUnlocked,onboardingLockReason} from '../src/onboarding.ts';
+const main=readFileSync(new URL('../src/main.ts',import.meta.url),'utf8');
+const messages=[],opened=[],portraits=[],elements=new Map(),get=id=>{if(!elements.has(id))elements.set(id,{innerHTML:'',onclick:null,querySelector:()=>null});return elements.get(id);};
+const endingButtons=[{dataset:{ending:'rekindle'}}];
+const runtime={CITY,CITY_VENDORS,VILLAGES,VILLAGE_NPCS,SHADY_MERCHANT,GOLD_MERCHANT,HEARTHLING_NPC,goldMerchantUI:{open(){runtime.goldMerchantOpened=true;}},treasureUI:{open(){runtime.treasureOpened=true;}},NPCS,TRAINER_NPCS,NPC_SERVICE_COSTS,onboardingFeatureUnlocked,onboardingLockReason,toast(){},Math,position:{x:0,z:0},rotation:.3,worldZone:'greenwood',worldInstance:null,lastMove:0,
+ performance:{now:()=>123},send:m=>messages.push(m),$ :get,icon:name=>`<i>${name}</i>`,openPanel:(...args)=>opened.push(args),closePanel(){runtime.closed=true;},
+ player:{gold:20,hp:100,quest:{completed:false}},panel:{dataset:{mode:'shop'},open:false},document:{activeElement:null,querySelectorAll:()=>endingButtons},showNpcPortrait:id=>portraits.push(id),openJournal(){runtime.journalOpened=true;},toWorld,colliders:WORLD_COLLIDERS,canTraverse,waterAt};
+runInNewContext(stripTypeScriptTypes(main.slice(main.indexOf('function allowFeature('),main.indexOf('function acknowledgeGuide('))),runtime);
+runInNewContext(stripTypeScriptTypes(main.slice(main.indexOf('function requestVillageService('),main.indexOf('function findStation('))),runtime);
+for(const resident of VILLAGE_NPCS.filter(npc=>npc.id!==SHADY_MERCHANT.id)){
+ const service=resident.role==='merchant'?'trade':resident.role==='warden'?'contracts':'heal';
+ runtime.openDialogue({type:'dialogue',npcId:resident.id,title:resident.name,lines:resident.lines,services:[{id:service,label:service==='heal'?'Rest · 5 gold':service}]});
+ const title=CITY_VENDORS.find(n=>n.id===resident.id)?.title||`Village ${resident.role}`;
+ assert.equal(opened.at(-1)[0],resident.name);assert.equal(opened.at(-1)[1],title.toUpperCase());assert.equal(opened.at(-1)[2],'npc-talk');
+ assert.equal(portraits.at(-1),resident.id,'conversation header uses the actual selected NPC portrait');
+ assert(get('panel-content').innerHTML.includes('training-shell npc-talk-shell'));assert(get('panel-content').innerHTML.includes('>Close</button>'));
+ if(service==='trade')assert(get('panel-content').innerHTML.includes('Browse supplies'),'merchants retain a compact browse action');
+ assert(get('panel-content').innerHTML.includes(`data-npc-service="${service}"`));assert(get('panel-content').innerHTML.includes(`data-npc-id="${resident.id}"`));
+ assert(!get('panel-content').innerHTML.includes('data-ending'),'village choices never trigger the story ending');
+ runtime.closed=false;get('dialogue-continue').onclick();assert(runtime.closed);
+ runtime.requestVillageService(resident.id,service);assert.deepEqual(messages.slice(-2).map(m=>m.type),['move','npcService']);assert.equal(messages.at(-1).npcId,resident.id);assert.equal(messages.at(-1).service,service);
+}
+runtime.openDialogue({type:'dialogue',npcId:SHADY_MERCHANT.id,lines:SHADY_MERCHANT.lines});assert(runtime.treasureOpened,'shady merchant retains its dedicated treasure menu');
+runtime.openDialogue({type:'dialogue',npcId:GOLD_MERCHANT.id,title:GOLD_MERCHANT.name,lines:GOLD_MERCHANT.dialogue});
+assert(runtime.goldMerchantOpened,'gold merchant uses his requirements checklist');
+const speaker=NPCS[0];runtime.openDialogue({type:'dialogue',npcId:speaker.id,title:'A new leaf',lines:['Welcome, <traveler> & friend.']});
+assert.deepEqual(Array.from(opened.at(-1)),[speaker.name,speaker.title.toUpperCase(),'npc-talk']);assert.equal(portraits.at(-1),speaker.id);
+assert(get('panel-content').innerHTML.includes('A new leaf'));assert(get('panel-content').innerHTML.includes('&lt;traveler&gt; &amp; friend.'));
+runtime.player.quest.completed=true;runtime.journalOpened=false;get('dialogue-continue').onclick();assert(runtime.journalOpened,'closing completed story dialogue preserves its journal continuation');runtime.player.quest.completed=false;
+runtime.openDialogue({type:'dialogue',npcId:'beacon-test',title:'The old light',lines:['A steady glow.']});assert.equal(opened.at(-1)[2],'dialogue','beacon lore preserves its existing modal');
+runtime.openDialogue({type:'dialogue',npcId:speaker.id,title:'Choose the light',lines:['Choose.'],choices:[{id:'rekindle',label:'Rekindle the lanterns'}]});
+assert.equal(opened.at(-1)[2],'dialogue');assert(get('panel-content').innerHTML.includes('data-ending="rekindle"'));endingButtons[0].onclick();assert.equal(messages.at(-1).type,'chooseEnding');assert.equal(messages.at(-1).ending,'rekindle','ending choices keep their server-owned behavior');
+
+const portraitCanvas={hidden:false,width:96,height:96,getContext:()=>({clearRect:()=>clears++})},portrait={dataset:{npc:'old'},querySelector:()=>portraitCanvas};let clears=0,draws=0;
+const portraitRuntime={panel:{querySelector:()=>portrait},npcViews:new Map([['one',{mesh:{id:'one'}}],['two',{mesh:{id:'two'}}]]),drawNpcPortrait:()=>draws++};
+runInNewContext(stripTypeScriptTypes(main.slice(main.indexOf('function showNpcPortrait('),main.indexOf('function renderTrainingPanel('))),portraitRuntime);
+portraitRuntime.showNpcPortrait('one');portraitRuntime.showNpcPortrait('one');assert.equal(draws,1);assert.equal(portrait.dataset.npc,'one');assert(!portraitCanvas.hidden);
+portraitRuntime.showNpcPortrait('missing');assert(portraitCanvas.hidden);assert.equal(portrait.dataset.npc,'');assert.equal(clears,2,'missing NPC models clear the previous speaker rather than showing a stale portrait');
+portraitRuntime.drawNpcPortrait=()=>{throw new Error('unavailable');};portraitRuntime.showNpcPortrait('two');assert(portraitCanvas.hidden);assert.equal(portrait.dataset.npc,'','failed portraits retain the framed fallback icon');
+const warden=VILLAGE_NPCS.find(n=>n.role==='warden');runtime.position={x:warden.x,z:warden.z+1};
+assert(runtime.nearStation('board',warden.zone));assert(!runtime.nearStation('workshop',warden.zone));assert(!runtime.nearStation('board','hollow'));
+runtime.worldInstance='test-dungeon';assert(!runtime.nearStation('board',warden.zone));runtime.worldInstance=null;runtime.position={x:warden.x+10,z:warden.z};assert(!runtime.nearStation('board',warden.zone));
+const markup=[];Object.assign(runtime,{renderShop:(player,npcId,options)=>`<p>Gear from ${npcId} · ${player.gold} gold · ${options.tab}</p>`,replacePanelContent:html=>markup.push(html)});
+runInNewContext(stripTypeScriptTypes(main.slice(main.indexOf('let shopNpcId:'),main.indexOf('function replacePanelContent('))),runtime);
+const merchant=VILLAGE_NPCS.find(n=>n.role==='merchant');runtime.position={x:merchant.x,z:merchant.z+1};runtime.openShop(merchant.id);
+assert(markup.at(-1).includes(`Gear from ${merchant.id} · 20 gold · buy`),'shop opens stock for the interacted merchant on its Buy tab');
+runtime.player.gold=0;runtime.renderShopPanel();assert(markup.at(-1).includes('0 gold'),'authoritative wallet changes refresh shop availability');
+runtime.player.gold=20;runtime.closed=false;runtime.position={x:merchant.x+20,z:merchant.z};runtime.renderShopPanel();assert(runtime.closed,'moving away closes merchant trading');
+const openCount=opened.length;runtime.openShop();runtime.openShop('unknown');runtime.openShop(merchant.id);runtime.openShop(warden.id);assert.equal(opened.length,openCount,'remote, absent, unknown and wrong-role merchants cannot open a shop');
+runtime.position={x:merchant.x,z:merchant.z+1};runtime.worldInstance='rootvault';runtime.openShop(merchant.id);assert.equal(opened.length,openCount,'dungeons cannot open world merchants');runtime.worldInstance=null;
+assert(!main.includes('Roadside supplies')&&!main.includes('data-open-supplies')&&!main.includes('data-backpack-tab'), 'there is no global shop shortcut');
+assert(main.includes("npcId:merchant.id,itemId:data.buyGear")&&main.includes("npcId:merchant.id,resource"),'purchase and sale messages retain the actual merchant');
+assert(main.includes('...VILLAGES.map(v=>')&&main.includes('label:`${v.name} · ${regionLevelLabel'),'villages are discoverable from atlas navigation');
+console.log(`PASS: all ${VILLAGE_NPCS.length} NPC conversations with trainer-style headers and actual portraits, compact service/Close actions, story/beacon/ending preservation, stale portrait cleanup, movement-before-service, regional warden proximity, merchant range/gold controls and atlas discovery.`);

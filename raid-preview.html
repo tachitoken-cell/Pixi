@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Horned Apostle · Mossvale local preview</title>
+    <link rel="stylesheet" href="/src/art.css" />
+    <link rel="stylesheet" href="/src/dungeon-results.css" />
+    <link rel="stylesheet" href="/src/raid.css" />
+    <link rel="stylesheet" href="/src/raid-preview.css" />
+  </head>
+  <body>
+    <header class="preview-header"><div><span class="preview-badge">LOCAL PREVIEW</span><h1>The Horned Apostle</h1></div><p>20 simulated raid members · No account or saved progress</p><span id="connection" role="status">Connecting…</span></header>
+    <main class="preview-layout">
+      <aside class="preview-deck" aria-label="Raid preview controls">
+        <div class="preview-step"><label for="mechanic">Explore the encounter</label><span id="step-count"></span></div>
+        <select id="mechanic" disabled><option>Loading mechanics…</option></select>
+        <div class="preview-buttons"><button id="previous" disabled>← Previous</button><button id="next" disabled>Next →</button></div>
+        <p id="instruction">Loading the raid models and local encounter controller.</p>
+        <div class="preview-buttons"><button id="play" class="primary-button" disabled>▶ Play</button><button id="restart" disabled>Restart</button></div>
+        <label class="preview-practice"><input type="checkbox" id="practice" checked /> <span>Practice protection<small>Prevents your death. Turn off to test failure.</small></span></label>
+        <div id="plane-controls" class="preview-buttons" hidden><button data-plane="arena">Arena</button><button data-plane="shadow">Shadow Realm</button></div>
+        <section class="preview-combat" aria-label="Your controls"><div class="preview-health"><strong>Your Ranger <span id="self-health">—</span></strong><progress id="health" max="1" value="1" aria-label="Your health"></progress><small id="personal-status">Level 60 · Simulated tank role</small></div><p id="target-status">Click an enemy to select it.</p><div class="preview-buttons"><button id="attack" disabled>Attack <kbd>Space</kbd></button><button id="heal" disabled>Heal <kbd>H</kbd></button></div><small>Quick Shot · 13.5m range · 12,000 demo damage</small></section>
+        <div class="preview-buttons"><button id="inspect" disabled>Raid details</button><button id="gallery" disabled>Cosmetics & pet</button></div>
+        <section id="gallery-controls" hidden><p>Visual inspection only. All cosmetics equipped; no items are granted. Pet displayed at twice its game size.</p><label for="pet-stage">Death Apostle pet</label><select id="pet-stage"><option value="0">Base form</option><option value="1">Evolution I</option><option value="2">Evolution II</option><option value="3">Evolution III</option></select><button id="back-encounter">Back to encounter</button></section>
+        <details class="preview-help"><summary>Movement & camera</summary><p>Click the ground or use <kbd>WASD</kbd> to move. Click an enemy, then Attack or <kbd>Space</kbd>. Use <kbd>H</kbd> to heal.</p><p>Drag to orbit. Scroll or pinch to zoom. Right-drag or two fingers to pan. You can move while paused.</p><div class="preview-buttons"><button id="camera-reset">Overview</button><button id="camera-hero">Your character</button><button id="camera-boss">Boss</button></div></details>
+        <section class="preview-events" aria-label="Encounter feedback"><h2>Encounter log</h2><ol id="events" aria-live="polite"><li>Preparing your local raid…</li></ol></section>
+      </aside>
+      <section id="preview-stage" aria-label="Interactive raid arena"><canvas id="arena" aria-label="Raid arena. Click enemies to select and the ground to move." tabindex="0"></canvas><div id="nameplates"></div><div class="preview-stage-status"><span id="mode">Paused · Inspect, then Play</span><time id="elapsed">00:00</time></div><div id="loading" role="status">Loading the sanctum…</div><div class="preview-stage-hint">Click ground to move · Drag to orbit · Scroll to zoom</div></section>
+    </main>
+    <dialog id="panel" data-mode="raid" aria-labelledby="panel-title"><header class="preview-dialog-heading"><div><span class="preview-badge">LOCAL INSPECTION</span><h2 id="panel-title">Raid details</h2></div><button id="close-panel" aria-label="Close raid details">×</button></header><p class="preview-inspection-note">Simulated members and rewards. Nothing here affects a real character.</p><div id="panel-content"></div></dialog>
+    <script type="module" src="/src/raid-preview.ts"></script>
+  </body>
+</html>

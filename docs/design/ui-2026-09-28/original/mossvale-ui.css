@@ -1,0 +1,17 @@
+/* Mossvale UI layout: pins every HUD part to its corner and centres windows. Load after hud.css and windows.css.
+   --s is set by mossvale-ui.js (one scale for everything, from a 1920 × 1080 design). */
+.mv-ui { --s: 1; --gap: calc(16px * var(--s)); position: fixed; inset: 0; z-index: 50; pointer-events: none; font-family: "Outfit", "Segoe UI", system-ui, sans-serif;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+.mv-ui > div { position: absolute; }
+.mv-ui > div > * { pointer-events: auto; }
+.mv-tl { left: calc(var(--gap) + env(safe-area-inset-left)); top: calc(var(--gap) + env(safe-area-inset-top)); }
+.mv-tr { right: calc(var(--gap) + env(safe-area-inset-right)); top: calc(var(--gap) + env(safe-area-inset-top)); display: flex; flex-direction: column; align-items: flex-end; gap: calc(12px * var(--s)); }
+.mv-tc { left: 50%; top: calc(var(--gap) + env(safe-area-inset-top)); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: calc(8px * var(--s)); }
+.mv-bl { left: calc(var(--gap) + env(safe-area-inset-left)); bottom: calc(var(--gap) + env(safe-area-inset-bottom)); }
+.mv-bc { left: 50%; bottom: calc(var(--gap) + env(safe-area-inset-bottom)); transform: translateX(-50%); }
+.mv-br { right: calc(var(--gap) + env(safe-area-inset-right)); bottom: calc(var(--gap) + env(safe-area-inset-bottom)); }
+/* narrow screens: skill bar sits above the chat / menu row instead of between them */
+.mv-ui.is-narrow .mv-bc { bottom: calc(var(--gap) + 200px * var(--s) + env(safe-area-inset-bottom)); }
+.mv-win { inset: 0; display: none; place-items: center; background: rgba(4, 8, 6, .35); pointer-events: auto; }
+.mv-win.is-open { display: grid; }
+.mv-win > .mw { max-width: none; }

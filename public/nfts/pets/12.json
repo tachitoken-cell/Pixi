@@ -1,0 +1,24 @@
+{
+  "name": "Amethyst Terrapin",
+  "description": "An ancient little terrapin with teal scales, silver-edged shell plates and clustered amethyst crystals. This Mossvale Pets NFT grants its current verified wallet holder access to this cosmetic companion in Mossvale. Selling or transferring it moves that access to the new holder.",
+  "image": "https://mossvale.world/ui/pets/amethyst-terrapin.png",
+  "external_url": "https://mossvale.world",
+  "attributes": [
+    {
+      "trait_type": "Species",
+      "value": "Amethyst Terrapin"
+    },
+    {
+      "trait_type": "Game asset",
+      "value": "amethyst-terrapin"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "epic"
+    },
+    {
+      "trait_type": "Source",
+      "value": "Retired from drops"
+    }
+  ]
+}

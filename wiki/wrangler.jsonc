@@ -1,0 +1,9 @@
+{
+  "name": "mossvale-wiki",
+  "account_id": "03328a697c28f28b1e4dea4e15b54471",
+  "compatibility_date": "2026-09-13",
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": { "directory": "../wiki-dist", "not_found_handling": "404-page" },
+  "routes": [{ "pattern": "wiki.mossvale.world", "custom_domain": true }]
+}

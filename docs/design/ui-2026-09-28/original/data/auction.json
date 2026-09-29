@@ -1,0 +1,1397 @@
+{
+ "title": "Lanternreach Auction House",
+ "npc": {
+  "id": "merrick",
+  "name": "Merrick Ledger",
+  "role": "Auctioneer",
+  "icon": "menu-shop",
+  "color": "#f3c252"
+ },
+ "realm": "All realms",
+ "gold": 145258,
+ "moss": 1840.5,
+ "walletLinked": true,
+ "wallets": [
+  {
+   "addr": "0xb13A…c652",
+   "moss": 0
+  },
+  {
+   "addr": "0xd550…f82F",
+   "moss": 12.5
+  },
+  {
+   "addr": "0xD480…c4dc",
+   "moss": 0
+  }
+ ],
+ "mossToCollect": 3.2,
+ "categories": [
+  [
+   "all",
+   "All items"
+  ],
+  [
+   "equipment",
+   "Equipment"
+  ],
+  [
+   "consumables",
+   "Consumables"
+  ],
+  [
+   "materials",
+   "Materials"
+  ],
+  [
+   "treasures",
+   "Treasures"
+  ],
+  [
+   "pets",
+   "Pets"
+  ],
+  [
+   "mounts",
+   "Mounts"
+  ],
+  [
+   "junk",
+   "Junk"
+  ]
+ ],
+ "totalListings": 347,
+ "fees": {
+  "gold": 0.05,
+  "moss": 0.025,
+  "exchange": 0.005
+ },
+ "listings": [
+  {
+   "id": "l1",
+   "name": "Trail bread",
+   "icon": "item-bread",
+   "cat": "consumables",
+   "qty": 27,
+   "total": 50,
+   "cur": "gold",
+   "seller": "vinmarcm",
+   "rarity": "common",
+   "type": "Food",
+   "use": "Use: Restores 25 health.",
+   "meta": "Out of combat · Shared 10s cooldown",
+   "desc": "A small loaf for a quiet moment between battles.",
+   "sell": 1
+  },
+  {
+   "id": "l2",
+   "name": "Wood",
+   "icon": "item-wood",
+   "cat": "materials",
+   "qty": 100,
+   "total": 300,
+   "cur": "gold",
+   "seller": "oakley",
+   "rarity": "common",
+   "type": "Material",
+   "desc": "Sturdy planks for the workshop.",
+   "sell": 1
+  },
+  {
+   "id": "l3",
+   "name": "Wood",
+   "icon": "item-wood",
+   "cat": "materials",
+   "qty": 2394,
+   "total": 9000,
+   "cur": "gold",
+   "seller": "hienhienn",
+   "rarity": "common",
+   "type": "Material",
+   "desc": "Sturdy planks for the workshop.",
+   "sell": 1
+  },
+  {
+   "id": "l4",
+   "name": "Wood",
+   "icon": "item-wood",
+   "cat": "materials",
+   "qty": 1000,
+   "total": 4900,
+   "cur": "gold",
+   "seller": "Mugen",
+   "rarity": "common",
+   "type": "Material",
+   "desc": "Sturdy planks for the workshop.",
+   "sell": 1
+  },
+  {
+   "id": "l5",
+   "name": "Crystals",
+   "icon": "item-frost-crystal",
+   "cat": "materials",
+   "qty": 172,
+   "total": 850,
+   "cur": "gold",
+   "seller": "Channy",
+   "rarity": "uncommon",
+   "type": "Material",
+   "desc": "Cold to the touch, used in frost gear.",
+   "sell": 2
+  },
+  {
+   "id": "l6",
+   "name": "Wood",
+   "icon": "item-wood",
+   "cat": "materials",
+   "qty": 500,
+   "total": 2500,
+   "cur": "gold",
+   "seller": "kekette",
+   "rarity": "common",
+   "type": "Material",
+   "desc": "Sturdy planks for the workshop.",
+   "sell": 1
+  },
+  {
+   "id": "l7",
+   "name": "Herbs",
+   "icon": "item-wild-herb",
+   "cat": "materials",
+   "qty": 100,
+   "total": 500,
+   "cur": "gold",
+   "seller": "vvan",
+   "rarity": "common",
+   "type": "Material",
+   "desc": "Fresh from the Greenwood.",
+   "sell": 1
+  },
+  {
+   "id": "l8",
+   "name": "Healing potion",
+   "icon": "item-healing-potion",
+   "cat": "consumables",
+   "qty": 40,
+   "total": 380,
+   "cur": "gold",
+   "seller": "MOLEUS",
+   "rarity": "common",
+   "type": "Potion",
+   "use": "Use: Restores 120 health.",
+   "meta": "Shared 30s cooldown",
+   "desc": "Tastes like mint and moss.",
+   "sell": 2
+  },
+  {
+   "id": "l9",
+   "name": "Berry tart",
+   "icon": "item-berry-tart",
+   "cat": "consumables",
+   "qty": 11,
+   "total": 1000,
+   "cur": "gold",
+   "seller": "hienhienn",
+   "rarity": "common",
+   "type": "Food",
+   "use": "Use: Restores 60 health.",
+   "meta": "Out of combat · Shared 10s cooldown",
+   "desc": "A small loaf for a quiet moment between battles.",
+   "sell": 1
+  },
+  {
+   "id": "l10",
+   "name": "Berry tart",
+   "icon": "item-berry-tart",
+   "cat": "consumables",
+   "qty": 1,
+   "total": 99,
+   "cur": "gold",
+   "seller": "kekette",
+   "rarity": "common",
+   "type": "Food",
+   "use": "Use: Restores 60 health.",
+   "meta": "Out of combat · Shared 10s cooldown",
+   "desc": "A small loaf for a quiet moment between battles.",
+   "sell": 1
+  },
+  {
+   "id": "l11",
+   "name": "Epic Sandstrider Band",
+   "icon": "gear-ring1",
+   "cat": "equipment",
+   "qty": 1,
+   "total": 100,
+   "cur": "gold",
+   "seller": "Channy",
+   "rarity": "epic",
+   "level": 12,
+   "cls": "Ranger",
+   "type": "Accessory",
+   "desc": "Warm sand still trickles from its seams.",
+   "ilvl": 14,
+   "upgrade": 2,
+   "slot": "Finger",
+   "rolls": [
+    {
+     "stat": "Agility",
+     "base": 3,
+     "roll": 5,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2,
+     "primary": true,
+     "note": "Each point adds 1 attack and skill power for Rangers."
+    },
+    {
+     "stat": "Stamina",
+     "base": 2,
+     "roll": 4,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2,
+     "primary": true,
+     "note": "Each point adds 5 maximum health."
+    },
+    {
+     "stat": "Attack damage",
+     "base": 2,
+     "roll": 6,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2
+    },
+    {
+     "stat": "Defense (armor)",
+     "base": 0,
+     "roll": 3,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2
+    }
+   ],
+   "sell": 12,
+   "equipped": {
+    "name": "Already equipped · Ring 1",
+    "diff": [
+     [
+      "Agility",
+      -4
+     ],
+     [
+      "Attack damage",
+      3
+     ]
+    ]
+   }
+  },
+  {
+   "id": "l12",
+   "name": "Legendary Elderwild Leggings",
+   "icon": "gear-legs",
+   "cat": "equipment",
+   "qty": 1,
+   "total": 2500,
+   "cur": "gold",
+   "seller": "vvan",
+   "rarity": "mythic",
+   "level": 53,
+   "cls": "Ranger",
+   "type": "Armor",
+   "desc": "Grown, not stitched.",
+   "ilvl": 53,
+   "upgrade": 5,
+   "slot": "Legs",
+   "set": {
+    "name": "Elderwild",
+    "have": 8,
+    "total": 8,
+    "bonuses": [
+     [
+      2,
+      "+8% poison damage"
+     ],
+     [
+      4,
+      "+12% damage over time"
+     ],
+     [
+      6,
+      "+5% agility"
+     ],
+     [
+      8,
+      "Vines root enemies you crit (10 s cooldown)"
+     ]
+    ]
+   },
+   "rolls": [
+    {
+     "stat": "Agility",
+     "base": 6,
+     "roll": 8,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point adds 1 attack and skill power for Rangers."
+    },
+    {
+     "stat": "Stamina",
+     "base": 4,
+     "roll": 6,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point adds 5 maximum health."
+    },
+    {
+     "stat": "Attack damage",
+     "base": 4,
+     "roll": 4,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "All damage",
+     "base": 0,
+     "roll": 4,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "Defense (armor)",
+     "base": 0,
+     "roll": 2,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    }
+   ],
+   "sell": 76,
+   "equipped": {
+    "name": "Already equipped · Legs",
+    "diff": [
+     [
+      "Agility",
+      2
+     ],
+     [
+      "Defense (armor)",
+      -1
+     ]
+    ]
+   }
+  },
+  {
+   "id": "l13",
+   "name": "Epic Elderwild Band",
+   "icon": "gear-ring2",
+   "cat": "equipment",
+   "qty": 1,
+   "total": 1,
+   "cur": "moss",
+   "seller": "Mugen",
+   "rarity": "epic",
+   "level": 55,
+   "cls": "Ranger",
+   "type": "Accessory",
+   "desc": "Bark rings older than the town.",
+   "ilvl": 51,
+   "upgrade": 5,
+   "slot": "Finger",
+   "set": {
+    "name": "Elderwild",
+    "have": 8,
+    "total": 8,
+    "bonuses": [
+     [
+      2,
+      "+8% poison damage"
+     ],
+     [
+      4,
+      "+12% damage over time"
+     ],
+     [
+      6,
+      "+5% agility"
+     ],
+     [
+      8,
+      "Vines root enemies you crit (10 s cooldown)"
+     ]
+    ]
+   },
+   "rolls": [
+    {
+     "stat": "Agility",
+     "base": 4,
+     "roll": 2,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point adds 1 attack and skill power for Rangers."
+    },
+    {
+     "stat": "Stamina",
+     "base": 5,
+     "roll": 2,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point adds 5 maximum health."
+    },
+    {
+     "stat": "Spirit",
+     "base": 6,
+     "roll": 3,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point restores 1 health every 5 seconds outside combat."
+    },
+    {
+     "stat": "Attack damage",
+     "base": 14,
+     "roll": 8,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "Magic (skill damage)",
+     "base": 0,
+     "roll": 1,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "Defense (armor)",
+     "base": 0,
+     "roll": 2,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    }
+   ],
+   "sell": 101,
+   "equipped": {
+    "name": "Already equipped · Ring 2",
+    "diff": [
+     [
+      "Attack damage",
+      5
+     ],
+     [
+      "Spirit",
+      -2
+     ]
+    ]
+   }
+  },
+  {
+   "id": "l14",
+   "name": "Epic Elderwild Boots",
+   "icon": "gear-shoes",
+   "cat": "equipment",
+   "qty": 1,
+   "total": 1,
+   "cur": "moss",
+   "seller": "MOLEUS",
+   "rarity": "epic",
+   "level": 53,
+   "cls": "Ranger",
+   "type": "Armor",
+   "desc": "Every step leaves a sprout.",
+   "ilvl": 53,
+   "upgrade": 5,
+   "slot": "Feet",
+   "set": {
+    "name": "Elderwild",
+    "have": 8,
+    "total": 8,
+    "bonuses": [
+     [
+      2,
+      "+8% poison damage"
+     ],
+     [
+      4,
+      "+12% damage over time"
+     ],
+     [
+      6,
+      "+5% agility"
+     ],
+     [
+      8,
+      "Vines root enemies you crit (10 s cooldown)"
+     ]
+    ]
+   },
+   "rolls": [
+    {
+     "stat": "Agility",
+     "base": 6,
+     "roll": 8,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point adds 1 attack and skill power for Rangers."
+    },
+    {
+     "stat": "Attack damage",
+     "base": 4,
+     "roll": 4,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "All damage",
+     "base": 0,
+     "roll": 4,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "Stamina",
+     "base": 0,
+     "roll": 3,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "Defense (armor)",
+     "base": 0,
+     "roll": 2,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    }
+   ],
+   "sell": 76,
+   "equipped": {
+    "name": "Already equipped · Feet",
+    "diff": []
+   }
+  },
+  {
+   "id": "l15",
+   "name": "Treasure map",
+   "icon": "item-treasure-map",
+   "cat": "treasures",
+   "qty": 1,
+   "total": 4.5,
+   "cur": "moss",
+   "seller": "oakley",
+   "rarity": "rare",
+   "type": "Treasure",
+   "desc": "Marks a spot in the Rootvault.",
+   "sell": 5
+  },
+  {
+   "id": "l16",
+   "name": "Rootvault relic",
+   "icon": "item-rootvault-relic",
+   "cat": "treasures",
+   "qty": 1,
+   "total": 12,
+   "cur": "moss",
+   "seller": "Channy",
+   "rarity": "epic",
+   "type": "Treasure",
+   "desc": "Hums quietly when held.",
+   "sell": 20
+  },
+  {
+   "id": "l17",
+   "name": "Clover mouse",
+   "icon": "pet-clover-mouse",
+   "cat": "pets",
+   "qty": 1,
+   "total": 3,
+   "cur": "moss",
+   "seller": "vinmarcm",
+   "rarity": "rare",
+   "type": "Pet",
+   "desc": "Brings you luck, or at least crumbs."
+  },
+  {
+   "id": "l18",
+   "name": "Duskwind raven",
+   "icon": "pet-duskwind-raven",
+   "cat": "pets",
+   "qty": 1,
+   "total": 8.5,
+   "cur": "moss",
+   "seller": "Mugen",
+   "rarity": "epic",
+   "type": "Pet",
+   "desc": "Knows every shortcut in Greenwood."
+  },
+  {
+   "id": "l19",
+   "name": "Hide scraps",
+   "icon": "item-hide-scraps",
+   "cat": "junk",
+   "qty": 60,
+   "total": 40,
+   "cur": "gold",
+   "seller": "kekette",
+   "rarity": "common",
+   "type": "Junk",
+   "desc": "Sell to any merchant.",
+   "sell": 1
+  },
+  {
+   "id": "l20",
+   "name": "Void elixir",
+   "icon": "item-void-elixir",
+   "cat": "consumables",
+   "qty": 5,
+   "total": 0.8,
+   "cur": "moss",
+   "seller": "vvan",
+   "rarity": "epic",
+   "type": "Potion",
+   "use": "Use: +10% damage for 30 min.",
+   "desc": "Swirls even when still.",
+   "sell": 10
+  }
+ ],
+ "mine": [
+  {
+   "id": "m0",
+   "name": "Epic Sandstrider Band",
+   "icon": "gear-ring1",
+   "cat": "equipment",
+   "qty": 1,
+   "total": 100,
+   "cur": "gold",
+   "seller": "Benjooie",
+   "rarity": "epic",
+   "level": 12,
+   "cls": "Ranger",
+   "type": "Accessory",
+   "desc": "Warm sand still trickles from its seams.",
+   "mine": true,
+   "ilvl": 14,
+   "upgrade": 2,
+   "slot": "Finger",
+   "rolls": [
+    {
+     "stat": "Agility",
+     "base": 3,
+     "roll": 5,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2,
+     "primary": true,
+     "note": "Each point adds 1 attack and skill power for Rangers."
+    },
+    {
+     "stat": "Stamina",
+     "base": 2,
+     "roll": 4,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2,
+     "primary": true,
+     "note": "Each point adds 5 maximum health."
+    },
+    {
+     "stat": "Attack damage",
+     "base": 2,
+     "roll": 6,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2
+    },
+    {
+     "stat": "Defense (armor)",
+     "base": 0,
+     "roll": 3,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2
+    }
+   ],
+   "sell": 12,
+   "equipped": {
+    "name": "Already equipped · Ring 1",
+    "diff": [
+     [
+      "Agility",
+      -4
+     ],
+     [
+      "Attack damage",
+      3
+     ]
+    ]
+   }
+  },
+  {
+   "id": "ml11",
+   "name": "Epic Sandstrider Band",
+   "icon": "gear-ring1",
+   "cat": "equipment",
+   "qty": 1,
+   "total": 100,
+   "cur": "gold",
+   "seller": "Benjooie",
+   "rarity": "epic",
+   "level": 12,
+   "cls": "Ranger",
+   "type": "Accessory",
+   "desc": "Warm sand still trickles from its seams.",
+   "mine": true,
+   "ilvl": 14,
+   "upgrade": 2,
+   "slot": "Finger",
+   "rolls": [
+    {
+     "stat": "Agility",
+     "base": 3,
+     "roll": 5,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2,
+     "primary": true,
+     "note": "Each point adds 1 attack and skill power for Rangers."
+    },
+    {
+     "stat": "Stamina",
+     "base": 2,
+     "roll": 4,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2,
+     "primary": true,
+     "note": "Each point adds 5 maximum health."
+    },
+    {
+     "stat": "Attack damage",
+     "base": 2,
+     "roll": 6,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2
+    },
+    {
+     "stat": "Defense (armor)",
+     "base": 0,
+     "roll": 3,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 2
+    }
+   ],
+   "sell": 12,
+   "equipped": {
+    "name": "Already equipped · Ring 1",
+    "diff": [
+     [
+      "Agility",
+      -4
+     ],
+     [
+      "Attack damage",
+      3
+     ]
+    ]
+   }
+  },
+  {
+   "id": "ml12",
+   "name": "Legendary Elderwild Leggings",
+   "icon": "gear-legs",
+   "cat": "equipment",
+   "qty": 1,
+   "total": 2500,
+   "cur": "gold",
+   "seller": "Benjooie",
+   "rarity": "mythic",
+   "level": 53,
+   "cls": "Ranger",
+   "type": "Armor",
+   "desc": "Grown, not stitched.",
+   "mine": true,
+   "ilvl": 53,
+   "upgrade": 5,
+   "slot": "Legs",
+   "set": {
+    "name": "Elderwild",
+    "have": 8,
+    "total": 8,
+    "bonuses": [
+     [
+      2,
+      "+8% poison damage"
+     ],
+     [
+      4,
+      "+12% damage over time"
+     ],
+     [
+      6,
+      "+5% agility"
+     ],
+     [
+      8,
+      "Vines root enemies you crit (10 s cooldown)"
+     ]
+    ]
+   },
+   "rolls": [
+    {
+     "stat": "Agility",
+     "base": 6,
+     "roll": 8,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point adds 1 attack and skill power for Rangers."
+    },
+    {
+     "stat": "Stamina",
+     "base": 4,
+     "roll": 6,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point adds 5 maximum health."
+    },
+    {
+     "stat": "Attack damage",
+     "base": 4,
+     "roll": 4,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "All damage",
+     "base": 0,
+     "roll": 4,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "Defense (armor)",
+     "base": 0,
+     "roll": 2,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    }
+   ],
+   "sell": 76,
+   "equipped": {
+    "name": "Already equipped · Legs",
+    "diff": [
+     [
+      "Agility",
+      2
+     ],
+     [
+      "Defense (armor)",
+      -1
+     ]
+    ]
+   }
+  },
+  {
+   "id": "ml13",
+   "name": "Epic Elderwild Band",
+   "icon": "gear-ring2",
+   "cat": "equipment",
+   "qty": 1,
+   "total": 1,
+   "cur": "moss",
+   "seller": "Benjooie",
+   "rarity": "epic",
+   "level": 55,
+   "cls": "Ranger",
+   "type": "Accessory",
+   "desc": "Bark rings older than the town.",
+   "mine": true,
+   "ilvl": 51,
+   "upgrade": 5,
+   "slot": "Finger",
+   "set": {
+    "name": "Elderwild",
+    "have": 8,
+    "total": 8,
+    "bonuses": [
+     [
+      2,
+      "+8% poison damage"
+     ],
+     [
+      4,
+      "+12% damage over time"
+     ],
+     [
+      6,
+      "+5% agility"
+     ],
+     [
+      8,
+      "Vines root enemies you crit (10 s cooldown)"
+     ]
+    ]
+   },
+   "rolls": [
+    {
+     "stat": "Agility",
+     "base": 4,
+     "roll": 2,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point adds 1 attack and skill power for Rangers."
+    },
+    {
+     "stat": "Stamina",
+     "base": 5,
+     "roll": 2,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point adds 5 maximum health."
+    },
+    {
+     "stat": "Spirit",
+     "base": 6,
+     "roll": 3,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point restores 1 health every 5 seconds outside combat."
+    },
+    {
+     "stat": "Attack damage",
+     "base": 14,
+     "roll": 8,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "Magic (skill damage)",
+     "base": 0,
+     "roll": 1,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "Defense (armor)",
+     "base": 0,
+     "roll": 2,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    }
+   ],
+   "sell": 101,
+   "equipped": {
+    "name": "Already equipped · Ring 2",
+    "diff": [
+     [
+      "Attack damage",
+      5
+     ],
+     [
+      "Spirit",
+      -2
+     ]
+    ]
+   }
+  },
+  {
+   "id": "ml14",
+   "name": "Epic Elderwild Boots",
+   "icon": "gear-shoes",
+   "cat": "equipment",
+   "qty": 1,
+   "total": 1,
+   "cur": "moss",
+   "seller": "Benjooie",
+   "rarity": "epic",
+   "level": 53,
+   "cls": "Ranger",
+   "type": "Armor",
+   "desc": "Every step leaves a sprout.",
+   "mine": true,
+   "ilvl": 53,
+   "upgrade": 5,
+   "slot": "Feet",
+   "set": {
+    "name": "Elderwild",
+    "have": 8,
+    "total": 8,
+    "bonuses": [
+     [
+      2,
+      "+8% poison damage"
+     ],
+     [
+      4,
+      "+12% damage over time"
+     ],
+     [
+      6,
+      "+5% agility"
+     ],
+     [
+      8,
+      "Vines root enemies you crit (10 s cooldown)"
+     ]
+    ]
+   },
+   "rolls": [
+    {
+     "stat": "Agility",
+     "base": 6,
+     "roll": 8,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5,
+     "primary": true,
+     "note": "Each point adds 1 attack and skill power for Rangers."
+    },
+    {
+     "stat": "Attack damage",
+     "base": 4,
+     "roll": 4,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "All damage",
+     "base": 0,
+     "roll": 4,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "Stamina",
+     "base": 0,
+     "roll": 3,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    },
+    {
+     "stat": "Defense (armor)",
+     "base": 0,
+     "roll": 2,
+     "range": [
+      1,
+      9
+     ],
+     "upgrade": 5
+    }
+   ],
+   "sell": 76,
+   "equipped": {
+    "name": "Already equipped · Feet",
+    "diff": []
+   }
+  }
+ ],
+ "bag": [
+  {
+   "id": "berry",
+   "name": "Berry tart",
+   "icon": "item-berry-tart",
+   "qty": 9,
+   "cat": "consumables"
+  },
+  {
+   "id": "gourd",
+   "name": "Bog gland",
+   "icon": "item-gourd",
+   "qty": 21,
+   "cat": "materials"
+  },
+  {
+   "id": "fang",
+   "name": "Chipped fang",
+   "icon": "item-fang",
+   "qty": 11,
+   "cat": "materials"
+  },
+  {
+   "id": "crys",
+   "name": "Clouded frost shard",
+   "icon": "item-frost-crystal",
+   "qty": 1079,
+   "cat": "materials"
+  },
+  {
+   "id": "carap",
+   "name": "Cracked carapace",
+   "icon": "item-hide-scraps",
+   "qty": 4,
+   "cat": "materials"
+  },
+  {
+   "id": "crystals",
+   "name": "Crystals",
+   "icon": "item-frost-crystal",
+   "qty": 4758,
+   "cat": "materials"
+  },
+  {
+   "id": "dust",
+   "name": "Faded void dust",
+   "icon": "item-void-elixir",
+   "qty": 356,
+   "cat": "materials"
+  },
+  {
+   "id": "bark",
+   "name": "Gnarled bark",
+   "icon": "item-bark",
+   "qty": 103,
+   "cat": "materials"
+  },
+  {
+   "id": "tonic",
+   "name": "Greater healing tonic",
+   "icon": "item-greater-tonic",
+   "qty": 323,
+   "cat": "consumables"
+  },
+  {
+   "id": "pot",
+   "name": "Healing potion",
+   "icon": "item-healing-potion",
+   "qty": 610,
+   "cat": "consumables"
+  },
+  {
+   "id": "stew",
+   "name": "Hearty stew",
+   "icon": "item-forest-stew",
+   "qty": 10,
+   "cat": "consumables"
+  },
+  {
+   "id": "wood",
+   "name": "Wood",
+   "icon": "item-wood",
+   "qty": 744,
+   "cat": "materials"
+  }
+ ],
+ "exchange": [
+  {
+   "id": "x1",
+   "qty": 880000,
+   "total": 79000,
+   "seller": "MOLEUS"
+  },
+  {
+   "id": "x2",
+   "qty": 300000,
+   "total": 30000,
+   "seller": "vvan"
+  },
+  {
+   "id": "x3",
+   "qty": 9000,
+   "total": 1440,
+   "seller": "Mugen"
+  },
+  {
+   "id": "x4",
+   "qty": 60000,
+   "total": 9900,
+   "seller": "Mugen"
+  },
+  {
+   "id": "x5",
+   "qty": 200000,
+   "total": 40000,
+   "seller": "Channy"
+  }
+ ],
+ "purchases": [],
+ "sold": [
+  {
+   "id": "s1",
+   "name": "Wood",
+   "icon": "item-wood",
+   "qty": 200,
+   "total": 900,
+   "cur": "gold",
+   "buyer": "oakley",
+   "when": "2 h ago",
+   "collected": true
+  },
+  {
+   "id": "s2",
+   "name": "Treasure map",
+   "icon": "item-treasure-map",
+   "qty": 1,
+   "total": 4,
+   "cur": "moss",
+   "buyer": "Channy",
+   "when": "5 h ago",
+   "collected": false,
+   "rarity": "rare"
+  },
+  {
+   "id": "s3",
+   "name": "Healing potion",
+   "icon": "item-healing-potion",
+   "qty": 20,
+   "total": 180,
+   "cur": "gold",
+   "buyer": "vvan",
+   "when": "Yesterday",
+   "collected": true
+  },
+  {
+   "id": "s4",
+   "name": "Clover mouse",
+   "icon": "pet-clover-mouse",
+   "qty": 1,
+   "total": 2.5,
+   "cur": "moss",
+   "buyer": "kekette",
+   "when": "Yesterday",
+   "collected": false,
+   "rarity": "rare"
+  },
+  {
+   "id": "s5",
+   "name": "Gnarled bark",
+   "icon": "item-bark",
+   "qty": 50,
+   "total": 60,
+   "cur": "gold",
+   "buyer": "MOLEUS",
+   "when": "2 days ago",
+   "collected": true
+  }
+ ],
+ "recent": [
+  "wood",
+  "berry tart",
+  "elderwild"
+ ],
+ "shoppingList": [
+  "Crystals"
+ ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "mossvale-stats",
+  "main": "worker.mjs",
+  "account_id": "03328a697c28f28b1e4dea4e15b54471",
+  "compatibility_date": "2026-09-17",
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": { "directory": "../stats-dist", "binding": "ASSETS", "run_worker_first": ["/api/*"], "not_found_handling": "404-page" },
+  "routes": [{ "pattern": "stats.mossvale.world", "custom_domain": true }]
+}

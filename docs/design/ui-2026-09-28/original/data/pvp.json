@@ -1,0 +1,70 @@
+{
+ "moss": 44436.4042,
+ "party": 1,
+ "tiers": [
+  {
+   "name": "Bronze",
+   "min": 0,
+   "c": "#d08a52"
+  },
+  {
+   "name": "Silver",
+   "min": 1200,
+   "c": "#c9d3dc"
+  },
+  {
+   "name": "Gold",
+   "min": 1400,
+   "c": "#f3c252"
+  },
+  {
+   "name": "Platinum",
+   "min": 1600,
+   "c": "#7fe3d9"
+  },
+  {
+   "name": "Diamond",
+   "min": 1800,
+   "c": "#8fb8ff"
+  }
+ ],
+ "rated": [
+  {
+   "id": "solo",
+   "name": "Solo",
+   "size": 1,
+   "mmr": 1000,
+   "wins": 0,
+   "losses": 0
+  },
+  {
+   "id": "2v2",
+   "name": "2v2",
+   "size": 2,
+   "mmr": 1000,
+   "wins": 0,
+   "losses": 0
+  },
+  {
+   "id": "3v3",
+   "name": "3v3",
+   "size": 3,
+   "mmr": 1000,
+   "wins": 0,
+   "losses": 0
+  }
+ ],
+ "nearby": [
+  {
+   "name": "裂开",
+   "level": 3,
+   "cls": "Ranger"
+  }
+ ],
+ "wagers": [
+  "Both players stake the same amount of MOSS. The winner gets both stakes.",
+  "Stakes are locked when the match starts and paid out when it ends.",
+  "Leaving the match counts as a loss.",
+  "0 means a friendly match with no stake."
+ ]
+}

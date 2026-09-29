@@ -1,0 +1,75 @@
+/* The item sheet follows the game's woodland palette and the familiar equipment hierarchy. */
+.item-sheet { --quality: #ede6d3; min-width: 0; color: #f1edde; font: 14px/1.5 'DM Sans', sans-serif; text-align: left; overflow-wrap: anywhere; }
+.item-sheet.quality-common { --quality: #ede6d3; }
+.item-sheet.quality-uncommon { --quality: #9ee273; }
+.item-sheet.quality-rare { --quality: #8bbfff; }
+.item-sheet.quality-epic { --quality: #d5a0ff; }
+.item-sheet.quality-legendary { --quality: #ffc06c; }
+.item-sheet.quality-mythic { --quality: #ffabd2; }
+.item-sheet .item-sheet-name, #panel-content #bag-item-details .item-sheet-name { color: var(--quality); font: 22px/1.2 'Marcellus', Georgia, serif; margin: 0 0 4px; }
+.item-sheet-level { color: #e9cc80; }
+.item-sheet-type { display: flex; justify-content: space-between; gap: 16px; margin-top: 14px; }
+.item-sheet-weapon { margin-top: 3px; }
+.item-sheet-attributes, .item-sheet-bonuses { margin-top: 12px; }
+.item-sheet-attributes { color: #f1edde; }
+.item-sheet-attribute-effect { margin: 0 0 6px; color: #bac7af; font-size: 11px; line-height: 1.4; }
+.item-sheet-bonuses { color: #9ee273; }
+.item-sheet-note { margin-top: 5px; font-size: 11px; color: #b8c5a8; }
+.item-sheet-set { margin-top: 12px; color: #e9cc80; }
+.item-sheet-description { margin-top: 14px; color: #cfc19d; font-style: italic; }
+.item-sheet-requirements { margin-top: 14px; }
+.item-sheet-unmet { color: #ffaaa0; }
+.item-sheet-price { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 3px; }
+.item-sheet-gold { display: inline-flex; align-items: center; gap: 3px; color: #e9cc80; font-variant-numeric: tabular-nums; }
+.item-sheet-gold .icon, .item-sheet-gold .item-art { width: 15px; height: 15px; }
+.item-sheet-gold > span { font-size: 11px; }
+.item-hover-tooltip { position: fixed; inset: auto; z-index: 1000; pointer-events: auto; width: 310px; max-width: calc(100vw - 16px); max-height: calc(100dvh - 16px); margin: 0; padding: 16px 18px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #748367 #122019; border: 1px solid #a69e71; border-radius: 7px; background: #101d16; color: #f1edde; box-shadow: 0 12px 30px #07100bc9; }
+.item-hover-tooltip:not(:popover-open) { display: none; }
+[data-item-tooltip]:focus-visible { outline: 2px solid #e9cc80; outline-offset: 3px; }
+@media (hover: hover) {
+  .bag-slot[data-item-tooltip]:hover, .bag-toggle[data-item-tooltip]:hover { border-color: var(--quality, #e9cc80); filter: brightness(1.17); }
+}
+#bag-item-details:has(> .item-sheet) { width: 288px; padding: 16px; background: #101d16; border: 1px solid #a69e71; border-radius: 7px; }
+#bag-item-details:has(> .item-sheet)::before { content: none; }
+#bag-item-details > .item-sheet { font-size: 13px; padding-bottom: 12px; }
+#panel-content #bag-item-details .item-sheet-name { font-size: 20px; }
+.item-sheet-close { position: sticky; top: 0; z-index: 1; grid-column: 1 / -1; grid-row: 1; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 44px; margin-bottom: 10px; padding: 8px; border: 1px solid #a69e71; border-radius: 4px; background: #22372b; color: #e9cc80; font-size: 14px; }
+.item-sheet-close :is(.icon, .item-art) { width: 18px; height: 18px; flex: none; }
+.item-sheet-close:hover { background: #344b38; }
+.item-sheet-close:focus-visible { outline: 2px solid #e9cc80; outline-offset: 2px; }
+.item-sheet-owned { display: flex; align-items: center; gap: 8px; padding-top: 10px; border-top: 1px solid #a69e713f; }
+.item-sheet-owned .gear-art, .item-sheet-owned .icon { width: 28px; height: 28px; }
+.character-primary-attributes { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; margin: 12px 0 0; padding-top: 10px; border-top: 1px solid #a69e7144; }
+.character-primary-attributes dt { color: #c5c3a7; font-size: 10px; }
+.character-primary-attributes > div:focus-visible { outline: 2px solid #e9cc80; outline-offset: 3px; }
+.character-primary-attributes dd { color: #ede6d3; margin: 3px 0 0; font: 18px/1.4 'Marcellus', Georgia, serif; }
+@media (max-width: 850px) {
+  #bag-item-details:has(> .item-sheet) { z-index: 3; }
+}
+@media (max-width: 620px) {
+  #bag-item-details:has(> .item-sheet) { width: min(310px, calc(100vw - 24px)); }
+  .item-hover-tooltip { padding: 14px; }
+}
+
+.item-roll-details { margin-top: 14px; border-top: 1px solid #a69e7155; }
+.item-roll-details > summary { min-height: 44px; padding: 11px 0; color: #e9cc80; font-weight: 600; cursor: pointer; }
+.item-roll-details > summary:hover { color: #fff0bb; }
+.item-roll-details > summary:focus-visible { outline: 2px solid #e9cc80; outline-offset: 2px; }
+.item-roll-body { padding: 0 2px 10px; }
+.item-roll-stats { list-style: none; margin: 12px 0; padding: 0; }
+.item-roll-stats > li { padding: 9px 0; border-bottom: 1px solid #a69e712f; }
+.item-roll-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 3px 8px; font-size: 12px; }
+.item-roll-heading > span { color: #9ee273; }
+.item-roll-stats dl { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 8px; margin: 7px 0 0; font-size: 12px; font-variant-numeric: tabular-nums; }
+.item-roll-stats dt { color: #b8c5a8; font-size: 11px; }
+.item-roll-stats dd { margin: 0; color: #f1edde; }
+.item-roll-stats small { display: block; color: #b8c5a8; font-size: 10px; }
+.item-roll-comparisons { margin-top: 16px; font-size: 12px; }
+.item-roll-comparison { margin-top: 12px; }
+.item-roll-comparison > strong { display: block; color: #e9cc80; }
+.item-roll-comparison .item-sheet-note { margin: 3px 0 6px; }
+.item-roll-gain { color: #9ee273; }
+.item-roll-loss { color: #ffaaa0; }
+.item-roll-inline { font-size: 12px; }
+.item-roll-inline .item-roll-body { max-height: min(32dvh, 280px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #748367 #122019; }
+.item-roll-inline .item-roll-details { margin-top: 8px; }

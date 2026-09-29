@@ -1,0 +1,24 @@
+{
+  "name": "Duskwind Raven",
+  "description": "A midnight raven with layered violet feathers, a silver beak and sweeping dusk-blue wings. This Mossvale Pets NFT grants its current verified wallet holder access to this cosmetic companion in Mossvale. Selling or transferring it moves that access to the new holder.",
+  "image": "https://mossvale.world/ui/pets/duskwind-raven.png",
+  "external_url": "https://mossvale.world",
+  "attributes": [
+    {
+      "trait_type": "Species",
+      "value": "Duskwind Raven"
+    },
+    {
+      "trait_type": "Game asset",
+      "value": "duskwind-raven"
+    },
+    {
+      "trait_type": "Rarity",
+      "value": "epic"
+    },
+    {
+      "trait_type": "Source",
+      "value": "briar-sentinel"
+    }
+  ]
+}

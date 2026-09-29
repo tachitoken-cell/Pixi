@@ -1,0 +1,162 @@
+#panel[data-mode="raid"] { width:min(920px,calc(100vw - 40px)); background:#21172f; color:#e9dffa; border-image:var(--wood-art) 175 fill / 18px / 0 stretch; }
+#panel[data-mode="raid"] :is(h2,h3,h4) { color:#e9dffa; }
+#panel[data-mode="raid"] :is(p,.eyebrow,small) { color:#c8c7a7; }
+#panel[data-mode="raid"] .close-button { color:#e9dffa; background:transparent; }
+.raid-panel { --raid-line:#ac8ed360; }
+.raid-intro { text-align:center; padding:10px 0 18px; }.raid-intro>.item-art { width:56px;height:56px; }.raid-intro h3 { margin:8px 0; font:28px Marcellus,serif; }
+.raid-panel-heading { display:flex;justify-content:space-between;align-items:center;gap:12px; }.raid-panel-heading h3 { margin:5px 0;font:25px Marcellus,serif; }.raid-panel-heading>strong { color:#d6b8ff;white-space:nowrap; }
+.raid-panel .raid-objective { border-block:1px solid var(--raid-line);padding:12px 0; }
+.raid-actions,.raid-role { display:flex;flex-wrap:wrap;gap:8px;margin:12px 0; }.raid-panel .primary-button { min-height:44px; }
+.raid-role [aria-pressed="true"] { color:#fff0bb;outline:2px solid #c7b16d;outline-offset:-5px; }
+.raid-roster { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:14px 0; }
+.raid-member { position:relative;min-width:0;border:1px solid #ac8ed345;background:#19112699; }.raid-member>button:first-child { padding:8px;display:grid;gap:4px;width:100%;text-align:left;color:#e9dffa;border:0;background:none;min-height:78px; }.raid-member-name { overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }.raid-member small { font-size:10px; }.raid-member progress { width:100%;height:5px;accent-color:#95bf77; }.raid-member.is-fallen { opacity:.6; }.raid-remove { position:absolute;top:0;right:0;border:0;background:#241b31;color:#e9dffa;width:28px;height:28px; }
+.raid-guide,.raid-invite-list { border-top:1px solid var(--raid-line);padding:12px 0; }.raid-guide summary,.raid-invite-list summary { cursor:pointer;min-height:32px; }.raid-guide ol { padding-left:20px;font-size:13px;line-height:1.55; }.raid-guide li { margin:8px 0; }.raid-invite-list>div { display:flex;justify-content:space-between;align-items:center;gap:8px; }.raid-invitation { border:1px solid var(--raid-line);padding:12px; }
+.raid-tactics { display:flex;align-items:center;justify-content:space-around;gap:14px;flex-wrap:wrap; }.raid-personal { display:grid;gap:8px;color:#d6b8ff; }.raid-self-suit { font-size:23px; }.raid-counter { color:#ffa18c; }.raid-tactical-map { width:210px;height:210px;position:relative;border:2px solid #a78a50;border-radius:50%;background:#101d25;flex:none; }.raid-tactical-map>span { position:absolute;transform:translate(-50%,-50%);font-size:26px;color:#ede0b7;display:grid;text-align:center; }.raid-tactical-map small { font-size:10px; }.raid-tactical-map>.is-assigned { color:#fff;outline:2px solid #d6b8ff;border-radius:20%;padding:4px; }.raid-tactical-map>b { position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:12px; }
+.raid-victory { display:grid;justify-items:center;gap:8px;padding:14px; }.raid-victory>strong { font:36px Marcellus,serif;color:#d6b8ff; }.raid-victory>.item-art { width:45px;height:45px; }.raid-rewards { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px; }.raid-rewards article { display:grid;text-align:center;justify-items:center;gap:6px;padding:12px;border:1px solid #ac8ed360;background:#19112688; }.raid-rewards .item-art { width:36px;height:36px; }
+#raid-hud { position:absolute;top:18px;left:50%;transform:translateX(-50%);width:min(370px,36vw);z-index:12;color:#e9dffa;pointer-events:auto; }.raid-hud-heading { width:100%;padding:9px 14px;background:#20152fea;border:1px solid #987eb6;border-radius:3px;color:inherit;text-align:center;display:grid;gap:4px; }.raid-hud-heading>strong { font:18px Marcellus,serif;color:#d6b8ff; }.raid-hud-heading>span { font-size:11px;line-height:1.35; }.raid-hud-heading progress { width:100%;height:7px;accent-color:#bc554b; }.raid-hud-personal { padding:5px 8px;text-align:center;background:#21172fe8;font-size:12px;line-height:1.4; }.raid-hud-personal[data-danger="true"] { color:#ffb095; }.raid-hud-roster { background:#21172fe8;font-size:11px; }.raid-hud-roster summary { padding:5px 8px;cursor:pointer; }.raid-hud-roster .raid-roster { margin:0;padding:4px;gap:3px; }.raid-hud-roster .raid-member>button:first-child { padding:5px;min-height:60px; }.raid-hud-roster .raid-remove { display:none; }
+.raid-nameplate-status { display:block;color:#ffd891;font-weight:bold;font-size:14px;text-shadow:0 1px 3px #000; }.raid-nameplate-status:empty { display:none; }
+#raid-button>span { font-size:9px; }
+@media(max-width:1000px) { #panel[data-mode="raid"] { width:calc(100vw - 16px); }.raid-roster { grid-template-columns:repeat(2,minmax(0,1fr)); }#raid-hud { top:90px;width:min(320px,calc(100vw - 24px)); }.raid-hud-heading>strong { font-size:15px; }.raid-hud-roster .raid-roster { grid-template-columns:repeat(4,minmax(0,1fr)); }.raid-hud-roster .raid-member small { font-size:8px; }.raid-rewards { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-height:520px) and (orientation:landscape) { #raid-hud { top:8px;max-width:290px;width:38vw; }.raid-hud-heading { padding:5px 8px; }.raid-hud-heading>span { max-height:30px;overflow:hidden; }.raid-hud-personal { font-size:10px;padding:3px 6px; }.raid-hud-roster>div { max-height:150px;overflow:auto; }.raid-tactical-map { width:150px;height:150px; }.raid-roster { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+#panel[data-mode="raid"] .raid-actions>.primary-button,#panel[data-mode="raid"] .raid-role>.primary-button { width:auto;flex:1;margin-top:0; }
+#panel[data-mode="raid"] .raid-invite-list .primary-button { width:auto;margin:3px 0; }
+body.in-raid :is(.realm,.quest-tracker) { visibility:hidden; }
+body.mobile-controls:is(.mobile-chat-open,.mobile-panel-open,.mobile-menu-open) #raid-hud { visibility:hidden;pointer-events:none; }
+@media(min-width:1250px) { body.in-raid #raid-hud { top:20px;left:auto;right:260px;transform:none;width:min(350px,calc(100vw - 920px));min-width:240px; } }
+@media(max-width:600px) { #raid-hud { top:150px; }.raid-hud-roster>div { max-height:230px;overflow:auto; } }
+
+@media(min-width:1001px) and (max-width:1249px) { body.in-raid #raid-hud { top:220px;left:20px;transform:none;width:300px; } }
+.raid-tabs { display:flex;gap:8px;margin:0 0 18px;border-bottom:1px solid #ac8ed360;padding-bottom:12px; }
+#panel[data-mode="raid"] .raid-tabs>.primary-button { margin-top:0; }
+.raid-tabs [aria-pressed="true"] { color:#fff0bb;outline:2px solid #c7b16d;outline-offset:-5px; }
+.raid-materials { display:flex;gap:14px;flex-wrap:wrap;padding:14px 0;color:#d6b8ff; }
+.raid-materials>span { display:flex;gap:5px;align-items:center; }
+.raid-progression>h3 { margin:24px 0 10px; }
+.raid-specialists { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0; }
+.raid-specialist { padding:14px;border:1px solid #ac8ed360;background:#19112688;min-width:0; }
+.raid-specialist h4 { margin:0 0 8px;font:19px Marcellus,serif; }
+.raid-specialist p { margin:7px 0; }
+#panel[data-mode="raid"] .raid-specialist .primary-button { margin-top:7px; }
+@media(max-width:600px) { .raid-specialists { grid-template-columns:1fr; }.raid-materials { font-size:12px; } }
+
+.raid-result { --dungeon-ink:#e9dffa;--dungeon-gold:#d6b8ff;--dungeon-muted:#c8c7a7; }.raid-result .dungeon-reward-slots { grid-template-columns:repeat(3,minmax(0,1fr)); }
+@media(max-width:600px) { .raid-result .dungeon-reward-slots { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+
+#raid-hud [hidden] { display:none; }
+.raid-hud-fallen { padding:8px;text-align:center;background:#21172ff2;color:#ffd4b3;font-size:12px; }
+.raid-hud-cast { display:grid;gap:3px;padding:4px 8px;text-align:center;background:#21172ff2;color:#ffdbad;font-size:11px; }
+.raid-hud-cast progress { width:100%;height:5px;accent-color:#dfaf67; }
+.raid-hud-roster summary { min-height:44px;padding:12px 8px; }
+.raid-member-actions { display:flex;flex-wrap:wrap;gap:4px;padding:4px; }
+.raid-member-action { min-height:44px;flex:1;min-width:0;font-size:11px;background:#302442;color:#e9dffa;border:1px solid #ac8ed360; }
+.raid-hud-heading:focus-visible,.raid-hud-roster summary:focus-visible { outline:2px solid #f6d58e;outline-offset:2px; }
+#raid-hud .raid-tactics .primary-button { margin:0;min-height:44px;width:100%;font-size:12px; }
+#raid-hud .raid-tactics { background:#21172ff2;text-align:center; }
+body.mobile-controls #play-ui #raid-hud { position:fixed;top:max(8px,env(safe-area-inset-top));left:calc(var(--control-left) + 148px);right:calc(var(--control-right) + 148px);width:auto;min-width:0;max-width:none;transform:none;pointer-events:none; }
+body.mobile-controls #raid-hud :is(button,summary,.raid-hud-roster) { pointer-events:auto; }
+body.mobile-controls #raid-hud .raid-hud-heading { padding:5px 8px;min-height:44px;gap:3px; }
+body.mobile-controls #raid-hud .raid-hud-heading>strong { font-size:14px;line-height:1.2; }
+body.mobile-controls #raid-hud .raid-hud-heading>span { font-size:11px;line-height:1.3;max-height:none; }
+body.mobile-controls #raid-hud .raid-hud-personal { font-size:11px;line-height:1.35;padding:4px 6px; }
+body.mobile-controls #raid-hud .raid-hud-roster { position:fixed;left:var(--control-left);top:calc(max(8px,env(safe-area-inset-top)) + 148px);width:140px; }
+body.mobile-controls #raid-hud .raid-hud-roster>div { max-height:max(44px,calc(100dvh - 350px));overflow:auto;overscroll-behavior:contain; }
+body.mobile-controls #raid-hud .raid-hud-roster .raid-roster { grid-template-columns:1fr; }
+body.mobile-controls #raid-hud .raid-hud-roster .raid-member>button:first-child { min-height:44px;grid-template-columns:1fr;gap:2px; }
+body.mobile-controls #raid-hud .raid-hud-roster .raid-member small { font-size:10px; }
+body.mobile-controls #raid-hud .raid-hud-fallen { position:fixed;left:50%;bottom:calc(var(--control-bottom) + 190px);transform:translateX(-50%);width:max-content;max-width:calc(100vw - 24px); }
+@media(orientation:landscape) and (max-height:520px) {
+ body.mobile-controls #raid-hud .raid-hud-roster[open] { top:calc(max(8px,env(safe-area-inset-top)) + 96px); }
+ body.mobile-controls #raid-hud .raid-hud-roster>div { max-height:max(44px,calc(100dvh - 308px)); }
+ body.mobile-controls #play-ui:has(.raid-hud-roster[open]) #unit-frames .unit-frame-focus { visibility:hidden; }
+}
+@media(orientation:landscape) and (max-height:360px) {
+ body.mobile-controls.in-raid #play-ui #unit-frames .unit-frame-focus { visibility:hidden; }
+ body.mobile-controls #raid-hud .raid-hud-roster { top:calc(max(8px,env(safe-area-inset-top)) + 96px); }
+ body.mobile-controls #raid-hud .raid-hud-roster[open] { top:calc(max(8px,env(safe-area-inset-top)) + 48px); }
+ body.mobile-controls #raid-hud .raid-hud-roster>div { max-height:max(44px,calc(100dvh - 260px)); }
+ body.mobile-controls #play-ui:has(.raid-hud-roster[open]) #unit-frames .unit-frame-target { visibility:hidden; }
+ body.mobile-controls.in-raid #mobile-target { bottom:calc(var(--control-bottom) + 48px); }
+ body.mobile-controls.in-raid #mobile-clear { bottom:var(--control-bottom); }
+ body.mobile-controls.in-raid #mobile-tools #mobile-interact { bottom:calc(var(--control-bottom) + 48px); }
+ body.mobile-controls #raid-hud .raid-hud-fallen { bottom:calc(var(--control-bottom) + 96px); }
+}
+@media(orientation:portrait) {
+ body.mobile-controls #play-ui #raid-hud { top:calc(max(8px,env(safe-area-inset-top)) + 96px);left:calc(var(--control-left) + 148px);right:var(--control-right); }
+ body.mobile-controls #raid-hud .raid-hud-roster>div { max-height:max(88px,calc(100dvh - 450px)); }
+}
+
+/* Encounter and collection composition from the supplied reference. */
+.raid-encounter-hero { display:grid; grid-template-columns:128px minmax(0,1fr); gap:20px; align-items:center; padding:18px; border:1px solid var(--raid-line); background:linear-gradient(100deg,#211b2e,#2b203d); }
+.raid-encounter-hero>img { width:128px; height:128px; object-fit:contain; filter:drop-shadow(0 6px 12px #090710); }
+#panel .raid-encounter-hero h3 { margin:5px 0 12px; font:28px/1.2 Marcellus,Georgia,serif; }
+.raid-encounter-chips { display:flex; flex-wrap:wrap; gap:6px; }
+.raid-encounter-chips span { padding:5px 8px; border:1px solid var(--raid-line); border-radius:3px; font-size:11px; color:#e5c796; }
+.raid-encounter-route { display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); list-style:none; margin:20px 0; padding:0; }
+.raid-encounter-route li { position:relative; min-width:0; display:flex; align-items:center; flex-direction:column; gap:5px; padding:0 3px; text-align:center; }
+.raid-encounter-route li:not(:last-child)::after { content:''; position:absolute; top:13px; left:calc(50% + 14px); width:calc(100% - 28px); height:1px; background:var(--raid-line); }
+.raid-encounter-route li>span { display:grid; place-items:center; width:28px; height:28px; border:1px solid #9b8462; border-radius:50%; background:#281f33; color:#dcc592; font-size:11px; }
+.raid-encounter-route strong { font-size:10px; font-weight:500; }
+.raid-encounter-route small { font-size:9px; line-height:1.35; }
+.raid-encounter-route .is-cleared>span { background:#344d30; border-color:#90ad72; }
+.raid-encounter-route .is-current>span { background:#634771; border-color:#ead1f8; outline:2px solid #d6b8ff40; outline-offset:2px; }
+.raid-role-guide { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:12px 0; }
+.raid-role-guide>div { border:1px solid var(--raid-line); padding:12px; background:#19112688; }
+.raid-role-guide dt { color:#c8c7a7; font-size:11px; }
+.raid-role-guide dd { margin:6px 0 0; color:#e9d5ad; font:15px/1.4 Marcellus,Georgia,serif; }
+.raid-composition-note { font-size:11px; line-height:1.5; }
+.raid-guide>summary { display:flex; align-items:center; min-height:44px; color:#e9d5ad; font-family:Marcellus,Georgia,serif; }
+.raid-guide>summary::before { content:'›'; margin-right:9px; font-size:20px; }
+.raid-guide[open]>summary::before { transform:rotate(90deg); }
+.raid-guide ol li::marker { color:#d9bd7b; font-weight:700; }
+.raid-materials { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:0; }
+.raid-materials>div { padding:12px; border:1px solid var(--raid-line); background:#19112688; }
+.raid-materials dt { font-size:11px; color:#c8c7a7; }
+.raid-materials dd { margin:8px 0 0; font:25px/1.2 Marcellus,Georgia,serif; color:#e9d5ad; }
+.raid-collection-heading { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:7px; }
+.raid-collection-heading small { font:11px/1.5 'DM Sans',sans-serif; }
+.raid-cosmetic-cards img { width:88px; height:88px; object-fit:contain; }
+.raid-cosmetic-cards .is-missing img { opacity:.5; filter:saturate(.4); }
+.raid-cosmetic-cards strong { font:16px/1.3 Marcellus,Georgia,serif; }
+.raid-collection-state { padding:4px 7px; border:1px solid var(--raid-line); border-radius:3px; font-size:10px; color:#d8c597; }
+.raid-cosmetic-cards small { font-size:10px; line-height:1.5; }
+.raid-pet-evolution { display:grid; grid-template-columns:104px minmax(0,1fr); gap:18px; padding:16px; border:1px solid var(--raid-line); background:#19112688; }
+.raid-pet-evolution>img { width:104px; height:104px; object-fit:contain; align-self:center; }
+.raid-pet-evolution p { font-size:12px; line-height:1.5; }
+.raid-evolution-steps { display:flex; gap:7px; padding:0; margin:12px 0; list-style:none; }
+.raid-evolution-steps li { display:grid; place-items:center; flex:1; height:22px; border:1px solid var(--raid-line); color:#b4aa98; background:#201c2a; font-size:10px; }
+.raid-evolution-steps .is-complete { color:#f4df9e; background:#645132; border-color:#d6b474; }
+.raid-evolution-progress { display:grid; gap:7px; font-size:11px; color:#c8c7a7; }
+.raid-evolution-progress progress { width:100%; height:7px; accent-color:#d9bd7b; }
+.raid-reward-odds { margin:8px 0; }
+.raid-reward-odds>div { display:flex; justify-content:space-between; gap:14px; padding:8px 0; border-bottom:1px solid var(--raid-line); font-size:12px; }
+.raid-reward-odds dd { margin:0; text-align:right; white-space:nowrap; color:#e9d5ad; }
+@media(max-width:600px) {
+ .raid-encounter-hero { grid-template-columns:76px minmax(0,1fr); gap:12px; padding:12px; }
+ .raid-encounter-hero>img { width:76px; height:100px; }
+ #panel .raid-encounter-hero h3 { font-size:23px; }
+ .raid-encounter-hero p { grid-column:1/-1; font-size:12px; }
+ .raid-encounter-route { grid-template-columns:repeat(4,minmax(0,1fr)); row-gap:15px; }
+ .raid-encounter-route li:nth-child(4)::after { display:none; }
+ .raid-role-guide { gap:5px; }
+ .raid-role-guide>div { padding:10px 7px; }
+ .raid-role-guide dd { font-size:13px; }
+ .raid-materials { gap:5px; }
+ .raid-materials>div { padding:10px 7px; }
+ .raid-materials dt { font-size:10px; }
+ .raid-materials dd { font-size:22px; }
+ .raid-cosmetic-cards { grid-template-columns:1fr; }
+ .raid-cosmetic-cards article { grid-template-columns:66px minmax(0,1fr); text-align:left; justify-items:start; padding:12px; }
+ .raid-cosmetic-cards img { grid-column:1; grid-row:1/5; width:60px; height:76px; align-self:center; }
+ .raid-cosmetic-cards article>:not(img) { grid-column:2; }
+ #panel .raid-cosmetic-cards .primary-button { margin:4px 0 0; min-height:44px; width:100%; }
+ .raid-pet-evolution { grid-template-columns:68px minmax(0,1fr); gap:10px; padding:12px; }
+ .raid-pet-evolution>img { width:68px; height:90px; align-self:start; }
+ .raid-reward-odds>div { font-size:11px; }
+}
+body.mobile-controls .raid-guide>summary { min-height:44px; }
+
+@media(max-width:420px) {
+ .raid-role-guide,.raid-materials { grid-template-columns:1fr; }
+ .raid-role-guide>div,.raid-materials>div { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+ .raid-role-guide dd,.raid-materials dd { margin:0; text-align:right; }
+}

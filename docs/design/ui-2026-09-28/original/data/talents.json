@@ -1,0 +1,394 @@
+{
+ "cls": "ranger",
+ "className": "Ranger",
+ "points": 20,
+ "resetCost": 300,
+ "rule": "One point at level 1, then every three levels: 20 at level 60. Specialize in one path or mix branches. Reset outside combat to choose again.",
+ "paths": [
+  {
+   "id": "marks",
+   "name": "Marksmanship",
+   "desc": "Precision & powerful shots",
+   "icon": "path-marks",
+   "color": "#e8c55a",
+   "nodes": [
+    {
+     "id": "m1",
+     "name": "Steady Aim",
+     "icon": "talent-bow",
+     "row": 0,
+     "col": 0,
+     "max": 3,
+     "rank": 3,
+     "req": null,
+     "desc": "+2% critical chance per rank."
+    },
+    {
+     "id": "m2",
+     "name": "Long Draw",
+     "icon": "talent-bow",
+     "row": 0,
+     "col": 2,
+     "max": 1,
+     "rank": 1,
+     "req": null,
+     "desc": "Aimed shots reach 4 m farther."
+    },
+    {
+     "id": "m3",
+     "name": "Keen Eye",
+     "icon": "talent-bow",
+     "row": 1,
+     "col": 0,
+     "max": 2,
+     "rank": 2,
+     "req": "m1",
+     "desc": "+4% damage to targets above 80% HP per rank."
+    },
+    {
+     "id": "m4",
+     "name": "Quick Nock",
+     "icon": "talent-bow",
+     "row": 1,
+     "col": 1,
+     "max": 1,
+     "rank": 1,
+     "req": "m2",
+     "desc": "Auto attacks are 8% faster."
+    },
+    {
+     "id": "m6",
+     "name": "Split Arrow",
+     "icon": "talent-volley",
+     "row": 2,
+     "col": 2,
+     "max": 1,
+     "rank": 1,
+     "req": "m4",
+     "desc": "Every 5th shot hits a second target."
+    },
+    {
+     "id": "m5",
+     "name": "Volley Master",
+     "icon": "talent-volley",
+     "row": 2,
+     "col": 1,
+     "max": 2,
+     "rank": 2,
+     "req": "m6",
+     "desc": "Volley cooldown −1.5 s per rank."
+    },
+    {
+     "id": "m8",
+     "name": "Deadeye",
+     "icon": "talent-bow",
+     "row": 3,
+     "col": 2,
+     "max": 2,
+     "rank": 2,
+     "req": "m6",
+     "desc": "+10% critical damage per rank."
+    },
+    {
+     "id": "m7",
+     "name": "Rain of Arrows",
+     "icon": "talent-volley",
+     "row": 3,
+     "col": 1,
+     "max": 2,
+     "rank": 2,
+     "req": "m5",
+     "desc": "Volley fires 2 more arrows per rank."
+    },
+    {
+     "id": "m9",
+     "name": "Storm of Shafts",
+     "icon": "talent-volley",
+     "row": 4,
+     "col": 1,
+     "max": 1,
+     "rank": 1,
+     "req": "m7",
+     "desc": "Ultimate: a 3 s arrow storm around the target."
+    }
+   ]
+  },
+  {
+   "id": "beast",
+   "name": "Beastmaster",
+   "desc": "Faithful companion",
+   "icon": "path-beast",
+   "color": "#f0a04b",
+   "nodes": [
+    {
+     "id": "b1",
+     "name": "Thick Hide",
+     "icon": "talent-guard",
+     "row": 0,
+     "col": 1,
+     "max": 1,
+     "rank": 0,
+     "req": null,
+     "desc": "Your companion takes 10% less damage."
+    },
+    {
+     "id": "b2",
+     "name": "Warden's Bond",
+     "icon": "talent-ward",
+     "row": 0,
+     "col": 2,
+     "max": 3,
+     "rank": 1,
+     "req": null,
+     "desc": "+5% companion HP per rank."
+    },
+    {
+     "id": "b3",
+     "name": "Rallying Howl",
+     "icon": "talent-howl",
+     "row": 1,
+     "col": 1,
+     "max": 1,
+     "rank": 0,
+     "req": "b1",
+     "desc": "Companion howls: +10% attack speed for 6 s."
+    },
+    {
+     "id": "b4",
+     "name": "Bristling Quills",
+     "icon": "talent-quills",
+     "row": 1,
+     "col": 2,
+     "max": 2,
+     "rank": 0,
+     "req": "b2",
+     "desc": "Attackers of your companion take 20 damage per rank."
+    },
+    {
+     "id": "b5",
+     "name": "Shield Wall",
+     "icon": "talent-guard",
+     "row": 2,
+     "col": 0,
+     "max": 3,
+     "rank": 0,
+     "req": "b3",
+     "desc": "Companion taunts for 2 s per rank."
+    },
+    {
+     "id": "b6",
+     "name": "Pack Heart",
+     "icon": "talent-heart",
+     "row": 2,
+     "col": 1,
+     "max": 2,
+     "rank": 0,
+     "req": "b3",
+     "desc": "You and your companion share 5% healing per rank."
+    },
+    {
+     "id": "b7",
+     "name": "Wild Heart",
+     "icon": "talent-heart",
+     "row": 2,
+     "col": 2,
+     "max": 1,
+     "rank": 0,
+     "req": "b4",
+     "desc": "Companion heals 3% HP on kill."
+    },
+    {
+     "id": "b8",
+     "name": "Alpha Howl",
+     "icon": "talent-howl",
+     "row": 3,
+     "col": 0,
+     "max": 2,
+     "rank": 0,
+     "req": "b5",
+     "desc": "Howl also fears enemies for 1 s per rank."
+    },
+    {
+     "id": "b9",
+     "name": "Porcupine Stance",
+     "icon": "talent-quills",
+     "row": 3,
+     "col": 2,
+     "max": 2,
+     "rank": 0,
+     "req": "b7",
+     "desc": "Quills also slow by 10% per rank."
+    },
+    {
+     "id": "b10",
+     "name": "Primal Rend",
+     "icon": "talent-claw",
+     "row": 4,
+     "col": 1,
+     "max": 1,
+     "rank": 0,
+     "req": "b6",
+     "desc": "Ultimate: companion rends for 300% damage."
+    }
+   ]
+  },
+  {
+   "id": "venom",
+   "name": "Venom",
+   "desc": "Poison & lingering damage",
+   "icon": "path-venom",
+   "color": "#8fe060",
+   "nodes": [
+    {
+     "id": "v1",
+     "name": "Toxic Sap",
+     "icon": "talent-leaf",
+     "row": 0,
+     "col": 0,
+     "max": 3,
+     "rank": 3,
+     "req": null,
+     "desc": "Poison ticks deal +4% damage per rank."
+    },
+    {
+     "id": "v2",
+     "name": "Bitter Leaf",
+     "icon": "talent-leaf",
+     "row": 0,
+     "col": 2,
+     "max": 3,
+     "rank": 1,
+     "req": null,
+     "desc": "Poisons last +1 s per rank."
+    },
+    {
+     "id": "v3",
+     "name": "Wilting Touch",
+     "icon": "talent-blight",
+     "row": 1,
+     "col": 0,
+     "max": 2,
+     "rank": 0,
+     "req": "v1",
+     "desc": "Poisoned targets deal 3% less damage per rank."
+    },
+    {
+     "id": "v4",
+     "name": "Blight Spores",
+     "icon": "talent-blight",
+     "row": 1,
+     "col": 1,
+     "max": 2,
+     "rank": 0,
+     "req": "v2",
+     "desc": "Poison spreads to 1 nearby enemy per rank."
+    },
+    {
+     "id": "v5",
+     "name": "Thornlash",
+     "icon": "talent-thorns",
+     "row": 2,
+     "col": 1,
+     "max": 1,
+     "rank": 0,
+     "req": "v4",
+     "desc": "Your auto attacks apply a weak poison."
+    },
+    {
+     "id": "v6",
+     "name": "Barbed Vines",
+     "icon": "talent-thorns",
+     "row": 2,
+     "col": 2,
+     "max": 2,
+     "rank": 0,
+     "req": "v5",
+     "desc": "Poisoned enemies are slowed 8% per rank."
+    },
+    {
+     "id": "v7",
+     "name": "Rot Bloom",
+     "icon": "talent-blight",
+     "row": 3,
+     "col": 0,
+     "max": 2,
+     "rank": 0,
+     "req": null,
+     "desc": "Killing a poisoned enemy leaves a toxic cloud."
+    },
+    {
+     "id": "v8",
+     "name": "Creeping Rot",
+     "icon": "talent-blight",
+     "row": 3,
+     "col": 2,
+     "max": 2,
+     "rank": 0,
+     "req": "v6",
+     "desc": "+6% poison damage per rank."
+    },
+    {
+     "id": "v9",
+     "name": "Venom Nova",
+     "icon": "talent-thorns",
+     "row": 4,
+     "col": 1,
+     "max": 1,
+     "rank": 0,
+     "req": "v8",
+     "desc": "Ultimate: detonate all poisons for their remaining damage."
+    }
+   ]
+  }
+ ],
+ "spellbook": [
+  {
+   "icon": "skill-1",
+   "name": "Sun Arrow",
+   "cd": 6,
+   "desc": "A burning arrow that marks the target."
+  },
+  {
+   "icon": "skill-eagles-eye",
+   "name": "Hawk Shot",
+   "cd": 10,
+   "desc": "Your hawk dives and stuns for 1 s."
+  },
+  {
+   "icon": "skill-frost-arrow",
+   "name": "Frost Arrow",
+   "cd": 8,
+   "desc": "Slows the target by 30% for 3 s."
+  },
+  {
+   "icon": "skill-4",
+   "name": "Venom Arrow",
+   "cd": 5,
+   "desc": "Applies a strong poison for 6 s."
+  },
+  {
+   "icon": "skill-5",
+   "name": "Spore Trap",
+   "cd": 14,
+   "desc": "A trap that roots the first enemy for 2 s."
+  },
+  {
+   "icon": "skill-6",
+   "name": "Serpent Sting",
+   "cd": 12,
+   "desc": "Poison that spreads on death."
+  },
+  {
+   "icon": "skill-forest-ward",
+   "name": "Grove Ward",
+   "cd": 30,
+   "desc": "A shield that absorbs 20% of your max HP."
+  },
+  {
+   "icon": "skill-8",
+   "name": "Verdant Drop",
+   "cd": 20,
+   "desc": "Heals you and your companion over 5 s."
+  }
+ ]
+}

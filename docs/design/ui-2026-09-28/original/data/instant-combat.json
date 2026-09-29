@@ -1,0 +1,71 @@
+{
+ "name": "Instant Combat",
+ "eyebrow": "Cooperative arena · every two hours",
+ "everyHours": 2,
+ "registerMinutesBefore": 5,
+ "prepareSeconds": 90,
+ "maps": [
+  {
+   "name": "Bone Pit",
+   "bosses": [
+    "Ossuary Tyrant",
+    "Marrow Colossus",
+    "Grave Cantor",
+    "Carrion Queen"
+   ]
+  },
+  {
+   "name": "Void Rift",
+   "bosses": [
+    "Rift Sovereign",
+    "Nullweaver",
+    "Umbral Behemoth",
+    "Eclipse Oracle"
+   ]
+  }
+ ],
+ "rounds": 5,
+ "groupsPerRound": 3,
+ "levels": [
+  46,
+  60
+ ],
+ "maxPlayers": 20,
+ "brackets": [
+  [
+   16,
+   30
+  ],
+  [
+   31,
+   45
+  ],
+  [
+   46,
+   60
+  ]
+ ],
+ "goldByRound": [
+  15,
+  30,
+  45,
+  75,
+  135
+ ],
+ "bossXp": 1800,
+ "bossRareChance": 0.2,
+ "pickupSeconds": 20,
+ "pickupSecondsBoss": 30,
+ "riftAt": [
+  70,
+  35
+ ],
+ "riftSeconds": 3,
+ "rules": [
+  "Stay together: rounds grow harder, and monsters chase the closest adventurer at double speed with 25% faster attacks.",
+  "Survive all three groups in a round to get your personal ground pickup. Collect it within 20 s (30 s after the boss).",
+  "At 70% and 35% boss HP, stand in each blue rift for 3 s to seal it. Progress stays; the second phase opens an extra rift.",
+  "Monsters drop no loot or XP. Rewards come from the round pickups and the boss clear.",
+  "Missed events can't be joined after they begin."
+ ]
+}

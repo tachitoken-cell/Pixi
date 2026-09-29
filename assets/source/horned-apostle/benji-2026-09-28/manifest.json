@@ -1,0 +1,112 @@
+{
+  "sourceArtifact": "https://claude.ai/artifact/3CtANMfaikwbR9jHKRuFdd",
+  "retrieved": "2026-09-28",
+  "format": "gzip-compressed unchanged JSON source; sha256 refers to decompressed bytes",
+  "files": [
+    {
+      "file": "horned-apostle.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/horned-apostle.json",
+      "sha256": "200343a5e2da5eb36a779d23634ffef100a63238221317d7514a5de8c07a9aa5",
+      "bytes": 4856035,
+      "compressedBytes": 857115
+    },
+    {
+      "file": "apostle-clone.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/apostle-clone.json",
+      "sha256": "04ca8b6c088577a01d215614ccc8a22a82c832e290d4edfcfacd6bd7703a91eb",
+      "bytes": 4852438,
+      "compressedBytes": 853364
+    },
+    {
+      "file": "apostle-incarnate.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/apostle-incarnate.json",
+      "sha256": "a329d00d3b2c0ca210b17b10020b140026e9c186fed0e25901aba68ec7ead9a4",
+      "bytes": 5002446,
+      "compressedBytes": 885503
+    },
+    {
+      "file": "spell-claws.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-claws.json",
+      "sha256": "ba71d6f5bea89fa60ad9072aa03def20ba8fc85416adb7bed4ddd4534d49ce1c",
+      "bytes": 154704,
+      "compressedBytes": 15015
+    },
+    {
+      "file": "spell-star.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-star.json",
+      "sha256": "46367e470eb1da016e184f4dc6ca721d56693f6a9b16aad6b09bec50d7e05b5f",
+      "bytes": 228379,
+      "compressedBytes": 22642
+    },
+    {
+      "file": "spell-palm.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-palm.json",
+      "sha256": "916d45027a5ade2470ad60941ebfdacf2cd5202cbf94b11282b5d8677f73e770",
+      "bytes": 508725,
+      "compressedBytes": 46963
+    },
+    {
+      "file": "spell-chain.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-chain.json",
+      "sha256": "63dd5944ec0c770698444d3cc0fab4e3dd1bc941cd1739b48ac852f4412dfe82",
+      "bytes": 125827,
+      "compressedBytes": 12428
+    },
+    {
+      "file": "spell-feather.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-feather.json",
+      "sha256": "93570d92a99e4bc5ae26172de260d6f75dd289de4ead3da040bfd07b2c7a3b73",
+      "bytes": 80679,
+      "compressedBytes": 8848
+    },
+    {
+      "file": "spell-eclipse.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-eclipse.json",
+      "sha256": "c15c50def23bd2d6cdf8c148f6889d920cd77272beb27cf6d4b7dcfc4fc54dec",
+      "bytes": 592095,
+      "compressedBytes": 51767
+    },
+    {
+      "file": "spell-soul.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-soul.json",
+      "sha256": "23330efa3e14e4100918cb87054de191c35b28ee8b3519805481a0ca3f68ca70",
+      "bytes": 120857,
+      "compressedBytes": 12380
+    },
+    {
+      "file": "spell-vortex.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-vortex.json",
+      "sha256": "c877a843d0b040ae60cfaa7aa0cb1b399a7c177cf5e305dd080bbb1e5b8b2c57",
+      "bytes": 505393,
+      "compressedBytes": 59989
+    },
+    {
+      "file": "spell-black-hole.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-black-hole.json",
+      "sha256": "6bbff2fcbc6a5c51380d0809e7158c66acbf0ab0b8a8b66a69cf594b4e7eeebc",
+      "bytes": 430560,
+      "compressedBytes": 42522
+    },
+    {
+      "file": "spell-rune-ring.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-rune-ring.json",
+      "sha256": "e7756d84359e3a9c2b7549cf42041ac67ff895c357e60ca2a794b4883ec9e413",
+      "bytes": 603827,
+      "compressedBytes": 50934
+    },
+    {
+      "file": "spell-rift.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-rift.json",
+      "sha256": "85e3f60477027e31f95548c6e29f9c0be26d5bd384d0e6cb4a6c351a8ff81412",
+      "bytes": 224152,
+      "compressedBytes": 22305
+    },
+    {
+      "file": "spell-portal-crown.json.gz",
+      "url": "https://11dafcfa-82bc-4210-879a-74fa552c2c24.frame.claudeusercontent.com/_f/1790552905-6005/spell-portal-crown.json",
+      "sha256": "2a99b069691048460ceddf13499846e0469f10110cb42c996621933d7acced41",
+      "bytes": 490147,
+      "compressedBytes": 43236
+    }
+  ]
+}

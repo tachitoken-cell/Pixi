@@ -1,0 +1,285 @@
+{
+ "name": "Benjooie",
+ "cls": "ranger",
+ "className": "Ranger",
+ "level": 60,
+ "title": "Pons Lover",
+ "gear": {
+  "head": {
+   "name": "Antlered hood",
+   "rarity": "rare"
+  },
+  "necklace": {
+   "name": "Leaf pendant",
+   "rarity": "uncommon"
+  },
+  "body": {
+   "name": "Warden jerkin",
+   "rarity": "rare"
+  },
+  "back": {
+   "name": "Quiver pack",
+   "rarity": "uncommon"
+  },
+  "legs": {
+   "name": "Warden leggings",
+   "rarity": "rare"
+  },
+  "shoes": {
+   "name": "Trail boots",
+   "rarity": "uncommon"
+  },
+  "ring1": {
+   "name": "Band of the grove",
+   "rarity": "epic"
+  },
+  "ring2": {
+   "name": "Band of the grove",
+   "rarity": "epic"
+  },
+  "weapon": {
+   "name": "Greenwood longbow +5",
+   "rarity": "epic"
+  }
+ },
+ "stats": {
+  "hp": 1238,
+  "maxHp": 1238,
+  "atk": 641,
+  "magic": 568,
+  "def": 56,
+  "speed": 20
+ },
+ "attrs": {
+  "str": 0,
+  "agi": 167,
+  "int": 0,
+  "sta": 86,
+  "spi": 56
+ },
+ "gold": 145206,
+ "moss": 44436.4042,
+ "bags": [
+  {
+   "id": "bag",
+   "name": "Bag",
+   "icon": "bag-main",
+   "size": 16
+  },
+  {
+   "id": "bag1",
+   "name": "Bag 1",
+   "icon": "bag-pack",
+   "size": 24
+  },
+  {
+   "id": "bag2",
+   "name": "Bag 2",
+   "icon": "bag-pack",
+   "size": 24
+  },
+  {
+   "id": "bag3",
+   "name": "Bag 3",
+   "icon": "bag-pack",
+   "size": 24
+  },
+  {
+   "id": "bag4",
+   "name": "Bag 4",
+   "icon": "bag-pack",
+   "size": 24
+  }
+ ],
+ "items": [
+  {
+   "id": "wood",
+   "name": "Wood",
+   "icon": "item-wood",
+   "count": 744,
+   "kind": "material",
+   "rarity": "common",
+   "bag": "bag"
+  },
+  {
+   "id": "lantern-fragment",
+   "name": "Lantern fragment",
+   "icon": "item-lantern-fragment",
+   "count": 4758,
+   "kind": "material",
+   "rarity": "uncommon",
+   "bag": "bag"
+  },
+  {
+   "id": "wild-herb",
+   "name": "Wild herb",
+   "icon": "item-wild-herb",
+   "count": 217,
+   "kind": "material",
+   "rarity": "common",
+   "bag": "bag"
+  },
+  {
+   "id": "healing-potion",
+   "name": "Healing potion",
+   "icon": "item-healing-potion",
+   "count": 610,
+   "kind": "consumable",
+   "rarity": "common",
+   "bag": "bag"
+  },
+  {
+   "id": "rootvault-relic",
+   "name": "Rootvault relic",
+   "icon": "item-rootvault-relic",
+   "count": 2594,
+   "kind": "material",
+   "rarity": "rare",
+   "bag": "bag"
+  },
+  {
+   "id": "slate-key",
+   "name": "Slate key",
+   "icon": "item-slate-key",
+   "count": 109,
+   "kind": "quest",
+   "rarity": "common",
+   "bag": "bag"
+  },
+  {
+   "id": "gourd",
+   "name": "Mossy gourd",
+   "icon": "item-gourd",
+   "count": 21,
+   "kind": "material",
+   "rarity": "common",
+   "bag": "bag"
+  },
+  {
+   "id": "void-elixir",
+   "name": "Void elixir",
+   "icon": "item-void-elixir",
+   "count": 356,
+   "kind": "consumable",
+   "rarity": "epic",
+   "bag": "bag"
+  },
+  {
+   "id": "berry-tart",
+   "name": "Berry tart",
+   "icon": "item-berry-tart",
+   "count": 9,
+   "kind": "consumable",
+   "rarity": "common",
+   "bag": "bag"
+  },
+  {
+   "id": "roast-drumstick",
+   "name": "Roast drumstick",
+   "icon": "item-roast-drumstick",
+   "count": 3,
+   "kind": "consumable",
+   "rarity": "common",
+   "bag": "bag"
+  },
+  {
+   "id": "frost-crystal",
+   "name": "Frost crystal",
+   "icon": "item-frost-crystal",
+   "count": 1079,
+   "kind": "material",
+   "rarity": "rare",
+   "bag": "bag"
+  },
+  {
+   "id": "forest-stew",
+   "name": "Forest stew",
+   "icon": "item-forest-stew",
+   "count": 10,
+   "kind": "consumable",
+   "rarity": "uncommon",
+   "bag": "bag"
+  },
+  {
+   "id": "bread",
+   "name": "Bread",
+   "icon": "item-bread",
+   "count": 2,
+   "kind": "consumable",
+   "rarity": "common",
+   "bag": "bag"
+  },
+  {
+   "id": "fang",
+   "name": "Beast fang",
+   "icon": "item-fang",
+   "count": 11,
+   "kind": "material",
+   "rarity": "common",
+   "bag": "bag"
+  },
+  {
+   "id": "bark",
+   "name": "Mossbark",
+   "icon": "item-bark",
+   "count": 103,
+   "kind": "material",
+   "rarity": "common",
+   "bag": "bag"
+  },
+  {
+   "id": "treasure-map",
+   "name": "Treasure map",
+   "icon": "item-treasure-map",
+   "count": 2,
+   "kind": "quest",
+   "rarity": "uncommon",
+   "bag": "bag"
+  },
+  {
+   "id": "greater-tonic",
+   "name": "Greater healing tonic",
+   "icon": "item-greater-tonic",
+   "count": 323,
+   "kind": "consumable",
+   "rarity": "uncommon",
+   "bag": "bag1"
+  },
+  {
+   "id": "slime-gel",
+   "name": "Slime gel",
+   "icon": "item-slime-gel",
+   "count": 2,
+   "kind": "material",
+   "rarity": "common",
+   "bag": "bag1"
+  },
+  {
+   "id": "fur-pelt",
+   "name": "Fur pelt",
+   "icon": "item-fur-pelt",
+   "count": 659,
+   "kind": "material",
+   "rarity": "common",
+   "bag": "bag1"
+  },
+  {
+   "id": "hide-scraps",
+   "name": "Hide scraps",
+   "icon": "item-hide-scraps",
+   "count": 4,
+   "kind": "material",
+   "rarity": "common",
+   "bag": "bag1"
+  },
+  {
+   "id": "ranger-longbow",
+   "name": "Greenwood longbow",
+   "icon": "item-ranger-longbow",
+   "count": 1,
+   "kind": "gear",
+   "rarity": "rare",
+   "bag": "bag1"
+  }
+ ]
+}
