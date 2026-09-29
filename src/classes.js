@@ -29,6 +29,7 @@ export const CLASSES = {
     backpack: true,
     xStraps: true,
     weapon: 'woodSword',
+    model: './models/adventurer.glb', // rigged 3D model (built from the concept model); other classes stay procedural
     stride: 1,
   },
   warrior: {

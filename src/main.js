@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from '../vendor/OrbitControls.js';
 import { Character, ANIM_NAMES, setWireframe } from './character.js';
+import { makeCharacter } from './model-character.js';
 import { CLASSES, CLASS_ORDER, CLASS_CHANGE_LEVEL, CLASS_CHOICES } from './classes.js';
 import { Effects } from './effects.js';
 import { buildMap } from './world.js';
@@ -67,7 +68,7 @@ scene.add(pet.root);
 const petState = { vel: 0 };
 const chars = {};
 for (const id of CLASS_ORDER) {
-  const ch = new Character(CLASSES[id]);
+  const ch = makeCharacter(CLASSES[id]);
   ch.onEvent = (name, c) => { fx.handle(name, c); audio.animEvent(name); onCombatEvent(name, c); };
   chars[id] = ch;
   scene.add(ch.root);
@@ -215,7 +216,7 @@ function makeThumbs() {
   cam.lookAt(0, 2.45, 0);
   const out = {};
   for (const id of CLASS_ORDER) {
-    const ch = new Character(CLASSES[id]);
+    const ch = makeCharacter(CLASSES[id]);
     ch.root.rotation.y = 0.25;
     ch.update(0.016);
     s.add(ch.root);
