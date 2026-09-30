@@ -13,6 +13,7 @@
 //   100 Production points (2000 per day, Production Coupons add 500) and durability (repair with gold).
 // State is saved in the browser (localStorage) when available.
 import * as THREE from 'three';
+import { ToonMat } from './anime.js';
 import { prop } from './props.js';
 import { PROP_MAT } from './voxel.js';
 import './miniland-props.js';
@@ -200,7 +201,7 @@ export function createMiniland({ $, toast, audio, fx, game, player, placeLabel, 
       for (const b of bar.querySelectorAll('[data-pick]')) b.onclick = () => setMode({ install: b.dataset.pick });
       if (m.install) {
         ghost = makeModel(m.install, 0).group;
-        ghost.traverse((q) => { if (q.isMesh) { q.material = new THREE.MeshLambertMaterial({ vertexColors: true, transparent: true, opacity: 0.6 }); q.castShadow = false; } });
+        ghost.traverse((q) => { if (q.isMesh) { q.material = new ToonMat({ vertexColors: true, transparent: true, opacity: 0.6 }); q.castShadow = false; } });
         ghost.visible = false;
         map.group.add(ghost);
       }

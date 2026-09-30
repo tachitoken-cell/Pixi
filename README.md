@@ -131,6 +131,39 @@ click a filled slot to clear it. You earn Job XP from kills (and from hitting th
 | 17 | Shout of Morale | self buff: defence +30%, hit chance +15% for 20 s |
 | 19 | Charging Attack | rush to the enemy (up to 10 m) and strike |
 
+## Anime look
+
+The whole world is cel-shaded (`src/anime.js`): toon materials with hard light and shadow bands, a screen pass that
+draws ink outlines wherever the depth jumps (characters, props, terrain steps) and lifts the colours, a deeper anime
+sky, and cherry petals drifting around you outdoors. "Anime outlines" in the options turns the line pass off.
+
+## Time-Spaces
+
+Like NosTale: a big glowing crystal on a stone pedestal. Click it (you walk up to it) to open the entry window.
+
+| Time-Space | Where | Level | Chambers | Boss | Time |
+|---|---|---|---|---|---|
+| TS 1 · Jelly Warren | Clover Fields | 1-4 | 3 | Jelly King | 5:00 |
+| TS 2 · Shroom Hollow | Whisperwood | 4-7 | 3 | Shroom Lord | 6:00 |
+| TS 3 · Crab Cove | Pebble Coast | 5-8 | 3 | Crab King | 7:00 |
+
+Inside, each chamber is a floating arena out of time. Its gate stays sealed until every monster is defeated (they
+never respawn), and the last chamber holds the boss and a reward chest. Your time decides the rank: S (under 40% of
+the limit, rewards ×1.5), A (×1.25), B, C (×0.75). Running out of time throws you out. Best ranks are saved.
+Definitions live in `src/timespace.js`.
+
+## Skill tree and mana
+
+Every level up gives 1 skill point; **T** (or the Tree button, which glows while you have points) opens the tree.
+
+- **Power**: Sharp Edge (ATK), Critical Eye (crit chance), Deadly Strikes (crit damage), Berserker (+20% below half HP)
+- **Guard**: Tough Skin (max HP), Iron Body (DEF), Second Wind (HP regen), Saat Blessing (revive costs 4 Saat)
+- **Mana**: Mana Well (max MP), Clear Mind (MP regen), Efficiency (cheaper skills), Mana Shield (20% of damage is
+  paid with MP)
+- **Skill upgrades**: every learned skill can reach Lv. 5 (+12% damage and −5% cooldown per level)
+
+Deeper nodes need the node above and a hero level (3 / 6 / 10). Resetting is free. Everything is in `src/skilltree.js`.
+
 ## Quests
 
 NPCs with a yellow **!** over their head have a quest; a yellow **?** means you can hand one in (grey **?** = in
@@ -188,6 +221,9 @@ Stones for the slingshot (40 max) are refilled by walking over a grey stone pile
 | `src/skills.js` | Adventurer skill list, job levels, cooldowns |
 | `src/tutorial.js` | Guide Nora's skippable tutorial |
 | `src/quests.js` | quests, quest items, tracker and quest log |
+| `src/anime.js` | cel shading, outline pass, petals |
+| `src/timespace.js` | Time-Space definitions and chambers |
+| `src/skilltree.js` | skill tree, stat bonuses, skill upgrades |
 | `src/companions.js` | caught monster companions (follow, fight, level up) |
 | `src/character.js` | builds the voxel model, rig and all animations |
 | `src/audio.js` | synthesized sound effects and the per-map soundtrack |

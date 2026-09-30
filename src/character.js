@@ -1,6 +1,7 @@
 // Procedural voxel chibi character: built from boxes and 4-sided pyramids,
 // rigged with simple pivots and animated procedurally (no model files needed).
 import * as THREE from 'three';
+import { ToonMat } from './anime.js';
 import { RoundedBoxGeometry } from '../vendor/RoundedBoxGeometry.js';
 
 // ---------------------------------------------------------------- materials
@@ -55,7 +56,7 @@ export function mat(color) {
   let m = matCache.get(color);
   if (!m) {
     // low-poly look: flat facets, soft light
-    m = new THREE.MeshLambertMaterial({ color, flatShading: true });
+    m = new ToonMat({ color, flatShading: true });
     matCache.set(color, m);
   }
   return m;
@@ -204,7 +205,7 @@ const HAIR_STYLES = {
 
 const HAIR_MATS = new Map();
 function hairMat() {
-  if (!HAIR_MATS.has('v')) HAIR_MATS.set('v', new THREE.MeshLambertMaterial({ vertexColors: true, flatShading: true }));
+  if (!HAIR_MATS.has('v')) HAIR_MATS.set('v', new ToonMat({ vertexColors: true, flatShading: true }));
   return HAIR_MATS.get('v');
 }
 function buildHair(head, h) {
@@ -344,7 +345,7 @@ function faceMats(c) {
     t.colorSpace = THREE.SRGBColorSpace;
     t.anisotropy = 8;
     t.magFilter = THREE.LinearFilter;
-    return new THREE.MeshLambertMaterial({ map: t, flatShading: true });
+    return new ToonMat({ map: t, flatShading: true });
   };
   const mats = { open: make(false), closed: make(true) };
   faceCache.set(key, mats);

@@ -1,6 +1,7 @@
 // Voxel engine: a dense colour grid and a mesher that emits only exposed faces, with
 // per-vertex ambient occlusion and vertex colours (MagicaVoxel-style shading).
 import * as THREE from 'three';
+import { ToonMat } from './anime.js';
 
 export class VoxelGrid {
   constructor(nx, ny, nz) {
@@ -110,7 +111,7 @@ export function meshGrid(grid, { size = 0.25, origin = [grid.nx / 2, 0, grid.nz 
   return g;
 }
 
-export const VOXEL_MAT = new THREE.MeshLambertMaterial({ vertexColors: true });
+export const VOXEL_MAT = new ToonMat({ vertexColors: true });
 
 // Props (trees, houses...) use a material that dithers away wherever it stands between the
 // camera and the hero, so the hero is never hidden (the classic MMO see-through effect).
@@ -119,7 +120,7 @@ export const SEE_THROUGH = {
   uCam: { value: new THREE.Vector3() },
   uRadius: { value: 3.4 },
 };
-export const PROP_MAT = new THREE.MeshLambertMaterial({ vertexColors: true });
+export const PROP_MAT = new ToonMat({ vertexColors: true });
 PROP_MAT.onBeforeCompile = (sh) => {
   Object.assign(sh.uniforms, SEE_THROUGH);
   sh.vertexShader = sh.vertexShader

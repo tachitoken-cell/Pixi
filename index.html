@@ -61,6 +61,7 @@
     <h3>Options</h3>
     <label class="toggle"><input type="checkbox" id="opt-weapon" checked> Weapon</label>
     <label class="toggle"><input type="checkbox" id="opt-rotate"> Turntable</label>
+    <label class="toggle"><input type="checkbox" id="opt-anime" checked> Anime outlines</label>
     <label class="toggle"><input type="checkbox" id="opt-pixel"> Pixel mode</label>
     <label class="toggle"><input type="checkbox" id="opt-wire"> Wireframe</label>
   </aside>
@@ -73,6 +74,7 @@
     <span><kbd>1</kbd> Sit · <kbd>2</kbd> Catch · <kbd>3</kbd>–<kbd>0</kbd> skills</span>
     <span><kbd>K</kbd>: skills (learn them from Kael)</span>
     <span><kbd>J</kbd>: quests · NPCs with a yellow <b>!</b> have one</span>
+    <span><kbd>T</kbd>: skill tree (1 point per level) · click a glowing crystal: Time-Space</span>
     <span><kbd>V</kbd>: classic ↔ 360° view · <kbd>Q</kbd> <kbd>E</kbd>: turn</span>
     <span>Mouse wheel: zoom</span>
     <span><kbd>F</kbd> wave · <kbd>R</kbd> cheer · <kbd>X</kbd> sit (heal)</span>
@@ -109,6 +111,7 @@
       <button data-emote="victory">Cheer</button>
       <button data-emote="sit">Sit</button>
       <button data-emote="quests" title="Quest log (J)">Quests</button>
+      <button data-emote="tree" id="tree-btn" title="Skill tree (T)">Tree</button>
       <button data-emote="miniland" title="Sweet Home Bell: go to your Miniland (L)">Miniland</button>
     </div>
   </div>
@@ -161,6 +164,42 @@
   </div>
   <div id="tut" hidden aria-live="polite"></div>
   <div id="qtrack" hidden></div>
+  <div id="tstimer" hidden></div>
+  <div id="treewin" hidden role="dialog" aria-labelledby="tr-title">
+    <div class="ml-box tr-box">
+      <div class="ml-head">
+        <div><small class="cp-eyebrow" id="tr-points"></small><h2 id="tr-title">Skill Tree</h2></div>
+        <button id="tr-close" aria-label="Close">×</button>
+      </div>
+      <div id="tr-branches"></div>
+      <h4>Skill upgrades</h4>
+      <div id="tr-skills"></div>
+      <div class="ml-row"><button id="tr-reset">Reset all points (free)</button></div>
+    </div>
+  </div>
+  <div id="tswin" hidden role="dialog" aria-labelledby="ts-title">
+    <div class="ml-box ts-box">
+      <div class="ml-head">
+        <div><small class="cp-eyebrow" id="ts-who"></small><h2 id="ts-title"></h2></div>
+        <button id="ts-close" aria-label="Close">×</button>
+      </div>
+      <p id="ts-desc" class="qd-text"></p>
+      <div id="ts-info" class="ml-stats"></div>
+      <p id="ts-reward" class="qd-reward"></p>
+      <p class="ml-note">Defeat every monster in a chamber to open its gate. The boss waits in the last chamber with the reward chest. Monsters don't come back, and running out of time ends the run.</p>
+      <div class="ml-row"><button id="ts-enter" class="primary">Enter the Time-Space</button></div>
+    </div>
+  </div>
+  <div id="tsresult" hidden role="dialog">
+    <div class="ml-box ts-box tsr">
+      <small class="cp-eyebrow">Reward chest</small>
+      <h2 id="tsr-title"></h2>
+      <div id="tsr-rank" class="tsr-rank"></div>
+      <p id="tsr-time" class="ml-note"></p>
+      <p id="tsr-reward" class="qd-reward"></p>
+      <div class="ml-row"><button id="tsr-leave" class="primary">Leave the Time-Space</button></div>
+    </div>
+  </div>
   <div id="qdlg" hidden role="dialog" aria-labelledby="qd-title">
     <div class="ml-box qd-box">
       <div class="ml-head">

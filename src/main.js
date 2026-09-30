@@ -6,13 +6,17 @@ import { createMiniland } from './miniland.js';
 import { CLASSES, CLASS_ORDER, CLASS_CHANGE_LEVEL, CLASS_CHOICES } from './classes.js';
 import { Effects } from './effects.js';
 import { buildMap } from './world.js';
-import { SEE_THROUGH } from './voxel.js';
+import { SEE_THROUGH, PROP_MAT } from './voxel.js';
+import { prop } from './props.js';
+import { TIMESPACES, chamberId, rankFor } from './timespace.js';
+import { createSkillTree } from './skilltree.js';
 import { MAPS, START_MAP } from './maps.js';
 import * as audio from './audio.js';
 import { Dachshund } from './pet.js';
 import { CompanionEntity, MAX_MATES, mateXpNeeded } from './companions.js';
 import { createTutorial } from './tutorial.js';
 import { createQuests } from './quests.js';
+import { createAnimePass, createPetals } from './anime.js';
 import { CLASS_SKILLS, MAX_JOB, MAX_LEVEL, CLASS_CHANGE_JOB, BUFF_TIME, MAX_STONES, jobXpNeeded } from './skills.js';
 
 // ---------------------------------------------------------------- renderer / scene
@@ -27,6 +31,9 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.15;
 
 const scene = new THREE.Scene();
+// anime look: ink outlines + colour pass over the whole picture, cherry petals outdoors
+const anime = createAnimePass(renderer, { samples: TOUCH ? 0 : 4 });
+const petals = createPetals(TOUCH ? 90 : 160);
 const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 900);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
@@ -58,6 +65,7 @@ disc.rotation.x = -Math.PI / 2;
 disc.position.y = 0.005;
 studio.add(floor, disc);
 scene.add(studio);
+scene.add(petals.points);
 
 // open world: each map is built the first time you enter it and kept afterwards
 const maps = {};
@@ -92,22 +100,24 @@ const game = { heroClass: 'adventurer', time: 0, jobLv: 1, jobXp: 0, stones: MAX
   bar: ['sit', 'catch', null, null, null, null, null, null, null, null], // hotbar slots 1-0 (skill ids or actions)
   learned: new Set(['swing']) };              // skills learned from Skill Master Kael (the basic attack is known)
 // Saat: revive where you fell with 50% HP and MP; costs 5 and then has a cooldown
-const SAAT_COST = 5, SAAT_CD = 300, SAAT_DROP = 0.12;
+const SAAT_CD = 300, SAAT_DROP = 0.12;
+let tree = null;                                   // skill tree (created with the UI below)
+const saatCost = () => tree?.saatCost() ?? 5;
 const clockText = (sec) => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
 // hero level, health and mana
 const hero = { name: 'Hero', lv: 1, xp: 0, hp: 0, mp: 0, dead: false };
 const xpNeeded = (lv) => Math.round(70 * Math.pow(lv, 1.6));
 // class stats (1-5) scale the hero; the Adventurer is the 1.0 baseline
 const classMul = (k) => 0.7 + CLASSES[game.heroClass].stats[k] * 0.1;
-const maxHp = () => Math.round((120 + (hero.lv - 1) * 30) * classMul('hp'));
-const maxMp = () => Math.round((60 + (hero.lv - 1) * 12) * classMul('mp'));
-const heroAtk = () => (14 + hero.lv * 5 + game.jobLv * 2) * classMul('atk');
+const maxHp = () => Math.round((120 + (hero.lv - 1) * 30) * classMul('hp') * (tree?.hp() ?? 1));
+const maxMp = () => Math.round((60 + (hero.lv - 1) * 12) * classMul('mp') * (tree?.mp() ?? 1));
+const heroAtk = () => (14 + hero.lv * 5 + game.jobLv * 2) * classMul('atk') * (tree?.atk() ?? 1);
 const maxJob = () => MAX_JOB[game.heroClass];
 let SKILLS = CLASS_SKILLS.adventurer;
 // critical hits: chance and damage come from the class, crit damage also grows a little with level
-const critRate = () => CLASSES[game.heroClass].crit.rate / 100;
-const critDmg = () => (CLASSES[game.heroClass].crit.dmg + (hero.lv - 1)) / 100;
-const heroDef = () => (2 + hero.lv * 1.5) * classMul('def') * (game.buffs.def > game.time ? 1.3 : 1);
+const critRate = () => CLASSES[game.heroClass].crit.rate / 100 + (tree?.crit() ?? 0);
+const critDmg = () => (CLASSES[game.heroClass].crit.dmg + (hero.lv - 1)) / 100 + (tree?.critDmg() ?? 0);
+const heroDef = () => (2 + hero.lv * 1.5) * classMul('def') * (game.buffs.def > game.time ? 1.3 : 1) * (tree?.def() ?? 1);
 hero.hp = maxHp(); hero.mp = maxMp();
 const keys = new Set();
 
@@ -119,6 +129,8 @@ const tutorial = createTutorial({ $, audio, toast, player, getMapId: () => map?.
   fx: () => { const ch = chars[state.cls]; fx.ring(ch.root.position, 0xffd24a, 2.6, 0.08, 0.7); },
   reward: () => { game.saat += 2; miniland.addGold(100); } });
 scene.add(tutorial.arrow);
+tree = createSkillTree({ $, audio, toast, getHero: () => hero, getSkills: () => SKILLS.slice(1), isLearned: (sk) => game.learned.has(sk.id),
+  onChange: () => { hero.hp = Math.min(hero.hp, maxHp()); hero.mp = Math.min(hero.mp, maxMp()); } });
 const quests = createQuests({ $, audio, toast, getHero: () => hero, getJob: () => game.jobLv, getMapId: () => map?.def.id,
   fx: () => { const ch = chars[state.cls]; fx.ring(ch.root.position, 0xffd24a, 3, 0.08, 0.9); fx.burst(ch.root.position.clone().setY(ch.root.position.y + 1.5), 0xffe08a, 28, 4, 0.13, 2); },
   reward: (r) => { if (r.gold) miniland.addGold(r.gold); if (r.saat) game.saat += r.saat; if (r.xp) gainXp(r.xp); if (r.jobXp) gainJobXp(r.jobXp); } });
@@ -184,6 +196,7 @@ document.querySelectorAll('#views button').forEach((b) => (b.onclick = () => {
 $('#opt-weapon').onchange = (e) => { state.armed = e.target.checked; for (const ch of Object.values(chars)) ch.setArmed(state.armed); };
 $('#opt-rotate').onchange = (e) => (state.turntable = e.target.checked);
 $('#opt-wire').onchange = (e) => setWireframe((state.wire = e.target.checked));
+$('#opt-anime').onchange = (e) => (anime.enabled = e.target.checked);
 $('#opt-pixel').onchange = (e) => { state.pixel = e.target.checked; canvas.classList.toggle('pixel', state.pixel); resize(); };
 
 const locked = (id) => id !== game.heroClass;
@@ -349,8 +362,9 @@ addEventListener('keydown', (e) => {
   }
   if (k === 'f') action('wave');
   if (k === 'l' && !e.repeat) goToMiniland();
-  if (k === 'escape') { miniland.closeAll(); closeSkills(); quests.closeAll(); }
+  if (k === 'escape') { miniland.closeAll(); closeSkills(); quests.closeAll(); tsWin.hidden = true; tree.toggle(false); }
   if (k === 'j' && !e.repeat && state.mode === 'play') quests.toggleLog();
+  if (k === 't' && !e.repeat && state.mode === 'play') tree.toggle();
   if (k === 'k' && !e.repeat && state.mode === 'play') { if (skillWin.hidden) openSkills(false); else closeSkills(); }
   if (k === 'v') toggleCam();
   if (state.camMode === 'classic' && !e.repeat && (k === 'q' || k === 'e')) state.camYawGoal += (k === 'q' ? 1 : -1) * Math.PI / 2;
@@ -458,7 +472,7 @@ function enterMap(id, portalId) {
   applyMapLook();
   audio.playMusic(map.def.music || map.def.theme);
   snapCamera();
-  labels.querySelectorAll('.mob, .npcname, .portalname').forEach((el) => el.remove());
+  labels.querySelectorAll('.mob, .npcname, .portalname, .tsname').forEach((el) => el.remove());
   $('#mapname').textContent = map.def.name;
   const banner = $('#banner');
   $('#banner-name').textContent = map.def.name;
@@ -529,7 +543,8 @@ function useSkill(i) {
   if (!isUnlocked(sk)) return audio.sfx('denied'), toast(`${sk.name} unlocks at Job Lv. ${sk.jobLv}`);
   if ((game.cds[sk.id] || 0) > game.time) return;
   if (sk.ammo && game.stones < sk.ammo) return audio.sfx('denied'), toast('Out of stones. Refill at a stone pile.');
-  if (hero.mp < sk.mp) return audio.sfx('denied'), toast('Not enough MP. Sit down to recover.');
+  const mpCost = Math.ceil(sk.mp * tree.mpCost());
+  if (hero.mp < mpCost) return audio.sfx('denied'), toast('Not enough MP. Sit down to recover.');
   if (player.sitting) { player.sitting = false; state.anim = 'idle'; ch.play('idle'); }
   player.target = null;
   if (sk.kind !== 'buff') {
@@ -545,9 +560,9 @@ function useSkill(i) {
   }
   player.pending = null;
   if (i === 0 && sk.kind !== 'buff' && game.target?.alive) game.aa = true;   // the basic attack keeps going on its own
-  game.cds[sk.id] = game.time + sk.cd;
+  game.cds[sk.id] = game.time + sk.cd * tree.skillCd(sk.id);
   if (sk.ammo) game.stones -= sk.ammo;
-  hero.mp -= sk.mp;
+  hero.mp -= mpCost;
   game.casting = sk;
   ch.play(sk.anim);
   markAnim();
@@ -623,7 +638,8 @@ function hitMonster(m, sk, extra, delay) {
     const acc = Math.min(1, (sk.acc ?? 0.95) + (game.buffs.def > game.time ? 0.15 : 0));
     if (Math.random() > acc) return audio.sfx('miss'), popDamage(m.pos, m.height, 'MISS');
     const crit = Math.random() < critRate();
-    let dmg = heroAtk() * sk.mult * extra * (0.85 + Math.random() * 0.3);
+    let dmg = heroAtk() * sk.mult * extra * (0.85 + Math.random() * 0.3) * tree.skillDmg(sk.id);
+    if (tree.berserk() && hero.hp < maxHp() / 2) dmg *= 1.2;
     if (game.buffs.atk > game.time) dmg *= 1.3;
     if (crit) dmg *= critDmg();
     dmg = Math.max(1, Math.round(dmg - m.t.def));
@@ -704,14 +720,14 @@ function tryCatch() {
   if (m.t.static || m.t.boss) return deny(`${m.t.name} cannot be caught.`);
   if (mates().length >= MAX_MATES) return deny(`You already have ${MAX_MATES} companions. Release one in the Miniland menu (L → NosMates).`);
   if (m.hp > m.maxHp * 0.5) return deny(`Weaken ${m.t.name} first: its HP must be below 50%.`);
-  if (hero.mp < A.mp) return deny('Not enough MP. Sit down to recover.');
+  if (hero.mp < Math.ceil(A.mp * tree.mpCost())) return deny('Not enough MP. Sit down to recover.');
   game.target = m;
   if (distTo(m) > A.range) { player.pending = { catch: true, tgt: m }; return; }
   if (player.sitting) { player.sitting = false; state.anim = 'idle'; }
   player.pending = player.target = null;
   game.aa = false;
   game.cds.catch = game.time + A.cd;
-  hero.mp -= A.mp;
+  hero.mp -= Math.ceil(A.mp * tree.mpCost());
   const d = m.pos.clone().sub(player.pos);
   player.yaw = ch.root.rotation.y = Math.atan2(d.x, d.z);
   ch.play('wave');
@@ -768,7 +784,9 @@ function monsterAttack(m) {
   game.combatUntil = game.time + 5;
   if (Math.random() < 0.08) return audio.sfx('miss'), popDamage(player.pos, 3.2, 'MISS');
   const dmg = Math.max(1, Math.round(m.t.atk * (0.85 + Math.random() * 0.3) - heroDef()));
-  hero.hp -= dmg;
+  const absorbed = Math.min(Math.floor(hero.mp), Math.round(dmg * tree.manaShield()));   // Mana Shield
+  hero.mp -= absorbed;
+  hero.hp -= dmg - absorbed;
   popDamage(player.pos, 3.2, dmg, 'hurt');
   audio.sfx('hurt');
   const ch = chars[state.cls];
@@ -793,15 +811,16 @@ function updateDeath() {
   if (deathEl.hidden) return;
   const left = Math.max(0, game.saatReadyAt - game.time);
   const btn = $('#death-saat');
-  btn.disabled = left > 0 || game.saat < SAAT_COST;
+  btn.disabled = left > 0 || game.saat < saatCost();
+  btn.firstChild.textContent = `Use ${saatCost()} Saat · revive here`;
   $('#death-saat-count').textContent = `${game.saat}`;
   $('#death-saat-note').textContent = left > 0 ? `Saat on cooldown · ${clockText(left)}`
-    : game.saat < SAAT_COST ? `You need ${SAAT_COST} Saat, you have ${game.saat}`
-    : `Uses ${SAAT_COST} Saat · then ${SAAT_CD / 60} min cooldown`;
+    : game.saat < saatCost() ? `You need ${saatCost()} Saat, you have ${game.saat}`
+    : `Uses ${saatCost()} Saat · then ${SAAT_CD / 60} min cooldown`;
 }
 $('#death-saat').onclick = () => {
-  if (!hero.dead || game.saat < SAAT_COST || game.saatReadyAt > game.time) return;
-  game.saat -= SAAT_COST;
+  if (!hero.dead || game.saat < saatCost() || game.saatReadyAt > game.time) return;
+  game.saat -= saatCost();
   game.saatReadyAt = game.time + SAAT_CD;
   deathEl.hidden = true;
   hero.dead = false;
@@ -816,6 +835,118 @@ $('#death-saat').onclick = () => {
   toast(`Revived with Saat · 50% HP and MP · ${game.saat} Saat left`, 3000);
 };
 $('#death-return').onclick = () => { deathEl.hidden = true; returnToVillage(); };
+// ---------------------------------------------------------------- Time-Spaces
+const tsWin = $('#tswin'), tsTimer = $('#tstimer'), tsRes = $('#tsresult');
+let tsBest = {};
+try { tsBest = JSON.parse(localStorage.getItem('voxelquest-ts') || '{}'); } catch { /* no storage */ }
+let tsChest = null, tsPendingStone = null;
+function clickStone(stone) {
+  if (stone.pos.distanceTo(player.pos) > 5) {             // walk up to it first
+    player.target = stone.pos.clone().add(player.pos.clone().sub(stone.pos).setY(0).normalize().multiplyScalar(3));
+    tsPendingStone = stone;
+    return;
+  }
+  openTsWindow(stone.id);
+}
+function openTsWindow(id) {
+  const ts = TIMESPACES[id], r = ts.reward, best = tsBest[id];
+  $('#ts-who').textContent = `Time-Space ${ts.num} · ${ts.level}`;
+  $('#ts-title').textContent = ts.name;
+  $('#ts-desc').textContent = ts.desc;
+  $('#ts-info').innerHTML = `<div><small>Chambers</small><b>${ts.chambers.length}</b></div><div><small>Time limit</small><b>${clockText(ts.limit)}</b></div><div><small>Best rank</small><b>${best ? `${best.rank} · ${clockText(best.time)}` : '—'}</b></div>`;
+  $('#ts-reward').textContent = `Rewards (rank B): ${r.xp} XP · ${r.jobXp} Job XP · ${r.gold} gold · ${r.saat} Saat. Rank S ×1.5, A ×1.25, C ×0.75`;
+  const low = hero.lv < ts.minLv;
+  $('#ts-enter').disabled = low;
+  $('#ts-enter').textContent = low ? `Requires Lv. ${ts.minLv}` : 'Enter the Time-Space';
+  $('#ts-enter').onclick = () => { tsWin.hidden = true; enterTimeSpace(id); };
+  tsWin.hidden = false;
+  audio.sfx('portal');
+}
+$('#ts-close').onclick = () => (tsWin.hidden = true);
+function enterTimeSpace(id) {
+  const ts = TIMESPACES[id];
+  // every run starts fresh: forget chambers built before
+  ts.chambers.forEach((_, i) => { const cid = chamberId(id, i); if (maps[cid]) { scene.remove(maps[cid].group); delete maps[cid]; } });
+  game.ts = { id, start: game.time, limit: ts.limit, returnTo: { id: map.def.id, pos: player.pos.clone(), yaw: player.yaw }, finished: false };
+  travel({ to: chamberId(id, 0), toPortal: 'south', ts: true });
+  setTimeout(() => toast(`Time-Space ${ts.num}: ${ts.name}. Defeat every monster to open the gate!`, 4000), 700);
+}
+function exitTimeSpace(msg) {
+  const r = game.ts?.returnTo;
+  game.ts = null;
+  if (tsChest) { tsChest.removeFromParent(); tsChest = null; }
+  tsTimer.hidden = true;
+  if (!r) return;
+  game.travelling = true;
+  $('#fade').classList.add('on');
+  setTimeout(() => {
+    enterMap(r.id, null);
+    player.pos.copy(r.pos); player.yaw = r.yaw;
+    chars[state.cls].root.position.copy(r.pos);
+    pet.root.position.copy(r.pos).add(new THREE.Vector3(1.2, 0, -0.8));
+    mate?.place(player.pos);
+    snapCamera();
+    $('#fade').classList.remove('on');
+    setTimeout(() => (game.travelling = false), 400);
+    if (msg) toast(msg, 3500);
+  }, 380);
+}
+function updateTimeSpace() {
+  if (tsPendingStone && !player.target) {
+    if (tsPendingStone.pos.distanceTo(player.pos) < 5.5) openTsWindow(tsPendingStone.id);
+    tsPendingStone = null;
+  }
+  const g = game.ts;
+  if (!g || !map) { tsTimer.hidden = true; return; }
+  if (!map.def.timespace) { if (!game.travelling) { game.ts = null; tsTimer.hidden = true; toast('You left the Time-Space.'); } return; }
+  const left = Math.max(0, g.limit - (game.time - g.start));
+  const ts = TIMESPACES[g.id], n = alive().length;
+  tsTimer.hidden = false;
+  const html = `<small>TS ${ts.num} · ${ts.name} · Chamber ${map.def.chamber + 1}/${ts.chambers.length}</small><b class="${left < 30 ? 'low' : ''}">${clockText(left)}</b><span>${g.finished ? 'Cleared!' : n ? `${n} monster${n > 1 ? 's' : ''} left` : map.def.last ? 'Open the chest!' : 'Gate open: go north'}</span>`;
+  if (tsTimer.innerHTML !== html) tsTimer.innerHTML = html;
+  // gates light up once the chamber is clear
+  for (const p of map.portals) if (p.to !== 'sealed') p.group.visible = !n;
+  if (!g.finished && left <= 0 && !hero.dead) { audio.sfx('denied'); return exitTimeSpace('Time is up! The Time-Space collapsed around you.'); }
+  if (map.def.last && !n && !tsChest && !g.finished) spawnChest();
+  if (tsChest && !g.finished && tsChest.position.distanceTo(player.pos) < 2.2) openChest();
+}
+function spawnChest() {
+  const p = prop('ml_chest');
+  tsChest = new THREE.Group();
+  const m = new THREE.Mesh(p.geo, PROP_MAT);
+  m.scale.setScalar(0.9);
+  const glow = new THREE.Mesh(new THREE.RingGeometry(1.4, 2, 28), new THREE.MeshBasicMaterial({ color: 0xffe08a, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
+  glow.rotation.x = -Math.PI / 2; glow.position.y = 0.06;
+  tsChest.add(m, glow);
+  tsChest.traverse((o) => (o.userData.tsChest = true));
+  tsChest.position.set(0, map.heightAt(0, 4), 4);
+  map.group.add(tsChest);
+  fx.burst(tsChest.position.clone().setY(tsChest.position.y + 1), 0xffe08a, 40, 5, 0.14, 2.5);
+  audio.sfx('jobUp');
+  toast('A reward chest appeared! Walk to it.', 3500);
+}
+function openChest() {
+  const g = game.ts;
+  if (!g || g.finished) return;
+  g.finished = true;
+  const ts = TIMESPACES[g.id], used = game.time - g.start;
+  const [rank, , mul] = rankFor(used, g.limit);
+  const r = ts.reward, got = { xp: Math.round(r.xp * mul), jobXp: Math.round(r.jobXp * mul), gold: Math.round(r.gold * mul), saat: Math.max(1, Math.round(r.saat * mul)) };
+  miniland.addGold(got.gold); game.saat += got.saat; gainXp(got.xp); gainJobXp(got.jobXp);
+  const best = tsBest[g.id];
+  const order = 'SABC';
+  if (!best || order.indexOf(rank) < order.indexOf(best.rank) || (rank === best.rank && used < best.time)) { tsBest[g.id] = { rank, time: Math.round(used) }; try { localStorage.setItem('voxelquest-ts', JSON.stringify(tsBest)); } catch { /* not saved */ } }
+  audio.sfx('levelUp');
+  fx.ring(player.pos, 0xffe08a, 4, 0.1, 1.2);
+  $('#tsr-title').textContent = `Time-Space ${ts.num} cleared!`;
+  $('#tsr-rank').textContent = rank;
+  $('#tsr-rank').className = `tsr-rank r${rank}`;
+  $('#tsr-time').textContent = `Time ${clockText(used)} of ${clockText(g.limit)}`;
+  $('#tsr-reward').textContent = `+${got.xp} XP · +${got.jobXp} Job XP · +${got.gold} gold · +${got.saat} Saat`;
+  tsRes.hidden = false;
+}
+$('#tsr-leave').onclick = () => { tsRes.hidden = true; exitTimeSpace(null); };
+
 function returnToVillage() {
   toast('Returning to Mossvale Village…');
   setTimeout(() => {
@@ -845,7 +976,8 @@ function gainXp(n) {
     fx.ring(ch.root.position, 0xffffff, 3.4, 0.08, 0.9);
     fx.burst(ch.root.position.clone().setY(1.5), 0xfff2c0, 30, 4.5, 0.14, 2.5);
     audio.sfx('levelUp');
-    setTimeout(() => toast(`Level ${hero.lv}! HP and MP restored.`), 400);
+    setTimeout(() => toast(`Level ${hero.lv}! HP and MP restored. +1 skill point (T)`), 400);
+    tree.render();
   }
   if (hero.lv >= MAX_LEVEL) hero.xp = 0;
 }
@@ -1027,8 +1159,11 @@ function updateHud() {
   if (SKILLS.some((sk) => sk.ammo && game.learned.has(sk.id))) b.push(`<span class="buff stones">Stones ${game.stones}</span>`);
   const saatCd = Math.max(0, game.saatReadyAt - game.time);
   b.push(`<span class="buff gold" title="Gold: buy and repair Miniland structures">Gold ${miniland.state.gold}</span>`);
-  b.push(`<span class="buff saat" title="Saat: ${SAAT_COST} revive you where you fall with 50% HP and MP">Saat ${game.saat}${saatCd > 0 ? ` · ${clockText(saatCd)}` : ''}</span>`);
+  b.push(`<span class="buff saat" title="Saat: ${saatCost()} revive you where you fall with 50% HP and MP">Saat ${game.saat}${saatCd > 0 ? ` · ${clockText(saatCd)}` : ''}</span>`);
   updateDeath();
+  const tp = tree.points(), tb = $('#tree-btn');
+  const tt = tp ? `Tree (${tp})` : 'Tree';
+  if (tb.textContent !== tt) { tb.textContent = tt; tb.classList.toggle('glow', tp > 0); }
   const html = b.join('');
   if ($('#buffs').innerHTML !== html) $('#buffs').innerHTML = html;
 
@@ -1127,9 +1262,13 @@ function updateLabels() {
     place(el, mate.pos, mate.m.height + 0.4);
   }
   miniland.update();
+  for (const t of map.tsStones || []) {
+    const el = plate(t, 'tsname', `<small>Click to enter</small>${t.name} · ${TIMESPACES[t.id].name}`);
+    if (t.pos.distanceTo(player.pos) > 26) el.style.display = 'none'; else place(el, t.pos, 7.4);
+  }
   for (const p of map.portals) {
     const el = plate(p, 'portalname', '');
-    const dest = `→ ${p.to === 'back' ? MAPS[homeReturn?.id ?? START_MAP].name : MAPS[p.to].name}`;
+    const dest = p.to === 'sealed' ? '' : map.def.timespace ? (alive().length ? '' : '→ Next chamber') : `→ ${p.to === 'back' ? MAPS[homeReturn?.id ?? START_MAP].name : MAPS[p.to].name}`;
     if (el.textContent !== dest) el.textContent = dest;
     if (p.pos.distanceTo(player.pos) > 16) el.style.display = 'none';
     else place(el, p.pos, 7.6);
@@ -1242,9 +1381,11 @@ canvas.addEventListener('pointerup', (e) => {
     if (miniland.click(mhit?.object, ground?.point)) return;
   }
   // monsters and NPCs first
-  const pickables = [...alive().map((m) => m.root), ...map.npcs.map((n) => n.ch.root)];
+  const pickables = [...alive().map((m) => m.root), ...map.npcs.map((n) => n.ch.root), ...(map.tsStones || []).map((t) => t.group), ...(tsChest ? [tsChest] : [])];
   const hits = ray.intersectObjects(pickables, true);
   const obj = hits[0]?.object;
+  if (obj?.userData.tsStone) return clickStone(obj.userData.tsStone);
+  if (obj?.userData.tsChest) return openChest();
   if (obj?.userData.monster) {
     const m = obj.userData.monster;
     game.target = m;
@@ -1335,6 +1476,7 @@ document.querySelectorAll('#emotes button').forEach((b) => (b.onclick = () => {
   if (b.dataset.emote === 'cam') return toggleCam();
   if (b.dataset.emote === 'miniland') return goToMiniland();
   if (b.dataset.emote === 'quests') return quests.toggleLog();
+  if (b.dataset.emote === 'tree') return tree.toggle();
   if (b.dataset.emote === 'sprint') { state.sprint = !state.sprint; b.classList.toggle('on', state.sprint); return; }
   if (b.dataset.emote === 'sit') toggleSit();
   else action(b.dataset.emote);
@@ -1468,7 +1610,15 @@ function updatePlayer(dt) {
   // follow the terrain
   if (!player.dash) player.pos.y += (map.heightAt(player.pos.x, player.pos.z) - player.pos.y) * Math.min(1, dt * 16);
   // portals
-  if (!hero.dead && !game.travelling) for (const p of map.portals) if (Math.hypot(p.pos.x - player.pos.x, p.pos.z - player.pos.z) < 1.6) travel(p);
+  if (!hero.dead && !game.travelling) for (const p of map.portals) {
+    if (Math.hypot(p.pos.x - player.pos.x, p.pos.z - player.pos.z) >= 1.6 || p.to === 'sealed') continue;
+    if (map.def.timespace && alive().length) {           // Time-Space gates open once the chamber is clear
+      if (game.time > (game.gateMsg || 0)) { game.gateMsg = game.time + 3; audio.sfx('denied'); toast(`The gate is sealed. Defeat all monsters (${alive().length} left).`); }
+      continue;
+    }
+    travel(p);
+  }
+  updateTimeSpace(dt);
 
   // stones, regeneration and buff auras
   if (map.stonePile && SKILLS.some((sk) => sk.ammo) && game.stones < MAX_STONES && player.pos.distanceTo(map.stonePile.position) < 1.8) {
@@ -1478,8 +1628,8 @@ function updatePlayer(dt) {
   }
   if (!hero.dead) {
     const resting = player.sitting ? 6 : game.time > game.combatUntil ? 1 : 0.3;
-    hero.hp = Math.min(maxHp(), hero.hp + maxHp() * 0.008 * resting * dt);
-    hero.mp = Math.min(maxMp(), hero.mp + maxMp() * 0.012 * resting * dt);
+    hero.hp = Math.min(maxHp(), hero.hp + maxHp() * 0.008 * resting * dt * tree.hpRegen());
+    hero.mp = Math.min(maxMp(), hero.mp + maxMp() * 0.012 * resting * dt * tree.mpRegen());
   }
   if ((game.auraIn -= dt) < 0) {
     game.auraIn = 0.25;
@@ -1563,6 +1713,7 @@ function resize() {
   const w = innerWidth, h = innerHeight;
   renderer.setPixelRatio(state.pixel ? Math.max(0.15, 240 / Math.min(w, h)) : Math.min(devicePixelRatio, TOUCH ? 1.5 : 2));
   renderer.setSize(w, h, false);
+  anime.setSize();
   camera.aspect = w / h;
   // widen the view in portrait so the whole character and more of the world fit
   const base = state.mode === 'play' ? (state.camMode === 'classic' ? 30 : 40) : 30;
@@ -1612,7 +1763,8 @@ function frame() {
     place(tag, player.pos, 4.1);
     updateLabels();
   }
-  renderer.render(scene, camera);
+  petals.update(dt, player.pos, state.mode === 'play' && !!map && !map.def.dungeon && map.def.theme !== 'coast');
+  anime.render(scene, camera);
   requestAnimationFrame(frame);
 }
 
@@ -1629,4 +1781,4 @@ $('#loading').classList.add('done');
 Object.assign(window, { changeClass, openClassPick, chars, state, setMode, selectClass, playAnim, game, player, hero, useSkill, enterMap, maps, getMap: () => map });
 
 // test hook, only with ?debug in the URL: lets automated checks jump between maps and trigger events
-if (new URLSearchParams(location.search).has('debug')) window.voxelQuest = { game, hero, player, state, enterMap, die, miniland, tutorial, quests, tryCatch, useSlot, openSkills, get mate() { return mate; }, get map() { return map; }, maps };
+if (new URLSearchParams(location.search).has('debug')) window.voxelQuest = { tree, anime, openTsWindow, enterTimeSpace, clickStone, game, hero, player, state, enterMap, die, miniland, tutorial, quests, tryCatch, useSlot, openSkills, get mate() { return mate; }, get map() { return map; }, maps };

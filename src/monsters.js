@@ -8,6 +8,10 @@ export const MONSTER_TYPES = {
   // ---- Training Grounds in Mossvale: weak, never leave their pen, come back fast
   tjelly:  { name: 'Training Jelly', lv: 1, hp: 40, atk: 3, def: 0, speed: 1.5, xp: 12, jobXp: 8, model: 'slime', color: 0xa8e07a, dark: 0x6aa84a, training: true, leash: 7, respawn: 6 },
   thopper: { name: 'Training Hopper', lv: 1, hp: 55, atk: 4, def: 0, speed: 2.2, xp: 16, jobXp: 10, model: 'bunny', color: 0xf4ecd8, dark: 0xd8b898, training: true, leash: 7, respawn: 6 },
+  // ---- Time-Space bosses
+  kingjelly: { name: 'Jelly King', lv: 4, hp: 900, atk: 15, def: 3, speed: 1.6, xp: 260, jobXp: 80, model: 'slime', aggro: 9, color: 0xf2c84a, dark: 0xb8862a, size: 2.2, boss: true },
+  shroomlord: { name: 'Shroom Lord', lv: 7, hp: 2000, atk: 26, def: 6, speed: 1.9, xp: 600, jobXp: 150, model: 'mushroom', aggro: 9, color: 0x9a3ac8, dark: 0x5a1e7a, size: 2.3, boss: true },
+  crabking: { name: 'Crab King', lv: 8, hp: 2400, atk: 29, def: 10, speed: 1.8, xp: 720, jobXp: 170, model: 'crab', aggro: 9, color: 0x3a8ae8, dark: 0x1e4a9a, size: 2.3, boss: true },
   jelly:  { name: 'Jelly', lv: 1, hp: 70, atk: 7, def: 0, speed: 1.7, xp: 14, jobXp: 9, model: 'slime', color: 0x7ccf5a, dark: 0x4f9a3a },
   hopper: { name: 'Hopper', lv: 2, hp: 95, atk: 9, def: 1, speed: 2.6, xp: 20, jobXp: 12, model: 'bunny', color: 0xe8dcc8, dark: 0xc8a888 },
   shroom: { name: 'Shroomling', lv: 4, hp: 170, atk: 15, def: 3, speed: 2.0, xp: 38, jobXp: 20, model: 'mushroom', aggro: 6, color: 0xc8483a, dark: 0x8a2a20 },
@@ -229,7 +233,7 @@ export class Monster {
       this.root.scale.setScalar(this.size * (1 - k * 0.9));
       this.root.rotation.z = k * 1.2;
       if (k >= 1) this.root.visible = false;
-      if (this.deadFor > (this.t.respawn ?? 14)) this.respawn(this.t.boss ? this.spawn : this.area ? this.randomInArea(ctx) : ctx.respawnPoint());
+      if (!this.noRespawn && this.deadFor > (this.t.respawn ?? 14)) this.respawn(this.t.boss ? this.spawn : this.area ? this.randomInArea(ctx) : ctx.respawnPoint());
       this.animate(dt, false);
       return;
     }

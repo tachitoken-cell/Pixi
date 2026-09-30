@@ -3,6 +3,7 @@
 // skill (idle, walk, run, attack, all class skills, sit, wave...) works unchanged: each frame the
 // model's bones copy the rotation of the matching pivot group. Weapons stay attached to the hands.
 import * as THREE from 'three';
+import { ToonMat } from './anime.js';
 import { GLTFLoader } from '../vendor/GLTFLoader.js';
 import { Character } from './character.js';
 
@@ -78,7 +79,7 @@ export class ModelCharacter extends Character {
       o.bind(new THREE.Skeleton(bones, o.skeleton.boneInverses), o.bindMatrix);
       o.castShadow = true;
       o.frustumCulled = false;
-      const lambert = (m) => new THREE.MeshLambertMaterial({ map: m.map, color: m.map ? 0xffffff : m.color });
+      const lambert = (m) => new ToonMat({ map: m.map, color: m.map ? 0xffffff : m.color });
       o.material = Array.isArray(o.material) ? o.material.map(lambert) : lambert(o.material);
     });
     const s = this.procHeight / MODEL_HEIGHT;       // skinned bounding boxes are unreliable before posing

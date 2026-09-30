@@ -3,6 +3,7 @@
 // meshed with ambient occlusion, detailed voxel props, grass and flowers, a sky dome with
 // drifting clouds, portal gates, NPCs and monsters.
 import * as THREE from 'three';
+import { ToonMat } from './anime.js';
 import { mergeGeometries } from '../vendor/BufferGeometryUtils.js';
 import { mat, Character } from './character.js';
 import { CLASSES } from './classes.js';
@@ -41,6 +42,7 @@ const THEMES = {
   grotto: { grass: [0x4a7a72, 0x3e6c66, 0x56887e], amp: 2, trees: 'rock', mini: [74, 122, 114] },
   crypt: { grass: [0x6a6670, 0x5e5a64, 0x76727c], amp: 1, trees: 'rock', mini: [106, 102, 112] },
   frost: { grass: [0xe8f0f8, 0xd8e6f2, 0xf4f8fc], amp: 4, trees: 'pine', mini: [226, 236, 246] },
+  timespace: { grass: [0x7a66c0, 0x6c5ab4, 0x8874cc], amp: 1, trees: 'rock', mini: [122, 102, 192] },   // Time-Space chambers
 };
 const SURF = {
   path: [0xc9a26a, 0xbb935c, 0xd2ad76],
@@ -97,7 +99,7 @@ function makeSky(horizon) {
   const geo = new THREE.SphereGeometry(400, 24, 12);
   const m = new THREE.ShaderMaterial({
     side: THREE.BackSide, depthWrite: false, fog: false,
-    uniforms: { top: { value: new THREE.Color(0x5a9ee8) }, mid: { value: new THREE.Color(horizon).lerp(new THREE.Color(0xfff0d8), 0.35) }, bottom: { value: new THREE.Color(0xf6ead2) } },
+    uniforms: { top: { value: new THREE.Color(0x2f7fe8) }, mid: { value: new THREE.Color(horizon).lerp(new THREE.Color(0xfff6e8), 0.5) }, bottom: { value: new THREE.Color(0xfdf4e2) } },   // anime sky: deep blue to a bright hazy horizon
     vertexShader: 'varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
     fragmentShader: 'uniform vec3 top; uniform vec3 mid; uniform vec3 bottom; varying vec3 vP; void main(){ float h = vP.y; vec3 c = h > 0.0 ? mix(mid, top, pow(h, 0.6)) : mix(mid, bottom, min(1.0, -h * 4.0)); gl_FragColor = vec4(c, 1.0); }',
   });
@@ -170,6 +172,7 @@ export function buildMap(def) {
   const flats = []; // [x, z, radius] areas forced flat (plaza, house pads)
   const plan = town ? planTown(def, town, R, portals, pathDist) : null;
   if (plan) flats.push(...plan.flats);
+  for (const t of def.tsStones || []) flats.push([t.at[0], t.at[1], 4]);   // Time-Space stones stand on flat ground
 
   // ---- heights and surfaces
   for (let j = 0; j < CZ; j++) for (let i = 0; i < CX; i++) {
@@ -322,6 +325,7 @@ export function buildMap(def) {
   const free = (x, z, clear = 5, types) => {
     if (Math.hypot(x, z) < clear) return false;
     if (portals.some((p) => Math.hypot(p.pos.x - x, p.pos.z - z) < 7)) return false;
+    if ((def.tsStones || []).some((t) => Math.hypot(t.at[0] - x, t.at[1] - z) < 6)) return false;
     if (pathDist(x, z) < 2.4) return false;
     return colOK(x, z, types);
   };
@@ -464,6 +468,69 @@ export function buildMap(def) {
     ridgeTrees(170, 'pine');
   }
 
+  if (def.theme === 'timespace') {
+    // a floating arena out of time: crystal shards around the edge and a starry void above
+    ridgeTrees(90, 'rock');
+    scatter(8, 'rock', { clear: 8, scale: 1.2 });
+    const cols = [0x8ae8ff, 0xff9ae8, 0xc8a8ff];
+    for (let n = 0; n < 22; n++) {
+      const a = (n / 22) * Math.PI * 2, r = Math.min(W, D) / 2 - MOUNT + 1.5 + (n % 3);
+      const x = Math.cos(a) * r, z = Math.sin(a) * r;
+      const cr = new THREE.Mesh(new THREE.OctahedronGeometry(0.8 + (n % 4) * 0.35), new THREE.MeshBasicMaterial({ color: cols[n % 3], transparent: true, opacity: 0.85 }));
+      cr.scale.y = 2.2;
+      cr.position.set(x, heightAt(x, z) + 2.5 + (n % 5), z);
+      group.add(cr);
+      const ph = n * 0.7;
+      update.push((t) => { cr.position.y += Math.sin(t * 1.4 + ph) * 0.004; cr.rotation.y = t * 0.5 + ph; });
+    }
+    const star = new Float32Array(900 * 3);
+    for (let n = 0; n < 900; n++) {
+      const a = Math.random() * Math.PI * 2, e = Math.random() * 1.2 + 0.15, r = 300;
+      star.set([Math.cos(a) * Math.cos(e) * r, Math.sin(e) * r, Math.sin(a) * Math.cos(e) * r], n * 3);
+    }
+    const sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.BufferAttribute(star, 3));
+    group.add(new THREE.Points(sg, new THREE.PointsMaterial({ color: 0xffffff, size: 1.6, sizeAttenuation: false, fog: false })));
+  }
+
+  // ---- Time-Space stones: a tall glowing crystal on a rock base; click it to enter
+  const tsStones = [];
+  for (const t of def.tsStones || []) {
+    const [x, z] = t.at, y = heightAt(x, z);
+    const g = new THREE.Group();
+    g.position.set(x, y, z);
+    g.scale.setScalar(1.45);                                   // big enough to see from far away
+    const crystal = new THREE.Mesh(new THREE.OctahedronGeometry(1.1), new ToonMat({ color: 0x9a6aff, emissive: 0x5a2ad8, emissiveIntensity: 0.9 }));
+    crystal.scale.set(1, 2.4, 1);
+    crystal.position.y = 3.2;
+    const glow = new THREE.Mesh(new THREE.SphereGeometry(2.2, 20, 14), new THREE.MeshBasicMaterial({ color: 0xb08aff, transparent: true, opacity: 0.18, blending: THREE.AdditiveBlending, depthWrite: false }));
+    glow.position.y = 3.2;
+    const ring = new THREE.Mesh(new THREE.RingGeometry(2, 2.6, 32), new THREE.MeshBasicMaterial({ color: 0xd8b8ff, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }));
+    ring.rotation.x = -Math.PI / 2; ring.position.y = 0.08;
+    const runes = new THREE.Mesh(new THREE.TorusGeometry(1.7, 0.06, 6, 40), new THREE.MeshBasicMaterial({ color: 0xffe08a }));
+    runes.position.y = 3.2; runes.rotation.x = Math.PI / 2.4;
+    // a two-step hexagonal pedestal of carved stone
+    const base = new THREE.Mesh(new THREE.CylinderGeometry(1.9, 2.2, 0.6, 6), new ToonMat({ color: 0x8e8aa0 }));
+    base.position.y = 0.3;
+    const top = new THREE.Mesh(new THREE.CylinderGeometry(1.3, 1.6, 0.5, 6), new ToonMat({ color: 0xa8a2bc }));
+    top.position.y = 0.85;
+    const inlay = new THREE.Mesh(new THREE.CylinderGeometry(1.32, 1.32, 0.08, 6), new THREE.MeshBasicMaterial({ color: 0xc8a8ff }));
+    inlay.position.y = 0.9;
+    for (const m of [base, top]) m.castShadow = true;
+    g.add(base, top, inlay, crystal, glow, ring, runes);
+    const motes = [];
+    for (let n = 0; n < 10; n++) { const m = new THREE.Mesh(new THREE.OctahedronGeometry(0.1), new THREE.MeshBasicMaterial({ color: n % 2 ? 0xffe08a : 0xc8a8ff })); m.userData.ph = n / 10; g.add(m); motes.push(m); }
+    update.push((tm) => {
+      crystal.position.y = 3.2 + Math.sin(tm * 1.6) * 0.18; crystal.rotation.y = tm * 0.6;
+      glow.scale.setScalar(1 + Math.sin(tm * 2.4) * 0.07); runes.rotation.z = tm * 0.9; ring.material.opacity = 0.4 + Math.sin(tm * 3) * 0.15;
+      for (const m of motes) { const q = (tm * 0.3 + m.userData.ph) % 1, a = m.userData.ph * 6.28 + tm; m.position.set(Math.cos(a) * 1.6, 0.4 + q * 5, Math.sin(a) * 1.6); m.scale.setScalar(1 - q); }
+    });
+    const stone = { id: t.id, name: t.name, pos: g.position, group: g };
+    g.traverse((o) => (o.userData.tsStone = stone));
+    group.add(g);
+    blockCircle(x, z, 2);
+    tsStones.push(stone);
+  }
+
   if (def.stones) {
     stonePile = new THREE.Group();
     for (const [x, y, z, sz] of [[0, 0.15, 0, 0.5], [0.35, 0.12, 0.1, 0.35], [-0.3, 0.12, 0.15, 0.4], [0.1, 0.1, -0.35, 0.35], [0.05, 0.42, 0.05, 0.3], [-0.15, 0.1, -0.2, 0.28]]) {
@@ -497,6 +564,7 @@ export function buildMap(def) {
     floor.rotation.x = -Math.PI / 2;
     floor.position.y = 0.05;
     pg.add(swirl, ring, floor);
+    if (p.to === 'sealed') { swirlMat.color.set(0x5a4a7a); ring.visible = floor.visible = false; }
     const motes = [];
     for (let n = 0; n < 14; n++) {
       const m = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: n % 2 ? 0xbef0ff : 0x6ac8ff }));
@@ -547,7 +615,7 @@ export function buildMap(def) {
     else tufts.push({ x, y, z, c: jitter(mix(theme.grass[0], 0x3f7a2a, R() * 0.6), 0.1, R), s: 0.6 + R() * 0.7, r: R() * 3 });
   }
   const tuftGeo = new THREE.BoxGeometry(0.1, 0.34, 0.1).translate(0, 0.17, 0);
-  const tuftMesh = new THREE.InstancedMesh(tuftGeo, new THREE.MeshLambertMaterial(), tufts.length * 3);
+  const tuftMesh = new THREE.InstancedMesh(tuftGeo, new ToonMat(), tufts.length * 3);
   const o = new THREE.Object3D(), c3 = new THREE.Color();
   let ti = 0;
   for (const tf of tufts) for (let b = 0; b < 3; b++) {
@@ -560,8 +628,8 @@ export function buildMap(def) {
   }
   group.add(tuftMesh);
   if (flowers.length) {
-    const stem = new THREE.InstancedMesh(new THREE.BoxGeometry(0.05, 0.3, 0.05).translate(0, 0.15, 0), new THREE.MeshLambertMaterial({ color: 0x3f7a2a }), flowers.length);
-    const head = new THREE.InstancedMesh(new THREE.BoxGeometry(0.16, 0.1, 0.16).translate(0, 0.33, 0), new THREE.MeshLambertMaterial(), flowers.length);
+    const stem = new THREE.InstancedMesh(new THREE.BoxGeometry(0.05, 0.3, 0.05).translate(0, 0.15, 0), new ToonMat({ color: 0x3f7a2a }), flowers.length);
+    const head = new THREE.InstancedMesh(new THREE.BoxGeometry(0.16, 0.1, 0.16).translate(0, 0.33, 0), new ToonMat(), flowers.length);
     flowers.forEach((f, n) => {
       o.position.set(f.x, f.y, f.z); o.rotation.set(0, 0, 0); o.scale.set(1, 1, 1); o.updateMatrix();
       stem.setMatrixAt(n, o.matrix);
@@ -643,6 +711,7 @@ export function buildMap(def) {
     else for (let n = 0; n < m.n; n++) monsters.push(new Monster(m.type, randomSpawn()));
   }
   for (const m of monsters) {
+    if (def.timespace) m.noRespawn = true;
     group.add(m.root);
     if (m.t.static) blockCircle(m.pos.x, m.pos.z, 0.7);
   }
@@ -666,7 +735,7 @@ export function buildMap(def) {
   mg.putImageData(img, 0, 0);
 
   return {
-    def, group, W, D, portals, monsters, npcs, stonePile, minimap, terrain,
+    def, group, W, D, portals, monsters, npcs, stonePile, minimap, terrain, tsStones,
     walkable, heightAt, camTopAt: (x, z) => camTopAt(x, z), randomSpawn, arrive, setBlock,
     surfaceAt: (x, z) => { const c = inCol(x, z); return c ? surf[k(...c)] : 'grass'; },
     update: (t, dt = 0.016) => update.forEach((f) => f(t, dt)),
