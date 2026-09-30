@@ -183,6 +183,15 @@ const TRACKS = {
     chords: [C(62, 'min'), C(60), C(65), C(67), C(62, 'min'), C(70), C(60), C(69, 'min')] },
   coast: { bpm: 92, beats: 4, key: 60, scale: [0, 2, 4, 6, 7, 9, 11], seed: 21, lead: 'ocarina', arp: 'marimba', perc: true, pad: true,
     chords: [C(60, 'maj7'), C(62), C(64, 'min'), C(62), C(60, 'maj7'), C(57, 'min'), C(65, 'maj7'), C(67)] },
+  // dungeons: slower, minor keys
+  cave: { bpm: 66, beats: 4, key: 57, scale: [0, 2, 3, 5, 7, 8, 10], seed: 31, lead: 'harp', arp: 'harp', perc: false, pad: true,
+    chords: [C(57, 'min'), C(53), C(55), C(57, 'min'), C(50, 'min'), C(53), C(52, 'min'), C(52)] },
+  grotto: { bpm: 78, beats: 4, key: 59, scale: [0, 2, 3, 5, 7, 9, 10], seed: 37, lead: 'ocarina', arp: 'marimba', perc: false, pad: true,
+    chords: [C(59, 'min'), C(57), C(55), C(54, 'min'), C(59, 'min'), C(52, 'min'), C(55), C(54)] },
+  crypt: { bpm: 60, beats: 3, key: 55, scale: [0, 1, 3, 5, 7, 8, 10], seed: 43, lead: 'clarinet', arp: 'harp', perc: false, pad: true,
+    chords: [C(55, 'min'), C(56), C(55, 'min'), C(50, 'min'), C(51), C(56), C(50), C(55, 'min')] },
+  frost: { bpm: 84, beats: 4, key: 62, scale: [0, 2, 3, 5, 7, 8, 11], seed: 47, lead: 'flute', arp: 'marimba', glock: true, perc: false, pad: true,
+    chords: [C(62, 'min'), C(58), C(55, 'min'), C(57), C(62, 'min'), C(60), C(58), C(57)] },
 };
 
 function compose(tr) { // 16 bars: A (8) then A' (first half repeated, new ending)

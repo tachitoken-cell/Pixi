@@ -164,6 +164,25 @@ Stones for the slingshot (40 max) are refilled by walking over a grey stone pile
 | `src/main.js` | scene, camera, UI, modes, controls, combat, travel between maps |
 | `vendor/` | three.js r160 and its OrbitControls / BufferGeometryUtils / RoundedBoxGeometry (bundled so it works offline) |
 
+## Dungeons
+
+| Dungeon | Entrance | Level | Monsters | Boss |
+|---|---|---|---|---|
+| Mossy Cavern | Whisperwood, east gate | 6-9 | Cave Slime, Stone Crab | Cavern King Slime |
+| Sunken Grotto | Pebble Coast, south gate | 7-10 | Deep Jelly, Tide Crab | Grotto Crab Queen |
+| Old Crypt | Clover Fields, south gate | 9-12 | Crypt Shroom, Ghost Wolf | Lich Shroom |
+| Frost Hollow | Whisperwood, north gate | 11-14 | Frost Jelly, Snow Wolf | Alpha Frost Wolf |
+
+Each boss waits at the far end of its dungeon; defeating it clears the dungeon and gives 3 Saat.
+Bosses return after 90 seconds.
+
+## Saat (revive)
+
+When the hero falls, the death screen offers **Use 5 Saat**: revive on the spot with 50% HP and 50% MP
+(2.5 seconds of protection to get up), or **Return to Mossvale Village**. After a Saat revive, Saat has a
+5-minute cooldown; the HUD shows your Saat and the cooldown. You start with 5 Saat; monsters drop one
+now and then (12%), bosses drop 3.
+
 ## Start the game
 
 1. Install **Node.js 22 LTS** from https://nodejs.org (once).

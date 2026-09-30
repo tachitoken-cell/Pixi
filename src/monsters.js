@@ -11,6 +11,20 @@ export const MONSTER_TYPES = {
   wolf:   { name: 'Grey Wolf', lv: 6, hp: 260, atk: 22, def: 5, speed: 3.8, xp: 60, jobXp: 30, model: 'wolf', aggro: 8, color: 0x8a8a94, dark: 0x5a5a64 },
   crab:   { name: 'Rock Crab', lv: 5, hp: 220, atk: 18, def: 7, speed: 1.8, xp: 48, jobXp: 24, model: 'crab', aggro: 4.5, color: 0xd8683a, dark: 0x9a4020 },
   bluejelly: { name: 'Tide Jelly', lv: 4, hp: 150, atk: 13, def: 2, speed: 1.9, xp: 34, jobXp: 18, model: 'slime', color: 0x5ab4e8, dark: 0x2a78b0 },
+
+  // ---- dungeon monsters (size: model scale; boss: dungeon boss, respawn: seconds until it returns)
+  caveslime: { name: 'Cave Slime', lv: 6, hp: 240, atk: 20, def: 4, speed: 1.9, xp: 58, jobXp: 28, model: 'slime', aggro: 6, color: 0x9a6ad8, dark: 0x5e3a9a },
+  stonecrab: { name: 'Stone Crab', lv: 7, hp: 320, atk: 24, def: 9, speed: 1.7, xp: 70, jobXp: 32, model: 'crab', aggro: 5, color: 0x8a8a90, dark: 0x5a5a62 },
+  cavernking: { name: 'Cavern King Slime', lv: 9, hp: 2600, atk: 34, def: 8, speed: 1.6, xp: 600, jobXp: 180, model: 'slime', aggro: 9, color: 0x7a3ac8, dark: 0x4a1e88, size: 2.6, boss: true, respawn: 90 },
+  deepjelly: { name: 'Deep Jelly', lv: 7, hp: 280, atk: 22, def: 4, speed: 2.0, xp: 66, jobXp: 30, model: 'slime', aggro: 6, color: 0x2ac8b8, dark: 0x0e7a70 },
+  tidecrab: { name: 'Tide Crab', lv: 8, hp: 360, atk: 27, def: 10, speed: 1.9, xp: 80, jobXp: 36, model: 'crab', aggro: 5, color: 0x3a8ad8, dark: 0x1e4e8a },
+  crabqueen: { name: 'Grotto Crab Queen', lv: 10, hp: 3200, atk: 38, def: 14, speed: 1.7, xp: 760, jobXp: 210, model: 'crab', aggro: 9, color: 0xe85a8a, dark: 0x9a2a50, size: 2.4, boss: true, respawn: 90 },
+  cryptshroom: { name: 'Crypt Shroom', lv: 9, hp: 380, atk: 29, def: 8, speed: 2.1, xp: 92, jobXp: 40, model: 'mushroom', aggro: 7, color: 0x6a4a8a, dark: 0x3a2850 },
+  ghostwolf: { name: 'Ghost Wolf', lv: 10, hp: 440, atk: 33, def: 8, speed: 3.9, xp: 110, jobXp: 46, model: 'wolf', aggro: 9, color: 0xb8c8d8, dark: 0x7a8aa0 },
+  lichshroom: { name: 'Lich Shroom', lv: 12, hp: 4200, atk: 46, def: 16, speed: 1.8, xp: 980, jobXp: 260, model: 'mushroom', aggro: 10, color: 0x3a1e5a, dark: 0x1e0e30, size: 2.5, boss: true, respawn: 90 },
+  frostjelly: { name: 'Frost Jelly', lv: 11, hp: 460, atk: 36, def: 9, speed: 2.0, xp: 120, jobXp: 50, model: 'slime', aggro: 7, color: 0xbfe8ff, dark: 0x6ab0e0 },
+  snowwolf: { name: 'Snow Wolf', lv: 12, hp: 540, atk: 40, def: 11, speed: 4.1, xp: 140, jobXp: 56, model: 'wolf', aggro: 10, color: 0xeef4fa, dark: 0xa8bccc },
+  frostalpha: { name: 'Alpha Frost Wolf', lv: 14, hp: 5400, atk: 55, def: 18, speed: 3.4, xp: 1300, jobXp: 320, model: 'wolf', aggro: 12, color: 0xd8ecff, dark: 0x5a86b8, size: 2.2, boss: true, respawn: 90 },
 };
 
 const BOX = new THREE.BoxGeometry(1, 1, 1);
@@ -146,6 +160,9 @@ export class Monster {
     this.root.add(blob);
     this.root.userData.monster = this;
     this.root.traverse((o) => { o.userData.monster = this; });
+    this.size = this.t.size ?? 1;
+    this.root.scale.setScalar(this.size);
+    this.spawn = home.clone();                     // bosses always come back at their lair
     this.home = home.clone();
     this.root.position.copy(home);
     this.root.rotation.y = Math.random() * Math.PI * 2;
@@ -165,7 +182,7 @@ export class Monster {
 
   get alive() { return this.state !== 'dead'; }
   get pos() { return this.root.position; }
-  get height() { return { dummy: 3.1, slime: 1.2, bunny: 1.6, mushroom: 1.5, wolf: 1.7, crab: 1.2 }[this.t.model]; }
+  get height() { return { dummy: 3.1, slime: 1.2, bunny: 1.6, mushroom: 1.5, wolf: 1.7, crab: 1.2 }[this.t.model] * this.size; }
 
   damage(n) {
     if (!this.alive) return false;
@@ -194,10 +211,10 @@ export class Monster {
     if (this.state === 'dead') {
       this.deadFor += dt;
       const k = Math.min(1, this.deadFor / 0.5);
-      this.root.scale.setScalar(1 - k * 0.9);
+      this.root.scale.setScalar(this.size * (1 - k * 0.9));
       this.root.rotation.z = k * 1.2;
       if (k >= 1) this.root.visible = false;
-      if (this.deadFor > 14) this.respawn(ctx.respawnPoint());
+      if (this.deadFor > (this.t.respawn ?? 14)) this.respawn(this.t.boss ? this.spawn : ctx.respawnPoint());
       this.animate(dt, false);
       return;
     }
@@ -212,7 +229,7 @@ export class Monster {
         this.provoked = false;
       }
     } else if (this.provoked || (this.t.aggro && dPlayer < this.t.aggro)) {
-      this.state = dPlayer < 1.5 ? 'attack' : 'chase';
+      this.state = dPlayer < 1.5 + (this.size - 1) * 0.7 ? 'attack' : 'chase';
       this.provoked = true;
     }
 
@@ -235,13 +252,13 @@ export class Monster {
       if (p.distanceTo(this.home) < 0.5) { this.state = 'idle'; this.hp = this.maxHp; }
     } else if (this.state === 'chase') {
       goal = ctx.player; speed = this.t.speed;
-      if (dPlayer < 1.4) { goal = null; this.state = 'attack'; }
+      if (dPlayer < 1.4 + (this.size - 1) * 0.7) { goal = null; this.state = 'attack'; }
     } else if (this.state === 'attack') {
       this.face(toPlayer, dt, 10);
       if (this.atkCd <= 0) {
         this.atkCd = 1.6;
         this.lunge = 0.35;
-        setTimeout(() => { if (this.alive && ctx.player.distanceTo(p) < 2.2) ctx.attack(this); }, 180);
+        setTimeout(() => { if (this.alive && ctx.player.distanceTo(p) < 2.2 + (this.size - 1) * 0.8) ctx.attack(this); }, 180);
       }
     }
 
@@ -275,7 +292,7 @@ export class Monster {
   respawn(at) {
     this.home.copy(at);
     this.root.position.copy(at);
-    this.root.scale.setScalar(1);
+    this.root.scale.setScalar(this.size);
     this.root.rotation.z = 0;
     this.root.visible = true;
     this.hp = this.maxHp;

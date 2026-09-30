@@ -82,7 +82,11 @@ const state = {
 };
 const player = { pos: new THREE.Vector3(0, 0, 0), yaw: 0, target: null, sitting: false, dash: null, pending: null };
 // Adventurer progression and combat state
-const game = { heroClass: 'adventurer', time: 0, jobLv: 1, jobXp: 0, stones: MAX_STONES, cds: {}, buffs: { atk: 0, def: 0 }, casting: null, auraIn: 0, target: null, travelling: false, combatUntil: 0 };
+const game = { heroClass: 'adventurer', time: 0, jobLv: 1, jobXp: 0, stones: MAX_STONES, cds: {}, buffs: { atk: 0, def: 0 }, casting: null, auraIn: 0, target: null, travelling: false, combatUntil: 0,
+  saat: 5, saatReadyAt: 0, shieldUntil: 0 };
+// Saat: revive where you fell with 50% HP and MP; costs 5 and then has a cooldown
+const SAAT_COST = 5, SAAT_CD = 300, SAAT_DROP = 0.12;
+const clockText = (sec) => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
 // hero level, health and mana
 const hero = { name: 'Hero', lv: 1, xp: 0, hp: 0, mp: 0, dead: false };
 const xpNeeded = (lv) => Math.round(70 * Math.pow(lv, 1.6));
@@ -357,6 +361,11 @@ function setLighting(world) {
     sun.color.set(0xffe2b8); sun.intensity = 1.7;
     rim.intensity = 0.35;
     renderer.toneMappingExposure = 1.08;
+    if (map?.def.dungeon) {
+      const frost = map.def.theme === 'frost';
+      hemi.color.set(frost ? 0xe8f2ff : 0xcfc8ff); hemi.groundColor.set(frost ? 0x8aa0b8 : 0x3a3448);
+      hemi.intensity = frost ? 2.0 : 1.9; sun.intensity = frost ? 1.2 : 0.95; sun.color.set(frost ? 0xeef6ff : 0xd8c8ff);
+    }
   } else {
     hemi.color.set(0xe6ecff); hemi.groundColor.set(0x4a4038); hemi.intensity = 1.6;
     sun.color.set(0xfff1dc); sun.intensity = 2.6;
@@ -375,8 +384,8 @@ function applyMapLook() {
   const d = map.def;
   setLighting(true);
   scene.background = new THREE.Color(d.sky);
-  // warm, hazy distance like NosTale's painted backdrops
-  scene.fog = new THREE.Fog(new THREE.Color(d.sky).lerp(new THREE.Color(0xf6e6c8), 0.45), d.fog[0], d.fog[1]);
+  // warm, hazy distance like NosTale's painted backdrops; dungeons fade into their own darkness
+  scene.fog = new THREE.Fog(d.dungeon ? new THREE.Color(d.sky) : new THREE.Color(d.sky).lerp(new THREE.Color(0xf6e6c8), 0.45), d.fog[0], d.fog[1]);
   document.body.style.setProperty('--sky', `#${d.sky.toString(16).padStart(6, '0')}`);
 }
 // camera offset from the hero; when a hill or mountain blocks the view the camera first
@@ -574,14 +583,21 @@ function hitMonster(m, sk, extra, delay) {
       fx.burst(m.pos.clone().setY(0.6), m.t.color ?? 0xffffff, 18, 3.5, 0.12);
       gainXp(m.t.xp);
       gainJobXp(m.t.jobXp);
-      toast(`${m.t.name} defeated  +${m.t.xp} XP  +${m.t.jobXp} Job XP`);
+      let loot = '';
+      if (m.t.boss) {
+        game.saat += 3;
+        fx.ring(m.pos, 0xffd66b, 5, 0.1, 1.2);
+        audio.sfx('jobUp');
+        setTimeout(() => toast(`${map.def.name} cleared! +3 Saat`, 5000), 900);
+      } else if (!m.t.static && Math.random() < SAAT_DROP) { game.saat++; loot = '  +1 Saat'; }
+      toast(`${m.t.name} defeated  +${m.t.xp} XP  +${m.t.jobXp} Job XP${loot}`);
       if (game.target === m) game.target = null;
     }
   }, delay);
 }
 
 function monsterAttack(m) {
-  if (hero.dead || state.mode !== 'play') return;
+  if (hero.dead || state.mode !== 'play' || game.shieldUntil > game.time) return;
   game.combatUntil = game.time + 5;
   if (Math.random() < 0.08) return audio.sfx('miss'), popDamage(player.pos, 3.2, 'MISS');
   const dmg = Math.max(1, Math.round(m.t.atk * (0.85 + Math.random() * 0.3) - heroDef()));
@@ -600,9 +616,40 @@ function die() {
   hero.dead = true;
   player.sitting = false;
   player.pending = player.target = null;
-  toast('You were defeated. Returning to Mossvale Village…');
+  chars[state.cls].play('hit');
+  setTimeout(() => { if (hero.dead) openDeath(); }, 900);
+}
+const deathEl = $('#death');
+function openDeath() { deathEl.hidden = false; updateDeath(); }
+function updateDeath() {
+  if (deathEl.hidden) return;
+  const left = Math.max(0, game.saatReadyAt - game.time);
+  const btn = $('#death-saat');
+  btn.disabled = left > 0 || game.saat < SAAT_COST;
+  $('#death-saat-count').textContent = `${game.saat}`;
+  $('#death-saat-note').textContent = left > 0 ? `Saat on cooldown · ${clockText(left)}`
+    : game.saat < SAAT_COST ? `You need ${SAAT_COST} Saat, you have ${game.saat}`
+    : `Uses ${SAAT_COST} Saat · then ${SAAT_CD / 60} min cooldown`;
+}
+$('#death-saat').onclick = () => {
+  if (!hero.dead || game.saat < SAAT_COST || game.saatReadyAt > game.time) return;
+  game.saat -= SAAT_COST;
+  game.saatReadyAt = game.time + SAAT_CD;
+  deathEl.hidden = true;
+  hero.dead = false;
+  hero.hp = Math.round(maxHp() * 0.5);
+  hero.mp = Math.round(maxMp() * 0.5);
+  game.shieldUntil = game.time + 2.5;           // a moment to get up before monsters hit again
   const ch = chars[state.cls];
-  ch.play('hit');
+  ch.play('victory');
+  fx.ring(ch.root.position, 0x9be86a, 3.2, 0.08, 0.9);
+  fx.burst(ch.root.position.clone().setY(1.5), 0xc8f59a, 34, 4.5, 0.14, 2.5);
+  audio.sfx('levelUp');
+  toast(`Revived with Saat · 50% HP and MP · ${game.saat} Saat left`, 3000);
+};
+$('#death-return').onclick = () => { deathEl.hidden = true; returnToVillage(); };
+function returnToVillage() {
+  toast('Returning to Mossvale Village…');
   setTimeout(() => {
     $('#fade').classList.add('on');
     setTimeout(() => {
@@ -613,7 +660,7 @@ function die() {
       for (const m of Object.values(maps).flatMap((mp) => mp.monsters)) if (m.state === 'chase' || m.state === 'attack') { m.state = 'return'; m.provoked = false; }
       $('#fade').classList.remove('on');
     }, 400);
-  }, 1300);
+  }, 300);
 }
 
 function gainXp(n) {
@@ -725,6 +772,9 @@ function updateHud() {
   if (game.buffs.atk > game.time) b.push(`<span class="buff atk">Combat ${Math.ceil(game.buffs.atk - game.time)}s</span>`);
   if (game.buffs.def > game.time) b.push(`<span class="buff def">Morale ${Math.ceil(game.buffs.def - game.time)}s</span>`);
   if (SKILLS.some((sk) => sk.ammo)) b.push(`<span class="buff stones">Stones ${game.stones}</span>`);
+  const saatCd = Math.max(0, game.saatReadyAt - game.time);
+  b.push(`<span class="buff saat" title="Saat: ${SAAT_COST} revive you where you fall with 50% HP and MP">Saat ${game.saat}${saatCd > 0 ? ` · ${clockText(saatCd)}` : ''}</span>`);
+  updateDeath();
   const html = b.join('');
   if ($('#buffs').innerHTML !== html) $('#buffs').innerHTML = html;
 
@@ -797,8 +847,8 @@ function place(el, pos, y) {
 }
 function updateLabels() {
   for (const m of map.monsters) {
-    const el = plate(m, 'mob', `<b>Lv.${m.t.lv} ${m.t.name}</b><i><u></u></i>`);
-    const near = m.alive && distTo(m) < 20;
+    const el = plate(m, m.t.boss ? 'mob boss' : 'mob', `<b>${m.t.boss ? '<em>BOSS</em> ' : ''}Lv.${m.t.lv} ${m.t.name}</b><i><u></u></i>`);
+    const near = m.alive && distTo(m) < (m.t.boss ? 30 : 20);
     if (!near) { el.style.display = 'none'; continue; }
     el.classList.toggle('sel', m === game.target);
     el.classList.toggle('hurt', !m.t.static && m.hp < m.maxHp);
@@ -1227,3 +1277,6 @@ $('#loading').classList.add('done');
 
 // handy for debugging from the console
 Object.assign(window, { changeClass, openClassPick, chars, state, setMode, selectClass, playAnim, game, player, hero, useSkill, enterMap, maps, getMap: () => map });
+
+// test hook, only with ?debug in the URL: lets automated checks jump between maps and trigger events
+if (new URLSearchParams(location.search).has('debug')) window.voxelQuest = { game, hero, player, state, enterMap, die, get map() { return map; }, maps };

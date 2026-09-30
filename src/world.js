@@ -34,6 +34,11 @@ const THEMES = {
   fields: { grass: [0x8cc83c, 0x7cba36, 0x9cd04a], amp: 4, trees: 'oak' },
   woods: { grass: [0x5e9e3a, 0x528e34, 0x6aaa44], amp: 5, trees: 'pine' },
   coast: { grass: [0x90c848, 0x82bc40, 0x9ed054], amp: 3, trees: 'palm' },
+  // dungeons: `grass` is the floor colour, `mini` the minimap floor colour
+  cave: { grass: [0x5a5448, 0x4e4a40, 0x646052], amp: 3, trees: 'rock', mini: [96, 90, 78] },
+  grotto: { grass: [0x4a7a72, 0x3e6c66, 0x56887e], amp: 2, trees: 'rock', mini: [74, 122, 114] },
+  crypt: { grass: [0x6a6670, 0x5e5a64, 0x76727c], amp: 1, trees: 'rock', mini: [106, 102, 112] },
+  frost: { grass: [0xe8f0f8, 0xd8e6f2, 0xf4f8fc], amp: 4, trees: 'pine', mini: [226, 236, 246] },
 };
 const SURF = {
   path: [0xc9a26a, 0xbb935c, 0xd2ad76],
@@ -151,6 +156,11 @@ export function buildMap(def) {
       else if (x > shore - 6) { h = Math.min(h, BASE); type = type === 'path' ? 'path' : 'sand'; }
       if (x > shore + 5 && edge < MOUNT) h = BASE - 4; // open sea to the east
     }
+    if (def.theme === 'crypt' && edge >= MOUNT && type === 'grass') type = 'cobble';
+    if (def.theme === 'grotto' && edge > MOUNT + 2 && pd > 3) {
+      const pool = Math.min(Math.hypot(x + 14, z - 6), Math.hypot(x - 10, z + 14), Math.hypot(x - 18, z - 4)) - (5 + N2(x * 0.2, z * 0.2) * 2);
+      if (pool < 0) { h = BASE - 3; type = 'sand'; } else if (pool < 1.2) { h = BASE; type = 'sand'; }
+    }
     if (h > BASE + 3 && type === 'grass' && edge < MOUNT) type = 'mountain';
     H[k(i, j)] = Math.max(1, h);
     surf[k(i, j)] = type;
@@ -203,7 +213,8 @@ export function buildMap(def) {
   const water = new THREE.Mesh(new THREE.PlaneGeometry(W + 400, D + 400), waterMat);
   water.rotation.x = -Math.PI / 2;
   water.position.y = WATER_Y;
-  const hasWater = def.theme === 'fields' || def.theme === 'coast';
+  const hasWater = def.theme === 'fields' || def.theme === 'coast' || def.theme === 'grotto';
+  if (def.theme === 'grotto') { waterMat.color.set(0x1e8a9a); waterMat.specular.set(0x7ae8ff); }
   if (hasWater) group.add(water);
 
   // ---- props
@@ -347,6 +358,35 @@ export function buildMap(def) {
     ridgeTrees(110, 'oak');
   }
 
+  if (def.theme === 'cave') {
+    scatter(46, 'rock', { clear: 5, scale: 1.3 });
+    scatter(34, 'shroom', { clear: 3, block: false, scale: 1.2 });
+    scatter(10, 'log');
+    ridgeTrees(160, 'rock');
+  }
+  if (def.theme === 'grotto') {
+    scatter(40, 'rock', { clear: 5, types: ['grass', 'sand'], scale: 1.2 });
+    scatter(16, 'shroom', { clear: 3, block: false });
+    place('boat', -22, -18, { ry: 2.2 });
+    ridgeTrees(150, 'rock');
+  }
+  if (def.theme === 'crypt') {
+    // two rows of lamp posts down the main hall, broken fences and old crates
+    for (let z = -D / 2 + MOUNT + 6; z < D / 2 - MOUNT - 4; z += 8) for (const x of [-6, 6]) place('lamp', x, z);
+    scatter(26, 'rock', { clear: 7, types: ['cobble'] });
+    scatter(10, 'crate', { clear: 7, types: ['cobble'] });
+    scatter(8, 'barrel', { clear: 7, types: ['cobble'] });
+    scatter(8, 'log', { clear: 7, types: ['cobble'] });
+    for (let n = 0; n < 6; n++) place('fence', -20 + n * 3.25, -14, { block: false });
+    ridgeTrees(140, 'rock');
+  }
+  if (def.theme === 'frost') {
+    scatter(90, 'pine', { clear: 7, variants: 4, scale: 1.1 });
+    scatter(30, 'rock', { clear: 5 });
+    scatter(10, 'log');
+    ridgeTrees(170, 'pine');
+  }
+
   if (def.stones) {
     stonePile = new THREE.Group();
     for (const [x, y, z, sz] of [[0, 0.15, 0, 0.5], [0.35, 0.12, 0.1, 0.35], [-0.3, 0.12, 0.15, 0.4], [0.1, 0.1, -0.35, 0.35], [0.05, 0.42, 0.05, 0.3], [-0.15, 0.1, -0.2, 0.28]]) {
@@ -426,7 +466,7 @@ export function buildMap(def) {
     const [i, j] = col(x, z);
     if (i < 0 || j < 0 || i >= CX || j >= CZ || blocked[k(i, j)] || surf[k(i, j)] !== 'grass') continue;
     const y = heightAt(x, z);
-    if (R() < 0.08) flowers.push({ x, y, z, c: pick([0xf2d24a, 0xe86a8a, 0xffffff, 0x9a8aff, 0xff8a4a]) });
+    if (!def.dungeon && R() < 0.08) flowers.push({ x, y, z, c: pick([0xf2d24a, 0xe86a8a, 0xffffff, 0x9a8aff, 0xff8a4a]) });
     else tufts.push({ x, y, z, c: jitter(mix(theme.grass[0], 0x3f7a2a, R() * 0.6), 0.1, R), s: 0.6 + R() * 0.7, r: R() * 3 });
   }
   const tuftGeo = new THREE.BoxGeometry(0.1, 0.34, 0.1).translate(0, 0.17, 0);
@@ -457,7 +497,7 @@ export function buildMap(def) {
   // ---- sky and clouds
   group.add(makeSky(def.sky));
   const clouds = [];
-  for (let n = 0; n < 9; n++) {
+  for (let n = 0; n < (def.dungeon && def.theme !== 'frost' ? 0 : 9); n++) {
     const m = new THREE.Mesh(prop('cloud', n % 4).geo, VOXEL_MAT);
     m.position.set((R() - 0.5) * (W + 80), 32 + R() * 14, (R() - 0.5) * (D + 80));
     m.scale.setScalar(1.6 + R());
@@ -488,7 +528,7 @@ export function buildMap(def) {
   const randomSpawn = () => {
     for (let n = 0; n < 300; n++) {
       const [x, z] = rand(MOUNT + 2);
-      if (!colOK(x, z, ['grass', 'sand'])) continue;
+      if (!colOK(x, z, ['grass', 'sand', 'cobble'])) continue;
       if (Math.hypot(x, z) < 8 || portals.some((p) => Math.hypot(p.pos.x - x, p.pos.z - z) < 9)) continue;
       return new THREE.Vector3(x, heightAt(x, z), z);
     }
@@ -523,6 +563,7 @@ export function buildMap(def) {
     const n = k(i, j);
     let c = surfCol[surf[n]] || surfCol.grass;
     if (def.theme === 'woods' && surf[n] === 'grass') c = [80, 150, 62];
+    if (theme.mini && (surf[n] === 'grass' || surf[n] === 'cobble')) c = theme.mini;
     if (isWater(i, j)) c = [64, 150, 214];
     const shade = 0.75 + Math.min(0.5, (H[n] - BASE) * 0.03);
     const b = blocked[n] && !isWater(i, j) ? 0.7 : 1;

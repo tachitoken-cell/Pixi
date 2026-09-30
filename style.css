@@ -325,3 +325,23 @@ body.touch.play.portrait-ask #rotate { display: grid; }
   background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(60, 36, 12, 0.28) 100%); }
 body.play #vignette { display: block; }
 body.play #view { filter: saturate(1.12) contrast(1.03); }
+
+/* death screen: Saat revive or return to town */
+#death { position: fixed; inset: 0; z-index: 26; display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, #3a141480, #0c0a0ee8 70%); backdrop-filter: grayscale(.8) blur(2px); padding: 16px; }
+#death[hidden] { display: none; }
+.death-box { width: min(380px, 100%); text-align: center; background: var(--panel); border: 2px solid #c8483a80; border-radius: 16px; padding: 20px 18px; box-shadow: 0 18px 50px #000a; }
+.death-box h2 { font-family: 'Pixelify Sans', monospace; font-size: 30px; letter-spacing: 3px; margin: 4px 0 6px; color: #ffb4a8; }
+.death-lead { color: var(--muted); font-size: 13.5px; margin: 0 0 12px; }
+.death-saat-have { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; margin-bottom: 12px; color: #c8f59a; }
+.saat-icon { width: 16px; height: 16px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: linear-gradient(135deg, #b8f07a, #4f9c45); box-shadow: 0 0 10px #9be86a88; }
+#death-saat, #death-return { display: block; width: 100%; padding: 12px; border-radius: 10px; font-weight: 800; font-size: 15px; }
+#death-saat { border: 0; background: linear-gradient(#8fd66a, #4f9c45); color: #0f220b; }
+#death-saat small { display: block; font-size: 11px; opacity: .8; font-weight: 700; }
+#death-saat:disabled { background: #ffffff14; color: var(--muted); cursor: not-allowed; }
+.death-note { font-size: 12px; color: var(--muted); margin: 6px 0 12px; min-height: 1.2em; font-variant-numeric: tabular-nums; }
+#death-return { border: 1px solid var(--line); background: #ffffff10; }
+.buff.saat { background: #4f9c4540; border-color: #9be86a80; color: #d8ffc0; font-variant-numeric: tabular-nums; }
+/* dungeon bosses */
+.mob.boss b { color: #ffd66b; font-size: 1.15em; }
+.mob.boss em { font-style: normal; background: #c8483a; color: #fff; border-radius: 4px; padding: 0 4px; font-size: .8em; letter-spacing: 1px; }
+.mob.boss i { display: block; width: 110px; }
