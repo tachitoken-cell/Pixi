@@ -188,6 +188,7 @@ const TRACKS = {
 const FILE_TRACKS = {
   battle: 'music/battle.mp3', // "Iron Gallop": dungeon fights
 };
+const AMBUSH = 'music/ambush.mp3'; // "Sealed In": the room-lock stinger
 const buffers = {};
 function loadBuffer(url) {
   buffers[url] = buffers[url] || fetch(url).then((r) => r.arrayBuffer()).then((a) => new Promise((res, rej) => ctx.decodeAudioData(a, res, rej)));
@@ -260,11 +261,41 @@ function startTrack(name) {
   current = song;
   if (!timer) timer = setInterval(schedule, 50);
 }
+let lockedUntil = 0, afterLock = null;
 export function playMusic(name) {
   if (!ctx) { pendingTrack = name; return; }
+  if (ctx.currentTime < lockedUntil) { afterLock = name; return; } // a stinger is playing: switch when it ends
   if (current && current.name === name) return;
   startTrack(name);
   current.name = name;
+}
+
+// room lock: the music fades out, the door slams and the alarm sounds, then the fight music
+// (`then`) starts from its beginning as the alarm rings out
+export function ambush(then = 'battle') {
+  if (!ctx) return;
+  const lead = 3.6; // seconds from the slam until the fight music comes in
+  if (current) {
+    const old = current;
+    old.gain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.15);
+    setTimeout(() => { old.gain.disconnect(); old.src?.stop(); }, 1500);
+    current = null;
+  }
+  lockedUntil = ctx.currentTime + lead;
+  afterLock = then;
+  loadBuffer(AMBUSH).then((buf) => {
+    if (!settings.sfx) return;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    src.connect(sfxBus);
+    src.start();
+  }).catch(() => { /* file missing: skip the stinger */ });
+  setTimeout(() => {
+    lockedUntil = 0;
+    const name = afterLock;
+    afterLock = null;
+    if (name) { startTrack(name); current.name = name; }
+  }, lead * 1000);
 }
 
 function inst(kind, freq, t, len, vol, out) {

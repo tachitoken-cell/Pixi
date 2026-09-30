@@ -419,6 +419,7 @@ function enterMap(id, portalId) {
   player.target = player.pending = player.dash = null;
   game.target = null;
   game.combatUntil = 0;
+  game.ambushMusic = null;
   const ch = chars[state.cls];
   ch.root.position.copy(player.pos);
   ch.root.rotation.y = player.yaw;
@@ -435,6 +436,13 @@ function enterMap(id, portalId) {
   void banner.offsetWidth;
   banner.classList.add('show');
 }
+// dungeon rooms call this when their doors close: alarm, then the map's battle music for the fight
+function roomAmbush() {
+  game.combatUntil = game.time + 10;
+  game.ambushMusic = map.def.battle || 'battle';
+  audio.ambush(game.ambushMusic);
+}
+window.roomAmbush = roomAmbush; // for trying it out from the browser console until rooms exist
 function travel(portal) {
   if (game.travelling) return;
   game.travelling = true;
@@ -1181,7 +1189,13 @@ function frame() {
   game.time += dt;
   if (state.mode === 'play' && map) {
     // maps with a battle theme (dungeons) switch to it while a fight is on, and back a few seconds after
-    if (map.def.battle) audio.playMusic(game.time < game.combatUntil + 6 ? map.def.battle : map.def.theme);
+    // (and any map after a room ambush, until that fight is over)
+    const battleTrack = map.def.battle || game.ambushMusic;
+    if (battleTrack) {
+      const fighting = game.time < game.combatUntil + 6;
+      audio.playMusic(fighting ? battleTrack : map.def.theme);
+      if (!fighting) game.ambushMusic = null;
+    }
     updatePlayer(dt);
     updateHud();
     if ((miniIn -= dt) < 0) { miniIn = 0.1; drawMinimap(); }
