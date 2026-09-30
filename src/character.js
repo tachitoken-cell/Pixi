@@ -635,8 +635,9 @@ function gait(w, stride, o) {
   };
   const l = leg(w), r = leg(w + Math.PI);
   return {
-    bodyY: o.bob * Math.cos(2 * w) - o.bob * 0.4, bodyX: o.lean, bodyRY: -s * o.twist, bodyZ: s * 0.025,
-    torsoY: s * o.twist * 1.5, torsoX: 0.03, headY: -s * o.twist, headX: -o.lean * 0.4,
+    // a light forward lean, mostly in the chest so the legs stay under the body; the head stays level
+    bodyY: o.bob * Math.cos(2 * w) - o.bob * 0.4, bodyX: o.lean * 0.3, bodyRY: -s * o.twist, bodyZ: s * 0.025,
+    torsoY: s * o.twist * 1.5, torsoX: 0.02 + o.lean * 0.5, headY: -s * o.twist, headX: -o.lean * 0.7,
     legLX: l.hip, legRX: r.hip, kneeL: l.knee, kneeR: r.knee, footL: l.foot, footR: r.foot,
     armLX: s * o.arm, armRX: -s * o.arm, armLZ: 0.12, armRZ: -0.12,
     elbowL: -o.elbow - 0.3 * Math.max(0, -s) * o.arm, elbowR: -o.elbow - 0.3 * Math.max(0, s) * o.arm,
@@ -662,13 +663,13 @@ const ANIMS = {
   run: {
     loop: true,
     pose(t, c) {
-      return { ...gait(t * 12.5, c.stride, { swing: 0.85, knee: 1.55, lift: 0.36, bob: 0.07, lean: 0.2, arm: 0.95, elbow: 1.2, twist: 0.1 }), headX: -0.12, armLZ: 0.2, armRZ: -0.2 };
+      return { ...gait(t * 12.5, c.stride, { swing: 0.85, knee: 1.55, lift: 0.36, bob: 0.07, lean: 0.12, arm: 0.95, elbow: 1.2, twist: 0.1 }), armLZ: 0.2, armRZ: -0.2 };
     },
   },
   sprint: {
     loop: true,
     pose(t, c) {
-      return { ...gait(t * 16, c.stride, { swing: 1.05, knee: 1.9, lift: 0.42, bob: 0.1, lean: 0.34, arm: 1.25, elbow: 1.45, twist: 0.12 }), headX: -0.22, armLZ: 0.22, armRZ: -0.26 };
+      return { ...gait(t * 16, c.stride, { swing: 1.05, knee: 1.9, lift: 0.42, bob: 0.1, lean: 0.18, arm: 1.25, elbow: 1.45, twist: 0.12 }), armLZ: 0.22, armRZ: -0.26 };
     },
   },
   attack: {
