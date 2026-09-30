@@ -37,7 +37,7 @@ yF, yB = clean_depth(yF), clean_depth(yB)
 def sdist(hit):            # signed 2D distance (m) to a silhouette, + inside
     return (distance_transform_edt(hit) - distance_transform_edt(~hit)) * V
 sdF, sdB, sdS = sdist(hitF), sdist(hitB), sdist(~np.isnan(sS))
-sdS = gaussian_filter(sdS, 3.0) + 0.012          # side silhouette: smooth, and let the real back surface win
+sdS = gaussian_filter(sdS, 2.0) + 0.004          # side silhouette: smooth, and let the real back surface win
 sdF, sdB = gaussian_filter(sdF, 2.5), gaussian_filter(sdB, 2.5)
 yF = np.where(np.isnan(yF), 1.0, yF); yB = np.where(np.isnan(yB), -1.0, yB)
 X, Y = np.meshgrid(xs, ys, indexing='ij')
@@ -45,7 +45,9 @@ vol = np.zeros((len(xs), len(ys), len(zs)), np.float32)
 for k in range(len(zs)):
     f = np.minimum(Y - yF[:, k][:, None], yB[:, k][:, None] - Y)
     f = np.minimum(f, np.minimum(sdF[:, k], sdB[:, k])[:, None])
-    vol[:, :, k] = f if NO_SIDE else np.minimum(f, sdS[:, k][None, :])
+    # the side view only shapes the head (it rounds the skull and cheeks); below the neck it is ignored
+    head = np.clip((zs[k] - 0.98) / 0.08, 0, 1)
+    vol[:, :, k] = f if head <= 0 else np.minimum(f, (sdS[:, k] + (1 - head) * 1.0)[None, :])
 vol = gaussian_filter(vol, 0.7)
 verts, faces, _, _ = marching_cubes(vol, 0.0, spacing=(V, V, V))
 verts += np.array([xs[0], ys[0], zs[0]])

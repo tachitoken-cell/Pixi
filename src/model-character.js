@@ -88,7 +88,7 @@ export class ModelCharacter extends Character {
       return {
         bone: b, group: this[group],
         rest: rootInv.clone().multiply(b.getWorldQuaternion(new THREE.Quaternion())),    // rest rotation, root space
-        restPos: b.position.clone(), restWorld: b.getWorldPosition(new THREE.Vector3()),
+        restPos: b.position.clone(), restLocal: this.root.worldToLocal(b.getWorldPosition(new THREE.Vector3())), // root space: follows the character
       };
     }).filter(Boolean);
     this.boneBy = Object.fromEntries(this.bones.map((e) => [e.bone.name, e]));
@@ -121,8 +121,8 @@ export class ModelCharacter extends Character {
         const dy = this.body.position.y - this.bodyRestY;
         body.bone.position.copy(body.restPos);
         this.model.updateMatrixWorld(true);
-        _v.copy(body.restWorld).add(new THREE.Vector3(0, dy, 0).applyQuaternion(this.root.quaternion));
-        body.bone.position.copy(body.bone.parent.worldToLocal(_v));
+        _v.copy(body.restLocal); _v.y += dy;
+        body.bone.position.copy(body.bone.parent.worldToLocal(this.root.localToWorld(_v)));
       }
       this.model.updateMatrixWorld(true);
     }

@@ -54,6 +54,19 @@ n = nrm[..., :3] * 2 - 1                                  # object-space normal 
 covered = nrm[..., 3] > 0
 w = {'front': np.clip(-n[..., 1], 0, 1) ** 2 * 1.5, 'back': np.clip(n[..., 1], 0, 1) ** 2 * 1.5,
      'side': np.clip(n[..., 0], 0, 1) ** 2, 'side2': np.clip(-n[..., 0], 0, 1) ** 2}
+# per-texel height: bake the object-space position through an emission shader
+em = nt.nodes.new("ShaderNodeEmission"); geo = nt.nodes.new("ShaderNodeNewGeometry"); sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+comb = nt.nodes.new("ShaderNodeCombineXYZ"); div = nt.nodes.new("ShaderNodeMath"); div.operation = 'DIVIDE'; div.inputs[1].default_value = 2.0
+nt.links.new(geo.outputs["Position"], sep.inputs[0]); nt.links.new(sep.outputs["Z"], div.inputs[0]); nt.links.new(div.outputs[0], comb.inputs["Z"])
+nt.links.new(comb.outputs[0], em.inputs["Color"])
+out_node = nt.nodes["Material Output"]; old_link = out_node.inputs["Surface"].links[0].from_socket
+nt.links.new(em.outputs[0], out_node.inputs["Surface"]); nt.nodes.active = tex
+sc.view_settings.view_transform = 'Standard'
+posz = bake_from([], 'EMIT')[..., 2] * 2.0                 # metres
+nt.links.new(old_link, out_node.inputs["Surface"])
+headmask = np.clip((posz - 1.0) / 0.06, 0, 1)             # 1 on the head, 0 below the chin
+w['side'] = w['side'] * (1 - 0.9 * headmask); w['side2'] = w['side2'] * (1 - 0.9 * headmask)
+w['front'] = w['front'] + 0.35 * headmask * np.clip(-n[..., 1] + 0.3, 0, 1)
 acc = np.zeros((N, N, 3), np.float32); wsum = np.zeros((N, N), np.float32)
 for k, L in layers.items():
     hit = L[..., :3].sum(-1) > 0.015                        # missed rays bake black: give them no weight
