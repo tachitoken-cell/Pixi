@@ -186,15 +186,15 @@ const TRACKS = {
     chords: [C(62, 'min'), C(60), C(65), C(67), C(62, 'min'), C(70), C(60), C(69, 'min')] },
   coast: { bpm: 92, beats: 4, key: 60, scale: [0, 2, 4, 6, 7, 9, 11], seed: 21, lead: 'ocarina', arp: 'marimba', perc: true, pad: true,
     chords: [C(60, 'maj7'), C(62), C(64, 'min'), C(62), C(60, 'maj7'), C(57, 'min'), C(65, 'maj7'), C(67)] },
-  // dungeon battle theme in the style of NosTale's Time-Space battle music, played as rock:
-  // dark E Phrygian verse that climbs into F# minor, twin distorted lead guitars over
-  // chugging power chords (one guitar per side), bass and a rock kit
-  battle: { bpm: 160, beats: 4, key: 64, scale: PHRYGIAN, seed: 17, lead: 'leadGtr', harmony: 'leadGtr',
-    accomp: 'rock', perc: 'rock', guitars: true,
-    rhythms: [[[0, 1.5], [1.5, 0.5], [2, 1.5], [3.5, 0.5]], [[0, 0.5], [0.5, 0.5], [1, 1], [2, 2]], [[0, 1], [1, 0.5], [1.5, 0.5], [2, 1], [3, 1]], [[0, 3], [3, 0.5], [3.5, 0.5]]],
-    chords: [C(64, 'min'), C(64, 'min'), C(60), C(65), C(64, 'min'), C(62), C(60), K(C(59), 64, HARMONIC),
-      K(C(66, 'min'), 66, MINOR), K(C(62), 66, MINOR), K(C(64), 66, MINOR), K(C(61), 66, HARMONIC),
-      K(C(66, 'min'), 66, MINOR), K(C(62), 66, MINOR), K(C(58), 62, MINOR), K(C(60), 62, MINOR)] },
+  // dungeon battle theme in the style of NosTale's Time-Space battle music, played as tense rock:
+  // grinding E-F half steps and tritone jumps, a galloping riff that creeps up a half step,
+  // twin lead guitars, a high tremolo 'alarm' and relentless drums
+  battle: { bpm: 176, beats: 4, key: 64, scale: PHRYGIAN, seed: 17, lead: 'leadGtr', harmony: 'leadGtr',
+    accomp: 'rock', perc: 'rock', guitars: true, tremolo: true,
+    rhythms: [[[0, 0.5], [0.5, 0.5], [1, 0.5], [1.5, 1.5], [3, 1]], [[0, 0.75], [0.75, 0.75], [1.5, 0.5], [2, 2]], [[0, 1.5], [1.5, 1.5], [3, 1]], [[0, 0.5], [0.5, 0.5], [1, 0.5], [1.5, 0.5], [2, 1], [3, 0.5], [3.5, 0.5]]],
+    chords: [C(64, 'min'), C(65), C(64, 'min'), C(65), C(60), K(C(59), 64, HARMONIC), C(64, 'min'), K(C(58), 62, MINOR),
+      K(C(66, 'min'), 66, PHRYGIAN), K(C(67), 66, PHRYGIAN), K(C(66, 'min'), 66, PHRYGIAN), K(C(67), 66, PHRYGIAN),
+      K(C(62), 66, MINOR), K(C(61), 66, HARMONIC), K(C(58), 62, MINOR), K(C(59), 64, HARMONIC)] },
 };
 // the notes a melody may use over a chord: the chord's own key if it has one, else the track's
 function scaleFor(tr, ch, lo = -1, hi = 2) {
@@ -301,6 +301,7 @@ function inst(kind, freq, t, len, vol, out) {
     case 'power': for (const [k, dt] of [[0, -4], [7, 3], [12, 0]]) tone({ freq: freq * Math.pow(2, k / 12), t, a: 0.003, d: len, vol, type: 'sawtooth', detune: dt, filter: 3200, bus: out }); break;
     case 'mute': for (const k of [0, 7]) tone({ freq: freq * Math.pow(2, k / 12), t, a: 0.002, d: 0.09, vol: vol * 0.8, type: 'sawtooth', filter: 750, bus: out }); break;
     case 'leadGtr': tone({ freq, t, a: 0.006, d: len, vol, type: 'sawtooth', filter: 2800, vib: len > 0.4 ? 0.012 : 0, bus: out }); tone({ freq: freq * 2.003, t, a: 0.006, d: len, vol: vol * 0.3, type: 'square', filter: 3000, bus: out }); break;
+    case 'trem': for (const dt of [-8, 8]) tone({ freq, t, a: 0.004, d: len, vol: vol * 0.5, type: 'sawtooth', detune: dt, filter: 3200, bus: out }); break;
     case 'rockbass': tone({ freq, t, a: 0.004, d: len, vol: vol * 0.3, type: 'sawtooth', filter: 900, bus: out }); tone({ freq, t, a: 0.004, d: len, vol: vol * 0.28, type: 'sine', bus: out }); break;
     case 'pad': for (const dt of [-7, 7]) tone({ freq, t, a: len * 0.4, d: len * 0.8, vol: vol * 0.12, type: 'sawtooth', detune: dt, filter: 900, bus: out }); break;
   }
@@ -316,17 +317,21 @@ function schedule() {
     const out = song.gain;
     const steps = tr.beats * 2;
     if (tr.accomp === 'rock') {
-      // power chords ringing on the 3-3-2 accents, palm-muted chugs in between, bass locked to the root
+      // galloping riff in sixteenths (da-dada), power chords ringing on the accents, and on the
+      // last beat the muted notes creep up a half step for tension; bass gallops on the root
       const low = ch.root - 24; // low guitar range, E2 for the E chord
-      const ring = { 0: 3, 3: 3, 6: 2 };
-      for (let i = 0; i < steps; i++) {
-        const st = t + i * beat / 2;
+      const six = beat / 4, ring = { 0: 6, 6: 4, 10: 2 };
+      for (let i = 0; i < 16; i++) {
+        if (!ring[i] && i % 4 === 1) continue;
+        const st = t + i * six;
         for (const [amp, late] of [[song.rhythmL, 0], [song.rhythmR, 0.006]]) {
-          if (ring[i]) inst('power', midi(low), st + late, ring[i] * beat / 2 * 0.92, 0.22, amp);
-          else inst('mute', midi(low), st + late, 0, 0.22, amp);
+          if (ring[i]) inst('power', midi(low), st + late, ring[i] * six * 0.92, 0.22, amp);
+          else inst('mute', midi(low + (i >= 12 ? 1 : 0)), st + late, 0, 0.22, amp);
         }
-        inst('rockbass', midi(low - 12), st, beat * 0.45, 0.6, out);
+        inst('rockbass', midi(low - 12), st, six * 0.9, 0.6, out);
       }
+      // high tremolo 'alarm': the root trilling with the half step above it
+      if (tr.tremolo) for (let i = 0; i < 16; i++) inst('trem', midi(ch.root + 12 + (i % 2 && (i >> 2) % 2 ? 1 : 0)), t + i * six, six * 0.9, 0.05, out);
     } else if (tr.accomp === 'oompah') {
       // oom-pah: bass on 1 and 3, short pizzicato chords on 2 and 4
       inst('bass', midi(ch.root - 24), t, beat * 0.9, 0.55, out);
@@ -360,21 +365,22 @@ function schedule() {
     }
     // light percussion
     if (tr.perc === 'rock') {
-      // rock kit: kick with the guitar accents, big backbeat snare, open hi-hat eighths,
-      // double-kick in every 8th bar, tom fill every 4 bars and a crash to start each phrase
-      const bar = song.bar;
-      const kick = (st, v = 0.6) => { tone({ freq: 130, glide: 0.35, t: st, d: 0.16, vol: v * 0.7, bus: out }); noise({ t: st, freq: 3500, q: 1.5, d: 0.012, vol: v * 0.25, bus: out }); };
-      for (let i = 0; i < steps; i++) {
-        const st = t + i * beat / 2;
-        noise({ t: st, freq: 7000, q: 0.7, d: i % 2 ? 0.05 : 0.09, vol: i % 2 ? 0.03 : 0.045, type: 'highpass', bus: out });
-        if (bar % 8 === 7 && i < 6) { kick(st, 0.5); kick(st + beat / 4, 0.4); }
-        else if (i === 0 || i === 3 || i === 6 || (i === 7 && bar % 2)) kick(st);
-        if (i === 2 || i === 6) {
-          noise({ t: st, freq: 1900, q: 0.6, d: 0.2, vol: 0.34, bus: out });
-          tone({ freq: 190, glide: 0.8, t: st, d: 0.09, vol: 0.2, type: 'triangle', bus: out });
-        }
+      // sixteenth hi-hats, kick on the riff accents (non-stop double kick in the middle section),
+      // backbeat snare, a tom fill or a building snare roll every 4 bars, crash to start each phrase
+      const bar = song.bar, six = beat / 4;
+      const kick = (st, v = 0.6) => { tone({ freq: 130, glide: 0.35, t: st, d: 0.14, vol: v * 0.7, bus: out }); noise({ t: st, freq: 3500, q: 1.5, d: 0.012, vol: v * 0.25, bus: out }); };
+      const snare = (st, v = 0.34) => { noise({ t: st, freq: 1900, q: 0.6, d: 0.18, vol: v, bus: out }); tone({ freq: 190, glide: 0.8, t: st, d: 0.08, vol: v * 0.6, type: 'triangle', bus: out }); };
+      const middle = bar % 16 >= 8;
+      const fill = bar % 4 === 3;
+      for (let i = 0; i < 16; i++) {
+        const st = t + i * six;
+        noise({ t: st, freq: 8000, q: 0.7, d: 0.03, vol: i % 4 === 0 ? 0.045 : 0.022, type: 'highpass', bus: out });
+        if (middle ? true : [0, 3, 6, 8, 10].includes(i)) kick(st, middle ? (i % 2 ? 0.38 : 0.5) : 0.6);
+        if (fill && i >= 8) {
+          if (bar % 8 === 7) snare(st, 0.12 + (i - 8) * 0.03); // snare roll building up
+          else if (i % 2 === 0) tone({ freq: [260, 220, 180, 150][(i - 8) >> 1], glide: 0.55, t: st, d: 0.16, vol: 0.4, bus: out });
+        } else if (i === 4 || i === 12) snare(st);
       }
-      if (bar % 4 === 3 && bar % 8 !== 7) [0, 1, 2, 3].forEach((k) => tone({ freq: [240, 200, 160, 120][k], glide: 0.55, t: t + (3 + k / 4) * beat, d: 0.18, vol: 0.4, bus: out }));
       if (bar % 4 === 0) noise({ t, freq: 4500, q: 0.4, d: 1.6, vol: 0.11, type: 'highpass', bus: out });
     } else if (tr.perc === 'tambourine') for (let i = 0; i < steps; i++) {
       noise({ t: t + i * beat / 2, freq: 8000, q: 1.5, d: i % 2 ? 0.04 : 0.07, vol: i % 4 === 2 ? 0.07 : 0.035, type: 'bandpass', bus: out });
