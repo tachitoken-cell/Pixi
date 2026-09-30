@@ -186,10 +186,11 @@ const TRACKS = {
 };
 // pre-rendered tracks (seamless loops made with the Private repo's blender/scripts/music/compose.py)
 const FILE_TRACKS = {
-  battle: 'music/battle.mp3', // "Iron Gallop": dungeon fights
+  battle: 'music/battle.mp3', // "Bloodgate": dungeon fights
 };
 // where a track's main part starts, for jumping straight into the action after an ambush
-const MAIN_PART = { battle: 8.889 }; // Iron Gallop: after the 4-bar taiko intro, on the gong
+// (Bloodgate opens on its big hit, so it starts from the top)
+const MAIN_PART = {};
 const AMBUSH = 'music/ambush.mp3'; // "Sealed In": door slam and two alarm blasts
 const buffers = {};
 function loadBuffer(url) {
