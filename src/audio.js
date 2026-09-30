@@ -188,7 +188,9 @@ const TRACKS = {
 const FILE_TRACKS = {
   battle: 'music/battle.mp3', // "Iron Gallop": dungeon fights
 };
-const AMBUSH = 'music/ambush.mp3'; // "Sealed In": the room-lock stinger
+// where a track's main part starts, for jumping straight into the action after an ambush
+const MAIN_PART = { battle: 8.889 }; // Iron Gallop: after the 4-bar taiko intro, on the gong
+const AMBUSH = 'music/ambush.mp3'; // "Sealed In": door slam and two alarm blasts
 const buffers = {};
 function loadBuffer(url) {
   buffers[url] = buffers[url] || fetch(url).then((r) => r.arrayBuffer()).then((a) => new Promise((res, rej) => ctx.decodeAudioData(a, res, rej)));
@@ -232,10 +234,10 @@ function compose(tr) { // 16 bars: A (8) then A' (first half repeated, new endin
 }
 
 let current = null, pendingTrack = null, timer = null;
-function startTrack(name) {
+function startTrack(name, offset = 0) {
   const gain = ctx.createGain();
-  gain.gain.value = 0;
-  gain.gain.setTargetAtTime(1, ctx.currentTime, FILE_TRACKS[name] ? 0.4 : 1.2);
+  gain.gain.value = offset ? 1 : 0; // jumping in mid-track hits at full volume
+  if (!offset) gain.gain.setTargetAtTime(1, ctx.currentTime, FILE_TRACKS[name] ? 0.4 : 1.2);
   gain.connect(musicBus);
   let song;
   if (FILE_TRACKS[name]) {
@@ -246,7 +248,7 @@ function startTrack(name) {
       const src = ctx.createBufferSource();
       src.buffer = buf; src.loop = true;
       src.connect(gain);
-      src.start();
+      src.start(0, offset % buf.duration);
       song.src = src;
     }).catch(() => { /* file missing: stay silent */ });
   } else {
@@ -270,11 +272,11 @@ export function playMusic(name) {
   current.name = name;
 }
 
-// room lock: the music fades out, the door slams and the alarm sounds, then the fight music
-// (`then`) starts from its beginning as the alarm rings out
+// room lock: the music cuts out, the door slams with two alarm blasts, then the fight music
+// (`then`) comes straight in at its main part
 export function ambush(then = 'battle') {
   if (!ctx) return;
-  const lead = 3.6; // seconds from the slam until the fight music comes in
+  const lead = 1.35; // seconds from the slam until the fight music comes in
   if (current) {
     const old = current;
     old.gain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.15);
@@ -294,7 +296,7 @@ export function ambush(then = 'battle') {
     lockedUntil = 0;
     const name = afterLock;
     afterLock = null;
-    if (name) { startTrack(name); current.name = name; }
+    if (name) { startTrack(name, name === then ? MAIN_PART[name] || 0 : 0); current.name = name; }
   }, lead * 1000);
 }
 
