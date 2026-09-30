@@ -5,7 +5,8 @@
 import * as THREE from 'three';
 import { ToonMat } from './anime.js';
 import { GLTFLoader } from '../vendor/GLTFLoader.js';
-import { Character } from './character.js';
+import * as SkeletonUtils from '../vendor/SkeletonUtils.js';
+import { Character, LOCO_SPEED } from './character.js';
 
 const loader = new GLTFLoader();
 const cache = new Map();
@@ -69,6 +70,7 @@ export class ModelCharacter extends Character {
   }
 
   attach(gltf) {
+    if (gltf.scene.getObjectByName('mixamorigHips')) return this.attachMixamo(gltf);
     const model = gltf.scene.clone(true);           // clone: several characters may share one file
     // skinned meshes need their skeleton re-bound to the cloned bones
     const byName = {};
@@ -106,7 +108,7 @@ export class ModelCharacter extends Character {
 
   update(dt) {
     super.update(dt);
-    this.sync();
+    if (this.mix) this.syncMixamo(dt); else this.sync();
   }
 
   sync() {
@@ -162,6 +164,169 @@ export class ModelCharacter extends Character {
         const axis = X_AXIS.clone().applyQuaternion(armD);
         holder.quaternion.premultiply(_q.setFromAxisAngle(axis, bend));
       }
+    }
+  }
+
+  // ---------------------------------------------------------------- rigged + animated models (Mixamo skeleton)
+  // The model's own clips play for idle, walking, running, the wounded walk and the attacks. Everything the clips
+  // don't cover (skills, sit, wave, cheer, hit, death...) is the procedural pose retargeted onto the same bones,
+  // with a short crossfade between the two.
+  locomote(speed, turn) { super.locomote(speed, turn); this.locoSpeedSeen = speed; this.drivenAt = this.clock; }
+
+  attachMixamo(gltf) {
+    const model = SkeletonUtils.clone(gltf.scene);
+    model.traverse((o) => {
+      if (!o.isSkinnedMesh) return;
+      o.castShadow = true; o.frustumCulled = false;
+      const lambert = (m) => new ToonMat({ map: m.map, color: m.map ? 0xffffff : m.color });
+      o.material = Array.isArray(o.material) ? o.material.map(lambert) : lambert(o.material);
+    });
+    let top = 1.7;
+    model.traverse((o) => { if (o.isSkinnedMesh) { o.geometry.computeBoundingBox(); top = o.geometry.boundingBox.max.y; } });
+    model.scale.setScalar(this.procHeight / top);
+    this.root.add(model);
+    this.model = model;
+    const B = (n) => model.getObjectByName('mixamorig' + n);
+    this.mx = { hips: B('Hips'), bones: [] };
+    this.root.updateMatrixWorld(true);
+    const rootInv = this.root.getWorldQuaternion(new THREE.Quaternion()).invert();
+    const rq = (o) => rootInv.clone().multiply(o.getWorldQuaternion(new THREE.Quaternion()));
+    // the bind pose is a T-pose: turn the arms down so "no rotation" matches the procedural arms hanging down
+    const down = { Left: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -Math.PI / 2 + 0.2),
+      Right: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI / 2 - 0.2) };
+    const map = { Hips: { group: 'body' }, Spine: { group: 'torso' }, Head: { group: 'neck' },
+      LeftUpLeg: { group: 'legL' }, RightUpLeg: { group: 'legR' }, LeftLeg: { parent: 'LeftUpLeg', key: 'kneeL' }, RightLeg: { parent: 'RightUpLeg', key: 'kneeR' },
+      LeftFoot: { parent: 'LeftLeg', key: 'footL' }, RightFoot: { parent: 'RightLeg', key: 'footR' },
+      LeftArm: { group: 'armL', side: 'Left' }, RightArm: { group: 'armR', side: 'Right' },
+      LeftForeArm: { parent: 'LeftArm', key: 'elbowL', side: 'Left' }, RightForeArm: { parent: 'RightArm', key: 'elbowR', side: 'Right' },
+      LeftHand: { parent: 'LeftForeArm', side: 'Left' }, RightHand: { parent: 'RightForeArm', side: 'Right' } };
+    // every bone in hierarchy order, with its bind rotation (local and root space)
+    this.mx.hips.traverse((o) => {
+      if (!o.isBone) return;
+      const name = o.name.replace('mixamorig', ''), m = map[name] || {};
+      let rest = rq(o);
+      if (m.side) rest = down[m.side].clone().multiply(rest);
+      this.mx.bones.push({ bone: o, name, group: m.group && this[m.group], parent: m.parent, key: m.key, rest, restLocal: o.quaternion.clone() });
+    });
+    this.mx.by = Object.fromEntries(this.mx.bones.map((b) => [b.name, b]));
+    this.mx.hipsRest = this.mx.hips.position.clone();
+    this.mx.hipsParentQ = rq(this.mx.hips.parent);
+    // clips: keep them in place (no drift), face forward, split the attack combo into two strikes
+    const mixer = new THREE.AnimationMixer(model);
+    const clip = (n) => gltf.animations.find((a) => a.name === n);
+    const inPlace = (c) => {
+      for (const tr of c.tracks) if (tr.name.endsWith('Hips.position')) {
+        const v = tr.values, x0 = v[0], z0 = v[2];
+        for (let i = 0; i < v.length; i += 3) { v[i] = x0; v[i + 2] = z0; }
+      }
+      return c;
+    };
+    const faceForward = (c) => {           // take out the clip's average turn of the hips
+      const tr = c.tracks.find((t) => t.name.endsWith('Hips.quaternion'));
+      if (!tr) return c;
+      const q = new THREE.Quaternion(), e = new THREE.Euler();
+      let sum = 0;
+      for (let i = 0; i < tr.values.length; i += 4) { q.fromArray(tr.values, i); sum += e.setFromQuaternion(q, 'YXZ').y; }
+      const fix = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -sum / (tr.values.length / 4));
+      for (let i = 0; i < tr.values.length; i += 4) { q.fromArray(tr.values, i).premultiply(fix).toArray(tr.values, i); }
+      return c;
+    };
+    const A = {};
+    for (const n of ['Idle', 'Walk', 'Run', 'Tired']) if (clip(n)) {
+      const c = inPlace(n === 'Idle' ? faceForward(clip(n).clone()) : clip(n).clone());
+      A[n] = mixer.clipAction(c); A[n].play(); A[n].setEffectiveWeight(0);
+    }
+    const atk = clip('Attack') && inPlace(clip('Attack').clone());
+    if (atk) {
+      const fps = 30;
+      A.Strike1 = mixer.clipAction(faceForward(THREE.AnimationUtils.subclip(atk, 'Strike1', Math.round(0.2 * fps), Math.round(0.95 * fps), fps)));
+      A.Strike2 = mixer.clipAction(faceForward(THREE.AnimationUtils.subclip(atk, 'Strike2', Math.round(0.95 * fps), Math.round(1.8 * fps), fps)));
+      A.Combo = mixer.clipAction(faceForward(atk));
+      for (const k of ['Strike1', 'Strike2', 'Combo']) { A[k].setLoop(THREE.LoopOnce); A[k].clampWhenFinished = true; }
+    }
+    this.mix = { mixer, A, w: 1, strike: 0, oneShot: null, loco: { Idle: 1, Walk: 0, Run: 0, Tired: 0 } };
+    // weapon grip: the fist is between the hand bone and the middle fingertip
+    this.mx.fingerR = B('RightHandMiddle4'); this.mx.fingerL = B('LeftHandMiddle4');
+    this.body.traverse((o) => { if (o.isMesh) o.visible = false; });
+    this.mixSetup = true;
+  }
+
+  syncMixamo(dt) {
+    const { mixer, A } = this.mix, mx = this.mx;
+    this.root.updateMatrixWorld(true);
+    const rootInv = this.root.getWorldQuaternion(new THREE.Quaternion()).invert();
+    // which one-shots the model's own clips play; everything else is procedural
+    const CLIP_SHOTS = { attack: () => (this.mix.strike ^= 1) ? 'Strike1' : 'Strike2', strongHit: () => 'Strike2', beatUp: () => 'Combo' };
+    const shot = this.oneShot && CLIP_SHOTS[this.state] && A.Strike1 ? this.state : null;
+    if (shot && this.mix.oneShotFor !== this.shotSeq) {
+      this.mix.oneShotFor = this.shotSeq;
+      const act = A[CLIP_SHOTS[shot]()];
+      const D = this.duration(this.state);
+      act.reset(); act.setEffectiveWeight(1); act.timeScale = act.getClip().duration / D; act.fadeIn(0.06); act.play();
+      if (this.mix.oneShot && this.mix.oneShot !== act) this.mix.oneShot.fadeOut(0.08);
+      this.mix.oneShot = act;
+    }
+    if (!shot && this.mix.oneShot) { this.mix.oneShot.fadeOut(0.15); this.mix.oneShot = null; this.mix.oneShotFor = null; }
+    const procedural = !shot && (this.oneShot || !['idle', 'walk', 'run', 'sprint'].includes(this.base) || this.base === 'sit');
+    // locomotion weights from the real speed (idle -> walk -> run), the wounded walk when HP is low
+    const spd = this.clock - (this.drivenAt ?? -9) < 0.25 ? this.locoSpeedSeen : (LOCO_SPEED[this.base] ?? 0);
+    const L = { Idle: 0, Walk: 0, Run: 0, Tired: 0 };
+    const moving = Math.min(1, spd / 1.2);
+    L.Idle = 1 - moving;
+    if (this.tired && A.Tired) L.Tired = moving;
+    else { const t = Math.max(0, Math.min(1, (spd - 2.3) / 2.9)); L.Walk = moving * (1 - t); L.Run = moving * t; }
+    const k = 1 - Math.exp(-dt * 10);
+    for (const n of Object.keys(L)) if (A[n]) {
+      this.mix.loco[n] += (L[n] - this.mix.loco[n]) * k;
+      A[n].setEffectiveWeight(this.mix.loco[n] * (this.mix.oneShot ? 0.02 : 1));
+    }
+    // the clips' natural speeds (world units / s) set how fast they play, so the feet match the ground
+    const native = { Walk: 2.6, Run: 6.2, Tired: 1.2 };
+    if (A.Walk) A.Walk.timeScale = Math.max(0.5, Math.min(1.8, (spd || 2.3) / native.Walk));
+    if (A.Run) A.Run.timeScale = Math.max(0.6, Math.min(1.6, (spd || 5.2) / native.Run));
+    if (A.Tired) A.Tired.timeScale = Math.max(0.6, Math.min(2.5, (spd || 1.2) / 2.2));
+    mixer.update(dt);
+    // crossfade to the procedural pose
+    this.mix.w += ((procedural ? 1 : 0) - this.mix.w) * (1 - Math.exp(-dt * 14));
+    const w = this.mix.w;
+    if (w > 0.002) {
+      const R = {}, delta = {};
+      let parentQ = mx.hipsParentQ;
+      for (const b of mx.bones) {
+        const pq = b.bone.parent && R[b.bone.parent.name] ? R[b.bone.parent.name] : parentQ;
+        let want;
+        if (b.group) {
+          delta[b.name] = rootInv.clone().multiply(b.group.getWorldQuaternion(new THREE.Quaternion()));
+          want = delta[b.name].clone().multiply(b.rest);
+        } else if (b.parent && delta[b.parent]) {
+          const d = delta[b.parent].clone();
+          if (b.key) d.multiply(new THREE.Quaternion().setFromAxisAngle(X_AXIS, this.pose[b.key] || 0));
+          delta[b.name] = d;
+          want = d.clone().multiply(b.rest);
+        } else want = pq.clone().multiply(b.restLocal);
+        R[b.bone.name] = want;
+        const local = pq.clone().invert().multiply(want);
+        b.bone.quaternion.slerp(local, w);
+      }
+      // body bob / crouch from the procedural hips height
+      const dy = (this.body.position.y - this.bodyRestY) / this.model.scale.y;
+      _v.copy(mx.hipsRest); _v.y += dy;
+      mx.hips.position.lerp(_v, w);
+    }
+    this.model.updateMatrixWorld(true);
+    // weapons follow the real hands; the wrist angle of the procedural pose still turns them
+    for (const side of ['handR', 'handL']) {
+      const S = side === 'handR' ? 'Right' : 'Left';
+      const hb = mx.by[S + 'Hand'].bone, tip = side === 'handR' ? mx.fingerR : mx.fingerL;
+      hb.getWorldPosition(_v);
+      if (tip) _v.lerp(tip.getWorldPosition(_v2), 0.45);
+      const holder = this.holders[side];
+      holder.position.copy(this.root.worldToLocal(_v));
+      const hand = this[side];
+      // bone frame -> the procedural arm frame it replaces, then the procedural wrist turn
+      const boneQ = rootInv.clone().multiply(hb.getWorldQuaternion(new THREE.Quaternion()));
+      const restFix = mx.by[S + 'Hand'].rest.clone().invert();
+      holder.quaternion.copy(boneQ).multiply(restFix).multiply(hand.quaternion);
     }
   }
 

@@ -1662,7 +1662,8 @@ function updatePlayer(dt) {
   ch.root.rotation.y += turnStep;
   // tell the animation the real speed and turn rate (step rhythm, leaning into curves)
   player.turn = (player.turn || 0) + ((turnStep / Math.max(dt, 1e-3)) - (player.turn || 0)) * Math.min(1, dt * 8);
-  if (state.anim === 'run') ch.locomote(speedNow, player.turn);
+  ch.locomote(speedNow, player.turn);
+  ch.tired = hero.hp < maxHp() * 0.25;            // wounded: the shaky walk (rigged model)
   ch.root.position.copy(player.pos);
 
   camDt = dt;

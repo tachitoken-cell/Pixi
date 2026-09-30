@@ -1047,6 +1047,7 @@ export class Character {
     this.holding = !!a.hold;
     this.state = name;
     this.oneShot = true;
+    this.shotSeq = (this.shotSeq || 0) + 1;          // lets a rigged model start its own clip for each new one-shot
     this.t = 0;
     this.firedEvents = new Set();
   }

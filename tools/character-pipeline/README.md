@@ -40,3 +40,12 @@ from the carved head, body texels from the sheet's front and back figures where 
 agrees with the part, the outfit's plain colours on the sides.
 
     python build_v3.py adventurer_textured.blend fuse1.blend adventurer.glb [preview_dir]
+
+## Current: the Meshy rig (`merge_meshy.mjs`)
+
+`models/adventurer-rig.glb` is the Meshy AI Adventurer (Mixamo skeleton) with five clips merged from the separate
+exports: Idle (Alert), Walk, Run, Attack and Tired (the elderly shaky walk), with a 1024 JPEG colour texture
+(`node merge_meshy.mjs out.glb`, needs @gltf-transform and sharp). In the game (`src/model-character.js`,
+`attachMixamo`) idle / walk / run / tired blend by the hero's real speed, the attack clip is split into two
+strikes that alternate (the full combo is Beat Up), and every other animation is the procedural pose retargeted
+onto the same bones with a short crossfade. The sword follows the right hand bone.
