@@ -746,6 +746,25 @@ const ANIMS = {
         headX: -0.2 * k, legLX: -0.3 * j * k, legRX: -0.3 * j * k, legLZ: 0.1 * k, legRZ: -0.1 * k };
     },
   },
+  // stagger, fall onto the back with the arms spread, lie still (hold: keeps the last pose until
+  // another animation is played, e.g. after a revive)
+  death: {
+    dur: 1.25, hold: true,
+    pose(t, c, D) {
+      const p = Math.min(1, t / D);
+      const stagger = seg(p, 0, 0.25), fall = seg(p, 0.2, 0.72) ** 2, land = seg(p, 0.7, 0.86), settle = seg(p, 0.86, 1);
+      const bounce = Math.sin(land * Math.PI) * (1 - settle) * 0.07;
+      return {
+        bodyX: -1.48 * fall, bodyY: -0.08 * stagger * (1 - fall) - 0.56 * fall + bounce, bodyZ: 0.08 * stagger * (1 - fall),
+        torsoX: -0.3 * stagger * (1 - fall) + 0.08 * fall, torsoY: 0.15 * stagger * (1 - fall),
+        headX: -0.35 * stagger * (1 - fall) + 0.2 * fall, headZ: 0.35 * settle, headY: 0.2 * settle,
+        armLX: 0.4 * stagger * (1 - fall) - 0.5 * fall, armRX: 0.4 * stagger * (1 - fall) - 0.3 * fall,
+        armLZ: 0.16 + 1.15 * fall, armRZ: -0.16 - 0.95 * fall,
+        legLX: 0.25 * stagger * (1 - fall) + 0.18 * fall, legRX: -0.1 * fall, legLZ: 0.12 * fall, legRZ: -0.08 * fall,
+        wRX: 0.6 * fall, wLX: 0.4 * fall,
+      };
+    },
+  },
   hit: {
     dur: 0.45,
     pose(t, c, D) {
@@ -854,7 +873,7 @@ Object.assign(ANIMS, {
   },
 });
 
-export const ANIM_NAMES = ['idle', 'walk', 'run', 'attack', 'skill', 'wave', 'victory', 'sit', 'hit'];
+export const ANIM_NAMES = ['idle', 'walk', 'run', 'attack', 'skill', 'wave', 'victory', 'sit', 'hit', 'death'];
 
 // ---------------------------------------------------------------- character
 export class Character {
@@ -949,7 +968,12 @@ export class Character {
   play(name) {
     const a = ANIMS[name];
     if (!a) return;
-    if (a.loop) { this.base = name; if (!this.oneShot) { this.state = name; this.t = 0; } return; }
+    if (a.loop) {
+      this.base = name;
+      if (!this.oneShot || this.holding) { this.oneShot = false; this.holding = false; this.state = name; this.t = 0; }
+      return;
+    }
+    this.holding = !!a.hold;
     this.state = name;
     this.oneShot = true;
     this.t = 0;
@@ -980,7 +1004,10 @@ export class Character {
       for (const [at, name] of ev) {
         if (this.t / D >= at && !this.firedEvents.has(at)) { this.firedEvents.add(at); this.onEvent?.(name, this); }
       }
-      if (this.t >= D) { this.oneShot = false; this.state = this.base; this.t = 0; }
+      if (this.t >= D) {
+        if (a.hold) this.t = D;                  // stay in the final pose (death) until something else plays
+        else { this.oneShot = false; this.state = this.base; this.t = 0; }
+      }
     } else {
       if (this.state !== this.base) { this.state = this.base; this.t = 0; }
       target = a.pose(this.clock, c);

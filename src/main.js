@@ -616,8 +616,9 @@ function die() {
   hero.dead = true;
   player.sitting = false;
   player.pending = player.target = null;
-  chars[state.cls].play('hit');
-  setTimeout(() => { if (hero.dead) openDeath(); }, 900);
+  chars[state.cls].play('death');
+  setTimeout(() => audio.sfx('thud'), 850);          // hits the ground
+  setTimeout(() => { if (hero.dead) openDeath(); }, 1700);
 }
 const deathEl = $('#death');
 function openDeath() { deathEl.hidden = false; updateDeath(); }
@@ -655,6 +656,8 @@ function returnToVillage() {
     setTimeout(() => {
       enterMap(START_MAP, null);
       hero.dead = false;
+      chars[state.cls].play('idle');                   // get up again
+      state.anim = 'idle';
       hero.hp = Math.round(maxHp() * 0.6);
       hero.mp = Math.round(maxMp() * 0.6);
       for (const m of Object.values(maps).flatMap((mp) => mp.monsters)) if (m.state === 'chase' || m.state === 'attack') { m.state = 'return'; m.provoked = false; }
@@ -847,10 +850,11 @@ function place(el, pos, y) {
 }
 function updateLabels() {
   for (const m of map.monsters) {
-    const el = plate(m, m.t.boss ? 'mob boss' : 'mob', `<b>${m.t.boss ? '<em>BOSS</em> ' : ''}Lv.${m.t.lv} ${m.t.name}</b><i><u></u></i>`);
+    const el = plate(m, m.t.boss ? 'mob boss' : 'mob', `<span class="alert">!</span><b>${m.t.boss ? '<em>BOSS</em> ' : ''}Lv.${m.t.lv} ${m.t.name}</b><i><u></u></i>`);
     const near = m.alive && distTo(m) < (m.t.boss ? 30 : 20);
     if (!near) { el.style.display = 'none'; continue; }
     el.classList.toggle('sel', m === game.target);
+    el.classList.toggle('alerted', m.alert > 0);
     el.classList.toggle('hurt', !m.t.static && m.hp < m.maxHp);
     el.lastChild.firstChild.style.width = pct(m.hp, m.maxHp);
     place(el, m.pos, m.height + 0.5);
@@ -1190,6 +1194,7 @@ function updatePlayer(dt) {
   const ctx = {
     dt, player: player.pos, playerAlive: !hero.dead, safe: !!map.def.safe,
     walkable: map.walkable, heightAt: map.heightAt, attack: monsterAttack, respawnPoint: map.randomSpawn,
+    onNotice: () => audio.sfx('alert'),
   };
   for (const m of map.monsters) m.update(ctx);
   for (const n of map.npcs) n.ch.update(dt);

@@ -147,6 +147,10 @@ const SFX = {
   portal() { tone({ freq: 200, glide: 4, a: 0.2, d: 0.6, vol: 0.12, type: 'sine', vib: 0.03 }); noise({ freq: 800, sweep: 5, q: 2, a: 0.25, d: 0.5, vol: 0.12 }); },
   stones() { const t = ctx.currentTime; for (let i = 0; i < 5; i++) noise({ t: t + i * 0.05 + Math.random() * 0.03, freq: 2500 + Math.random() * 1500, q: 4, d: 0.04, vol: 0.12 }); },
   heal() { const t = ctx.currentTime; [79, 84, 88].forEach((n, i) => tone({ freq: midi(n), t: t + i * 0.12, d: 0.6, vol: 0.06, type: 'sine' })); },
+  // a monster noticed the hero: two quick rising notes
+  alert() { const t = ctx.currentTime; tone({ freq: midi(81), t, d: 0.08, vol: 0.09, type: 'square', filter: 2600 }); tone({ freq: midi(88), t: t + 0.07, d: 0.14, vol: 0.1, type: 'square', filter: 2600 }); },
+  // the hero's body hits the ground
+  thud() { tone({ freq: 90, glide: 0.5, d: 0.25, vol: 0.35, type: 'sine' }); noise({ freq: 250, d: 0.18, vol: 0.22, type: 'lowpass' }); },
   die() { const t = ctx.currentTime; [67, 63, 60, 55].forEach((n, i) => tone({ freq: midi(n), t: t + i * 0.22, d: 0.5, vol: 0.12, type: 'triangle' })); },
   talk() { const t = ctx.currentTime; for (let i = 0; i < 3; i++) tone({ freq: midi(74 + Math.floor(Math.random() * 5)), t: t + i * 0.07, d: 0.05, vol: 0.06, type: 'square', filter: 2000 }); },
   click() { tone({ freq: 1200, d: 0.03, vol: 0.05, type: 'triangle' }); },

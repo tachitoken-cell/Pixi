@@ -27,6 +27,11 @@ export const MONSTER_TYPES = {
   frostalpha: { name: 'Alpha Frost Wolf', lv: 14, hp: 5400, atk: 55, def: 18, speed: 3.4, xp: 1300, jobXp: 320, model: 'wolf', aggro: 12, color: 0xd8ecff, dark: 0x5a86b8, size: 2.2, boss: true, respawn: 90 },
 };
 
+// every monster notices the hero inside its awareness range (aggressive types have a larger one)
+export const AWARENESS = 4.5;
+const NOTICE_PAUSE = 0.45;   // seconds a monster stops and stares before it gives chase
+const ALERT_TIME = 1.4;      // seconds the "!" stays over its head
+
 const BOX = new THREE.BoxGeometry(1, 1, 1);
 function box(parent, w, h, d, color, x = 0, y = 0, z = 0) {
   const soft = Math.min(w, h, d) >= 0.09;
@@ -178,7 +183,11 @@ export class Monster {
     this.deadFor = 0;
     this.provoked = false;
     this.walking = false;
+    this.alert = 0;          // > 0 while the "!" is shown
+    this.noticeFor = 0;
   }
+
+  get awareness() { return this.t.aggro ?? AWARENESS; }
 
   get alive() { return this.state !== 'dead'; }
   get pos() { return this.root.position; }
@@ -189,6 +198,7 @@ export class Monster {
     this.flash = 0.18;
     if (this.t.static) { this.hp = this.maxHp; return false; }
     this.hp -= n;
+    if (!this.provoked) this.alert = ALERT_TIME;
     this.provoked = true;
     if (this.hp <= 0) {
       this.hp = 0;
@@ -206,6 +216,8 @@ export class Monster {
     this.flash = Math.max(0, this.flash - dt);
     this.lunge = Math.max(0, this.lunge - dt);
     this.atkCd = Math.max(0, this.atkCd - dt);
+    this.alert = Math.max(0, this.alert - dt);
+    this.noticeFor = Math.max(0, this.noticeFor - dt);
     const p = this.root.position;
 
     if (this.state === 'dead') {
@@ -228,7 +240,12 @@ export class Monster {
         this.state = 'return';
         this.provoked = false;
       }
-    } else if (this.provoked || (this.t.aggro && dPlayer < this.t.aggro)) {
+    } else if (this.provoked || dPlayer < this.awareness) {
+      if (!this.provoked) {                          // just noticed the hero: "!" and a short stare
+        this.alert = ALERT_TIME;
+        this.noticeFor = NOTICE_PAUSE;
+        ctx.onNotice?.(this);
+      }
       this.state = dPlayer < 1.5 + (this.size - 1) * 0.7 ? 'attack' : 'chase';
       this.provoked = true;
     }
@@ -252,6 +269,7 @@ export class Monster {
       if (p.distanceTo(this.home) < 0.5) { this.state = 'idle'; this.hp = this.maxHp; }
     } else if (this.state === 'chase') {
       goal = ctx.player; speed = this.t.speed;
+      if (this.noticeFor > 0) { this.face(toPlayer, dt, 10); goal = null; }
       if (dPlayer < 1.4 + (this.size - 1) * 0.7) { goal = null; this.state = 'attack'; }
     } else if (this.state === 'attack') {
       this.face(toPlayer, dt, 10);
