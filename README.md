@@ -111,21 +111,43 @@ The game runs in mobile Safari and Chrome.
 
 ## Adventurer skills
 
-Skills unlock by **Job level** (`src/skills.js`). You earn Job XP from kills (and from hitting the dummy); the
+You start with **auto-attack only**: click a monster (or press Space) and the hero keeps swinging until it falls.
+The hotbar starts with just two actions: **1 Sit** (rest to heal fast) and **2 Catch** (see Companions).
+Other skills unlock by **Job level** (`src/skills.js`), but you must **learn them from Skill Master Kael** on the
+Mossvale plaza. His window (or **K** anywhere) lets you put skills on slots 1–0: pick a skill, then click a slot;
+click a filled slot to clear it. You earn Job XP from kills (and from hitting the dummy); the
 "Unlock all" button in the HUD jumps to Job Lv. 20 for testing.
 
-| Key | Job Lv. | Skill | What it does |
-|---|---|---|---|
-| Space / 1 | 1 | Swing | basic melee attack with the wooden sword |
-| 2 | 2 | Shooting Slingshot | ranged shot, uses 1 stone |
-| 3 | 4 | Strong Hit | heavy melee blow, 1.8x damage |
-| 4 | 6 | Target Shooting | aimed slingshot shot, never misses, uses 1 stone |
-| 5 | 8 | Energy Bolt | magic projectile (elemental damage) |
-| 6 | 10 | Spinning Hit | spin attack that hits everything around you |
-| 7 | 12 | Shout of Combat | self buff: attack +30% for 20 s |
-| 8 | 15 | Beat Up | three-hit melee combo |
-| 9 | 17 | Shout of Morale | self buff: defence +30%, hit chance +15% for 20 s |
-| 0 | 19 | Charging Attack | rush to the enemy (up to 10 m) and strike |
+| Job Lv. | Skill | What it does |
+|---|---|---|
+| 1 | Swing | basic melee attack = auto-attack (Space / click a monster) |
+| 2 | Shooting Slingshot | ranged shot, uses 1 stone |
+| 4 | Strong Hit | heavy melee blow, 1.8x damage |
+| 6 | Target Shooting | aimed slingshot shot, never misses, uses 1 stone |
+| 8 | Energy Bolt | magic projectile (elemental damage) |
+| 10 | Spinning Hit | spin attack that hits everything around you |
+| 12 | Shout of Combat | self buff: attack +30% for 20 s |
+| 15 | Beat Up | three-hit melee combo |
+| 17 | Shout of Morale | self buff: defence +30%, hit chance +15% for 20 s |
+| 19 | Charging Attack | rush to the enemy (up to 10 m) and strike |
+
+## Tutorial and Training Grounds
+
+The first time you play, **Guide Nora** walks you through the basics: walk to the Training Grounds, defeat 3
+monsters with auto-attack, catch a companion, sit, and visit Kael. Every step has a **Skip tutorial** button, and
+talking to Nora (plaza, next to the statue) replays it. Finishing gives 2 Saat and 100 gold.
+
+The **Training Grounds** are the fenced pen north-west of the plaza (the town hall moved to the north-west corner of
+town). Training Jellies and Hoppers (Lv. 1) live there. They never leave the pen, fight back even though the town is
+a safe zone, and return 6 seconds after they fall: an easy place for your first levels.
+
+## Companions (Catch)
+
+Hit a monster until its HP is **below 50%**, then use **Catch** (slot 2, 5 MP, range 6, 4 s cooldown). Weaker and
+lower-level monsters are easier to catch; if it breaks free, try again. Bosses and the dummy can't be caught.
+Your first catch follows you right away: it attacks your target (auto-attack or any monster that is fighting you),
+gets the XP of every kill and levels up (up to Lv. 70). You can keep up to 10; manage them in the Miniland menu
+(**L → NosMates**): take one along, leave it at home, or release it. They are saved with your Miniland.
 
 Stones for the slingshot (40 max) are refilled by walking over a grey stone pile (Mossvale, Clover Fields, Pebble Coast).
 
@@ -139,8 +161,9 @@ Stones for the slingshot (40 max) are refilled by walking over a grey stone pile
 | Q / E | turn the camera (90° steps in Classic) |
 | Drag (mouse or one finger) | turn the camera in 360° view |
 | Mouse wheel / pinch | zoom |
-| Click / tap a monster | attack it |
-| Space, 1–0 | skills (see above) |
+| Click / tap a monster, or Space | auto-attack it |
+| 1 / 2 | Sit / Catch |
+| 3–0 | skills you set up (K opens the skill window) |
 | Click a villager | talk |
 | F / R / X | wave / cheer / sit |
 
@@ -152,6 +175,8 @@ Stones for the slingshot (40 max) are refilled by walking over a grey stone pile
 | `manifest.webmanifest`, `icons/` | home-screen app info and icons for iOS and Android |
 | `src/classes.js` | class colours, hair style, outfit, weapon, stats |
 | `src/skills.js` | Adventurer skill list, job levels, cooldowns |
+| `src/tutorial.js` | Guide Nora's skippable tutorial |
+| `src/companions.js` | caught monster companions (follow, fight, level up) |
 | `src/character.js` | builds the voxel model, rig and all animations |
 | `src/audio.js` | synthesized sound effects and the per-map soundtrack |
 | `src/pet.js` | the dachshund companion model and animation |

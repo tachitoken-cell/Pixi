@@ -5,6 +5,9 @@ import { mat, BLOB_GEO, BLOB_MAT, roundBox } from './character.js';
 
 export const MONSTER_TYPES = {
   dummy:  { name: 'Training Dummy', lv: 1, hp: 1e9, atk: 0, def: 0, speed: 0, xp: 0, jobXp: 3, model: 'dummy', static: true },
+  // ---- Training Grounds in Mossvale: weak, never leave their pen, come back fast
+  tjelly:  { name: 'Training Jelly', lv: 1, hp: 40, atk: 3, def: 0, speed: 1.5, xp: 12, jobXp: 8, model: 'slime', color: 0xa8e07a, dark: 0x6aa84a, training: true, leash: 7, respawn: 6 },
+  thopper: { name: 'Training Hopper', lv: 1, hp: 55, atk: 4, def: 0, speed: 2.2, xp: 16, jobXp: 10, model: 'bunny', color: 0xf4ecd8, dark: 0xd8b898, training: true, leash: 7, respawn: 6 },
   jelly:  { name: 'Jelly', lv: 1, hp: 70, atk: 7, def: 0, speed: 1.7, xp: 14, jobXp: 9, model: 'slime', color: 0x7ccf5a, dark: 0x4f9a3a },
   hopper: { name: 'Hopper', lv: 2, hp: 95, atk: 9, def: 1, speed: 2.6, xp: 20, jobXp: 12, model: 'bunny', color: 0xe8dcc8, dark: 0xc8a888 },
   shroom: { name: 'Shroomling', lv: 4, hp: 170, atk: 15, def: 3, speed: 2.0, xp: 38, jobXp: 20, model: 'mushroom', aggro: 6, color: 0xc8483a, dark: 0x8a2a20 },
@@ -226,7 +229,7 @@ export class Monster {
       this.root.scale.setScalar(this.size * (1 - k * 0.9));
       this.root.rotation.z = k * 1.2;
       if (k >= 1) this.root.visible = false;
-      if (this.deadFor > (this.t.respawn ?? 14)) this.respawn(this.t.boss ? this.spawn : ctx.respawnPoint());
+      if (this.deadFor > (this.t.respawn ?? 14)) this.respawn(this.t.boss ? this.spawn : this.area ? this.randomInArea(ctx) : ctx.respawnPoint());
       this.animate(dt, false);
       return;
     }
@@ -234,8 +237,9 @@ export class Monster {
 
     const toPlayer = ctx.player.clone().sub(p).setY(0);
     const dPlayer = toPlayer.length();
-    const leash = p.distanceTo(this.home) > 16;
-    if (leash || !ctx.playerAlive || ctx.safe) {
+    // pen monsters (Training Grounds) may chase anywhere inside their pen, others stay near home
+    const leash = this.area ? !this.inArea(p, 0.5) : p.distanceTo(this.home) > (this.t.leash ?? 16);
+    if (leash || !ctx.playerAlive || (ctx.safe && !this.t.training)) {
       if (this.state === 'chase' || this.state === 'attack') {
         this.state = 'return';
         this.provoked = false;
@@ -305,6 +309,21 @@ export class Monster {
     let dy = want - this.root.rotation.y;
     dy = Math.atan2(Math.sin(dy), Math.cos(dy));
     this.root.rotation.y += dy * Math.min(1, dt * k);
+  }
+
+  inArea(p, pad = 0) {
+    const [x0, z0, x1, z1] = this.area;
+    return p.x > x0 - pad && p.x < x1 + pad && p.z > z0 - pad && p.z < z1 + pad;
+  }
+
+  // a free spot inside this monster's spawn area [x0, z0, x1, z1] (Training Grounds)
+  randomInArea(ctx) {
+    const [x0, z0, x1, z1] = this.area;
+    for (let i = 0; i < 20; i++) {
+      const x = x0 + 1.5 + Math.random() * (x1 - x0 - 3), z = z0 + 1.5 + Math.random() * (z1 - z0 - 3);
+      if (ctx.walkable(x, z)) return new THREE.Vector3(x, ctx.heightAt ? ctx.heightAt(x, z) : this.spawn.y, z);
+    }
+    return this.spawn.clone();
   }
 
   respawn(at) {

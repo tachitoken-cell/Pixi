@@ -14,17 +14,18 @@ export const MAPS = {
       { id: 'south', edge: 'south', at: 0, to: 'miniland', toPortal: 'exit' },
       { id: 'west', edge: 'west', at: 0, to: 'brookhollow', toPortal: 'east' },
     ],
-    monsters: [{ type: 'dummy', at: [10, -10] }],
+    monsters: [{ type: 'dummy', at: [10, -10] }, { type: 'tjelly', n: 5, area: [-35, -35, -13, -13] }, { type: 'thopper', n: 4, area: [-35, -35, -13, -13] }],
     stones: [-9, 10],
     town: {
       plaza: 14,
+      pens: [[-35, -35, -13, -13]],                 // Training Grounds: weak monsters that never leave
       streets: [
         [[-72, 0], [72, 0]], [[0, -72], [0, 72]],
         [[-42, -42], [42, -42], [42, 42], [-42, 42], [-42, -42]],
         [[-42, -21], [-70, -21]], [[-42, 21], [-70, 21]], [[42, 21], [70, 21]], [[-21, 42], [-21, 70]], [[21, -42], [21, -70]],
       ],
-      reserve: [[15, -9, 38, 9], [-35, -35, -13, -13], [13, -35, 35, -13], [-35, 13, -13, 35], [13, 13, 35, 35], [44, -74, 74, -44], [44, 44, 74, 74]],
-      fixedHouses: [[-24, -24, 4, 0, 2.0], [24, -24, 2, 0, 1.7], [-24, 24, 1, Math.PI, 1.5], [24, 24, 3, Math.PI, 1.6]],
+      reserve: [[15, -9, 38, 9], [-35, -35, -13, -13], [-72, -72, -46, -46], [13, -35, 35, -13], [-35, 13, -13, 35], [13, 13, 35, 35], [44, -74, 74, -44], [44, 44, 74, 74]],
+      fixedHouses: [[-58, -60, 4, 0, 2.0], [24, -24, 2, 0, 1.7], [-24, 24, 1, Math.PI, 1.5], [24, 24, 3, Math.PI, 1.6]],
       props: [
         ['mtent', 19, -6, { v: 0 }], ['mtent', 27, -6, { v: 1 }], ['mtent', 35, -6, { v: 2 }],
         ['mtent', 19, 6, { v: 3, ry: Math.PI }], ['mtent', 27, 6, { v: 0, ry: Math.PI }], ['mtent', 35, 6, { v: 1, ry: Math.PI }],
@@ -36,6 +37,8 @@ export const MAPS = {
       farms: [[46, -72, 72, -46]],
       parks: [[58, 58, 12]],
       npcs: [
+        ['guide', 'Guide Nora', [-3, -9], 'Hello, Adventurer! Talk to me any time to replay the tutorial. The Training Grounds are just north-west of here.', { guide: true, ry: Math.PI / 4 }],
+        ['sage', 'Skill Master Kael', [10, 3], 'Skills are earned with Job Levels. Come to me to learn them, and set them on your bar.', { skills: true, ry: -Math.PI / 2 }],
         ['elder', 'Elder Moss', [5, 5], 'Welcome to Mossvale! Beyond the gates: Clover Fields (east), Whisperwood (north), Brookhollow (west). Your Miniland gate is south.'],
         ['master', 'Class Master Oren', [-5, 6], 'At Job Level 20 I can guide you onto a new path: Knight, Ranger or Mage.'],
         ['mimi', 'Mimi Mentor', [19, -2], 'Tents, chests, carpets, minigames… everything for your Miniland! Open the menu with L.', { shop: 'miniland', ry: 0 }],
@@ -45,7 +48,7 @@ export const MAPS = {
         ['guard', 'Guard Bram', [66, 6], 'Clover Fields lies east. Jellies and Hoppers: easy prey for a new Adventurer.', { ry: -Math.PI / 2 }],
         ['guard', 'Guard Hilda', [6, -66], 'North is the Whisperwood. Wolves bite hard, and the caves beyond are worse.', { ry: 0 }],
         ['guard', 'Guard Tobin', [-66, -6], 'The road west leads to Brookhollow, our farming village.', { ry: Math.PI / 2 }],
-        ['noble', 'Mayor Aldwin', [-24, -14], 'Mossvale has grown five times over! We owe it to adventurers like you.'],
+        ['noble', 'Mayor Aldwin', [-58, -48], 'Mossvale has grown five times over! We owe it to adventurers like you.'],
         ['innkeeper', 'Innkeeper Rosa', [24, -14], 'Sit down anywhere to rest and heal. My stew is the best in the realm!'],
         ['smith', 'Blacksmith Doran', [-19, 18], 'Four dungeons lie around Mossvale. Each hides a boss; bring Saat.'],
         ['priestess', 'Priestess Liora', [24, 15], 'When you fall, Saat lets you rise where you stand. Five of them, once every few minutes.'],

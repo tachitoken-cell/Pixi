@@ -16,6 +16,7 @@ import * as THREE from 'three';
 import { prop } from './props.js';
 import { PROP_MAT } from './voxel.js';
 import './miniland-props.js';
+import { MAX_MATES, mateXpNeeded } from './companions.js';
 
 const SAVE_KEY = 'voxelquest-miniland-v2';
 export const PP_MAX = 2000;
@@ -66,7 +67,7 @@ export const SHOP_ITEMS = { bell: { name: 'Bell of Sweet Home', price: 150, desc
 
 function defaultState() {
   return { gold: 0, bells: 3, coupons: 0, pp: PP_MAX, ppDay: today(), locked: false, message: 'Welcome to my Miniland!',
-    visits: { total: 0, today: 0, day: today() }, storage: {}, placed: [], games: {}, bag: {}, wh: {}, petHome: false, gift: true, uid: 1 };
+    visits: { total: 0, today: 0, day: today() }, storage: {}, placed: [], games: {}, bag: {}, wh: {}, petHome: false, gift: true, uid: 1, mates: [], activeMate: null };
 }
 function load() {
   try {
@@ -77,7 +78,7 @@ function load() {
 }
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-export function createMiniland({ $, toast, audio, fx, game, player, placeLabel, labelsEl, bellTravel }) {
+export function createMiniland({ $, toast, audio, fx, game, player, placeLabel, labelsEl, bellTravel, onMates }) {
   const st = load();
   const save = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify(st)); } catch { /* not saved */ } };
   const refreshDay = () => {
@@ -282,8 +283,8 @@ export function createMiniland({ $, toast, audio, fx, game, player, placeLabel, 
     if (win.hidden) return;
     const inside = !!map;
     const res = residence();
-    for (const t of win.querySelectorAll('[data-tab]')) { t.classList.toggle('on', t.dataset.tab === tab); t.hidden = !inside && t.dataset.tab !== 'overview' && t.dataset.tab !== 'bag'; }
-    if (!inside && tab !== 'overview' && tab !== 'bag') tab = 'overview';
+    for (const t of win.querySelectorAll('[data-tab]')) { t.classList.toggle('on', t.dataset.tab === tab); t.hidden = !inside && !['overview', 'bag', 'mates'].includes(t.dataset.tab); }
+    if (!inside && !['overview', 'bag', 'mates'].includes(tab)) tab = 'overview';
     const B = $('#ml-body');
     if (tab === 'overview') {
       B.innerHTML = `
@@ -329,7 +330,12 @@ export function createMiniland({ $, toast, audio, fx, game, player, placeLabel, 
     } else if (tab === 'mates') {
       const kennel = st.placed.some((e) => e.id === 'kennel');
       B.innerHTML = `<div class="ml-game"><b>Dachshund</b><small>${st.petHome ? `Staying home${kennel ? ' by his kennel' : ''} in the Miniland.` : 'Travelling with you.'}</small>
-        <div class="ml-row"><button id="ml-pet">${st.petHome ? 'Take him along' : 'Leave him at home'}</button></div></div>`;
+        <div class="ml-row"><button id="ml-pet">${st.petHome ? 'Take him along' : 'Leave him at home'}</button></div></div>
+        <h4>Caught companions <small>${st.mates.length} / ${MAX_MATES} · one travels with you, the others wait here</small></h4>
+        ${st.mates.map((m) => `<div class="ml-game"><b>Lv.${m.lv} ${esc(m.name)}${m.id === st.activeMate ? ' <span class="ml-tag">With you</span>' : ''}</b>
+          <small>XP ${m.lv >= 70 ? 'MAX' : `${m.xp} / ${mateXpNeeded(m.lv)}`} · ${m.id === st.activeMate ? 'Fights at your side and levels up from kills.' : 'Resting in the Miniland.'}</small>
+          <div class="ml-row"><button data-mate-go="${m.id}">${m.id === st.activeMate ? 'Leave at home' : 'Take along'}</button><button data-mate-free="${m.id}">Release</button></div></div>`).join('')
+          || '<p class="ml-empty">No companions yet. Weaken a monster below 50% HP and use Catch (slot 2).</p>'}`;
     }
     const q = (s) => win.querySelector(s);
     q('#ml-message') && (q('#ml-message').onchange = (e) => { st.message = e.target.value.trim() || 'Welcome to my Miniland!'; save(); });
@@ -343,6 +349,18 @@ export function createMiniland({ $, toast, audio, fx, game, player, placeLabel, 
       st.bells--; save(); closeWindow();
     });
     q('#ml-pet') && (q('#ml-pet').onclick = () => { st.petHome = !st.petHome; save(); render(); });
+    for (const b of win.querySelectorAll('[data-mate-go]')) b.onclick = () => {
+      const id = Number(b.dataset.mateGo);
+      st.activeMate = st.activeMate === id ? null : id;
+      audio.sfx('click'); save(); onMates?.(); render();
+    };
+    for (const b of win.querySelectorAll('[data-mate-free]')) b.onclick = () => {
+      if (!b.classList.contains('confirm')) { b.classList.add('confirm'); b.textContent = 'Click again to release'; return; }
+      const id = Number(b.dataset.mateFree);
+      st.mates = st.mates.filter((m) => m.id !== id);
+      if (st.activeMate === id) st.activeMate = null;
+      audio.sfx('pop'); toast('Your companion returned to the wild.'); save(); onMates?.(); render();
+    };
     for (const b of win.querySelectorAll('[data-repair]')) b.onclick = () => { const gs = st.games[b.dataset.repair]; st.gold -= DUR_MAX - gs.dur; gs.dur = DUR_MAX; audio.sfx('heal'); save(); render(); };
     for (const b of win.querySelectorAll('[data-upgrade]')) b.onclick = () => {
       const id = b.dataset.upgrade, gs = st.games[id], up = UPGRADE[gs.tier + 1];

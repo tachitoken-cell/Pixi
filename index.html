@@ -69,8 +69,9 @@
     <b>Controls</b>
     <span><kbd>WASD</kbd> / click ground: move</span>
     <span>Hold <kbd>Shift</kbd>: sprint</span>
-    <span>Click a monster: attack it</span>
-    <span><kbd>Space</kbd> Swing · <kbd>1</kbd>–<kbd>0</kbd> skills</span>
+    <span>Click a monster / <kbd>Space</kbd>: auto-attack</span>
+    <span><kbd>1</kbd> Sit · <kbd>2</kbd> Catch · <kbd>3</kbd>–<kbd>0</kbd> skills</span>
+    <span><kbd>K</kbd>: skills (learn them from Kael)</span>
     <span><kbd>V</kbd>: classic ↔ 360° view · <kbd>Q</kbd> <kbd>E</kbd>: turn</span>
     <span>Mouse wheel: zoom</span>
     <span><kbd>F</kbd> wave · <kbd>R</kbd> cheer · <kbd>X</kbd> sit (heal)</span>
@@ -154,6 +155,19 @@
       <p id="mg-score" class="mg-score" aria-live="polite"></p>
       <button id="mg-start" class="primary">Start</button>
       <div id="mg-result" hidden></div>
+    </div>
+  </div>
+  <div id="tut" hidden aria-live="polite"></div>
+  <div id="skillwin" hidden role="dialog" aria-labelledby="sw-title">
+    <div class="ml-box">
+      <div class="ml-head">
+        <div><small class="cp-eyebrow" id="sw-who">Your skills</small><h2 id="sw-title">Skills</h2></div>
+        <button id="sw-close" aria-label="Close">×</button>
+      </div>
+      <h4>Skill bar</h4>
+      <div id="sw-bar"></div>
+      <p id="sw-hint" class="ml-note"></p>
+      <div id="sw-list"></div>
     </div>
   </div>
   <div id="death" hidden>

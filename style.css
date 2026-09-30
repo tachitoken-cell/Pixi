@@ -465,3 +465,40 @@ body.play #view { filter: saturate(1.12) contrast(1.03); }
 .mg-reward i { width: 12px; height: 12px; border-radius: 3px; }
 .mg-box { width: min(560px, 100%); }
 @media (max-width: 520px) { .ml-stats { grid-template-columns: 1fr; } }
+
+/* tutorial (Guide Nora) */
+#tut { position: fixed; top: calc(270px + env(safe-area-inset-top, 0px)); right: calc(20px + env(safe-area-inset-right, 0px)); z-index: 22; width: min(330px, calc(100vw - 32px)); background: var(--panel); border: 2px solid #ffd24a88; border-radius: 14px; padding: 12px 14px; box-shadow: 0 12px 34px #0009; }
+#tut[hidden] { display: none; }
+#tut small { color: var(--gold); font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+#tut b { display: block; font-family: 'Pixelify Sans', monospace; font-size: 18px; margin: 2px 0 4px; }
+#tut p { margin: 0 0 8px; font-size: 13px; line-height: 1.45; color: var(--text); }
+.tut-count { font-weight: 800; color: var(--gold); margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+.tut-buttons { display: flex; gap: 8px; }
+.tut-buttons button { padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff10; font-weight: 800; font-size: 12px; }
+.tut-buttons button.primary { background: var(--gold); color: #2b2210; border-color: transparent; }
+/* skill window (Skill Master Kael / K) */
+#skillwin { position: fixed; inset: 0; z-index: 24; display: grid; place-items: center; background: #15161ab0; padding: 16px; }
+#skillwin[hidden] { display: none; }
+#sw-close { width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--line); background: #ffffff10; font-size: 20px; line-height: 1; }
+#sw-bar { display: flex; gap: 5px; flex-wrap: wrap; }
+#sw-bar .slot { width: 42px; height: 42px; }
+.sw-skill { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 10px; background: #ffffff08; margin-bottom: 6px; border: 2px solid transparent; }
+.sw-skill[data-pick] { cursor: pointer; }
+.sw-skill.pick { border-color: var(--gold); background: #ffd24a14; }
+.sw-skill img { width: 40px; height: 40px; image-rendering: pixelated; border-radius: 6px; }
+.sw-skill small { display: block; color: var(--muted); font-size: 11.5px; }
+.sw-skill p { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
+.sw-skill button { padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff10; font-weight: 800; white-space: nowrap; }
+.sw-skill button.primary { background: var(--gold); color: #2b2210; border-color: transparent; }
+/* hotbar: auto-attack slot, empty slots, active sit */
+.slot.empty { background: #0002; border-style: dashed; border-color: #ffffff22; }
+.slot.aa kbd { font-size: 9px; }
+.slot .aa-tag { position: absolute; right: 2px; bottom: 2px; font-size: 8px; font-weight: 800; padding: 0 3px; border-radius: 3px; background: #0009; color: var(--muted); }
+.slot.aa.on, .slot.on { border-color: var(--gold); box-shadow: 0 0 10px #ffd24a88; }
+.slot.aa.on .aa-tag { color: var(--gold); }
+.ml-tag { font-size: 10px; font-weight: 800; padding: 1px 6px; border-radius: 5px; background: var(--gold); color: #2b2210; vertical-align: middle; }
+.ml-game button.confirm { background: #c8483a; color: #fff; }
+/* companion name plate and damage */
+.matename { position: absolute; transform: translate(-50%, -100%); pointer-events: none; white-space: nowrap; text-align: center; font-weight: 800; font-size: 11px; color: #c8f59a; text-shadow: 0 1px 2px #000, 0 0 3px #000; }
+.matename small { display: block; font-size: 9px; color: #ff9ac0; letter-spacing: 1px; }
+.dmg.mate { color: #c8f59a; font-size: 18px; }

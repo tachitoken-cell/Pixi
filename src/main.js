@@ -10,6 +10,8 @@ import { SEE_THROUGH } from './voxel.js';
 import { MAPS, START_MAP } from './maps.js';
 import * as audio from './audio.js';
 import { Dachshund } from './pet.js';
+import { CompanionEntity, MAX_MATES, mateXpNeeded } from './companions.js';
+import { createTutorial } from './tutorial.js';
 import { CLASS_SKILLS, MAX_JOB, MAX_LEVEL, CLASS_CHANGE_JOB, BUFF_TIME, MAX_STONES, jobXpNeeded } from './skills.js';
 
 // ---------------------------------------------------------------- renderer / scene
@@ -84,7 +86,10 @@ const state = {
 const player = { pos: new THREE.Vector3(0, 0, 0), yaw: 0, target: null, sitting: false, dash: null, pending: null };
 // Adventurer progression and combat state
 const game = { heroClass: 'adventurer', time: 0, jobLv: 1, jobXp: 0, stones: MAX_STONES, cds: {}, buffs: { atk: 0, def: 0 }, casting: null, auraIn: 0, target: null, travelling: false, combatUntil: 0,
-  saat: 5, saatReadyAt: 0, shieldUntil: 0 };
+  saat: 5, saatReadyAt: 0, shieldUntil: 0,
+  aa: false,                                  // auto-attack: keeps using the basic attack on the target
+  bar: ['sit', 'catch', null, null, null, null, null, null, null, null], // hotbar slots 1-0 (skill ids or actions)
+  learned: new Set(['swing']) };              // skills learned from Skill Master Kael (the basic attack is known)
 // Saat: revive where you fell with 50% HP and MP; costs 5 and then has a cooldown
 const SAAT_COST = 5, SAAT_CD = 300, SAAT_DROP = 0.12;
 const clockText = (sec) => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
@@ -108,7 +113,11 @@ const keys = new Set();
 // ---------------------------------------------------------------- UI
 const $ = (s) => document.querySelector(s);
 const labels = $('#labels');
-const miniland = createMiniland({ $, toast, audio, fx, game, player, placeLabel: (el, pos, y) => place(el, pos, y), labelsEl: labels, bellTravel: () => bellTravel() });
+const miniland = createMiniland({ $, toast, audio, fx, game, player, placeLabel: (el, pos, y) => place(el, pos, y), labelsEl: labels, bellTravel: () => bellTravel(), onMates: () => syncMate() });
+const tutorial = createTutorial({ $, audio, toast, player, getMapId: () => map?.def.id,
+  fx: () => { const ch = chars[state.cls]; fx.ring(ch.root.position, 0xffd24a, 2.6, 0.08, 0.7); },
+  reward: () => { game.saat += 2; miniland.addGold(100); } });
+scene.add(tutorial.arrow);
 let homeReturn = null;   // where the Miniland exit leads: { id, portalId } or { id, pos, yaw }
 
 function renderInfo() {
@@ -330,17 +339,18 @@ addEventListener('keydown', (e) => {
   const slot = e.code === 'Space' ? 0 : e.code.startsWith('Digit') ? (Number(e.code.slice(5)) + 9) % 10 : -1;
   if (slot >= 0 && !e.repeat) {
     e.preventDefault();
-    if (state.mode === 'play') useSkill(slot);
+    if (state.mode === 'play') { if (e.code === 'Space') startAutoAttack(); else useSlot(slot); }
     else if (CLASSES[state.cls].starter) playAnim(SKILLS[slot].anim);
     else if (slot < 2) playAnim(slot ? 'skill' : 'attack');
   }
   if (k === 'f') action('wave');
   if (k === 'l' && !e.repeat) goToMiniland();
-  if (k === 'escape') miniland.closeAll();
+  if (k === 'escape') { miniland.closeAll(); closeSkills(); }
+  if (k === 'k' && !e.repeat && state.mode === 'play') { if (skillWin.hidden) openSkills(false); else closeSkills(); }
   if (k === 'v') toggleCam();
   if (state.camMode === 'classic' && !e.repeat && (k === 'q' || k === 'e')) state.camYawGoal += (k === 'q' ? 1 : -1) * Math.PI / 2;
   if (k === 'r') { if (miniland.mode?.install) miniland.rotate(); else action('victory'); }
-  if (k === 'x') { if (state.anim === 'sit') playAnim('idle'); else playAnim('sit'); }
+  if (k === 'x') toggleSit();
 });
 addEventListener('keyup', (e) => keys.delete(e.key.toLowerCase()));
 addEventListener('blur', () => keys.clear());
@@ -437,6 +447,9 @@ function enterMap(id, portalId) {
   ch.root.position.copy(player.pos);
   ch.root.rotation.y = player.yaw;
   pet.root.position.copy(player.pos).add(new THREE.Vector3(1.2, 0, -0.8));
+  game.aa = false;
+  syncMate();
+  mate?.place(player.pos);
   applyMapLook();
   audio.playMusic(map.def.music || map.def.theme);
   snapCamera();
@@ -525,6 +538,7 @@ function useSkill(i) {
     }
   }
   player.pending = null;
+  if (i === 0 && sk.kind !== 'buff' && game.target?.alive) game.aa = true;   // the basic attack keeps going on its own
   game.cds[sk.id] = game.time + sk.cd;
   if (sk.ammo) game.stones -= sk.ammo;
   hero.mp -= sk.mp;
@@ -612,24 +626,133 @@ function hitMonster(m, sk, extra, delay) {
     game.target = m;
     game.combatUntil = game.time + 5;
     if (m.t.static) gainJobXp(m.t.jobXp);
-    if (m.damage(dmg)) {
-      audio.sfx('pop');
-      fx.burst(m.pos.clone().setY(0.6), m.t.color ?? 0xffffff, 18, 3.5, 0.12);
-      gainXp(m.t.xp);
-      gainJobXp(m.t.jobXp);
-      let loot = '';
-      const gold = m.t.static ? 0 : m.t.boss ? 300 : Math.round(m.t.lv * 6 * (0.7 + Math.random() * 0.6));
-      if (gold) { miniland.addGold(gold); loot += `  +${gold} gold`; }
-      if (m.t.boss) {
-        game.saat += 3;
-        fx.ring(m.pos, 0xffd66b, 5, 0.1, 1.2);
-        audio.sfx('jobUp');
-        setTimeout(() => toast(`${map.def.name} cleared! +3 Saat`, 5000), 900);
-      } else if (!m.t.static && Math.random() < SAAT_DROP) { game.saat++; loot += '  +1 Saat'; }
-      toast(`${m.t.name} defeated  +${m.t.xp} XP  +${m.t.jobXp} Job XP${loot}`);
-      if (game.target === m) game.target = null;
-    }
+    if (m.damage(dmg)) onMonsterKilled(m);
   }, delay);
+}
+
+// rewards for a defeated monster (by the hero or the companion)
+function onMonsterKilled(m) {
+  audio.sfx('pop');
+  fx.burst(m.pos.clone().setY(0.6), m.t.color ?? 0xffffff, 18, 3.5, 0.12);
+  gainXp(m.t.xp);
+  gainJobXp(m.t.jobXp);
+  let loot = '';
+  const gold = m.t.static ? 0 : m.t.boss ? 300 : Math.round(m.t.lv * 6 * (0.7 + Math.random() * 0.6));
+  if (gold) { miniland.addGold(gold); loot += `  +${gold} gold`; }
+  if (m.t.boss) {
+    game.saat += 3;
+    fx.ring(m.pos, 0xffd66b, 5, 0.1, 1.2);
+    audio.sfx('jobUp');
+    setTimeout(() => toast(`${map.def.name} cleared! +3 Saat`, 5000), 900);
+  } else if (!m.t.static && Math.random() < SAAT_DROP) { game.saat++; loot += '  +1 Saat'; }
+  if (mate && !m.t.static && mate.gainXp(m.t.xp)) {
+    fx.ring(mate.pos, 0x9be86a, 2, 0.08, 0.7);
+    audio.sfx('jobUp');
+    setTimeout(() => toast(`${mate.data.name} reached Lv. ${mate.data.lv}!`), 700);
+  }
+  if (mate) miniland.save();
+  toast(`${m.t.name} defeated  +${m.t.xp} XP  +${m.t.jobXp} Job XP${loot}`);
+  if (game.target === m) { game.target = null; game.aa = false; }
+  tutorial.event('kill');
+}
+
+// ---------------------------------------------------------------- hotbar actions, auto-attack, Catch, companions
+// actions that sit on the bar next to learned skills
+const ACTIONS = {
+  sit: { id: 'sit', name: 'Sit', icon: ['#7ab86a', '#2e5a28'], desc: 'Sit down to rest: HP and MP recover much faster.', cd: 0, mp: 0, jobLv: 1 },
+  catch: { id: 'catch', name: 'Catch', icon: ['#e86a8a', '#7a1e3a'], desc: 'Catch a weakened monster (HP below 50%) as your companion. It fights at your side and levels up with you.', cd: 4, mp: 5, jobLv: 1, range: 6 },
+};
+const barEntry = (id) => ACTIONS[id] || SKILLS.find((sk) => sk.id === id) || null;
+function toggleSit() {
+  if (state.mode !== 'play') return playAnim(state.anim === 'sit' ? 'idle' : 'sit');
+  if (hero.dead) return;                            // during an attack or emote the hero sits down right after it
+  game.aa = false;
+  if (state.anim === 'sit') playAnim('idle');
+  else { player.target = player.pending = null; playAnim('sit'); tutorial.event('sit'); }
+}
+function useSlot(i) {
+  const id = game.bar[i];
+  if (!id) return;
+  if (id === 'sit') return toggleSit();
+  if (id === 'catch') return tryCatch();
+  const idx = SKILLS.findIndex((sk) => sk.id === id);
+  if (idx >= 0) useSkill(idx);
+}
+// Space / clicking a monster: select the nearest monster and keep hitting it with the basic attack
+function startAutoAttack() {
+  if (hero.dead || game.dialog) return;
+  if (!game.target?.alive) game.target = nearestMonster(SKILLS[0].kind === 'ranged' ? SKILLS[0].range + 2 : 9);
+  if (!game.target) return toast('No monster nearby.');
+  game.aa = true;
+  useSkill(0);
+}
+
+function tryCatch() {
+  const ch = chars[state.cls], A = ACTIONS.catch;
+  if (ch.busy || hero.dead || game.travelling || game.dialog) return;
+  if ((game.cds.catch || 0) > game.time) return;
+  const deny = (msg) => { audio.sfx('denied'); toast(msg, 3000); };
+  const m = game.target?.alive ? game.target : nearestMonster(A.range);
+  if (!m) return deny('Select a monster to catch.');
+  if (m.t.static || m.t.boss) return deny(`${m.t.name} cannot be caught.`);
+  if (mates().length >= MAX_MATES) return deny(`You already have ${MAX_MATES} companions. Release one in the Miniland menu (L → NosMates).`);
+  if (m.hp > m.maxHp * 0.5) return deny(`Weaken ${m.t.name} first: its HP must be below 50%.`);
+  if (hero.mp < A.mp) return deny('Not enough MP. Sit down to recover.');
+  game.target = m;
+  if (distTo(m) > A.range) { player.pending = { catch: true, tgt: m }; return; }
+  if (player.sitting) { player.sitting = false; state.anim = 'idle'; }
+  player.pending = player.target = null;
+  game.aa = false;
+  game.cds.catch = game.time + A.cd;
+  hero.mp -= A.mp;
+  const d = m.pos.clone().sub(player.pos);
+  player.yaw = ch.root.rotation.y = Math.atan2(d.x, d.z);
+  ch.play('wave');
+  audio.sfx('talk');
+  fx.ring(m.pos, 0xff8ab8, 1.6, 0.06, 0.6);
+  setTimeout(() => {
+    if (!m.alive) return;
+    // weaker (lower HP) and lower-level monsters are easier to catch
+    const chance = Math.min(0.95, Math.max(0.15, 0.4 + (0.5 - m.hp / m.maxHp) * 1.1 + (hero.lv - m.t.lv) * 0.05));
+    if (Math.random() > chance) {
+      audio.sfx('miss');
+      popDamage(m.pos, m.height, 'ESCAPED');
+      return toast(`${m.t.name} broke free! Try again.`);
+    }
+    m.hp = 0; m.state = 'dead'; m.deadFor = 0;
+    if (game.target === m) game.target = null;
+    fx.burst(m.pos.clone().setY(0.8), 0xff8ab8, 30, 4, 0.13, 2);
+    fx.ring(m.pos, 0xffffff, 2.4, 0.08, 0.8);
+    audio.sfx('levelUp');
+    const st = miniland.state;
+    const data = { id: st.uid++, type: m.typeId, lv: m.t.lv, xp: 0, name: m.t.name };
+    st.mates.push(data);
+    const first = !st.activeMate || !mate;
+    if (first) st.activeMate = data.id;
+    miniland.save();
+    syncMate();
+    if (first) mate?.place(player.pos);
+    toast(first ? `You caught a ${m.t.name}! It is your companion now.` : `You caught a ${m.t.name}! It waits in your Miniland (L → NosMates).`, 4000);
+    tutorial.event('catch');
+  }, 650);
+}
+
+// the companion travelling with the hero (one at a time)
+const mates = () => miniland.state.mates;
+let mate = null;
+function syncMate() {
+  const want = mates().find((d) => d.id === miniland.state.activeMate) || null;
+  if (mate?.data === want) return;
+  if (mate) { scene.remove(mate.root); mate.plate?.remove(); }
+  mate = want ? new CompanionEntity(want) : null;
+  if (mate) { scene.add(mate.root); mate.place(player.pos); mate.m.root.traverse((o) => { if (o.isMesh) o.castShadow = false; }); }
+}
+function mateHit(m, dmg) {
+  if (!m.alive || !map.monsters.includes(m)) return;
+  popDamage(m.pos, m.height, dmg, 'mate');
+  audio.sfx('hit');
+  game.combatUntil = game.time + 5;
+  if (m.damage(dmg)) onMonsterKilled(m);
 }
 
 function monsterAttack(m) {
@@ -736,7 +859,7 @@ function setJobLv(lv) {
   fx.burst(ch.root.position.clone().setY(1.5), 0xffd66b, 26, 4, 0.13, 2);
   audio.sfx('jobUp');
   const ready = game.heroClass === 'adventurer' && lv >= CLASS_CHANGE_JOB;
-  toast(`Job Lv. ${lv}!${fresh.length ? ` New skill: ${fresh.join(', ')}` : ''}${ready ? ' Visit the Class Master in Mossvale to choose your class!' : ''}`, ready ? 5000 : 2200);
+  toast(`Job Lv. ${lv}!${fresh.length ? ` New skill at Skill Master Kael: ${fresh.join(', ')}` : ''}${ready ? ' Visit the Class Master in Mossvale to choose your class!' : ''}`, ready ? 5000 : 2200);
 }
 
 // ---------------------------------------------------------------- HUD (play mode)
@@ -752,6 +875,8 @@ function drawIcon(sk) {
   const line = (x0, y0, x1, y1, w = 1) => { for (let i = 0; i <= 20; i++) g.fillRect(Math.round(x0 + (x1 - x0) * i / 20), Math.round(y0 + (y1 - y0) * i / 20), w, w); };
   g.fillStyle = '#fff8e8';
   switch (sk.id) {
+    case 'sit': g.fillRect(5, 3, 4, 4); line(7, 7, 7, 10, 2); line(7, 10, 12, 10, 2); line(12, 10, 12, 14, 2); line(4, 9, 7, 9, 1); break;
+    case 'catch': g.strokeStyle = '#fff8e8'; g.lineWidth = 2; g.beginPath(); g.arc(8, 8, 5, 0, 6.3); g.stroke(); line(3, 8, 13, 8, 1); g.fillRect(7, 7, 3, 3); break;
     case 'swing': line(4, 12, 11, 5, 2); g.fillStyle = b; line(3, 10, 6, 13); break;
     case 'strong': line(3, 12, 11, 4, 3); g.fillStyle = b; px([[12, 3], [13, 2]]); break;
     case 'slingshot': case 'target':
@@ -774,20 +899,97 @@ function drawIcon(sk) {
   return c.toDataURL();
 }
 
+// ---------------------------------------------------------------- skill window (Skill Master Kael, or K)
+// Learn skills from Kael once your Job Level is high enough, then set skills and actions on slots 1-0:
+// pick a skill, then click the slot it should go on (click a filled slot with nothing picked to clear it).
+const skillWin = $('#skillwin');
+let skillPick = null, atKael = false;
+function openSkills(kael) {
+  atKael = kael;
+  skillPick = null;
+  game.dialog = true;
+  game.aa = false;
+  skillWin.hidden = false;
+  renderSkills();
+  if (kael) tutorial.event('skills');
+}
+function closeSkills() { if (skillWin.hidden) return; skillWin.hidden = true; game.dialog = false; skillPick = null; }
+function renderSkills() {
+  $('#sw-who').textContent = atKael ? 'Skill Master Kael' : 'Your skills';
+  const basic = SKILLS[0];
+  const row = (sk, status, btn) => `<div class="sw-skill${skillPick === sk.id ? ' pick' : ''}" ${btn === 'pick' ? `data-pick="${sk.id}"` : ''}>
+    <img src="${drawIcon(sk)}" alt=""><div><b>${sk.name}</b><small>${status}</small><p>${sk.desc}</p></div>
+    ${btn === 'learn' ? `<button class="primary" data-learn="${sk.id}">Learn</button>` : btn === 'pick' ? `<button data-pick="${sk.id}">${skillPick === sk.id ? 'Picked' : 'Set on bar'}</button>` : ''}</div>`;
+  const rows = [row(basic, 'Auto-attack · Space or click a monster', null), row(ACTIONS.sit, 'Action · always known', 'pick'), row(ACTIONS.catch, `Action · MP ${ACTIONS.catch.mp} · Cooldown ${ACTIONS.catch.cd}s`, 'pick')];
+  for (const sk of SKILLS.slice(1)) {
+    const info = `Job Lv. ${sk.jobLv}${sk.mp ? ` · MP ${sk.mp}` : ''} · Cooldown ${sk.cd}s`;
+    if (game.learned.has(sk.id)) rows.push(row(sk, `${info} · learned`, 'pick'));
+    else if (!isUnlocked(sk)) rows.push(row(sk, `${info} · reach Job Lv. ${sk.jobLv} first`, null));
+    else if (atKael) rows.push(row(sk, `${info} · ready to learn`, 'learn'));
+    else rows.push(row(sk, `${info} · learn it from Skill Master Kael in Mossvale`, null));
+  }
+  $('#sw-bar').innerHTML = game.bar.map((id, i) => {
+    const sk = id && barEntry(id);
+    return `<button class="slot${sk ? '' : ' empty'}" data-slot="${i}" title="${sk ? sk.name : 'Empty'}">${sk ? `<img src="${drawIcon(sk)}" alt="">` : ''}<kbd>${i === 9 ? 0 : i + 1}</kbd></button>`;
+  }).join('');
+  $('#sw-hint').textContent = skillPick ? `Now click a slot for ${barEntry(skillPick).name}.` : 'Pick a skill, then click a slot. Click a filled slot to clear it.';
+  $('#sw-list').innerHTML = rows.join('');
+  for (const b of skillWin.querySelectorAll('[data-learn]')) b.onclick = (e) => {
+    e.stopPropagation();
+    const sk = SKILLS.find((k) => k.id === b.dataset.learn);
+    game.learned.add(sk.id);
+    const free = game.bar.indexOf(null);
+    if (free >= 0) { game.bar[free] = sk.id; buildSlots(); }
+    audio.sfx('jobUp');
+    toast(`Learned ${sk.name}!${free >= 0 ? ` It is on slot ${free === 9 ? 0 : free + 1}.` : ''}`);
+    renderSkills();
+  };
+  for (const el of skillWin.querySelectorAll('[data-pick]')) el.onclick = (e) => {
+    e.stopPropagation();
+    skillPick = skillPick === el.dataset.pick ? null : el.dataset.pick;
+    audio.sfx('click');
+    renderSkills();
+  };
+  for (const b of skillWin.querySelectorAll('[data-slot]')) b.onclick = () => {
+    const i = Number(b.dataset.slot);
+    if (skillPick) {
+      const old = game.bar.indexOf(skillPick);
+      if (old >= 0) game.bar[old] = game.bar[i];           // swap when it already sits on another slot
+      game.bar[i] = skillPick;
+      skillPick = null;
+    } else game.bar[i] = null;
+    audio.sfx('click');
+    buildSlots();
+    renderSkills();
+  };
+}
+$('#sw-close').onclick = closeSkills;
+
 const hud = $('#hud');
 const slotsEl = $('#slots');
 let slotEls = [];
 function buildSlots() {
   slotsEl.innerHTML = '';
-  slotEls = SKILLS.map((sk, i) => {
+  // the basic attack is the auto-attack (Space), then slots 1-0 as set up in the skill window (K)
+  const basic = SKILLS[0];
+  const aa = document.createElement('button');
+  aa.className = 'slot aa';
+  aa.innerHTML = `<img src="${drawIcon(basic)}" alt=""><kbd>Space</kbd><span class="cd"></span><span class="aa-tag">AUTO</span>`;
+  aa.title = `${basic.name}: auto-attack\nClick a monster or press Space: your hero keeps attacking until it falls.`;
+  aa.onclick = startAutoAttack;
+  slotsEl.appendChild(aa);
+  slotEls = game.bar.map((id, i) => {
+    const sk = id && barEntry(id);
     const el = document.createElement('button');
-    el.className = 'slot';
-    el.innerHTML = `<img src="${drawIcon(sk)}" alt=""><kbd>${i === 9 ? 0 : i + 1}</kbd><span class="cd"></span><span class="lk">Job ${sk.jobLv}</span>${sk.ammo ? '<span class="ammo"></span>' : ''}`;
-    el.title = `${sk.name} (Job Lv. ${sk.jobLv})\n${sk.desc}\nMP ${sk.mp} · Cooldown ${sk.cd}s`;
-    el.onclick = () => useSkill(i);
+    el.className = sk ? 'slot' : 'slot empty';
+    el.innerHTML = sk ? `<img src="${drawIcon(sk)}" alt=""><kbd>${i === 9 ? 0 : i + 1}</kbd><span class="cd"></span>${sk.ammo ? '<span class="ammo"></span>' : ''}`
+      : `<kbd>${i === 9 ? 0 : i + 1}</kbd>`;
+    el.title = sk ? `${sk.name}\n${sk.desc}${sk.mp ? `\nMP ${sk.mp}` : ''}${sk.cd ? ` · Cooldown ${sk.cd}s` : ''}` : 'Empty slot: set up skills with Skill Master Kael, or press K';
+    el.onclick = () => (sk ? useSlot(i) : openSkills(false));
     slotsEl.appendChild(el);
     return el;
   });
+  slotEls.aa = aa;
 }
 buildSlots();
 $('#job-test').onclick = () => { if (game.jobLv < maxJob()) setJobLv(maxJob()); };
@@ -799,18 +1001,21 @@ function updateHud() {
   const full = game.jobLv >= maxJob();
   $('#job-fill').style.width = full ? '100%' : pct(game.jobXp, need);
   $('#job-xp').textContent = full ? (game.heroClass === 'adventurer' ? 'MAX · see the Class Master' : 'MAX') : `${game.jobXp} / ${need}`;
-  SKILLS.forEach((sk, i) => {
-    const el = slotEls[i];
-    el.classList.toggle('locked', !isUnlocked(sk));
-    el.classList.toggle('nomp', hero.mp < sk.mp);
-    const left = Math.max(0, (game.cds[sk.id] || 0) - game.time);
-    el.querySelector('.cd').style.height = `${(left / sk.cd) * 100}%`;
+  const cdOf = (sk) => (sk.cd ? Math.max(0, (game.cds[sk.id] || 0) - game.time) / sk.cd : 0);
+  slotEls.aa.classList.toggle('on', game.aa);
+  slotEls.aa.querySelector('.cd').style.height = `${cdOf(SKILLS[0]) * 100}%`;
+  game.bar.forEach((id, i) => {
+    const sk = id && barEntry(id), el = slotEls[i];
+    if (!sk) return;
+    el.classList.toggle('nomp', hero.mp < (sk.mp || 0));
+    el.classList.toggle('on', id === 'sit' && player.sitting);
+    el.querySelector('.cd').style.height = `${cdOf(sk) * 100}%`;
     if (sk.ammo) el.querySelector('.ammo').textContent = game.stones;
   });
   const b = [];
   if (game.buffs.atk > game.time) b.push(`<span class="buff atk">Combat ${Math.ceil(game.buffs.atk - game.time)}s</span>`);
   if (game.buffs.def > game.time) b.push(`<span class="buff def">Morale ${Math.ceil(game.buffs.def - game.time)}s</span>`);
-  if (SKILLS.some((sk) => sk.ammo)) b.push(`<span class="buff stones">Stones ${game.stones}</span>`);
+  if (SKILLS.some((sk) => sk.ammo && game.learned.has(sk.id))) b.push(`<span class="buff stones">Stones ${game.stones}</span>`);
   const saatCd = Math.max(0, game.saatReadyAt - game.time);
   b.push(`<span class="buff gold" title="Gold: buy and repair Miniland structures">Gold ${miniland.state.gold}</span>`);
   b.push(`<span class="buff saat" title="Saat: ${SAAT_COST} revive you where you fall with 50% HP and MP">Saat ${game.saat}${saatCd > 0 ? ` · ${clockText(saatCd)}` : ''}</span>`);
@@ -896,7 +1101,13 @@ function updateLabels() {
     el.lastChild.firstChild.style.width = pct(m.hp, m.maxHp);
     place(el, m.pos, m.height + 0.5);
   }
-  for (const n of map.npcs) place(plate(n, 'npcname', `<small>NPC</small>${n.name}`), n.pos, 3.9);
+  for (const n of map.npcs) place(plate(n, 'npcname', `<small>${n.guide ? 'Guide · tutorial' : n.skills ? 'Skills' : 'NPC'}</small>${n.name}`), n.pos, 3.9);
+  if (mate) {
+    const el = plate(mate, 'matename', '');
+    const html = `<small>Companion</small>Lv.${mate.data.lv} ${mate.data.name}`;
+    if (el.innerHTML !== html) el.innerHTML = html;
+    place(el, mate.pos, mate.m.height + 0.4);
+  }
   miniland.update();
   for (const p of map.portals) {
     const el = plate(p, 'portalname', '');
@@ -939,6 +1150,9 @@ $('#cp-close').onclick = closeClassPick;
 function changeClass(id) {
   game.heroClass = id;
   SKILLS = CLASS_SKILLS[id];
+  game.learned = new Set([SKILLS[0].id]);
+  game.bar = ['sit', 'catch', null, null, null, null, null, null, null, null];
+  game.aa = false;
   game.jobLv = 1;
   game.jobXp = 0;
   game.cds = {};
@@ -1016,7 +1230,7 @@ canvas.addEventListener('pointerup', (e) => {
   if (obj?.userData.monster) {
     const m = obj.userData.monster;
     game.target = m;
-    useSkill(0); // click a monster: attack it (walks there first when needed)
+    startAutoAttack(); // click a monster: auto-attack it (walks there first when needed)
     return;
   }
   if (obj?.userData.npc) return talk(obj.userData.npc);
@@ -1026,6 +1240,7 @@ canvas.addEventListener('pointerup', (e) => {
     player.target = hit;
     player.pending = null;
     player.sitting = false;
+    game.aa = false;
     fx.ring(hit, 0xffffff, 0.8, 0.06, 0.4);
   }
 });
@@ -1066,6 +1281,12 @@ function talk(npc) {
   npc.ch.play('wave');
   audio.sfx('talk');
   if (npc.shop) return miniland.openShop(npc.shop, npc.name);
+  if (npc.guide) {
+    if (tutorial.active) return toast(`${npc.name}: “Follow the golden arrow, you are doing great!”`, 4000);
+    toast(`${npc.name}: “Let's go through it again!”`, 3000);
+    return tutorial.replay();
+  }
+  if (npc.skills) { toast(`${npc.name}: “${npc.line}”`, 4000); return openSkills(true); }
   if (npc.classMaster) {
     if (game.heroClass !== 'adventurer') return toast(`${npc.name}: “You walk the path of the ${CLASSES[game.heroClass].name}. Your training continues.”`, 5000);
     if (game.jobLv < CLASS_CHANGE_JOB) return toast(`${npc.name}: “Come back when your Job Level is ${CLASS_CHANGE_JOB}. You are Job Lv. ${game.jobLv}.”`, 5000);
@@ -1095,7 +1316,7 @@ document.querySelectorAll('#emotes button').forEach((b) => (b.onclick = () => {
   if (b.dataset.emote === 'cam') return toggleCam();
   if (b.dataset.emote === 'miniland') return goToMiniland();
   if (b.dataset.emote === 'sprint') { state.sprint = !state.sprint; b.classList.toggle('on', state.sprint); return; }
-  if (b.dataset.emote === 'sit') { if (state.anim === 'sit') playAnim('idle'); else playAnim('sit'); }
+  if (b.dataset.emote === 'sit') toggleSit();
   else action(b.dataset.emote);
 }));
 $('#tframe').onclick = () => (game.target = null);
@@ -1177,16 +1398,23 @@ function updatePlayer(dt) {
     const cy = Math.cos(state.cam.yaw), sy = Math.sin(state.cam.yaw);
     move.set(move.x * cy + move.z * sy, 0, move.z * cy - move.x * sy);
   }
-  if (move.lengthSq() > 0) { player.target = null; player.pending = null; }
+  if (move.lengthSq() > 0) { player.target = null; player.pending = null; game.aa = false; }
   else if (player.pending) {
-    // walking toward a monster to use a skill on it
-    const { i, tgt } = player.pending;
+    // walking toward a monster to use a skill (or Catch) on it
+    const { i, tgt, catch: isCatch } = player.pending;
+    const reach = isCatch ? ACTIONS.catch.range : reachOf(SKILLS[i]);
     if (!tgt.alive) player.pending = null;
-    else if (distTo(tgt) <= reachOf(SKILLS[i])) { player.pending = null; useSkill(i); }
+    else if (distTo(tgt) <= reach) { player.pending = null; if (isCatch) tryCatch(); else useSkill(i); }
     else move.copy(tgt.pos).sub(player.pos).setY(0);
   } else if (player.target) {
     move.copy(player.target).sub(player.pos).setY(0);
     if (move.length() < 0.15) { player.target = null; move.set(0, 0, 0); }
+  }
+  // auto-attack: swing again whenever the basic attack is ready
+  if (game.aa) {
+    const t = game.target;
+    if (!t?.alive || hero.dead || player.sitting) game.aa = false;
+    else if (!player.pending && !ch.busy && !player.dash && hero.mp >= (SKILLS[0].mp || 0) && (game.cds[SKILLS[0].id] || 0) <= game.time) useSkill(0);
   }
   const walking = stickMag > 0.18 && stickMag < 0.6;
   const sprinting = !walking && (keys.has('shift') || state.sprint);
@@ -1288,6 +1516,11 @@ function updatePlayer(dt) {
     onNotice: () => audio.sfx('alert'),
   };
   for (const m of map.monsters) m.update(ctx);
+  if (mate) {
+    const t = game.target?.alive && !hero.dead && (game.aa || game.target.provoked) ? game.target : null;
+    mate.update({ dt, player: player.pos, yaw: player.yaw, target: t, heightAt: map.heightAt, walkable: map.walkable, hit: mateHit });
+  }
+  tutorial.update(game.time);
   for (const n of map.npcs) { if (n.wander) walkNpc(n, dt); n.ch.update(dt); }
   map.update(game.time, dt);
   if (game.target && !game.target.alive) game.target = null;
@@ -1368,6 +1601,7 @@ renderInfo();
 markAnim();
 for (const ch of Object.values(chars)) ch.root.rotation.y = state.view;
 setMode('play');
+tutorial.autostart();
 requestAnimationFrame(frame);
 $('#loading').classList.add('done');
 
@@ -1375,4 +1609,4 @@ $('#loading').classList.add('done');
 Object.assign(window, { changeClass, openClassPick, chars, state, setMode, selectClass, playAnim, game, player, hero, useSkill, enterMap, maps, getMap: () => map });
 
 // test hook, only with ?debug in the URL: lets automated checks jump between maps and trigger events
-if (new URLSearchParams(location.search).has('debug')) window.voxelQuest = { game, hero, player, state, enterMap, die, miniland, get map() { return map; }, maps };
+if (new URLSearchParams(location.search).has('debug')) window.voxelQuest = { game, hero, player, state, enterMap, die, miniland, tutorial, tryCatch, useSlot, openSkills, get mate() { return mate; }, get map() { return map; }, maps };

@@ -84,6 +84,9 @@ const NPC_LOOKS = {
   gerta: villager('gerta', { hair: { color: 0x9a9a9a, dark: 0x7a7a7a, style: 'tall', seed: 45 }, shirt: 0xe8dcc8, vest: { color: 0x8a6a3a, trim: null }, scarf: 0x5a8a3a }),
   elder: { ...CLASSES.adventurer, id: 'elder', hair: { color: 0xe8e4dc, dark: 0xc4c0b8, style: 'tall', seed: 4 }, vest: { color: 0x5a4a7a, trim: 0xd1a646 }, scarf: null, weapon: null },
   merchant: { ...CLASSES.adventurer, id: 'merchant', hair: { color: 0x2e2a2a, dark: 0x1c1a1a, style: 'shaggy', seed: 8 }, vest: { color: 0x3f7a4a, trim: null }, scarf: 0xe8b83a, weapon: null },
+  guide: villager('guide', { hair: { color: 0xe86a3a, dark: 0xb84a24, style: 'tall', seed: 47 }, shirt: 0xfff4dc, vest: { color: 0x3a8ab8, trim: 0xffd24a }, scarf: 0xffd24a }),
+  sage: { ...CLASSES.mage, id: 'sage', armed: true, hair: { color: 0x2a2a3a, dark: 0x1a1a24, style: 'swept', seed: 49 },
+    robe: { ...CLASSES.mage.robe, color: 0x8a2a3a, dark: 0x5a1a24, trim: 0xd1a646 } },
   guard: { ...CLASSES.knight, id: 'guard', armed: true, hair: { color: 0x6a4428, dark: 0x4e301c, style: 'swept', seed: 12 } },
   master: { ...CLASSES.mage, id: 'master', armed: true, hair: { color: 0xd8d4cc, dark: 0xa8a49c, style: 'swept', seed: 17 },
     robe: { ...CLASSES.mage.robe, color: 0x2e4a8a, dark: 0x223866 }, boot: 0x3a3a4a, bootCuff: 0x2e2e3a, sole: 0x1e1e28 },
@@ -364,6 +367,14 @@ export function buildMap(def) {
       for (let z = z0 + 4; z < z1 - 3; z += 4.4) for (let x = x0 + 4; x < x1 - 3; x += 4.4) if (colOK(x, z, ['grass'])) place('crops', x, z, { variant: (Math.floor((x - x0) / 9) + Math.floor((z - z0) / 9)) % 2, block: false });
       for (let n = 0; n < 3; n++) { const x = x0 + 2 + R() * (x1 - x0 - 4), z = z0 + 2 + R() * 3; if (colOK(x, z, ['grass'])) place('haybale', x, z, { ry: R() * 3 }); }
     }
+    // fenced pens (Training Grounds): fences all round with a wide gate in the corner nearest the plaza
+    for (const [x0, z0, x1, z1] of town.pens || []) {
+      const gx = Math.abs(x0) < Math.abs(x1) ? x0 : x1, gz = Math.abs(z0) < Math.abs(z1) ? z0 : z1;
+      const gate = (x, z) => Math.hypot(x - gx, z - gz) < 6;
+      for (let x = x0 + 1.6; x < x1; x += 3.25) for (const z of [z0, z1]) if (!gate(x, z)) place('fence', x, z, { block: false });
+      for (let z = z0 + 1.6; z < z1; z += 3.25) for (const x of [x0, x1]) if (!gate(x, z)) place('fence', x, z, { ry: Math.PI / 2, block: false });
+      place('sign', gx - Math.sign((x0 + x1) / 2 - gx) * 1.5, gz - Math.sign((z0 + z1) / 2 - gz) * 3.5, { ry: Math.PI / 4, block: false });
+    }
     // parks: a ring of trees with benches and flower beds
     for (const [px, pz, pr] of town.parks || []) {
       for (let n = 0; n < 10; n++) { const a = n / 10 * Math.PI * 2; const x = px + Math.cos(a) * pr, z = pz + Math.sin(a) * pr; if (colOK(x, z)) place(town.treeKind || 'oak', x, z, { variant: n % 4, scale: 1.1 }); }
@@ -388,7 +399,7 @@ export function buildMap(def) {
       ch.root.traverse((o) => { if (o.isMesh) o.castShadow = false; });
       ch.blob.visible = true;
       group.add(ch.root);
-      const npc = { ch, name, line, pos: ch.root.position, home: ch.root.position.clone(), classMaster: look === 'master', shop: extra.shop, wander: extra.wander };
+      const npc = { ch, name, line, pos: ch.root.position, home: ch.root.position.clone(), classMaster: look === 'master', shop: extra.shop, wander: extra.wander, guide: !!extra.guide, skills: !!extra.skills };
       ch.root.traverse((o) => (o.userData.npc = npc));
       npcs.push(npc);
       if (!extra.wander) blockCircle(x, z, 0.6);
@@ -622,6 +633,13 @@ export function buildMap(def) {
   const monsters = [];
   for (const m of def.monsters || []) {
     if (m.at) monsters.push(new Monster(m.type, new THREE.Vector3(m.at[0], heightAt(m.at[0], m.at[1]), m.at[1])));
+    else if (m.area) for (let n = 0; n < m.n; n++) {           // kept inside a pen (Training Grounds)
+      const mon = new Monster(m.type, new THREE.Vector3());
+      mon.area = m.area;
+      const p = mon.randomInArea({ walkable, heightAt });
+      mon.spawn.copy(p); mon.respawn(p);
+      monsters.push(mon);
+    }
     else for (let n = 0; n < m.n; n++) monsters.push(new Monster(m.type, randomSpawn()));
   }
   for (const m of monsters) {
