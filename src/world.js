@@ -32,16 +32,16 @@ function noise2(seed) {
 }
 
 const THEMES = {
-  village: { grass: [0x86c440, 0x78b83a, 0x94cc4c], amp: 2, trees: 'oak' },
-  fields: { grass: [0x8cc83c, 0x7cba36, 0x9cd04a], amp: 4, trees: 'oak' },
-  woods: { grass: [0x5e9e3a, 0x528e34, 0x6aaa44], amp: 5, trees: 'pine' },
-  coast: { grass: [0x90c848, 0x82bc40, 0x9ed054], amp: 3, trees: 'palm' },
+  village: { grass: [0x86c440, 0x78b83a, 0x94cc4c], amp: 1, trees: 'oak' },
+  fields: { grass: [0x8cc83c, 0x7cba36, 0x9cd04a], amp: 1.2, trees: 'oak' },
+  woods: { grass: [0x5e9e3a, 0x528e34, 0x6aaa44], amp: 1.4, trees: 'pine' },
+  coast: { grass: [0x90c848, 0x82bc40, 0x9ed054], amp: 1, trees: 'palm' },
   miniland: { grass: [0x8ed04a, 0x80c442, 0x9cd858], amp: 1, trees: 'oak' },
   // dungeons: `grass` is the floor colour, `mini` the minimap floor colour
-  cave: { grass: [0x5a5448, 0x4e4a40, 0x646052], amp: 3, trees: 'rock', mini: [96, 90, 78] },
+  cave: { grass: [0x5a5448, 0x4e4a40, 0x646052], amp: 1.5, trees: 'rock', mini: [96, 90, 78] },
   grotto: { grass: [0x4a7a72, 0x3e6c66, 0x56887e], amp: 2, trees: 'rock', mini: [74, 122, 114] },
   crypt: { grass: [0x6a6670, 0x5e5a64, 0x76727c], amp: 1, trees: 'rock', mini: [106, 102, 112] },
-  frost: { grass: [0xe8f0f8, 0xd8e6f2, 0xf4f8fc], amp: 4, trees: 'pine', mini: [226, 236, 246] },
+  frost: { grass: [0xe8f0f8, 0xd8e6f2, 0xf4f8fc], amp: 1.5, trees: 'pine', mini: [226, 236, 246] },
   timespace: { grass: [0x7a66c0, 0x6c5ab4, 0x8874cc], amp: 1, trees: 'rock', mini: [122, 102, 192] },   // Time-Space chambers
 };
 const SURF = {
@@ -183,7 +183,7 @@ export function buildMap(def) {
     // mountains around the map
     if (edge < MOUNT) {
       const t = (MOUNT - edge) / MOUNT;
-      h += Math.round(t * t * 26 + N2(x * 0.12, z * 0.12) * 8 * t);
+      h += Math.round(t * t * 15 + N2(x * 0.12, z * 0.12) * 5 * t);
     }
     // gate corridors through the mountains
     for (const p of portals) {
@@ -322,18 +322,21 @@ export function buildMap(def) {
     const h = H[k(i, j)];
     return Math.abs(hAt(i + 1, j) - h) <= 1 && Math.abs(hAt(i - 1, j) - h) <= 1 && Math.abs(hAt(i, j + 1) - h) <= 1 && Math.abs(hAt(i, j - 1) - h) <= 1;
   };
-  const free = (x, z, clear = 5, types) => {
+  const free = (x, z, clear = 5, types, opts) => {
     if (Math.hypot(x, z) < clear) return false;
     if (portals.some((p) => Math.hypot(p.pos.x - x, p.pos.z - z) < 7)) return false;
     if ((def.tsStones || []).some((t) => Math.hypot(t.at[0] - x, t.at[1] - z) < 6)) return false;
-    if (pathDist(x, z) < 2.4) return false;
+    if (pathDist(x, z) < (opts?.road ?? 4.5)) return false;
     return colOK(x, z, types);
   };
   const rand = (margin = MOUNT - 1) => [(R() - 0.5) * (W - margin * 2), (R() - 0.5) * (D - margin * 2)];
+  const placedAt = [];                    // scattered props keep some room between each other
   const scatter = (n, kind, opts = {}) => {
     for (let t = 0; t < n * 4 && n > 0; t++) {
       const [x, z] = rand(opts.margin);
-      if (!free(x, z, opts.clear ?? 6, opts.types)) continue;
+      if (!free(x, z, opts.clear ?? 12, opts.types, opts)) continue;
+      if (opts.spacing && placedAt.some(([px, pz]) => Math.hypot(px - x, pz - z) < opts.spacing)) continue;
+      placedAt.push([x, z]);
       place(kind, x, z, { variant: Math.floor(R() * (opts.variants || 3)), ry: Math.floor(R() * 4) * (Math.PI / 2), scale: (opts.scale || 1) * (0.85 + R() * 0.3), block: opts.block !== false });
       n--;
     }
@@ -409,29 +412,43 @@ export function buildMap(def) {
       if (!extra.wander) blockCircle(x, z, 0.6);
     }
   }
+  // open NosTale-style fields: wide flat meadows, a few lone trees and small scenes, trees framing the edges
+  const scene = (kind, x, z, o = {}) => { if (colOK(x, z, o.types || ['grass', 'path', 'sand'])) place(kind, x, z, { block: o.block !== false, ...o }); };
+  const fenceRun = (x, z, n, alongX = true) => { for (let k2 = 0; k2 < n; k2++) scene('fence', x + (alongX ? k2 * 3.25 : 0), z + (alongX ? 0 : k2 * 3.25), { ry: alongX ? 0 : Math.PI / 2, block: false }); };
   if (def.theme === 'fields' && !town) {
-    scatter(46, 'oak', { variants: 4, scale: 1.05 });
-    scatter(26, 'bush');
-    scatter(22, 'rock');
-    for (let n = 0; n < 12; n++) place('fence', -34 + n * 3.25, -24, { block: false });
-    ridgeTrees(140, 'oak');
+    scatter(14, 'oak', { variants: 4, scale: 0.95, spacing: 12 });
+    scatter(12, 'bush', { spacing: 6 });
+    scatter(8, 'rock', { spacing: 8 });
+    scatter(4, 'log', { spacing: 10 });
+    // a farmer's corner: fence, crops and hay bales
+    const fx = -W / 2 + MOUNT + 8, fz = -D / 2 + MOUNT + 8;
+    fenceRun(fx, fz, 5); fenceRun(fx, fz, 4, false);
+    for (let a = 0; a < 3; a++) for (let b = 0; b < 2; b++) scene('crops', fx + 3 + a * 4, fz + 3 + b * 4.2, { variant: (a + b) % 2, block: false, types: ['grass'] });
+    scene('haybale', fx + 16, fz + 3); scene('haybale', fx + 16.5, fz + 5.5, { ry: 1 });
+    scene('sign', 10, 12, { ry: -0.6 });
+    ridgeTrees(120, 'oak');
   }
   if (def.theme === 'woods' && !town) {
-    scatter(150, 'pine', { clear: 7, variants: 4, scale: 1.1 });
-    scatter(26, 'oak', { variants: 4 });
-    scatter(40, 'shroom', { clear: 3, block: false });
-    scatter(14, 'log');
-    scatter(30, 'bush');
-    scatter(16, 'rock');
-    ridgeTrees(170, 'pine');
+    scatter(36, 'pine', { variants: 4, scale: 1.0, spacing: 7 });
+    scatter(10, 'oak', { variants: 4, spacing: 10 });
+    scatter(22, 'shroom', { clear: 6, block: false, road: 3 });
+    scatter(8, 'log', { spacing: 8 });
+    scatter(14, 'bush', { spacing: 5 });
+    scatter(8, 'rock', { spacing: 8 });
+    // a woodcutters' camp by the road
+    scene('logpile', -8, -10, { ry: 0.3 }); scene('log', -12, -8, { ry: 1.2 }); scene('crate', -5, -13); scene('barrel', -4, -11.5);
+    scene('sign', 10, 11, { ry: -0.6 });
+    ridgeTrees(150, 'pine');
   }
   if (def.theme === 'coast' && !town) {
-    scatter(34, 'palm', { types: ['sand'], variants: 3, scale: 1.1 });
-    scatter(18, 'oak', { variants: 4 });
-    scatter(28, 'rock', { types: ['grass', 'sand'] });
-    scatter(12, 'bush');
+    scatter(16, 'palm', { types: ['sand'], variants: 3, scale: 1.0, spacing: 8, road: 3 });
+    scatter(6, 'oak', { variants: 4, spacing: 12 });
+    scatter(14, 'rock', { types: ['grass', 'sand'], spacing: 6 });
+    scatter(8, 'bush', { spacing: 6 });
     place('boat', W / 2 - 30, -16, { ry: 0.4 });
-    ridgeTrees(110, 'oak');
+    scene('crate', W / 2 - 36, -12); scene('barrel', W / 2 - 35, -10); scene('pier', W / 2 - 27, 6, { ry: Math.PI / 2, block: false, types: ['sand', 'grass'] });
+    scene('sign', 10, 12, { ry: -0.6 });
+    ridgeTrees(100, 'oak');
   }
 
   if (def.theme === 'miniland') {
@@ -440,14 +457,14 @@ export function buildMap(def) {
     for (let x = -16; x <= 16; x += 3.25) for (const z of [-17.2]) place('fence', x, z, { block: false });
   }
   if (def.theme === 'cave') {
-    scatter(46, 'rock', { clear: 5, scale: 1.3 });
-    scatter(34, 'shroom', { clear: 3, block: false, scale: 1.2 });
-    scatter(10, 'log');
+    scatter(22, 'rock', { clear: 8, scale: 1.2, spacing: 6 });
+    scatter(18, 'shroom', { clear: 5, block: false, scale: 1.2, road: 3 });
+    scatter(5, 'log', { spacing: 8 });
     ridgeTrees(160, 'rock');
   }
   if (def.theme === 'grotto') {
-    scatter(40, 'rock', { clear: 5, types: ['grass', 'sand'], scale: 1.2 });
-    scatter(16, 'shroom', { clear: 3, block: false });
+    scatter(20, 'rock', { clear: 8, types: ['grass', 'sand'], scale: 1.1, spacing: 6 });
+    scatter(10, 'shroom', { clear: 5, block: false, road: 3 });
     place('boat', -22, -18, { ry: 2.2 });
     ridgeTrees(150, 'rock');
   }
@@ -462,9 +479,9 @@ export function buildMap(def) {
     ridgeTrees(140, 'rock');
   }
   if (def.theme === 'frost') {
-    scatter(90, 'pine', { clear: 7, variants: 4, scale: 1.1 });
-    scatter(30, 'rock', { clear: 5 });
-    scatter(10, 'log');
+    scatter(34, 'pine', { clear: 9, variants: 4, scale: 1.0, spacing: 7 });
+    scatter(14, 'rock', { clear: 8, spacing: 6 });
+    scatter(5, 'log', { spacing: 8 });
     ridgeTrees(170, 'pine');
   }
 

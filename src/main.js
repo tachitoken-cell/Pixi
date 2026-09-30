@@ -424,8 +424,9 @@ function applyMapLook() {
 }
 // camera offset from the hero; when a hill or mountain blocks the view the camera first
 // tilts up, then moves in
-const CLASSIC = { pitch: 0.95, dist: 30 };
-function camOffset() {
+const CLASSIC = { pitch: 0.8, dist: 25 };           // NosTale-like: about 45° down, fairly close
+let camPitchNow = null, camDistNow = null, camDt = 0.016;
+function camOffset(snap = false) {
   const classic = state.camMode === 'classic';
   const yaw = state.cam.yaw;
   const dist = classic ? CLASSIC.dist * (state.cam.dist / 17) : state.cam.dist;
@@ -439,13 +440,19 @@ function camOffset() {
     }
     return dist;
   };
+  // when a cliff blocks the view the camera tilts up first, then moves in; both ease so it never jumps
   let pitch = classic ? CLASSIC.pitch : state.cam.pitch;
   let dir = dirAt(pitch), d = clearUntil(dir);
-  while (d < dist && pitch < 1.4) { pitch += 0.08; dir = dirAt(pitch); d = clearUntil(dir); }
-  return dir.multiplyScalar(d < dist ? Math.max(3, d - 1) : dist);
+  while (d < dist && pitch < 1.3) { pitch += 0.05; dir = dirAt(pitch); d = clearUntil(dir); }
+  const wantDist = d < dist ? Math.max(4, d - 1) : dist;
+  if (snap || camPitchNow === null) { camPitchNow = pitch; camDistNow = wantDist; }
+  const k = Math.min(1, camDt * 2.5);
+  camPitchNow += (pitch - camPitchNow) * k;
+  camDistNow += (wantDist - camDistNow) * (wantDist < camDistNow ? Math.min(1, camDt * 6) : k);
+  return dirAt(camPitchNow).multiplyScalar(camDistNow);
 }
 function snapCamera() {
-  camera.position.copy(player.pos).add(camOffset());
+  camera.position.copy(player.pos).add(camOffset(true));
   camera.lookAt(player.pos.x, player.pos.y + 1.4, player.pos.z);
 }
 function enterMap(id, portalId) {
@@ -1642,7 +1649,8 @@ function updatePlayer(dt) {
   ch.root.rotation.y += dy * Math.min(1, dt * 14);
   ch.root.position.copy(player.pos);
 
-  camera.position.lerp(player.pos.clone().add(camOffset()), Math.min(1, dt * 8));
+  camDt = dt;
+  camera.position.lerp(player.pos.clone().add(camOffset()), Math.min(1, dt * 10));
   camera.lookAt(player.pos.x, player.pos.y + 1.4, player.pos.z);
   sun.position.copy(player.pos).add(new THREE.Vector3(18, 34, 14));
   sun.target.position.copy(player.pos);

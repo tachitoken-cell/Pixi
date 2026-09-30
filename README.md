@@ -131,6 +131,14 @@ click a filled slot to clear it. You earn Job XP from kills (and from hitting th
 | 17 | Shout of Morale | self buff: defence +30%, hit chance +15% for 20 s |
 | 19 | Charging Attack | rush to the enemy (up to 10 m) and strike |
 
+## Maps, monsters and camera
+
+The fields, forests and coast are wide and mostly flat like NosTale's maps, with low cliff walls, trees kept off
+the roads and out of the open middle, and small scenes instead of clutter (a farmer's corner with crops and hay,
+a woodcutters' camp, a pier with crates, signposts). Monsters are round anime chibis with big shiny eyes and blush
+(Jellies, Hoppers, Shroomlings, wolves with fierce yellow eyes, crabs on eye stalks), bosses are bigger versions.
+The classic camera looks down at about 45° from closer in and eases smoothly when a cliff gets in the way.
+
 ## Anime look
 
 The whole world is cel-shaded (`src/anime.js`): toon materials with hard light and shadow bands, a screen pass that

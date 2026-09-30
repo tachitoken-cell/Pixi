@@ -2,6 +2,7 @@
 // provoked (or on sight for aggressive types), attack in melee, leash back home, respawn.
 import * as THREE from 'three';
 import { mat, BLOB_GEO, BLOB_MAT, roundBox } from './character.js';
+import { ToonMat } from './anime.js';
 
 export const MONSTER_TYPES = {
   dummy:  { name: 'Training Dummy', lv: 1, hp: 1e9, atk: 0, def: 0, speed: 0, xp: 0, jobXp: 3, model: 'dummy', static: true },
@@ -61,6 +62,42 @@ function eyes(parent, y, z, spread = 0.16, size = 0.1) {
   }
 }
 
+// smooth toon parts for the anime monsters
+const SPH = new THREE.SphereGeometry(1, 22, 16);
+const DOME = new THREE.SphereGeometry(1, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2);
+const CONE = new THREE.ConeGeometry(1, 1, 10).translate(0, 0.5, 0);
+const CAPS = new THREE.CapsuleGeometry(1, 2, 4, 10);
+const TM = new Map();
+const tm = (color) => { if (!TM.has(color)) TM.set(color, new ToonMat({ color })); return TM.get(color); };
+const lighten = (c, k) => new THREE.Color(c).lerp(new THREE.Color(0xffffff), k).getHex();
+function ball(parent, rx, ry, rz, color, x = 0, y = 0, z = 0) {
+  const m = new THREE.Mesh(SPH, tm(color));
+  m.scale.set(rx, ry, rz); m.position.set(x, y, z); m.castShadow = true;
+  parent.add(m);
+  return m;
+}
+// a leg hanging down from its pivot
+function limb(parent, r, len, color) {
+  const m = new THREE.Mesh(CAPS, tm(color));
+  m.scale.set(r, len / 4, r);
+  m.position.y = -len / 2 - r;
+  m.castShadow = true;
+  parent.add(m);
+  return m;
+}
+// big anime eyes: white, coloured iris, pupil and two highlights; optional blush under them
+function animeEyes(parent, y, z, spread, size, o = {}) {
+  for (const s of [-1, 1]) {
+    const e = g(parent, s * spread, y, z);
+    ball(e, size * 0.72, size, size * 0.34, 0xffffff);
+    ball(e, size * 0.58, size * 0.8, size * 0.3, o.iris ?? 0x3a2458, 0, -size * 0.1, size * 0.1);
+    ball(e, size * 0.32, size * 0.42, size * 0.25, 0x0c0812, 0, -size * 0.12, size * 0.18);
+    ball(e, size * 0.2, size * 0.22, size * 0.1, 0xffffff, size * 0.18, size * 0.28, size * 0.3);
+    ball(e, size * 0.09, size * 0.09, size * 0.06, 0xffffff, -size * 0.18, -size * 0.35, size * 0.3);
+    if (o.blush) ball(parent, size * 0.55, size * 0.25, size * 0.1, 0xff94ac, s * (spread + size * 0.35), y - size * 1.25, z - size * 0.05);
+  }
+}
+
 // Each builder returns { root, parts } where parts are animated by `animate`.
 const BUILD = {
   dummy(t) {
@@ -73,60 +110,79 @@ const BUILD = {
     box(body, 0.8, 0.16, 0.72, 0xb8342b, 0, 2.15, 0);
     return { root, body };
   },
+  // anime chibi monsters: smooth round shapes, big shiny eyes, blush
   slime(t) {
     const root = new THREE.Group();
     const body = g(root);
-    box(body, 0.9, 0.7, 0.9, t.color, 0, 0.35, 0);
-    box(body, 0.7, 0.2, 0.7, t.color, 0, 0.78, 0);
-    box(body, 0.2, 0.2, 0.2, 0xffffff, -0.22, 0.6, 0.35).material = mat(0xdff8d0);
-    eyes(body, 0.42, 0.46, 0.18, 0.11);
+    ball(body, 0.56, 0.47, 0.56, t.color, 0, 0.47, 0);
+    ball(body, 0.44, 0.2, 0.44, lighten(t.color, 0.25), 0, 0.22, 0.12);           // lighter belly
+    ball(body, 0.15, 0.22, 0.15, t.color, 0, 0.93, -0.04);                          // little drip on top
+    ball(body, 0.12, 0.07, 0.05, 0xffffff, -0.3, 0.82, 0.3).rotation.z = 0.6;       // glossy shine
+    ball(body, 0.05, 0.05, 0.03, 0xffffff, -0.2, 0.9, 0.3);
+    animeEyes(body, 0.66, 0.43, 0.18, 0.13, { blush: true });
+    ball(body, 0.06, 0.035, 0.02, 0x4a1a20, 0, 0.5, 0.52);                         // tiny mouth
     return { root, body };
   },
   bunny(t) {
     const root = new THREE.Group();
     const body = g(root);
-    box(body, 0.6, 0.5, 0.75, t.color, 0, 0.35, 0);
-    const head = g(body, 0, 0.7, 0.3);
-    box(head, 0.5, 0.45, 0.45, t.color);
+    ball(body, 0.34, 0.31, 0.4, t.color, 0, 0.36, 0);
+    ball(body, 0.24, 0.21, 0.1, 0xfff6ea, 0, 0.32, 0.33);
+    const head = g(body, 0, 0.74, 0.2);
+    ball(head, 0.34, 0.3, 0.3, t.color);
     for (const s of [-1, 1]) {
-      box(head, 0.12, 0.45, 0.08, t.color, s * 0.13, 0.42, -0.05);
-      box(head, 0.06, 0.32, 0.03, 0xf0a8b8, s * 0.13, 0.42, -0.005);
+      const ear = g(head, s * 0.13, 0.2, -0.04);
+      ear.rotation.z = -s * 0.2;
+      ball(ear, 0.085, 0.29, 0.05, t.color, 0, 0.27, 0);
+      ball(ear, 0.05, 0.22, 0.02, 0xf4a8bc, 0, 0.27, 0.035);
     }
-    eyes(head, 0.02, 0.23, 0.13, 0.08);
-    box(head, 0.08, 0.06, 0.03, 0xf08898, 0, -0.1, 0.24);
-    box(body, 0.2, 0.2, 0.2, 0xffffff, 0, 0.4, -0.42);
+    animeEyes(head, 0.03, 0.26, 0.13, 0.095, { blush: true });
+    ball(head, 0.035, 0.028, 0.03, 0xf07890, 0, -0.07, 0.3);
+    ball(body, 0.13, 0.13, 0.13, 0xffffff, 0, 0.42, -0.42);                          // cotton tail
+    for (const s of [-1, 1]) ball(body, 0.1, 0.07, 0.16, t.color, s * 0.17, 0.06, 0.14);
     return { root, body, head };
   },
   mushroom(t) {
     const root = new THREE.Group();
     const body = g(root);
-    box(body, 0.5, 0.6, 0.5, 0xf0e2c4, 0, 0.42, 0);
-    const cap = g(body, 0, 0.85, 0);
-    box(cap, 1.1, 0.35, 1.1, t.color);
-    box(cap, 0.8, 0.2, 0.8, t.color, 0, 0.25, 0);
-    for (const [x, z] of [[0.3, 0.2], [-0.25, -0.3], [-0.2, 0.35], [0.35, -0.25]]) box(cap, 0.18, 0.06, 0.18, 0xffffff, x, 0.19, z);
-    eyes(body, 0.5, 0.26, 0.12, 0.09);
+    ball(body, 0.3, 0.42, 0.3, 0xf6ead0, 0, 0.46, 0);
+    const cap = g(body, 0, 0.92, 0);
+    const dome = new THREE.Mesh(DOME, tm(t.color)); dome.scale.set(0.6, 0.5, 0.6); dome.castShadow = true; cap.add(dome);
+    ball(cap, 0.6, 0.07, 0.6, 0xe8d6b4, 0, 0.02, 0);
+    for (const [x, z, r] of [[0.28, 0.22, 0.12], [-0.3, 0.12, 0.1], [0.02, -0.34, 0.13], [-0.12, 0.36, 0.08], [0.34, -0.2, 0.09], [0, 0.02, 0.1]]) {
+      const y = Math.sqrt(Math.max(0, 1 - (x * x + z * z) / 0.41)) * 0.52;
+      ball(cap, r, r * 0.45, r, 0xffffff, x, y, z);
+    }
+    animeEyes(body, 0.58, 0.27, 0.11, 0.09, { blush: true });
+    ball(body, 0.04, 0.025, 0.02, 0x4a1a20, 0, 0.42, 0.3);
+    for (const s of [-1, 1]) ball(body, 0.07, 0.07, 0.07, 0xf6ead0, s * 0.3, 0.42, 0.04);     // little arms
     const feet = [];
-    for (const s of [-1, 1]) feet.push(box(body, 0.2, 0.14, 0.26, 0xd8c8a4, s * 0.14, 0.07, 0.05));
+    for (const s of [-1, 1]) feet.push(ball(body, 0.12, 0.08, 0.16, 0xe8d6b4, s * 0.14, 0.07, 0.05));
     return { root, body, cap, feet };
   },
   wolf(t) {
     const root = new THREE.Group();
     const body = g(root, 0, 0.1, 0);
-    box(body, 0.6, 0.55, 1.2, t.color, 0, 0.75, 0);
-    box(body, 0.5, 0.2, 0.9, 0xd8d8de, 0, 0.5, 0.05);
-    const head = g(body, 0, 1.0, 0.7);
-    box(head, 0.5, 0.45, 0.45, t.color);
-    box(head, 0.3, 0.22, 0.35, 0xd8d8de, 0, -0.1, 0.3);
-    box(head, 0.1, 0.08, 0.06, 0x1a1414, 0, -0.02, 0.48);
-    for (const s of [-1, 1]) box(head, 0.12, 0.2, 0.08, t.dark, s * 0.16, 0.3, -0.08);
-    eyes(head, 0.06, 0.23, 0.13, 0.07);
-    const tail = g(body, 0, 0.95, -0.6);
-    box(tail, 0.16, 0.16, 0.5, t.color, 0, 0, -0.22);
+    ball(body, 0.33, 0.32, 0.58, t.color, 0, 0.72, 0);
+    ball(body, 0.25, 0.18, 0.44, 0xe8e8ee, 0, 0.56, 0.05);
+    ball(body, 0.24, 0.22, 0.18, 0xeeeef2, 0, 0.8, 0.45);                           // chest fluff
+    const head = g(body, 0, 1.02, 0.6);
+    ball(head, 0.34, 0.31, 0.32, t.color);
+    ball(head, 0.16, 0.12, 0.21, 0xe8e8ee, 0, -0.1, 0.28);
+    ball(head, 0.05, 0.04, 0.04, 0x1a1414, 0, -0.03, 0.48);
+    for (const s of [-1, 1]) {
+      const ear = new THREE.Mesh(CONE, tm(t.dark)); ear.scale.set(0.11, 0.27, 0.08); ear.position.set(s * 0.17, 0.33, -0.05); ear.rotation.z = -s * 0.25; head.add(ear);
+      ball(head, 0.06, 0.035, 0.02, t.dark, s * 0.13, 0.17, 0.27).rotation.z = s * 0.45;                // fierce brows
+    }
+    animeEyes(head, 0.06, 0.26, 0.14, 0.08, { iris: 0xe0a020 });
+    const tail = g(body, 0, 0.9, -0.55);
+    ball(tail, 0.11, 0.11, 0.32, t.color, 0, 0, -0.26);
+    ball(tail, 0.08, 0.08, 0.1, 0xeeeef2, 0, 0, -0.55);
     const legs = [];
-    for (const [x, z] of [[-0.2, 0.4], [0.2, 0.4], [-0.2, -0.4], [0.2, -0.4]]) {
-      const l = g(body, x, 0.5, z);
-      box(l, 0.16, 0.5, 0.18, t.dark, 0, -0.25, 0);
+    for (const [x, z] of [[-0.18, 0.36], [0.18, 0.36], [-0.18, -0.36], [0.18, -0.36]]) {
+      const l = g(body, x, 0.55, z);
+      limb(l, 0.08, 0.32, t.dark);
+      ball(l, 0.09, 0.06, 0.12, t.dark, 0, -0.5, 0.03);
       legs.push(l);
     }
     return { root, body, head, tail, legs };
@@ -134,23 +190,29 @@ const BUILD = {
   crab(t) {
     const root = new THREE.Group();
     const body = g(root);
-    box(body, 1.0, 0.4, 0.7, t.color, 0, 0.45, 0);
-    box(body, 0.8, 0.15, 0.55, t.dark, 0, 0.7, 0);
+    ball(body, 0.55, 0.3, 0.42, t.color, 0, 0.45, 0);
+    ball(body, 0.44, 0.12, 0.32, t.dark, 0, 0.66, -0.03);
+    ball(body, 0.45, 0.17, 0.34, 0xf4dcb4, 0, 0.32, 0.06);
     for (const s of [-1, 1]) {
-      box(body, 0.06, 0.2, 0.06, t.dark, s * 0.18, 0.75, 0.3);
-      box(body, 0.12, 0.12, 0.12, 0x1a1414, s * 0.18, 0.88, 0.3);
+      const st = new THREE.Mesh(CAPS, tm(t.dark)); st.scale.set(0.035, 0.12, 0.035); st.position.set(s * 0.16, 0.8, 0.26); body.add(st);
+      const e = g(body, s * 0.16, 0.95, 0.27);
+      ball(e, 0.09, 0.1, 0.09, 0xffffff);
+      ball(e, 0.05, 0.06, 0.03, 0x14101a, 0, -0.01, 0.08);
+      ball(e, 0.02, 0.02, 0.01, 0xffffff, 0.02, 0.02, 0.11);
     }
+    ball(body, 0.06, 0.03, 0.02, 0x4a1a20, 0, 0.5, 0.42);
     const claws = [];
     for (const s of [-1, 1]) {
-      const c = g(body, s * 0.6, 0.5, 0.35);
-      box(c, 0.3, 0.25, 0.35, t.color, 0, 0, 0.15);
-      box(c, 0.12, 0.12, 0.2, t.dark, s * -0.06, 0.12, 0.3);
+      const c = g(body, s * 0.58, 0.5, 0.3);
+      ball(c, 0.2, 0.16, 0.24, t.color, 0, 0, 0.14);
+      ball(c, 0.12, 0.07, 0.17, t.dark, 0, 0.11, 0.3);
       claws.push(c);
     }
     const legs = [];
     for (const s of [-1, 1]) for (const z of [-0.2, 0.05]) {
-      const l = g(body, s * 0.5, 0.35, z);
-      box(l, 0.35, 0.08, 0.08, t.dark, s * 0.15, -0.12, 0).rotation.z = s * -0.6;
+      const l = g(body, s * 0.46, 0.36, z);
+      limb(l, 0.04, 0.28, t.dark);
+      l.rotation.z = s * 0.9;
       legs.push(l);
     }
     return { root, body, claws, legs };
@@ -198,7 +260,7 @@ export class Monster {
 
   get alive() { return this.state !== 'dead'; }
   get pos() { return this.root.position; }
-  get height() { return { dummy: 3.1, slime: 1.2, bunny: 1.6, mushroom: 1.5, wolf: 1.7, crab: 1.2 }[this.t.model] * this.size; }
+  get height() { return { dummy: 3.1, slime: 1.2, bunny: 1.6, mushroom: 1.6, wolf: 1.7, crab: 1.2 }[this.t.model] * this.size; }
 
   damage(n) {
     if (!this.alive) return false;
