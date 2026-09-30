@@ -644,14 +644,48 @@ function gait(w, stride, o) {
   };
 }
 
+// One continuous locomotion cycle: the gait settings blend with the real speed (standing -> walk -> run -> sprint),
+// and the step phase advances with the distance covered, so the feet don't slide and nothing snaps between gaits.
+export const LOCO_SPEED = { walk: 2.3, run: 5.2, sprint: 8.6 };
+const GAITS = [
+  { s: 0, swing: 0.05, knee: 0.15, lift: 0.02, bob: 0.004, lean: 0, arm: 0.05, elbow: 0.2, twist: 0.01, cycle: 1.6 },
+  { s: 2.3, swing: 0.5, knee: 0.9, lift: 0.24, bob: 0.03, lean: 0.03, arm: 0.45, elbow: 0.3, twist: 0.07, cycle: 2.1 },
+  { s: 5.2, swing: 0.78, knee: 1.45, lift: 0.34, bob: 0.07, lean: 0.12, arm: 0.9, elbow: 1.15, twist: 0.1, cycle: 3.5 },
+  { s: 8.6, swing: 0.98, knee: 1.8, lift: 0.4, bob: 0.1, lean: 0.18, arm: 1.2, elbow: 1.4, twist: 0.12, cycle: 4.6 },
+];
+function gaitAt(spd) {
+  let i = 0;
+  while (i < GAITS.length - 2 && spd > GAITS[i + 1].s) i++;
+  const a = GAITS[i], b = GAITS[i + 1], t = Math.max(0, Math.min(1, (spd - a.s) / (b.s - a.s)));
+  const o = {};
+  for (const k in a) o[k] = a[k] + (b[k] - a[k]) * t;
+  return o;
+}
+function locoPose(phase, spd, c, turn) {
+  const o = gaitAt(spd);
+  const p = gait(phase, c.stride, o);
+  const run = Math.min(1, spd / 5.2);
+  // lean into turns and look where you are going; arms swing a little out when running
+  p.bodyZ += Math.max(-0.2, Math.min(0.2, -turn * 0.05 * run));
+  p.headY += Math.max(-0.35, Math.min(0.35, turn * 0.06));
+  p.armLZ += run * 0.08; p.armRZ -= run * 0.08;
+  // the head bobs less than the body (it stays steady, like a real runner)
+  p.headX += -Math.cos(2 * phase) * o.bob * 0.6;
+  return p;
+}
+
 const ANIMS = {
   idle: {
     loop: true,
     pose(t) {
-      const b = Math.sin(t * 2.2);
-      return { bodyY: b * 0.018 - 0.008, torsoX: b * 0.02, headX: -b * 0.025, headZ: Math.sin(t * 0.7) * 0.03,
-        armLZ: 0.16 + b * 0.03, armRZ: -0.16 - b * 0.03, kneeL: 0.08 - b * 0.03, kneeR: 0.08 - b * 0.03, footL: -0.03, footR: -0.03,
-        elbowL: -0.18, elbowR: -0.18 };
+      // breathing, a slow weight shift from foot to foot, and now and then a look around
+      const b = Math.sin(t * 2.2), w = Math.sin(t * 0.55), look = Math.sin(t * 0.31) * Math.max(0, Math.sin(t * 0.13)) * 1.6;
+      const kl = 0.1 + Math.max(0, -w) * 0.12, kr = 0.1 + Math.max(0, w) * 0.12;
+      return { bodyY: b * 0.014 - 0.012 - Math.abs(w) * 0.01, bodyZ: w * 0.035, bodyRY: w * 0.04, torsoZ: -w * 0.03, torsoX: 0.02 + b * 0.025,
+        headX: -b * 0.02, headY: look * 0.3, headZ: w * 0.04 + Math.sin(t * 0.7) * 0.02,
+        armLZ: 0.16 + b * 0.025, armRZ: -0.16 - b * 0.025, armLX: Math.sin(t * 0.9) * 0.05, armRX: -Math.sin(t * 0.9 + 0.5) * 0.04,
+        kneeL: kl, kneeR: kr, footL: -kl * 0.6, footR: -kr * 0.6, legLX: -kl * 0.35, legRX: -kr * 0.35,
+        elbowL: -0.22 - b * 0.03, elbowR: -0.22 - b * 0.03 };
     },
   },
   walk: {
@@ -1017,6 +1051,8 @@ export class Character {
     this.firedEvents = new Set();
   }
   get busy() { return !!this.oneShot; }
+  // the game tells the character how fast it really moves (world units / s) and how fast it turns (rad / s)
+  locomote(speed, turn = 0) { this.locoSpeed = speed; this.locoTurn = turn; this.locoDriven = true; }
 
   duration(name) {
     const a = this.A[name];
@@ -1047,7 +1083,13 @@ export class Character {
       }
     } else {
       if (this.state !== this.base) { this.state = this.base; this.t = 0; }
-      target = a.pose(this.clock, c);
+      if (LOCO_SPEED[this.base]) {
+        // speed from the game (locomote) or the gait's usual speed (NPCs)
+        const spd = this.locoDriven ? this.locoSpeed : LOCO_SPEED[this.base];
+        this.locoPhase = ((this.locoPhase || 0) + dt * 2 * Math.PI * spd / gaitAt(spd).cycle) % (Math.PI * 2000);
+        target = locoPose(this.locoPhase, spd, c, this.locoDriven ? this.locoTurn : 0);
+        this.locoDriven = false;
+      } else target = a.pose(this.clock, c);
     }
     // skill props: the slingshot shows up only while it is used; some skills put the sword away
     const cur = this.oneShot ? a : null;
@@ -1055,7 +1097,7 @@ export class Character {
     const hide = !!cur?.hideWeapon || cur?.prop === 'sling';
     for (const w of this.weaponParts) w.visible = this.armed && !hide;
     const base = hold(c, this.armed);
-    const k = 1 - Math.exp(-dt * (this.oneShot ? 22 : 12));
+    const k = 1 - Math.exp(-dt * (this.oneShot ? 22 : LOCO_SPEED[this.base] ? 18 : 10));
     for (const key of KEYS) {
       const tv = target[key], bv = base[key];
       let v;

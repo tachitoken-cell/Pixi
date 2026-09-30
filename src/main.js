@@ -1596,21 +1596,33 @@ function updatePlayer(dt) {
     if (k >= 1) player.dash = null;
     move.set(0, 0, 0);
   }
+  // velocity with acceleration: the hero speeds up and brakes over a moment instead of jumping between
+  // standing and full speed, and curves round when the direction changes
+  const vel = player.vel ||= new THREE.Vector3();
+  const wantVel = new THREE.Vector3();
   if (move.lengthSq() > 0 && !ch.busy && !hero.dead) {
+    const dist = move.length();
     move.normalize();
     player.sitting = false;
-    const speed = (walking ? 2.3 : sprinting ? 8.6 : 5.2) * (0.85 + CLASSES[state.cls].stats.spd * 0.05);
-    if (!tryMove(move.x * speed * dt, move.z * speed * dt)) player.target = null;
+    let speed = (walking ? 2.3 : sprinting ? 8.6 : 5.2) * (0.85 + CLASSES[state.cls].stats.spd * 0.05);
+    if (player.target && !player.pending) speed *= Math.min(1, 0.3 + dist / 1.4);       // ease in when arriving at a clicked spot
+    wantVel.copy(move).multiplyScalar(speed);
     player.yaw = Math.atan2(move.x, move.z);
-    loco = walking ? 'walk' : sprinting ? 'sprint' : 'run';
-    // footsteps, sounding like the ground under the hero
-    game.stepDist = (game.stepDist || 0) + speed * dt;
-    if (game.stepDist > (walking ? 1.0 : sprinting ? 1.7 : 1.35)) { game.stepDist = 0; audio.sfx('step', map.surfaceAt(player.pos.x, player.pos.z)); }
-    if (sprinting && (game.dustIn = (game.dustIn || 0) - dt) < 0) {
+  }
+  if (player.dash || hero.dead) vel.set(0, 0, 0);
+  else vel.lerp(wantVel, 1 - Math.exp(-dt * (wantVel.lengthSq() >= vel.lengthSq() ? 11 : 15)));
+  const speedNow = vel.length();
+  if (speedNow > 0.02) {
+    if (!tryMove(vel.x * dt, vel.z * dt)) { player.target = null; vel.multiplyScalar(0.4); }
+    // footsteps at each foot fall, sounding like the ground under the hero
+    game.stepDist = (game.stepDist || 0) + speedNow * dt;
+    if (game.stepDist > (speedNow < 3.2 ? 1.05 : speedNow < 6.8 ? 1.75 : 2.3)) { game.stepDist = 0; audio.sfx('step', map.surfaceAt(player.pos.x, player.pos.z)); }
+    if (speedNow > 6.8 && (game.dustIn = (game.dustIn || 0) - dt) < 0) {
       game.dustIn = 0.12;
       fx.burst(player.pos.clone().setY(player.pos.y + 0.1), 0xd8c8a0, 3, 1.2, 0.09, 0.6);
     }
-  }
+  } else vel.set(0, 0, 0);
+  if (speedNow > 0.35) loco = 'run';
   if (player.sitting) loco = 'sit';
   if (!hero.dead && loco !== state.anim) { state.anim = loco; ch.play(loco); markAnim(); }
 
@@ -1646,7 +1658,11 @@ function updatePlayer(dt) {
 
   let dy = player.yaw - ch.root.rotation.y;
   dy = Math.atan2(Math.sin(dy), Math.cos(dy));
-  ch.root.rotation.y += dy * Math.min(1, dt * 14);
+  const turnStep = dy * Math.min(1, dt * 12);
+  ch.root.rotation.y += turnStep;
+  // tell the animation the real speed and turn rate (step rhythm, leaning into curves)
+  player.turn = (player.turn || 0) + ((turnStep / Math.max(dt, 1e-3)) - (player.turn || 0)) * Math.min(1, dt * 8);
+  if (state.anim === 'run') ch.locomote(speedNow, player.turn);
   ch.root.position.copy(player.pos);
 
   camDt = dt;
