@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from '../vendor/OrbitControls.js';
-import { Character, ANIM_NAMES, setWireframe } from './character.js';
+import { Character, ANIM_NAMES, setWireframe, makeOrb } from './character.js';
 import { makeCharacter } from './model-character.js';
 import { createMiniland } from './miniland.js';
 import { CLASSES, CLASS_ORDER, CLASS_CHANGE_LEVEL, CLASS_CHOICES } from './classes.js';
@@ -200,13 +200,37 @@ $('#opt-anime').onchange = (e) => (anime.enabled = e.target.checked);
 $('#opt-pixel').onchange = (e) => { state.pixel = e.target.checked; canvas.classList.toggle('pixel', state.pixel); resize(); };
 
 const locked = (id) => id !== game.heroClass;
-let toastTimer;
+// system messages: small lines, at most three on screen; a repeated message counts up (×2, ×3) instead of piling up
+const toastLines = [];
 function toast(msg, ms = 2200) {
-  const el = $('#toast');
-  el.textContent = msg;
-  el.hidden = false;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => (el.hidden = true), ms);
+  const box = $('#toast');
+  ms = Math.min(ms, 4000);
+  const same = toastLines.find((t) => t.msg === msg);
+  if (same) {
+    same.n++;
+    same.el.lastChild.textContent = `×${same.n}`;
+    clearTimeout(same.timer);
+    same.timer = setTimeout(() => dropToast(same), ms);
+    return;
+  }
+  const el = document.createElement('div');
+  el.className = 'toast-line';
+  el.append(document.createElement('span'), document.createElement('i'));
+  el.firstChild.textContent = msg;
+  box.appendChild(el);
+  box.hidden = false;
+  const t = { msg, el, n: 1 };
+  toastLines.push(t);
+  while (toastLines.length > 3) dropToast(toastLines[0]);
+  t.timer = setTimeout(() => dropToast(t), ms);
+}
+function dropToast(t) {
+  const i = toastLines.indexOf(t);
+  if (i < 0) return;
+  toastLines.splice(i, 1);
+  clearTimeout(t.timer);
+  t.el.classList.add('out');
+  setTimeout(() => { t.el.remove(); if (!toastLines.length) $('#toast').hidden = true; }, 250);
 }
 
 function selectClass(id, force = false) {
@@ -615,6 +639,9 @@ function onCombatEvent(name, ch) {
       game.buffs.def = game.time + BUFF_TIME;
       toast('Defence +30% · Hit chance +15%');
       break;
+    case 'throw':
+      launchOrb(ch);
+      break;
     case 'arrow': case 'bolt': {
       const ok = (m) => distTo(m) < sk.range + 2 && facing(m) > 0.9;
       const m = tgt && ok(tgt) ? tgt : nearestMonster(sk.range + 2, ok);
@@ -674,6 +701,7 @@ function onMonsterKilled(m) {
     audio.sfx('jobUp');
     setTimeout(() => toast(`${map.def.name} cleared! +3 Saat`, 5000), 900);
   } else if (!m.t.static && Math.random() < SAAT_DROP) { game.saat++; loot += '  +1 Saat'; }
+  if (!m.t.static && !m.t.boss && Math.random() < 0.08) { miniland.state.orbs++; miniland.save(); loot += '  +1 Catch Orb'; }
   if (mate && !m.t.static && mate.gainXp(m.t.xp)) {
     fx.ring(mate.pos, 0x9be86a, 2, 0.08, 0.7);
     audio.sfx('jobUp');
@@ -690,7 +718,7 @@ function onMonsterKilled(m) {
 // actions that sit on the bar next to learned skills
 const ACTIONS = {
   sit: { id: 'sit', name: 'Sit', icon: ['#7ab86a', '#2e5a28'], desc: 'Sit down to rest: HP and MP recover much faster.', cd: 0, mp: 0, jobLv: 1 },
-  catch: { id: 'catch', name: 'Catch', icon: ['#e86a8a', '#7a1e3a'], desc: 'Catch a weakened monster (HP below 50%) as your companion. It fights at your side and levels up with you.', cd: 4, mp: 5, jobLv: 1, range: 6 },
+  catch: { id: 'catch', name: 'Catch', icon: ['#e86a8a', '#7a1e3a'], desc: 'Throw a Catch Orb at a weakened monster (HP below 50%) to make it your companion. It fights at your side and levels up with you. Uses 1 Catch Orb.', cd: 4, mp: 5, jobLv: 1, range: 6, orbs: true },
 };
 const barEntry = (id) => ACTIONS[id] || SKILLS.find((sk) => sk.id === id) || null;
 function toggleSit() {
@@ -728,6 +756,7 @@ function tryCatch() {
   if (mates().length >= MAX_MATES) return deny(`You already have ${MAX_MATES} companions. Release one in the Miniland menu (L → NosMates).`);
   if (m.hp > m.maxHp * 0.5) return deny(`Weaken ${m.t.name} first: its HP must be below 50%.`);
   if (hero.mp < Math.ceil(A.mp * tree.mpCost())) return deny('Not enough MP. Sit down to recover.');
+  if (miniland.state.orbs <= 0) return deny('You have no Catch Orbs. Malcolm in Mossvale sells them.');
   game.target = m;
   if (distTo(m) > A.range) { player.pending = { catch: true, tgt: m }; return; }
   if (player.sitting) { player.sitting = false; state.anim = 'idle'; }
@@ -737,35 +766,81 @@ function tryCatch() {
   hero.mp -= Math.ceil(A.mp * tree.mpCost());
   const d = m.pos.clone().sub(player.pos);
   player.yaw = ch.root.rotation.y = Math.atan2(d.x, d.z);
-  ch.play('wave');
+  game.catchTarget = m;
+  ch.play('catch');                                   // wind up and throw: the orb leaves the hand on the 'throw' event
   audio.sfx('talk');
-  fx.ring(m.pos, 0xff8ab8, 1.6, 0.06, 0.6);
-  setTimeout(() => {
-    if (!m.alive) return;
-    // weaker (lower HP) and lower-level monsters are easier to catch
-    const chance = Math.min(0.95, Math.max(0.15, 0.4 + (0.5 - m.hp / m.maxHp) * 1.1 + (hero.lv - m.t.lv) * 0.05));
-    if (Math.random() > chance) {
-      audio.sfx('miss');
-      popDamage(m.pos, m.height, 'ESCAPED');
-      return toast(`${m.t.name} broke free! Try again.`);
+}
+
+// the thrown Catch Orb: flies in an arc, wobbles on the monster, then captures it or pops
+const orbFlights = [];
+function launchOrb(ch) {
+  const m = game.catchTarget;
+  game.catchTarget = null;
+  if (!m?.alive) return;
+  miniland.state.orbs--; miniland.save();
+  const orb = makeOrb(0.24);
+  const from = ch.worldPos(ch.handR, 0, -0.1, 0.12);
+  orb.position.copy(from);
+  scene.add(orb);
+  audio.sfx('stones');
+  orbFlights.push({ orb, m, from, t: 0, phase: 'fly' });
+}
+function updateOrbs(dt) {
+  for (let i = orbFlights.length - 1; i >= 0; i--) {
+    const f = orbFlights[i], { orb, m } = f;
+    f.t += dt;
+    const target = m.pos.clone().setY(m.pos.y + m.height * 0.55);
+    if (f.phase === 'fly') {
+      const k = Math.min(1, f.t / 0.42);
+      orb.position.lerpVectors(f.from, target, k);
+      orb.position.y += Math.sin(k * Math.PI) * 1.6;               // arc
+      orb.rotation.x += dt * 18;
+      if (k >= 1) {
+        f.phase = 'wobble'; f.t = 0;
+        // weaker (lower HP) and lower-level monsters are easier to catch
+        f.success = m.alive && Math.random() < Math.min(0.95, Math.max(0.15, 0.4 + (0.5 - m.hp / m.maxHp) * 1.1 + (hero.lv - m.t.lv) * 0.05));
+        f.baseScale = m.root.scale.x;
+        fx.ring(m.pos, 0xff8ab8, 1.8, 0.06, 0.5);
+        audio.sfx('pop');
+      }
+    } else if (f.phase === 'wobble') {
+      // the monster is pulled into the orb (or starts to, when it will break free)
+      const pull = Math.min(1, f.t / 0.35) * (f.success ? 1 : 0.6);
+      if (m.alive) m.root.scale.setScalar(f.baseScale * (1 - pull * 0.95));
+      orb.position.copy(target).setY(m.pos.y + 0.3 + Math.max(0, 0.6 - f.t) * 0.8);
+      orb.rotation.set(0, 0, Math.sin(f.t * 16) * 0.5 * Math.min(1, f.t * 2));
+      if (f.t > 1.1) {
+        orbFlights.splice(i, 1);
+        scene.remove(orb);
+        if (!m.alive) continue;
+        if (!f.success) {
+          m.root.scale.setScalar(f.baseScale);
+          fx.burst(orb.position.clone(), 0xff8ab8, 16, 3, 0.1, 1.2);
+          audio.sfx('miss');
+          popDamage(m.pos, m.height, 'ESCAPED');
+          toast(`${m.t.name} broke free! ${miniland.state.orbs} Catch Orbs left.`);
+          continue;
+        }
+        m.root.scale.setScalar(f.baseScale);
+        m.hp = 0; m.state = 'dead'; m.deadFor = 0; m.root.visible = false;
+        if (game.target === m) game.target = null;
+        fx.burst(orb.position.clone(), 0xff8ab8, 30, 4, 0.13, 2);
+        fx.ring(m.pos, 0xffffff, 2.4, 0.08, 0.8);
+        audio.sfx('levelUp');
+        const st = miniland.state;
+        const data = { id: st.uid++, type: m.typeId, lv: m.t.lv, xp: 0, name: m.t.name };
+        st.mates.push(data);
+        const first = !st.activeMate || !mate;
+        if (first) st.activeMate = data.id;
+        miniland.save();
+        syncMate();
+        if (first) mate?.place(player.pos);
+        toast(first ? `You caught a ${m.t.name}! It is your companion now.` : `You caught a ${m.t.name}! It waits in your Miniland (L → NosMates).`, 4000);
+        tutorial.event('catch');
+        quests.onEvent('catch');
+      }
     }
-    m.hp = 0; m.state = 'dead'; m.deadFor = 0;
-    if (game.target === m) game.target = null;
-    fx.burst(m.pos.clone().setY(0.8), 0xff8ab8, 30, 4, 0.13, 2);
-    fx.ring(m.pos, 0xffffff, 2.4, 0.08, 0.8);
-    audio.sfx('levelUp');
-    const st = miniland.state;
-    const data = { id: st.uid++, type: m.typeId, lv: m.t.lv, xp: 0, name: m.t.name };
-    st.mates.push(data);
-    const first = !st.activeMate || !mate;
-    if (first) st.activeMate = data.id;
-    miniland.save();
-    syncMate();
-    if (first) mate?.place(player.pos);
-    toast(first ? `You caught a ${m.t.name}! It is your companion now.` : `You caught a ${m.t.name}! It waits in your Miniland (L → NosMates).`, 4000);
-    tutorial.event('catch');
-    quests.onEvent('catch');
-  }, 650);
+  }
 }
 
 // the companion travelling with the hero (one at a time)
@@ -1130,7 +1205,7 @@ function buildSlots() {
     const sk = id && barEntry(id);
     const el = document.createElement('button');
     el.className = sk ? 'slot' : 'slot empty';
-    el.innerHTML = sk ? `<img src="${drawIcon(sk)}" alt=""><kbd>${i === 9 ? 0 : i + 1}</kbd><span class="cd"></span>${sk.ammo ? '<span class="ammo"></span>' : ''}`
+    el.innerHTML = sk ? `<img src="${drawIcon(sk)}" alt=""><kbd>${i === 9 ? 0 : i + 1}</kbd><span class="cd"></span>${sk.ammo || sk.orbs ? '<span class="ammo"></span>' : ''}`
       : `<kbd>${i === 9 ? 0 : i + 1}</kbd>`;
     el.title = sk ? `${sk.name}\n${sk.desc}${sk.mp ? `\nMP ${sk.mp}` : ''}${sk.cd ? ` · Cooldown ${sk.cd}s` : ''}` : 'Empty slot: set up skills with Skill Master Kael, or press K';
     el.onclick = () => (sk ? useSlot(i) : openSkills(false));
@@ -1138,6 +1213,30 @@ function buildSlots() {
     return el;
   });
   slotEls.aa = aa;
+  // skills book: the learned skills at a glance (hover), click to open the skill window
+  const book = document.createElement('button');
+  book.className = 'slot book';
+  book.innerHTML = `<img src="${drawBookIcon()}" alt=""><kbd>K</kbd><span class="ammo"></span>`;
+  book.onclick = () => openSkills(false);
+  book.onmouseenter = () => {
+    const known = SKILLS.filter((sk, i) => i > 0 && game.learned.has(sk.id));
+    book.title = `Skills (K)\n${known.length ? known.map((sk) => `• ${sk.name} (Lv. ${tree.skillLv(sk.id)})`).join('\n') : 'No skills learned yet: visit Skill Master Kael.'}`;
+  };
+  slotsEl.prepend(book);
+  slotEls.book = book;
+}
+// a little spell book for the skills button
+function drawBookIcon() {
+  const c = document.createElement('canvas'); c.width = c.height = 16;
+  const g = c.getContext('2d');
+  g.fillStyle = '#3a2458'; g.fillRect(0, 0, 16, 16);
+  g.fillStyle = '#6a3aa8'; g.fillRect(1, 1, 14, 14);
+  g.fillStyle = '#8a2a2a'; g.fillRect(3, 3, 10, 11);           // cover
+  g.fillStyle = '#f2e6c8'; g.fillRect(4, 4, 8, 9);             // pages
+  g.fillStyle = '#8a2a2a'; g.fillRect(7, 4, 2, 9);             // spine
+  g.fillStyle = '#ffd24a'; g.fillRect(5, 6, 1, 1); g.fillRect(10, 6, 1, 1); g.fillRect(5, 9, 1, 1); g.fillRect(10, 9, 1, 1);
+  g.fillStyle = '#ffd24a'; g.fillRect(12, 2, 2, 2); g.fillRect(2, 12, 1, 1);    // sparkles
+  return c.toDataURL();
 }
 buildSlots();
 $('#job-test').onclick = () => { if (game.jobLv < maxJob()) setJobLv(maxJob()); };
@@ -1159,7 +1258,11 @@ function updateHud() {
     el.classList.toggle('on', id === 'sit' && player.sitting);
     el.querySelector('.cd').style.height = `${cdOf(sk) * 100}%`;
     if (sk.ammo) el.querySelector('.ammo').textContent = game.stones;
+    if (sk.orbs) { el.querySelector('.ammo').textContent = miniland.state.orbs; el.classList.toggle('nomp', hero.mp < sk.mp || miniland.state.orbs <= 0); }
   });
+  // skills book: how many skills you know
+  const known = SKILLS.filter((sk, i) => i > 0 && game.learned.has(sk.id)).length;
+  if (slotEls.book.dataset.n !== String(known)) { slotEls.book.dataset.n = known; slotEls.book.querySelector('.ammo').textContent = known; }
   const b = [];
   if (game.buffs.atk > game.time) b.push(`<span class="buff atk">Combat ${Math.ceil(game.buffs.atk - game.time)}s</span>`);
   if (game.buffs.def > game.time) b.push(`<span class="buff def">Morale ${Math.ceil(game.buffs.def - game.time)}s</span>`);
@@ -1286,7 +1389,7 @@ function updateLabels() {
 const pickEl = $('#classpick');
 function openClassPick() {
   game.dialog = true;
-  $('#toast').hidden = true;
+  for (const t of [...toastLines]) dropToast(t);
   const names = { hp: 'HP', mp: 'MP', atk: 'ATK', def: 'DEF', spd: 'SPD' };
   $('#cp-cards').innerHTML = CLASS_CHOICES.map((id) => {
     const c = CLASSES[id];
@@ -1638,6 +1741,7 @@ function updatePlayer(dt) {
     travel(p);
   }
   updateTimeSpace(dt);
+  updateOrbs(dt);
 
   // stones, regeneration and buff auras
   if (map.stonePile && SKILLS.some((sk) => sk.ammo) && game.stones < MAX_STONES && player.pos.distanceTo(map.stonePile.position) < 1.8) {

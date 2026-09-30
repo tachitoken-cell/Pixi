@@ -11,7 +11,7 @@ const STEPS = [
   { id: 'intro', title: 'Welcome, Adventurer!', text: 'I am Nora, the guide of Mossvale. Every hero starts as an Adventurer. Let me show you the basics — it only takes a minute. You can skip at any time.', button: 'Show me' },
   { id: 'move', title: 'Walk to the Training Grounds', text: 'Walk (WASD or click the ground) to the fenced Training Grounds north-west of the plaza. Follow the golden arrow.', target: GROUND_C },
   { id: 'attack', title: 'Auto-attack', text: 'Click a Training Jelly or Hopper. Your hero keeps attacking on his own until it falls. Defeat 3 monsters.', need: 3, event: 'kill', target: GROUND_C },
-  { id: 'catch', title: 'Catch a companion', text: 'Hit a monster until its HP bar is below half, then press 2 (Catch). Caught monsters fight at your side and level up with you.', event: 'catch', target: GROUND_C },
+  { id: 'catch', title: 'Catch a companion', text: 'Hit a monster until its HP bar is below half, then press 2 to throw a Catch Orb. Caught monsters fight at your side and level up with you.', event: 'catch', target: GROUND_C },
   { id: 'sit', title: 'Rest', text: 'Nice catch! Press 1 (Sit) to rest: sitting recovers HP and MP quickly.', event: 'sit' },
   { id: 'skills', title: 'Learn skills', text: 'Skill Master Kael at the plaza teaches new skills as your Job Level rises. Talk to him and put skills on your bar. (K opens your skills anywhere.)', event: 'skills', target: KAEL },
   { id: 'done', title: 'You are ready!', text: 'That is everything. Explore the fields, visit the villages, try the dungeons and build your Miniland (L). A gift for the road: 2 Saat and 100 gold.', button: 'Finish' },

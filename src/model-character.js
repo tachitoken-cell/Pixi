@@ -49,7 +49,7 @@ export class ModelCharacter extends Character {
   constructor(cls) {
     super(cls);
     // weapons move from the procedural hands to holders that follow the model's hands
-    const weapons = new Set([...this.weaponParts, this.sling?.g, this.bow?.g, this.staff?.g].filter(Boolean));
+    const weapons = new Set([...this.weaponParts, this.sling?.g, this.bow?.g, this.staff?.g, this.orb].filter(Boolean));
     this.holders = {};
     for (const side of ['handR', 'handL']) {
       const holder = new THREE.Group();

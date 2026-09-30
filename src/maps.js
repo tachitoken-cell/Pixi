@@ -42,7 +42,7 @@ export const MAPS = {
         ['elder', 'Elder Moss', [5, 5], 'Welcome to Mossvale! Beyond the gates: Clover Fields (east), Whisperwood (north), Brookhollow (west). Your Miniland gate is south.'],
         ['master', 'Class Master Oren', [-5, 6], 'At Job Level 20 I can guide you onto a new path: Knight, Ranger or Mage.'],
         ['mimi', 'Mimi Mentor', [19, -2], 'Tents, chests, carpets, minigames… everything for your Miniland! Open the menu with L.', { shop: 'miniland', ry: 0 }],
-        ['malcolm', 'Malcolm Mix', [27, -2], 'A Bell of Sweet Home takes you to your Miniland from anywhere, and back again.', { shop: 'bells', ry: 0 }],
+        ['malcolm', 'Malcolm Mix', [27, -2], 'Bells of Sweet Home and Catch Orbs! A Bell takes you to your Miniland from anywhere; an Orb catches a weakened monster.', { shop: 'bells', ry: 0 }],
         ['gerta', 'Gerta the Trader', [35, 2], 'Stone, timber, fish, feathers: I buy all the materials your minigames produce.', { shop: 'materials' }],
         ['merchant', 'Merchant Tilly', [30, 10], 'Fresh apples! The stone pile by the fountain has free slingshot stones.'],
         ['guard', 'Guard Bram', [66, 6], 'Clover Fields lies east. Jellies and Hoppers: easy prey for a new Adventurer.', { ry: -Math.PI / 2 }],

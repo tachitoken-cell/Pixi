@@ -930,20 +930,52 @@ Object.assign(ANIMS, {
   },
 });
 
+// Throwing a Catch Orb: wind up over the shoulder, step in and throw, follow through
+ANIMS.catch = {
+  dur: 0.9, hideWeapon: true, prop: 'orb',
+  pose(t, c, D) {
+    const p = t / D, wind = seg(p, 0, 0.42), thr = seg(p, 0.42, 0.58), rec = seg(p, 0.7, 1), k = 1 - rec;
+    let arm = -0.15 + (-3.25 + 0.15) * wind;
+    arm += (-1.0 - arm) * thr;
+    return {
+      armRX: arm * k - 0.15 * rec, armRZ: -0.2 - 0.25 * wind * (1 - thr), elbowR: (-1.4 * wind * (1 - thr) - 0.15) * k,
+      armLX: (-0.5 * wind + 0.4 * thr) * k, armLZ: 0.35 * wind * k + 0.16, elbowL: -0.5 * k,
+      torsoY: (0.5 * wind - 0.9 * thr) * k, torsoX: (-0.1 * wind + 0.18 * thr) * k, bodyX: 0.1 * thr * k,
+      legLX: (-0.1 * wind - 0.35 * thr) * k, legRX: (0.1 * wind + 0.3 * thr) * k, kneeL: 0.25 * thr * k + 0.08, kneeR: (0.15 * wind + 0.35 * thr) * k + 0.08,
+      headX: (-0.1 * wind + 0.08 * thr) * k, headY: -0.2 * wind * k,
+    };
+  },
+  events: [[0.5, 'throw']],
+};
+
 // The rigged model has longer legs and real knees: it sits with its knees up and its feet flat on the ground.
 const MODEL_ANIMS = { ...ANIMS,
   sit: {
     loop: true,
+    // sitting on the ground: legs stretched out with one knee up, leaning back on both hands
     pose(t) {
-      const b = Math.sin(t * 1.6);
-      return { bodyY: -1.0, bodyX: -0.05, legLX: -1.75, legRX: -1.75, legLZ: 0.22, legRZ: -0.22, kneeL: 0.62, kneeR: 0.62, footL: 1.1, footR: 1.1,
-        torsoX: 0.2 + b * 0.015, armLX: -0.85, armRX: -0.85, armLZ: 0.1, armRZ: -0.1, elbowL: -0.5, elbowR: -0.5,
-        headX: 0.05 + b * 0.02, headZ: 0.06, wRX: 1.57, wLX: 0.4 };
+      const b = Math.sin(t * 1.6), look = Math.sin(t * 0.4) * 0.25;
+      return { bodyY: -1.52, bodyX: -0.12, torsoX: -0.18 + b * 0.02, headX: 0.22 + b * 0.02, headY: look, headZ: 0.05,
+        legLX: -1.45, legRX: -1.75, legLZ: 0.16, legRZ: -0.12, kneeL: 0.25, kneeR: 1.05, footL: 0.2, footR: 0.55,
+        armLX: 0.75, armRX: 0.75, armLZ: 0.42, armRZ: -0.42, elbowL: -0.1, elbowR: -0.1, wRX: 0.3, wLX: 0.3 };
     },
   },
 };
 
 export const ANIM_NAMES = ['idle', 'walk', 'run', 'attack', 'skill', 'wave', 'victory', 'sit', 'hit', 'death'];
+
+// the Catch Orb: pink with a gold band and a white button, like a little capture ball
+export function makeOrb(r = 0.16) {
+  const g = new THREE.Group();
+  const top = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2), new ToonMat({ color: 0xff6aa8, emissive: 0x6a1a3a, emissiveIntensity: 0.4 }));
+  const bot = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 10, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), new ToonMat({ color: 0xfff4f8 }));
+  const band = new THREE.Mesh(new THREE.TorusGeometry(r * 1.0, r * 0.12, 6, 20), new ToonMat({ color: 0xe8b83a }));
+  band.rotation.x = Math.PI / 2;
+  const btn = new THREE.Mesh(new THREE.SphereGeometry(r * 0.28, 10, 8), new ToonMat({ color: 0xffffff, emissive: 0xffe8f2, emissiveIntensity: 0.6 }));
+  btn.position.z = r * 0.95;
+  g.add(top, bot, band, btn);
+  return g;
+}
 
 // ---------------------------------------------------------------- character
 export class Character {
@@ -972,6 +1004,11 @@ export class Character {
 
     this.weaponParts = [];
     this.buildWeapon();
+    // the Catch Orb in the throwing hand
+    this.orb = makeOrb();
+    this.orb.position.set(0, -0.1, 0.12);
+    this.orb.visible = false;
+    this.handR.add(this.orb);
     this.blob = new THREE.Mesh(BLOB_GEO, BLOB_MAT);
     this.blob.rotation.x = -Math.PI / 2;
     this.blob.position.y = 0.03;
@@ -1095,7 +1132,8 @@ export class Character {
     // skill props: the slingshot shows up only while it is used; some skills put the sword away
     const cur = this.oneShot ? a : null;
     if (this.sling) this.sling.g.visible = cur?.prop === 'sling';
-    const hide = !!cur?.hideWeapon || cur?.prop === 'sling';
+    if (this.orb) this.orb.visible = cur?.prop === 'orb' && this.t < this.duration(this.state) * 0.5;
+    const hide = !!cur?.hideWeapon || cur?.prop === 'sling' || (!this.oneShot && this.state === 'sit');
     for (const w of this.weaponParts) w.visible = this.armed && !hide;
     const base = hold(c, this.armed);
     const k = 1 - Math.exp(-dt * (this.oneShot ? 22 : LOCO_SPEED[this.base] ? 18 : 10));

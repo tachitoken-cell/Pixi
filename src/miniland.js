@@ -64,11 +64,13 @@ export const MATERIALS = {
 };
 const GAME_MATS = { quarry: ['stone', 'iron', 'crystal'], sawmill: ['timber', 'hardwood', 'resin'], pond: ['carp', 'mackerel', 'pearl'], range: ['feather', 'egg', 'gfeather'] };
 const UPGRADE = [null, { gold: 800, mats: [30, 15, 0] }, { gold: 2500, mats: [50, 30, 8] }];
-export const SHOP_ITEMS = { bell: { name: 'Bell of Sweet Home', price: 150, desc: 'Go to your Miniland from anywhere; the exit brings you back.' }, coupon: { name: 'Production Coupon', price: 300, desc: '+500 Production points today.' } };
+export const SHOP_ITEMS = { bell: { name: 'Bell of Sweet Home', price: 150, desc: 'Go to your Miniland from anywhere; the exit brings you back.' }, coupon: { name: 'Production Coupon', price: 300, desc: '+500 Production points today.' },
+  orb: { name: 'Catch Orb', price: 40, desc: 'Thrown by the Catch skill to capture a weakened monster. One orb per throw.' },
+  orb5: { name: 'Catch Orb ×5', price: 180, desc: 'A bundle of five Catch Orbs.' } };
 
 function defaultState() {
   return { gold: 0, bells: 3, coupons: 0, pp: PP_MAX, ppDay: today(), locked: false, message: 'Welcome to my Miniland!',
-    visits: { total: 0, today: 0, day: today() }, storage: {}, placed: [], games: {}, bag: {}, wh: {}, petHome: false, gift: true, uid: 1, mates: [], activeMate: null };
+    visits: { total: 0, today: 0, day: today() }, storage: {}, placed: [], games: {}, bag: {}, wh: {}, petHome: false, gift: true, uid: 1, mates: [], activeMate: null, orbs: 5 };
 }
 function load() {
   try {
@@ -327,7 +329,7 @@ export function createMiniland({ $, toast, audio, fx, game, player, placeLabel, 
         <div class="ml-inv">${invRows(st.bag, 'bag')}</div><h4>In the warehouse</h4><div class="ml-inv">${invRows(st.wh, 'wh')}</div>`
         : '<p class="ml-empty">Install a warehouse (Tiny Chest, Iron-bound Chest, Oak Cabinet or Storage Shed) to store materials.</p>';
     } else if (tab === 'bag') {
-      B.innerHTML = `<p class="ml-note">Bag: ${slotsUsed(st.bag)} / ${BAG_SLOTS} slots (${STACK} per slot) · Bells of Sweet Home: ${st.bells} · Production Coupons: ${st.coupons}</p><div class="ml-inv">${invRows(st.bag, null)}</div>`;
+      B.innerHTML = `<p class="ml-note">Bag: ${slotsUsed(st.bag)} / ${BAG_SLOTS} slots (${STACK} per slot) · Bells of Sweet Home: ${st.bells} · Production Coupons: ${st.coupons} · Catch Orbs: ${st.orbs}</p><div class="ml-inv">${invRows(st.bag, null)}</div>`;
     } else if (tab === 'mates') {
       const kennel = st.placed.some((e) => e.id === 'kennel');
       B.innerHTML = `<div class="ml-game"><b>Dachshund</b><small>${st.petHome ? `Staying home${kennel ? ' by his kennel' : ''} in the Miniland.` : 'Travelling with you.'}</small>
@@ -398,7 +400,7 @@ export function createMiniland({ $, toast, audio, fx, game, player, placeLabel, 
   $('#shop-close').onclick = closeShop;
   function renderShop(kind) {
     const B = $('#shop-body');
-    const title = { miniland: 'Miniland furniture', bells: 'Travel goods', materials: 'Material trader' }[kind];
+    const title = { miniland: 'Miniland furniture', bells: 'Travel & catching goods', materials: 'Material trader' }[kind];
     $('#shop-title').textContent = title;
     if (kind === 'materials') {
       const rows = Object.entries(st.bag).filter(([, n]) => n > 0).map(([id, n]) => `<div class="ml-mat"><i style="background:${MATERIALS[id].color}"></i><b>${MATERIALS[id].name}</b><span>×${n} · ${MATERIALS[id].price} g each</span><button data-sell="${id}">Sell all · ${n * MATERIALS[id].price} g</button></div>`).join('');
@@ -415,7 +417,9 @@ export function createMiniland({ $, toast, audio, fx, game, player, placeLabel, 
       const id = b.dataset.buy, o = OBJECTS[id] || SHOP_ITEMS[id];
       if (st.gold < o.price) return;
       st.gold -= o.price;
-      if (id === 'bell') st.bells++; else if (id === 'coupon') st.coupons++; else st.storage[id] = (st.storage[id] || 0) + 1;
+      if (id === 'bell') st.bells++; else if (id === 'coupon') st.coupons++;
+      else if (id === 'orb' || id === 'orb5') st.orbs += id === 'orb' ? 1 : 5;
+      else st.storage[id] = (st.storage[id] || 0) + 1;
       audio.sfx('stones'); toast(`Bought ${o.name}.${OBJECTS[id] ? ' It is in your Miniland storage.' : ''}`); save(); renderShop(kind);
     };
     for (const b of B.querySelectorAll('[data-sell]')) b.onclick = () => {
