@@ -171,6 +171,9 @@ export function animEvent(name) { if (EVENT_SFX[name]) sfx(EVENT_SFX[name]); }
 // instruments that play it. The melody is composed once per track from the chords with a
 // fixed seed, so a map always has the same tune.
 const C = (root, q = 'maj') => ({ root, tones: q === 'maj' ? [0, 4, 7] : q === 'min' ? [0, 3, 7] : q === 'sus' ? [0, 5, 7] : [0, 4, 7, 11] });
+// a chord that borrows another key for its melody notes (for key changes mid-track)
+const K = (chord, key, scale) => ({ ...chord, key, scale });
+const MINOR = [0, 2, 3, 5, 7, 8, 10], HARMONIC = [0, 2, 3, 5, 7, 8, 11], PHRYGIAN = [0, 1, 3, 5, 7, 8, 10];
 const TRACKS = {
   // town theme in the style of NosTale's village music: bouncy 4/4, recorder melody with a
   // clarinet harmony, pizzicato oom-pah, glockenspiel sparkles, soft strings and tambourine
@@ -183,22 +186,37 @@ const TRACKS = {
     chords: [C(62, 'min'), C(60), C(65), C(67), C(62, 'min'), C(70), C(60), C(69, 'min')] },
   coast: { bpm: 92, beats: 4, key: 60, scale: [0, 2, 4, 6, 7, 9, 11], seed: 21, lead: 'ocarina', arp: 'marimba', perc: true, pad: true,
     chords: [C(60, 'maj7'), C(62), C(64, 'min'), C(62), C(60, 'maj7'), C(57, 'min'), C(65, 'maj7'), C(67)] },
+  // dungeon battle theme in the style of NosTale's Time-Space battle music: fast and driving,
+  // dark E Phrygian verse that climbs into F# minor, brass lead over galloping bass,
+  // staccato string stabs, timpani and drums
+  battle: { bpm: 160, beats: 4, key: 64, scale: PHRYGIAN, seed: 17, lead: 'brass', harmony: 'horn',
+    accomp: 'drive', perc: 'battle', strings: true,
+    rhythms: [[[0, 1.5], [1.5, 0.5], [2, 1.5], [3.5, 0.5]], [[0, 0.5], [0.5, 0.5], [1, 1], [2, 2]], [[0, 1], [1, 0.5], [1.5, 0.5], [2, 1], [3, 1]], [[0, 3], [3, 0.5], [3.5, 0.5]]],
+    chords: [C(64, 'min'), C(64, 'min'), C(60), C(65), C(64, 'min'), C(62), C(60), K(C(59), 64, HARMONIC),
+      K(C(66, 'min'), 66, MINOR), K(C(62), 66, MINOR), K(C(64), 66, MINOR), K(C(61), 66, HARMONIC),
+      K(C(66, 'min'), 66, MINOR), K(C(62), 66, MINOR), K(C(58), 62, MINOR), K(C(60), 62, MINOR)] },
 };
+// the notes a melody may use over a chord: the chord's own key if it has one, else the track's
+function scaleFor(tr, ch, lo = -1, hi = 2) {
+  const notes = [];
+  for (let o = lo; o <= hi; o++) for (const d of ch.scale || tr.scale) notes.push((ch.key ?? tr.key) + o * 12 + d);
+  return notes;
+}
 
 function compose(tr) { // 16 bars: A (8) then A' (first half repeated, new ending)
   let s = tr.seed;
   const R = () => ((s = (s * 16807) % 2147483647) / 2147483647);
-  const scaleNotes = [];
-  for (let o = -1; o <= 2; o++) for (const d of tr.scale) scaleNotes.push(tr.key + o * 12 + d);
   const inChord = (n, ch) => ch.tones.some((t) => (n - ch.root - t) % 12 === 0);
   const bars = [];
   let prev = tr.key + 12;
   for (let b = 0; b < tr.chords.length; b++) {
     const ch = tr.chords[b];
+    const scaleNotes = scaleFor(tr, ch);
     const notes = [];
     // rhythm per bar: [start in beats, length in beats]
     const rhythms = tr.beats === 3 ? [[[0, 1.5], [1.5, 0.5], [2, 1]], [[0, 2], [2, 1]], [[0, 1], [1, 1], [2, 1]]] : [[[0, 1.5], [1.5, 0.5], [2, 1], [3, 1]], [[0, 2], [2, 1.5], [3.5, 0.5]], [[0, 1], [1, 1], [2, 2]], [[0.5, 1], [1.5, 0.5], [2, 2]]];
-    const rhythm = b % 4 === 3 ? [[0, tr.beats]] : rhythms[Math.floor(R() * rhythms.length)];
+    const pool = tr.rhythms || rhythms;
+    const rhythm = b % 4 === 3 ? [[0, tr.beats]] : pool[Math.floor(R() * pool.length)];
     for (const [st, len] of rhythm) {
       const strong = st === 0 || st === 2;
       let cands = scaleNotes.filter((n) => Math.abs(n - prev) <= 5 && n >= tr.key + 2 && n <= tr.key + 21);
@@ -215,7 +233,7 @@ function compose(tr) { // 16 bars: A (8) then A' (first half repeated, new endin
   for (let b = 4; b < 8; b++) {
     const ch = tr.chords[b];
     const last = b === 7;
-    const n = scaleNotes.filter((x) => inChord(x, last ? { root: tr.key, tones: [0] } : ch) && x >= tr.key && x <= tr.key + 14);
+    const n = scaleFor(tr, ch).filter((x) => inChord(x, last ? { root: tr.key, tones: [0] } : ch) && x >= tr.key && x <= tr.key + 14);
     out.push(last ? [[0, tr.beats, tr.key + 12]] : [[0, 1, n[n.length - 1 - (b % 2)]], [1, 1, n[Math.max(0, n.length - 2)]], [2, 2, n[Math.floor(n.length / 2)]]]);
   }
   return out;
@@ -257,6 +275,11 @@ function inst(kind, freq, t, len, vol, out) {
     case 'pizz': tone({ freq, t, a: 0.003, d: 0.16, vol: vol * 0.55, type: 'sawtooth', filter: 1500, bus: out }); tone({ freq, t, a: 0.003, d: 0.12, vol: vol * 0.3, type: 'triangle', bus: out }); break;
     case 'glock': tone({ freq, t, a: 0.002, d: 0.9, vol: vol * 0.22, type: 'sine', bus: out }); tone({ freq: freq * 2.76, t, a: 0.002, d: 0.25, vol: vol * 0.07, type: 'sine', bus: out }); break;
     case 'strings': for (const dt of [-6, 6]) tone({ freq, t, a: len * 0.3, d: len * 0.9, vol: vol * 0.1, type: 'sawtooth', detune: dt, filter: 1600, vib: 0.004, bus: out }); break;
+    case 'brass': for (const dt of [-8, 8]) tone({ freq, t, a: 0.035, d: len, vol: vol * 0.2, type: 'sawtooth', detune: dt, filter: 2600, vib: 0.005, bus: out }); tone({ freq: freq / 2, t, a: 0.03, d: len, vol: vol * 0.12, type: 'square', filter: 900, bus: out }); break;
+    case 'horn': tone({ freq, t, a: 0.05, d: len, vol: vol * 0.3, type: 'sawtooth', filter: 1100, bus: out }); tone({ freq, t, a: 0.05, d: len, vol: vol * 0.25, type: 'triangle', bus: out }); break;
+    case 'stab': for (const dt of [-10, 10]) tone({ freq, t, a: 0.004, d: 0.13, vol: vol * 0.16, type: 'sawtooth', detune: dt, filter: 2200, bus: out }); break;
+    case 'drivebass': tone({ freq, t, a: 0.004, d: len, vol: vol * 0.3, type: 'sawtooth', filter: 650, bus: out }); tone({ freq, t, a: 0.004, d: len, vol: vol * 0.45, type: 'sine', bus: out }); break;
+    case 'timpani': tone({ freq, t, a: 0.004, d: 0.9, vol: vol * 0.6, glide: 0.97, type: 'sine', bus: out }); noise({ t, freq: 180, q: 1, d: 0.12, vol: vol * 0.25, type: 'lowpass', bus: out }); break;
     case 'pad': for (const dt of [-7, 7]) tone({ freq, t, a: len * 0.4, d: len * 0.8, vol: vol * 0.12, type: 'sawtooth', detune: dt, filter: 900, bus: out }); break;
   }
 }
@@ -270,7 +293,13 @@ function schedule() {
     const ch = tr.chords[song.bar % tr.chords.length];
     const out = song.gain;
     const steps = tr.beats * 2;
-    if (tr.accomp === 'oompah') {
+    if (tr.accomp === 'drive') {
+      // galloping eighth-note bass, string stabs in a 3-3-2 pattern, timpani on the downbeat
+      const bassPat = [0, 0, 12, 0, 0, 12, 0, 7];
+      for (let i = 0; i < steps; i++) inst('drivebass', midi(ch.root - 24 + bassPat[i]), t + i * beat / 2, beat * 0.42, 0.55, out);
+      for (const i of [0, 3, 6]) for (const k of ch.tones.slice(0, 3)) inst('stab', midi(ch.root + k), t + i * beat / 2, 0.15, i ? 0.4 : 0.5, out);
+      inst('timpani', midi(ch.root - 24), t, 0, 0.6, out);
+    } else if (tr.accomp === 'oompah') {
       // oom-pah: bass on 1 and 3, short pizzicato chords on 2 and 4
       inst('bass', midi(ch.root - 24), t, beat * 0.9, 0.55, out);
       inst('bass', midi(ch.root - 24 + 7), t + beat * 2, beat * 0.9, 0.45, out);
@@ -292,8 +321,7 @@ function schedule() {
     if (tr.strings) for (const k of ch.tones) inst('strings', midi(ch.root + k - (k > 4 ? 12 : 0)), t, beat * tr.beats, 0.6, out);
     // melody, with an optional harmony a third below and glockenspiel on the downbeats
     const phrase = song.melody[song.bar % song.melody.length];
-    const scaleAll = [];
-    for (let o = -2; o <= 2; o++) for (const d of tr.scale) scaleAll.push(tr.key + o * 12 + d);
+    const scaleAll = scaleFor(tr, ch, -2, 2);
     for (const [st, len, n] of phrase) {
       inst(tr.lead, midi(n), t + st * beat, len * beat * 0.95, 0.3, out);
       if (tr.harmony) {
@@ -303,7 +331,18 @@ function schedule() {
       if (tr.glock && (st === 0 || len >= 2)) inst('glock', midi(n + 12), t + st * beat, 0.5, 0.35, out);
     }
     // light percussion
-    if (tr.perc === 'tambourine') for (let i = 0; i < steps; i++) {
+    if (tr.perc === 'battle') {
+      const bar = song.bar;
+      for (let i = 0; i < steps; i++) {
+        const st = t + i * beat / 2;
+        noise({ t: st, freq: 8000, q: 1, d: 0.025, vol: i % 2 ? 0.025 : 0.04, type: 'highpass', bus: out });
+        if (i === 0 || i === 4 || (i === 3 && bar % 2)) tone({ freq: 150, glide: 0.3, t: st, d: 0.18, vol: 0.5, bus: out });
+        if (i === 2 || i === 6) { noise({ t: st, freq: 1800, q: 0.8, d: 0.14, vol: 0.2, bus: out }); tone({ freq: 220, t: st, d: 0.06, vol: 0.1, type: 'triangle', bus: out }); }
+      }
+      // tom fill at the end of every 4-bar phrase, crash at the start of every 8
+      if (bar % 4 === 3) [0, 1, 2, 3].forEach((k) => tone({ freq: [220, 190, 160, 130][k], glide: 0.5, t: t + (3 + k / 4) * beat, d: 0.15, vol: 0.3, bus: out }));
+      if (bar % 8 === 0) noise({ t, freq: 5000, q: 0.5, d: 1.4, vol: 0.09, type: 'highpass', bus: out });
+    } else if (tr.perc === 'tambourine') for (let i = 0; i < steps; i++) {
       noise({ t: t + i * beat / 2, freq: 8000, q: 1.5, d: i % 2 ? 0.04 : 0.07, vol: i % 4 === 2 ? 0.07 : 0.035, type: 'bandpass', bus: out });
     } else if (tr.perc) for (let i = 0; i < steps; i++) {
       noise({ t: t + i * beat / 2, freq: 7000, q: 1, d: 0.03, vol: i % 2 ? 0.035 : 0.05, type: 'highpass', bus: out });

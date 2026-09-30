@@ -418,6 +418,7 @@ function enterMap(id, portalId) {
   state.cam.yaw = state.camMode === 'classic' ? state.cam.yaw : portalId ? at.yaw + 0.5 : Math.PI * 0.15;
   player.target = player.pending = player.dash = null;
   game.target = null;
+  game.combatUntil = 0;
   const ch = chars[state.cls];
   ch.root.position.copy(player.pos);
   ch.root.rotation.y = player.yaw;
@@ -1179,6 +1180,8 @@ function frame() {
   const dt = Math.min(clock.getDelta(), 0.05);
   game.time += dt;
   if (state.mode === 'play' && map) {
+    // maps with a battle theme (dungeons) switch to it while a fight is on, and back a few seconds after
+    if (map.def.battle) audio.playMusic(game.time < game.combatUntil + 6 ? map.def.battle : map.def.theme);
     updatePlayer(dt);
     updateHud();
     if ((miniIn -= dt) < 0) { miniIn = 0.1; drawMinimap(); }

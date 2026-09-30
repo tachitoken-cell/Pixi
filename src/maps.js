@@ -1,6 +1,7 @@
 // World layout: maps connected by portals at their edges (NosTale style).
 // Portal `edge` places it on that side of the map; `at` is the offset along that edge.
 // Arriving through a portal puts you just inside the matching portal on the other map.
+// `battle` (optional) names a music track that takes over while you are fighting, e.g. 'battle' for dungeons.
 export const MAPS = {
   village: {
     name: 'Mossvale Village', theme: 'village', size: [72, 72], seed: 3, safe: true,
