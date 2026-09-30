@@ -29,3 +29,14 @@ blends only at the joints).
 
 In the game the knees, ankles and elbows are driven by the `kneeL/R`, `footL/R` and `elbowL/R` pose values (walk and
 run cycles in `src/character.js`, `gait()`).
+
+## v3 (current): `build_v3.py`, from the second concept sheet
+
+The second sheet (a new `model.glb`: front, three-quarter, side and back views plus close-ups) goes through the same
+first steps (`decomp.mjs`, `fuse1.py` with the figure ranges of the new sheet, `fuse2.py`, `bake.py`). Its carved head
+gives the face and hair. `build_v3.py` then fits the v2 rig and parts to the sheet's front silhouette (wide stance,
+big buckled boots with leather cuffs, arms away from the body, bigger head) and bakes one 2048 texture: head texels
+from the carved head, body texels from the sheet's front and back figures where the surface faces them and the colour
+agrees with the part, the outfit's plain colours on the sides.
+
+    python build_v3.py adventurer_textured.blend fuse1.blend adventurer.glb [preview_dir]
