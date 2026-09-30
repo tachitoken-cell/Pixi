@@ -25,7 +25,8 @@ function loadModel(url, texture) {
       const map = await new THREE.TextureLoader().loadAsync(texture);
       map.flipY = false;                        // glTF texture convention
       map.colorSpace = THREE.SRGBColorSpace;
-      gltf.scene.traverse((o) => { if (o.isMesh) for (const m of [o.material].flat()) if (m.map) m.map = map; }); // only textured parts (the face and hair)
+      // the model has one textured material; in hosts that block the embedded image it arrives without a map
+      gltf.scene.traverse((o) => { if (o.isMesh) for (const m of [o.material].flat()) { m.map = map; m.color?.set(0xffffff); m.needsUpdate = true; } });
     }
     return gltf;
   })());
