@@ -9,6 +9,7 @@ import { CLASSES } from './classes.js';
 import { Monster } from './monsters.js';
 import { VoxelGrid, meshGrid, jitter, mix, VOXEL_MAT, PROP_MAT } from './voxel.js';
 import { prop } from './props.js';
+import './miniland-props.js';
 
 export const T = 0.5;            // terrain voxel size (world units)
 const BASE = 8;                  // terrain height (in voxels) that sits at world y = 0
@@ -66,11 +67,25 @@ function segDist(px, pz, ax, az, bx, bz) {
 }
 
 // villagers reuse the player model with their own colours
+const villager = (id, o) => ({ ...CLASSES.adventurer, id, weapon: null, backpack: false, xStraps: false, scarf: null, ...o });
 const NPC_LOOKS = {
+  villager: villager('villager', { hair: { color: 0x8a5a3a, dark: 0x6a4028, style: 'shaggy', seed: 21 }, vest: { color: 0x7a6a4a, trim: null } }),
+  farmer: villager('farmer', { hair: { color: 0xc89a5a, dark: 0xa07a40, style: 'messy', seed: 23 }, shirt: 0xe8dcc0, vest: { color: 0x4a6a3a, trim: null }, pants: 0x5a4a3a }),
+  smith: villager('smith', { hair: { color: 0x2a2020, dark: 0x1a1414, style: 'swept', seed: 25 }, shirt: 0x8a8a8a, vest: { color: 0x3a2a24, trim: null }, pants: 0x2a2424, armed: true, weapon: 'woodSword' }),
+  innkeeper: villager('innkeeper', { hair: { color: 0xb8402a, dark: 0x8a2a1a, style: 'tall', seed: 27 }, shirt: 0xf2ece0, vest: { color: 0x8a3a4a, trim: 0xd1a646 } }),
+  kid: villager('kid', { hair: { color: 0xe8c068, dark: 0xc89a48, style: 'messy', seed: 29 }, shirt: 0x6ab8e8, vest: { color: 0x3a6ab8, trim: null }, pants: 0x3a3a4a }),
+  fisher: villager('fisher', { hair: { color: 0x4a3a2a, dark: 0x2e241a, style: 'shaggy', seed: 31 }, shirt: 0xd8e8f0, vest: { color: 0x2a5a8a, trim: null }, scarf: 0xe8b83a }),
+  lumberjack: villager('lumberjack', { hair: { color: 0x8a3a1a, dark: 0x6a2a12, style: 'messy', seed: 33 }, shirt: 0xb8342b, vest: { color: 0x3a3a2a, trim: null }, pants: 0x3a3a44 }),
+  priestess: { ...CLASSES.mage, id: 'priestess', weapon: null, hair: { color: 0xf2e6c8, dark: 0xd8c8a0, style: 'tall', seed: 35 }, robe: { ...CLASSES.mage.robe, color: 0xf2eee4, dark: 0xd8d0c0, trim: 0xd1a646 } },
+  noble: villager('noble', { hair: { color: 0xd8c8a8, dark: 0xb8a888, style: 'swept', seed: 37 }, shirt: 0xf2f2f2, vest: { color: 0x6a2a6a, trim: 0xd1a646 }, scarf: 0xd1a646 }),
+  bard: villager('bard', { hair: { color: 0x6a3a8a, dark: 0x4a2a6a, style: 'shaggy', seed: 39 }, shirt: 0xf2e0b8, vest: { color: 0x2a8a6a, trim: 0xd1a646 }, scarf: 0xc8483a }),
+  mimi: villager('mimi', { hair: { color: 0xf28ab8, dark: 0xd86a98, style: 'tall', seed: 41 }, shirt: 0xfff0f4, vest: { color: 0xe86a9a, trim: 0xffffff } }),
+  malcolm: villager('malcolm', { hair: { color: 0x3a2a4a, dark: 0x241a30, style: 'swept', seed: 43 }, shirt: 0xe8e0f0, vest: { color: 0x4a3a8a, trim: 0xd1a646 }, scarf: 0x9a6ad8 }),
+  gerta: villager('gerta', { hair: { color: 0x9a9a9a, dark: 0x7a7a7a, style: 'tall', seed: 45 }, shirt: 0xe8dcc8, vest: { color: 0x8a6a3a, trim: null }, scarf: 0x5a8a3a }),
   elder: { ...CLASSES.adventurer, id: 'elder', hair: { color: 0xe8e4dc, dark: 0xc4c0b8, style: 'tall', seed: 4 }, vest: { color: 0x5a4a7a, trim: 0xd1a646 }, scarf: null, weapon: null },
   merchant: { ...CLASSES.adventurer, id: 'merchant', hair: { color: 0x2e2a2a, dark: 0x1c1a1a, style: 'shaggy', seed: 8 }, vest: { color: 0x3f7a4a, trim: null }, scarf: 0xe8b83a, weapon: null },
-  guard: { ...CLASSES.knight, id: 'guard', hair: { color: 0x6a4428, dark: 0x4e301c, style: 'swept', seed: 12 } },
-  master: { ...CLASSES.mage, id: 'master', hair: { color: 0xd8d4cc, dark: 0xa8a49c, style: 'swept', seed: 17 },
+  guard: { ...CLASSES.knight, id: 'guard', armed: true, hair: { color: 0x6a4428, dark: 0x4e301c, style: 'swept', seed: 12 } },
+  master: { ...CLASSES.mage, id: 'master', armed: true, hair: { color: 0xd8d4cc, dark: 0xa8a49c, style: 'swept', seed: 17 },
     robe: { ...CLASSES.mage.robe, color: 0x2e4a8a, dark: 0x223866 }, boot: 0x3a3a4a, bootCuff: 0x2e2e3a, sole: 0x1e1e28 },
 };
 
@@ -86,6 +101,33 @@ function makeSky(horizon) {
   const sky = new THREE.Mesh(geo, m);
   sky.renderOrder = -1;
   return sky;
+}
+
+// Houses along a town's streets: both sides, facing the street, skipping the plaza, portals,
+// reserved districts (market, farms, parks, landmarks) and other houses. Returns their flat pads too.
+function planTown(def, town, R, portals, pathDist) {
+  const [W, D] = def.size, limX = W / 2 - MOUNT - 5, limZ = D / 2 - MOUNT - 5;
+  const P = town.plaza ?? 11, houses = [], flats = [[0, 0, P]];
+  const reserved = (x, z, pad) => (town.reserve || []).some(([x0, z0, x1, z1]) => x > x0 - pad && x < x1 + pad && z > z0 - pad && z < z1 + pad);
+  for (const [x, z, v, ry, scale] of town.fixedHouses || []) { houses.push({ x, z, v, ry, scale, kind: 'house' }); flats.push([x, z, 5 * scale]); }
+  const spacing = town.houseSpacing ?? 13, off = town.houseOffset ?? 9, kind = town.houseKind || 'house';
+  for (const pts of town.streets || []) for (let i = 0; i < pts.length - 1; i++) {
+    const [ax, az] = pts[i], [bx, bz] = pts[i + 1], len = Math.hypot(bx - ax, bz - az);
+    const dx = (bx - ax) / len, dz = (bz - az) / len;
+    for (let s = spacing / 2; s < len - 3; s += spacing) for (const side of [-1, 1]) {
+      const nx = -dz * side, nz = dx * side;
+      const x = ax + dx * s + nx * off, z = az + dz * s + nz * off;
+      if (Math.abs(x) > limX || Math.abs(z) > limZ || Math.hypot(x, z) < P + 9) continue;
+      if (portals.some((p) => Math.hypot(p.pos.x - x, p.pos.z - z) < 13)) continue;
+      if (reserved(x, z, 5) || pathDist(x, z) < off - 3.5) continue;
+      if (houses.some((h) => Math.hypot(h.x - x, h.z - z) < spacing - 1)) continue;
+      if (R() < (town.gaps ?? 0.12)) continue;
+      const ry = Math.round(Math.atan2(-nx, -nz) / (Math.PI / 2)) * (Math.PI / 2);   // door faces the street
+      houses.push({ x, z, v: Math.floor(R() * 5), ry, scale: town.houseScale ?? 1.25, kind });
+      flats.push([x, z, 6.5]);
+    }
+  }
+  return { houses, flats };
 }
 
 export function buildMap(def) {
@@ -107,19 +149,24 @@ export function buildMap(def) {
   const blocked = new Uint8Array(CX * CZ);
   const k = (i, j) => j * CX + i;
 
-  // paths from every portal to the map centre
+  // paths from every portal to the map centre (straight streets in towns), plus a town's own streets
+  const town = def.town;
   const paths = portals.map((p) => {
     const [ix, iz] = INWARD[p.edge];
-    const bend = (R() - 0.5) * 12;
+    const bend = town ? (R(), 0) : (R() - 0.5) * 12;
     const mid = [p.pos.x * 0.5 + iz * bend, p.pos.z * 0.5 + ix * bend];
     return [[p.pos.x - ix * (MOUNT + 3), p.pos.z - iz * (MOUNT + 3)], [p.pos.x, p.pos.z], mid, [0, 0]];
   });
-  const pathDist = (x, z) => Math.min(...paths.map((pts) => Math.min(segDist(x, z, ...pts[0], ...pts[1]), segDist(x, z, ...pts[1], ...pts[2]), segDist(x, z, ...pts[2], ...pts[3]))));
+  if (town) for (const st of town.streets || []) paths.push(st);
+  const pathDist = (x, z) => {
+    let d = Infinity;
+    for (const pts of paths) for (let i = 0; i < pts.length - 1; i++) d = Math.min(d, segDist(x, z, ...pts[i], ...pts[i + 1]));
+    return d;
+  };
+  const PW = town ? 2.6 : 1.7;                                   // half width of paths / streets
   const flats = []; // [x, z, radius] areas forced flat (plaza, house pads)
-  if (def.theme === 'village') {
-    flats.push([0, 0, 11]);
-    for (const [x, z] of [[-15, -13], [15, -14], [-15, 14], [16, 14], [-24, 0]]) flats.push([x, z, 7]);
-  }
+  const plan = town ? planTown(def, town, R, portals, pathDist) : null;
+  if (plan) flats.push(...plan.flats);
 
   // ---- heights and surfaces
   for (let j = 0; j < CZ; j++) for (let i = 0; i < CX; i++) {
@@ -139,14 +186,14 @@ export function buildMap(def) {
       if (along < 3.2 && out) { h = BASE; type = 'path'; }
     }
     const pd = pathDist(x, z);
-    if (pd < 1.7 && edge > 2) { h = BASE + Math.min(1, Math.max(0, h - BASE)); type = pd < 1.2 ? 'path' : type; }
-    else if (pd < 9 && edge >= MOUNT) h = Math.round(BASE + (h - BASE) * Math.pow((pd - 1.7) / 7.3, 1.5));
+    if (pd < PW && edge > 2) { h = BASE + Math.min(1, Math.max(0, h - BASE)); type = pd < PW - 0.5 ? 'path' : type; }
+    else if (pd < 9 && edge >= MOUNT) h = Math.round(BASE + (h - BASE) * Math.pow((pd - PW) / (9 - PW), 1.5));
     for (const [fx, fz, fr] of flats) {
       const d = Math.hypot(x - fx, z - fz);
       if (d < fr) h = BASE;
       else if (d < fr + 3) h = Math.round(BASE + (h - BASE) * ((d - fr) / 3));
     }
-    if (def.theme === 'village' && Math.hypot(x, z) < 11) type = 'cobble';
+    if (town && Math.hypot(x, z) < (town.plaza ?? 11)) type = 'cobble';
     if (def.theme === 'fields') {
       const pond = Math.hypot(x + 16, z - 18) - (6 + N2(x * 0.2, z * 0.2) * 2);
       if (pond < 0) { h = BASE - 3; type = 'sand'; } else if (pond < 1.2 && type === 'grass') { h = BASE; type = 'sand'; }
@@ -158,7 +205,12 @@ export function buildMap(def) {
       if (x > shore + 5 && edge < MOUNT) h = BASE - 4; // open sea to the east
     }
     if (def.theme === 'crypt' && edge >= MOUNT && type === 'grass') type = 'cobble';
-    if (def.theme === 'miniland' && edge >= MOUNT) h = BASE;          // flat ground to build on
+    if (def.theme === 'miniland' && edge >= MOUNT) {                  // flat plot: stone terrace, dirt production yard
+      h = BASE;
+      const inZ = (r) => r && x >= r[0] && x <= r[2] && z >= r[1] && z <= r[3];
+      if (inZ(def.zones?.terrace)) type = 'cobble';
+      else if (inZ(def.zones?.production)) type = 'path';
+    }
     if (def.theme === 'grotto' && edge > MOUNT + 2 && pd > 3) {
       const pool = Math.min(Math.hypot(x + 14, z - 6), Math.hypot(x - 10, z + 14), Math.hypot(x - 18, z - 4)) - (5 + N2(x * 0.2, z * 0.2) * 2);
       if (pool < 0) { h = BASE - 3; type = 'sand'; } else if (pool < 1.2) { h = BASE; type = 'sand'; }
@@ -239,7 +291,7 @@ export function buildMap(def) {
   };
   // tallest thing per column, so the camera can keep clear of trees and roofs
   const camTop = new Float32Array(CX * CZ).fill(-99);
-  const CANOPY = { oak: 2.8, pine: 3.2, palm: 3, house: 4.6, fountain: 3.2, stall: 2, gate: 4.2 };
+  const CANOPY = { oak: 2.8, pine: 3.2, palm: 3, house: 4.6, fountain: 3.2, stall: 2, gate: 4.2, ml_cabin: 4, ml_villa: 5, mtent: 2.4, ml_windmill: 2, ml_well: 1.8 };
   const raiseCam = (x, z, r, top) => {
     const [ci, cj] = col(x, z);
     const n = Math.ceil(r / T);
@@ -294,55 +346,62 @@ export function buildMap(def) {
   const npcs = [];
   const update = [];
 
-  if (def.theme === 'village') {
-    place('fountain', 0, 0, { block: false });
-    blockCircle(0, 0, 3.4);
-    for (const [x, z] of [[-8, -8], [8, -8], [-8, 8], [8, 8]]) place('lamp', x, z);
-    const houses = [[-15, -13, 0, 0], [15, -14, 1, 0], [-15, 14, 2, Math.PI], [16, 14, 3, Math.PI], [-24, 0, 4, Math.PI / 2]];
-    for (const [x, z, v, ry] of houses) {
-      place('house', x, z, { variant: v, ry, scale: 1.25, block: false });
-      const rot = Math.abs(Math.sin(ry)) > 0.5;
-      blockRect(x, z, (rot ? 22 : 28) * 0.25 * 1.25 + 0.4, (rot ? 28 : 22) * 0.25 * 1.25 + 0.4);
+  if (town) {
+    const P = town.plaza ?? 11;
+    if (town.fountain !== false) { place('fountain', 0, 0, { block: false }); blockCircle(0, 0, 3.4); }
+    if (town.well) place('ml_well', 0, 0, { scale: 1.4 });
+    // houses along the streets (planned before the terrain so their pads are flat)
+    for (const h of plan.houses) {
+      place(h.kind, h.x, h.z, { variant: h.v, ry: h.ry, scale: h.scale, block: h.kind !== 'house' });
+      if (h.kind === 'house') { const rot = Math.abs(Math.sin(h.ry)) > 0.5; blockRect(h.x, h.z, (rot ? 22 : 28) * 0.25 * h.scale + 0.4, (rot ? 28 : 22) * 0.25 * h.scale + 0.4); }
     }
-    place('stall', -7, -12, { scale: 1.3 });
-    for (const [x, z] of [[-11, -8], [-11.8, -9]]) place('barrel', x, z, { scale: 1.2 });
-    for (const [x, z] of [[11, 9], [11.9, 9.6], [11.3, 10.4]]) place('crate', x, z, { scale: 1.3, ry: R() });
-    for (const [x, z, ry] of [[19, -4, Math.PI / 2], [4, -19, 0]]) place('sign', x, z, { ry, scale: 1.3 });
-    // fences along the fields
-    for (let x = -26; x < -8; x += 3.25) place('fence', x, 22, { block: false });
-    for (let x = 9; x < 27; x += 3.25) place('fence', x, 22, { block: false });
-    scatter(18, 'oak', { clear: 16, variants: 4, scale: 1.1 });
-    scatter(14, 'bush', { clear: 12 });
-    scatter(6, 'rock', { clear: 12 });
-    ridgeTrees(90, 'oak');
-    const npcDefs = [
-      ['elder', 'Elder Moss', [3.8, 4.2], 'Welcome to Mossvale! East lies Clover Fields, north the Whisperwood. Sit down to heal.'],
-      ['merchant', 'Merchant Tilly', [-7, -10], 'Fresh apples and slingshot stones! The stone pile by the fountain is free.'],
-      ['guard', 'Guard Bram', [20, 5], 'Jellies and Hoppers roam the fields. Wolves in the woods bite hard, be careful.'],
-      ['master', 'Class Master Oren', [-4.6, 5], 'At Job Level 20 I can guide you onto a new path: Knight, Ranger or Mage.'],
-    ];
-    for (const [look, name, [x, z], line] of npcDefs) {
-      const ch = new Character(NPC_LOOKS[look]);
+    for (const [kind, x, z, o = {}] of town.props || []) place(kind, x, z, { variant: o.v ?? 0, ry: o.ry ?? 0, scale: o.scale ?? 1, block: o.block !== false });
+    // fenced farms with crop patches and hay bales; the side facing the town centre has a gap
+    for (const [x0, z0, x1, z1] of town.farms || []) {
+      const cx = (x0 + x1) / 2, cz = (z0 + z1) / 2;
+      for (let x = x0 + 1.6; x < x1; x += 3.25) for (const z of [z0, z1]) if (!(Math.abs(x - cx) < 3 && Math.abs(z) < Math.abs(cz))) place('fence', x, z, { block: false });
+      for (let z = z0 + 1.6; z < z1; z += 3.25) for (const x of [x0, x1]) if (!(Math.abs(z - cz) < 3 && Math.abs(x) < Math.abs(cx))) place('fence', x, z, { ry: Math.PI / 2, block: false });
+      for (let z = z0 + 4; z < z1 - 3; z += 4.4) for (let x = x0 + 4; x < x1 - 3; x += 4.4) if (colOK(x, z, ['grass'])) place('crops', x, z, { variant: (Math.floor((x - x0) / 9) + Math.floor((z - z0) / 9)) % 2, block: false });
+      for (let n = 0; n < 3; n++) { const x = x0 + 2 + R() * (x1 - x0 - 4), z = z0 + 2 + R() * 3; if (colOK(x, z, ['grass'])) place('haybale', x, z, { ry: R() * 3 }); }
+    }
+    // parks: a ring of trees with benches and flower beds
+    for (const [px, pz, pr] of town.parks || []) {
+      for (let n = 0; n < 10; n++) { const a = n / 10 * Math.PI * 2; const x = px + Math.cos(a) * pr, z = pz + Math.sin(a) * pr; if (colOK(x, z)) place(town.treeKind || 'oak', x, z, { variant: n % 4, scale: 1.1 }); }
+      for (let n = 0; n < 4; n++) { const a = n / 4 * Math.PI * 2 + 0.4; place('ml_bench', px + Math.cos(a) * pr * 0.5, pz + Math.sin(a) * pr * 0.5, { ry: -a - Math.PI / 2 }); place('ml_flowerbed', px + Math.cos(a + 0.8) * pr * 0.55, pz + Math.sin(a + 0.8) * pr * 0.55, { ry: -a }); }
+    }
+    // street lamps
+    for (const pts of town.streets || []) for (let i = 0; i < pts.length - 1; i++) {
+      const [ax, az] = pts[i], [bx, bz] = pts[i + 1], len = Math.hypot(bx - ax, bz - az), dx = (bx - ax) / len, dz = (bz - az) / len;
+      for (let s = 8; s < len - 4; s += town.lampSpacing ?? 18) {
+        const x = ax + dx * s - dz * (PW + 0.9), z = az + dz * s + dx * (PW + 0.9);
+        if (Math.hypot(x, z) > P + 2 && colOK(x, z, ['grass', 'path'])) place('lamp', x, z, { scale: 1.2 });
+      }
+    }
+    for (const [kind, n, o = {}] of town.scatter || [['oak', 24, { variants: 4, scale: 1.1 }], ['bush', 16]]) scatter(n, kind, { clear: P + 8, ...o });
+    ridgeTrees(town.ridge ?? Math.round((W + D) * 0.9), town.treeKind || 'oak');
+    for (const [look, name, [x, z], line, extra = {}] of town.npcs || []) {
+      const ch = new Character(NPC_LOOKS[look] || NPC_LOOKS.villager);
       ch.root.position.set(x, heightAt(x, z), z);
-      ch.root.rotation.y = Math.PI;
-      ch.setArmed(look === 'guard' || look === 'master');
+      ch.root.rotation.y = extra.ry ?? Math.PI;
+      ch.setArmed(!!NPC_LOOKS[look]?.armed);
+      if (extra.small) ch.root.scale.setScalar(0.72);
       ch.root.traverse((o) => { if (o.isMesh) o.castShadow = false; });
       ch.blob.visible = true;
       group.add(ch.root);
-      const npc = { ch, name, line, pos: ch.root.position, classMaster: look === 'master' };
+      const npc = { ch, name, line, pos: ch.root.position, home: ch.root.position.clone(), classMaster: look === 'master', shop: extra.shop, wander: extra.wander };
       ch.root.traverse((o) => (o.userData.npc = npc));
       npcs.push(npc);
-      blockCircle(x, z, 0.6);
+      if (!extra.wander) blockCircle(x, z, 0.6);
     }
   }
-  if (def.theme === 'fields') {
+  if (def.theme === 'fields' && !town) {
     scatter(46, 'oak', { variants: 4, scale: 1.05 });
     scatter(26, 'bush');
     scatter(22, 'rock');
     for (let n = 0; n < 12; n++) place('fence', -34 + n * 3.25, -24, { block: false });
     ridgeTrees(140, 'oak');
   }
-  if (def.theme === 'woods') {
+  if (def.theme === 'woods' && !town) {
     scatter(150, 'pine', { clear: 7, variants: 4, scale: 1.1 });
     scatter(26, 'oak', { variants: 4 });
     scatter(40, 'shroom', { clear: 3, block: false });
@@ -351,7 +410,7 @@ export function buildMap(def) {
     scatter(16, 'rock');
     ridgeTrees(170, 'pine');
   }
-  if (def.theme === 'coast') {
+  if (def.theme === 'coast' && !town) {
     scatter(34, 'palm', { types: ['sand'], variants: 3, scale: 1.1 });
     scatter(18, 'oak', { variants: 4 });
     scatter(28, 'rock', { types: ['grass', 'sand'] });
@@ -361,9 +420,9 @@ export function buildMap(def) {
   }
 
   if (def.theme === 'miniland') {
-    // a flower-lined meadow; the middle stays free for your own structures
-    scatter(10, 'bush', { clear: 17, scale: 1.1 });
-    ridgeTrees(120, 'oak');
+    // the plot itself stays free for your own objects; hedges and trees all around
+    ridgeTrees(140, 'oak');
+    for (let x = -16; x <= 16; x += 3.25) for (const z of [-17.2]) place('fence', x, z, { block: false });
   }
   if (def.theme === 'cave') {
     scatter(46, 'rock', { clear: 5, scale: 1.3 });

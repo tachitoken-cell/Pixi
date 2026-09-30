@@ -176,22 +176,43 @@ Stones for the slingshot (40 max) are refilled by walking over a grey stone pile
 Each boss waits at the far end of its dungeon; defeating it clears the dungeon and gives 3 Saat.
 Bosses return after 90 seconds.
 
-## Miniland
+## Towns and villages
 
-Your own home area, like NosTale's Miniland. Go there through the gate south of Mossvale, or with the
-**Miniland** button / **L** from anywhere outside dungeons (the Sweet Home Bell); the exit gate takes you back.
+- **Mossvale** (168 × 168): cross streets from the four gates, a ring road and side streets lined with
+  houses; market street east of the plaza (Mimi, Malcolm, Gerta), town hall, inn, smithy and chapel
+  around the plaza, a farm with a windmill (north-east) and a park (south-east). About 20 NPCs; some walk around.
+- **Brookhollow** (west gate of Mossvale): farming village with fields, hay and a big windmill.
+- **Pinecrest** (west gate of the Whisperwood): lumber village with log cabins, a sawmill and log piles.
+- **Saltmere** (north gate of Pebble Coast): fishing village with piers and boats by the sea.
 
-- **L** inside opens the Miniland window: welcome message, visits, Production points, gold, Public / Private.
-- **Installing / Deleting mode** works only while the Miniland is **Private**: pick a structure in storage,
-  click the ground to place it; Deleting mode puts a structure back into storage.
-- **Shop**: decorations (trees, lamps, fences, a fountain, a cottage...) and four minigames, paid with gold
-  (monsters drop gold, bosses 300).
-- **Minigames**: Woodcutting (timing), Rock Mining (hit the glowing ore), Fishing (react to the bite),
-  Chicken Shooting (click the chickens). Your score gives a reward level 1-5 (gold, and Saat from level 3).
-  Taking a reward costs 100 Production points (2000 per day) and some of the game's durability; repair it
-  with gold in the window.
-- **Dachshund**: untick "travels with me" and he stays home, trotting around your Miniland.
-- The first visit gives you Woodcutting for free. Your Miniland and gold are saved in the browser.
+Towns are generated from their definition in `src/maps.js` (`town`: streets, reserved districts, fixed
+houses, props, farms, parks, NPCs); houses are placed along the streets automatically.
+
+## Miniland (like NosTale)
+
+Your home plot. Enter through the gate south of Mossvale, or ring a **Bell of Sweet Home** from the
+Miniland menu (your position is saved; the Miniland exit brings you back). Bells: Malcolm, Mossvale market.
+
+- **Menu (L or the Miniland button)**, everywhere: status, visitors and capacity, Production points, gold,
+  welcome message; tabs for Objects, Minigames, Warehouse, Bag and NosMates.
+- **Zones**: the stone **Terrace** (warehouses, carpets, pots, tea table, lantern), the **Garden**
+  (residences, kennel, flower beds, well, windmill, statue, bench, gnome, signpost) and the dirt
+  **Production area** (minigames only). Installing in the wrong zone is refused.
+- **Install / Delete mode** only while the Miniland is **Locked**: pick an object in the tray, a ghost shows
+  where it goes (green = allowed), click to place, **R** rotates.
+- **Objects** are bought from Mimi Mentor (Mossvale market): residences set your visitor capacity
+  (Tent 5, Cabin 10, Villa 20), warehouses store materials (7 to 35 slots).
+- **Minigames**, each with Easy / Medium / Good tiers:
+  Quarry (↑ mines, ← → squash caterpillars, a wrong swing freezes you), Sawmill (↑ ↓ at the mark,
+  combos up to ×10), Fish Pond (four rods; golden fish need an arrow combo; devils cost a life) and
+  Shooting Range (← → shoot, ↓ reloads, the golden rooster gives unlimited ammo).
+  The score gives a reward level 1-5 of that game's materials (e.g. Stone / Iron Ore / Crystal).
+  A reward costs 100 Production points (2000 a day; Production Coupons add 500) and durability
+  (repair with gold). Upgrade a minigame with its materials and gold for better rewards.
+- **Materials** go to your bag (20 slots) and warehouse; Gerta buys them for gold.
+- **Dachshund**: leave him at home and he naps by his kennel.
+- First visit: a Canvas Tent, a Tiny Chest, a Dog Kennel and a Quarry as housewarming gifts.
+- Your Miniland, gold and materials are saved in the browser.
 
 ## Saat (revive)
 

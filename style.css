@@ -422,3 +422,46 @@ body.play #view { filter: saturate(1.12) contrast(1.03); }
 .mg-yard .bird.gold { background: #ffd24a; box-shadow: inset -6px -4px 0 #d8a43a, 0 0 12px #ffd24a; }
 @media (max-width: 520px) { .ml-stats { grid-template-columns: 1fr; } .ml-row { flex-direction: column; } }
 @media (prefers-reduced-motion: reduce) { .mg-pond .bob { animation: none; } }
+
+/* ---- Miniland v2 */
+#shop { position: fixed; inset: 0; z-index: 24; display: grid; place-items: center; background: #15161ab0; padding: 16px; }
+#shop[hidden] { display: none; }
+#shop-close { width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--line); background: #ffffff10; font-size: 20px; line-height: 1; }
+.ml-box { width: min(560px, 100%); }
+.ml-tabs { flex-wrap: wrap; }
+.ml-tabs button { flex: 1 0 auto; font-size: 12.5px; padding: 7px 8px; }
+.ml-tabs button[hidden] { display: none; }
+.ml-status { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; background: #6fcf6a33; color: #c8f59a; margin-bottom: 10px; }
+.ml-status.locked { background: #ffd66b33; color: #ffe08a; }
+.ml-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ml-lead, .ml-note { color: var(--muted); font-size: 13px; margin: 6px 0 10px; }
+.ml-note b { color: inherit; }
+.ml-row button { flex: 1; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff0c; font-weight: 800; }
+.ml-row button.primary, #ml-bell { background: linear-gradient(#ffe08a, #d8a43a); color: #2b2210; border: 0; }
+.ml-row button:disabled { opacity: .45; cursor: not-allowed; }
+.ml-game { padding: 10px; border-radius: 10px; background: #ffffff08; margin-bottom: 8px; }
+.ml-game > b { display: block; }
+.ml-game > small { display: block; color: var(--muted); font-size: 12px; margin: 2px 0 6px; }
+.ml-need { color: var(--muted); font-size: 11.5px; }
+.ml-inv { display: grid; gap: 4px; }
+.ml-mat { display: grid; grid-template-columns: 14px 1fr auto auto; gap: 8px; align-items: center; padding: 6px 8px; border-radius: 8px; background: #ffffff08; font-size: 13px; }
+.ml-mat i { width: 14px; height: 14px; border-radius: 3px; }
+.ml-mat span { color: var(--muted); font-variant-numeric: tabular-nums; }
+.ml-mat button { padding: 5px 10px; border-radius: 7px; border: 0; background: var(--gold); color: #2b2210; font-weight: 800; }
+#ml-mode { top: auto; bottom: 150px; flex-wrap: wrap; justify-content: center; max-width: min(760px, calc(100vw - 24px)); }
+#ml-mode span { color: var(--muted); }
+.ml-tray { display: flex; gap: 6px; overflow-x: auto; max-width: 100%; padding: 2px; }
+.ml-tray button { flex: none; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff10; color: inherit; font-weight: 800; font-size: 12px; text-align: left; }
+.ml-tray button small { display: block; font-weight: 600; color: var(--muted); font-size: 10.5px; }
+.ml-tray button.on { background: var(--gold); color: #2b2210; }
+.ml-tray button.on small { color: #4a3a1a; }
+.ml-zone-label { position: absolute; transform: translate(-50%, -50%); pointer-events: none; font: 800 13px 'Pixelify Sans', monospace; letter-spacing: 2px; text-transform: uppercase; color: #fff; text-shadow: 0 1px 2px #000, 0 0 4px #000; }
+.ml-zone-label[hidden] { display: none; }
+.mg-canvas { display: block; width: 100%; height: auto; border-radius: 12px; image-rendering: pixelated; border: 2px solid #ffffff22; background: #000; }
+.mg-pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+.mg-pad button { padding: 10px; border-radius: 9px; border: 1px solid var(--line); background: #ffffff12; font-size: 18px; font-weight: 800; touch-action: manipulation; }
+.mg-reward { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 8px 0; }
+.mg-reward span { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: #ffffff10; font-weight: 800; font-size: 13px; }
+.mg-reward i { width: 12px; height: 12px; border-radius: 3px; }
+.mg-box { width: min(560px, 100%); }
+@media (max-width: 520px) { .ml-stats { grid-template-columns: 1fr; } }

@@ -22,6 +22,9 @@ export function prop(kind, variant = 0) {
   return cache.get(key);
 }
 
+// other modules (e.g. the Miniland furniture) add their own voxel models here
+export function registerProp(kind, builder) { BUILDERS[kind] = builder; }
+
 const G = {
   leaf: [0x4f9a3a, 0x5aa842, 0x69b84a, 0x3f8a32],
   leafDark: 0x2f6a2a,

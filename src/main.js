@@ -108,7 +108,7 @@ const keys = new Set();
 // ---------------------------------------------------------------- UI
 const $ = (s) => document.querySelector(s);
 const labels = $('#labels');
-const miniland = createMiniland({ $, toast, audio, fx, game, hero, player, placeLabel: (el, pos, y) => place(el, pos, y), labelsEl: labels });
+const miniland = createMiniland({ $, toast, audio, fx, game, player, placeLabel: (el, pos, y) => place(el, pos, y), labelsEl: labels, bellTravel: () => bellTravel() });
 let homeReturn = null;   // where the Miniland exit leads: { id, portalId } or { id, pos, yaw }
 
 function renderInfo() {
@@ -336,10 +336,10 @@ addEventListener('keydown', (e) => {
   }
   if (k === 'f') action('wave');
   if (k === 'l' && !e.repeat) goToMiniland();
-  if (k === 'escape') { miniland.closeWindow(); miniland.setMode(null); }
+  if (k === 'escape') miniland.closeAll();
   if (k === 'v') toggleCam();
   if (state.camMode === 'classic' && !e.repeat && (k === 'q' || k === 'e')) state.camYawGoal += (k === 'q' ? 1 : -1) * Math.PI / 2;
-  if (k === 'r') action('victory');
+  if (k === 'r') { if (miniland.mode?.install) miniland.rotate(); else action('victory'); }
   if (k === 'x') { if (state.anim === 'sit') playAnim('idle'); else playAnim('sit'); }
 });
 addEventListener('keyup', (e) => keys.delete(e.key.toLowerCase()));
@@ -438,7 +438,7 @@ function enterMap(id, portalId) {
   ch.root.rotation.y = player.yaw;
   pet.root.position.copy(player.pos).add(new THREE.Vector3(1.2, 0, -0.8));
   applyMapLook();
-  audio.playMusic(map.def.theme);
+  audio.playMusic(map.def.music || map.def.theme);
   snapCamera();
   labels.querySelectorAll('.mob, .npcname, .portalname').forEach((el) => el.remove());
   $('#mapname').textContent = map.def.name;
@@ -472,14 +472,21 @@ function travel(portal) {
   }, 380);
 }
 
-// Sweet Home Bell: the Miniland button / L. Inside the Miniland it opens the Miniland window
+// the Miniland menu (button / L) opens everywhere; away from home it offers the Bell of Sweet Home
 function goToMiniland() {
-  if (state.mode !== 'play' || !map || hero.dead || game.travelling) return;
-  if (map.def.miniland) return miniland.windowOpen ? miniland.closeWindow() : miniland.openWindow();
-  if (map.def.dungeon) return audio.sfx('denied'), toast('The Sweet Home Bell does not work in dungeons.');
-  if (game.combatUntil > game.time) return audio.sfx('denied'), toast('You cannot go home in the middle of a fight.');
+  if (state.mode !== 'play' || !map) return;
+  if (miniland.windowOpen) return miniland.closeWindow();
+  miniland.openWindow();
+}
+// Bell of Sweet Home: saves where you are and takes you home; the Miniland exit brings you back
+function bellTravel() {
+  if (state.mode !== 'play' || !map || hero.dead || game.travelling) return 'You cannot do that right now.';
+  if (map.def.miniland) return 'You are already home.';
+  if (map.def.dungeon) return 'The Bell of Sweet Home does not work in dungeons.';
+  if (game.combatUntil > game.time) return 'You cannot go home in the middle of a fight.';
   homeReturn = { id: map.def.id, pos: player.pos.clone(), yaw: player.yaw };
   travel({ to: 'miniland', toPortal: 'exit', bell: true });
+  return null;
 }
 
 // ---------------------------------------------------------------- adventurer skills
@@ -965,6 +972,11 @@ canvas.addEventListener('pointerdown', (e) => {
 });
 canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 canvas.addEventListener('pointermove', (e) => {
+  if (miniland.mode?.install && state.mode === 'play' && map) {        // ghost preview follows the pointer
+    const r = canvas.getBoundingClientRect();
+    ray.setFromCamera(new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1), camera);
+    miniland.hover(ray.intersectObjects(map.terrain, false)[0]?.point);
+  }
   if (!touches.has(e.pointerId)) return;
   const prev = touches.get(e.pointerId);
   touches.set(e.pointerId, [e.clientX, e.clientY]);
@@ -1022,15 +1034,38 @@ canvas.addEventListener('wheel', (e) => {
   state.cam.dist = Math.min(34, Math.max(8, state.cam.dist * (e.deltaY > 0 ? 1.1 : 0.9)));
 }, { passive: true });
 
+// villagers with `wander` stroll around their home spot and pause now and then
+function walkNpc(n, dt) {
+  n.t = (n.t ?? Math.random() * 3) - dt;
+  if (!n.goal) {
+    if (n.t > 0) return;
+    const a = Math.random() * Math.PI * 2, r = 1 + Math.random() * n.wander;
+    const x = n.home.x + Math.cos(a) * r, z = n.home.z + Math.sin(a) * r;
+    if (map.walkable(x, z)) { n.goal = new THREE.Vector3(x, 0, z); n.ch.play('walk'); }
+    n.t = 2 + Math.random() * 4;
+    return;
+  }
+  const to = n.goal.clone().sub(n.pos).setY(0), d = to.length();
+  const stop = () => { n.goal = null; n.t = 2 + Math.random() * 5; n.ch.play('idle'); };
+  if (d < 0.3 || n.t < -10) return stop();
+  to.normalize();
+  const step = Math.min(d, 1.7 * dt), nx = n.pos.x + to.x * step, nz = n.pos.z + to.z * step;
+  if (!map.walkable(nx, nz, n.pos.x, n.pos.z) || Math.hypot(nx - player.pos.x, nz - player.pos.z) < 1) return stop();
+  n.pos.x = nx; n.pos.z = nz; n.pos.y = map.heightAt(nx, nz);
+  n.ch.root.rotation.y = Math.atan2(to.x, to.z);
+}
+
 function talk(npc) {
   if (npc.pos.distanceTo(player.pos) > 6) {
     player.target = npc.pos.clone().add(player.pos.clone().sub(npc.pos).setY(0).normalize().multiplyScalar(1.6));
     return;
   }
+  if (npc.wander) { npc.goal = null; npc.t = 6; }
   const d = player.pos.clone().sub(npc.pos);
   npc.ch.root.rotation.y = Math.atan2(d.x, d.z);
   npc.ch.play('wave');
   audio.sfx('talk');
+  if (npc.shop) return miniland.openShop(npc.shop, npc.name);
   if (npc.classMaster) {
     if (game.heroClass !== 'adventurer') return toast(`${npc.name}: “You walk the path of the ${CLASSES[game.heroClass].name}. Your training continues.”`, 5000);
     if (game.jobLv < CLASS_CHANGE_JOB) return toast(`${npc.name}: “Come back when your Job Level is ${CLASS_CHANGE_JOB}. You are Job Lv. ${game.jobLv}.”`, 5000);
@@ -1219,7 +1254,8 @@ function updatePlayer(dt) {
   pet.root.visible = !petHome || !!map.def.miniland;
   if (petHome && map.def.miniland) {
     if (!petState.goal || (petState.wander -= dt) < 0) {
-      petState.goal = new THREE.Vector3((Math.random() - 0.5) * 16, 0, (Math.random() - 0.5) * 16);
+      const spot = miniland.petSpot();                 // napping by his kennel, or roaming the garden
+      petState.goal = spot ? spot.add(new THREE.Vector3((Math.random() - 0.5) * 2, 0, Math.random() * 1.5)) : new THREE.Vector3(-8 + (Math.random() - 0.5) * 10, 0, 4 + (Math.random() - 0.5) * 10);
       petState.wander = 3 + Math.random() * 4;
     }
     const to = petState.goal.clone().sub(pet.root.position).setY(0), d = to.length();
@@ -1252,7 +1288,7 @@ function updatePlayer(dt) {
     onNotice: () => audio.sfx('alert'),
   };
   for (const m of map.monsters) m.update(ctx);
-  for (const n of map.npcs) n.ch.update(dt);
+  for (const n of map.npcs) { if (n.wander) walkNpc(n, dt); n.ch.update(dt); }
   map.update(game.time, dt);
   if (game.target && !game.target.alive) game.target = null;
 }
