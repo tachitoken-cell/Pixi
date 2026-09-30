@@ -131,6 +131,17 @@ click a filled slot to clear it. You earn Job XP from kills (and from hitting th
 | 17 | Shout of Morale | self buff: defence +30%, hit chance +15% for 20 s |
 | 19 | Charging Attack | rush to the enemy (up to 10 m) and strike |
 
+## Quests
+
+NPCs with a yellow **!** over their head have a quest; a yellow **?** means you can hand one in (grey **?** = in
+progress). **J** (or the Quests button) opens the quest log; active quests show in the tracker under your portrait.
+The main story starts with Elder Moss: Training Grounds, Clover Fields, Guard Hilda at the north gate, the
+Whisperwood, then the boss of the Mossy Cavern and finally your class change. Side quests come from Mossvale's
+townsfolk (Tilly, Rosa, Hobb, Kael, Pip, Doran, Liora, Mayor Aldwin, Sable) and the villages (Greta, Bjorn, Wren,
+Captain Mara). Goals: defeat monsters, collect drops (Jelly Goo, Hopper Fluff, Shroom Spores, Wolf Fangs, Crab
+Shells drop only while a quest needs them), talk to someone, visit places, catch a companion, beat a dungeon boss.
+Rewards: XP, Job XP, gold and Saat. Everything is in `src/quests.js`.
+
 ## Tutorial and Training Grounds
 
 The first time you play, **Guide Nora** walks you through the basics: walk to the Training Grounds, defeat 3
@@ -176,6 +187,7 @@ Stones for the slingshot (40 max) are refilled by walking over a grey stone pile
 | `src/classes.js` | class colours, hair style, outfit, weapon, stats |
 | `src/skills.js` | Adventurer skill list, job levels, cooldowns |
 | `src/tutorial.js` | Guide Nora's skippable tutorial |
+| `src/quests.js` | quests, quest items, tracker and quest log |
 | `src/companions.js` | caught monster companions (follow, fight, level up) |
 | `src/character.js` | builds the voxel model, rig and all animations |
 | `src/audio.js` | synthesized sound effects and the per-map soundtrack |

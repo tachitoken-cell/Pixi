@@ -12,6 +12,7 @@ import * as audio from './audio.js';
 import { Dachshund } from './pet.js';
 import { CompanionEntity, MAX_MATES, mateXpNeeded } from './companions.js';
 import { createTutorial } from './tutorial.js';
+import { createQuests } from './quests.js';
 import { CLASS_SKILLS, MAX_JOB, MAX_LEVEL, CLASS_CHANGE_JOB, BUFF_TIME, MAX_STONES, jobXpNeeded } from './skills.js';
 
 // ---------------------------------------------------------------- renderer / scene
@@ -118,6 +119,9 @@ const tutorial = createTutorial({ $, audio, toast, player, getMapId: () => map?.
   fx: () => { const ch = chars[state.cls]; fx.ring(ch.root.position, 0xffd24a, 2.6, 0.08, 0.7); },
   reward: () => { game.saat += 2; miniland.addGold(100); } });
 scene.add(tutorial.arrow);
+const quests = createQuests({ $, audio, toast, getHero: () => hero, getJob: () => game.jobLv, getMapId: () => map?.def.id,
+  fx: () => { const ch = chars[state.cls]; fx.ring(ch.root.position, 0xffd24a, 3, 0.08, 0.9); fx.burst(ch.root.position.clone().setY(ch.root.position.y + 1.5), 0xffe08a, 28, 4, 0.13, 2); },
+  reward: (r) => { if (r.gold) miniland.addGold(r.gold); if (r.saat) game.saat += r.saat; if (r.xp) gainXp(r.xp); if (r.jobXp) gainJobXp(r.jobXp); } });
 let homeReturn = null;   // where the Miniland exit leads: { id, portalId } or { id, pos, yaw }
 
 function renderInfo() {
@@ -345,7 +349,8 @@ addEventListener('keydown', (e) => {
   }
   if (k === 'f') action('wave');
   if (k === 'l' && !e.repeat) goToMiniland();
-  if (k === 'escape') { miniland.closeAll(); closeSkills(); }
+  if (k === 'escape') { miniland.closeAll(); closeSkills(); quests.closeAll(); }
+  if (k === 'j' && !e.repeat && state.mode === 'play') quests.toggleLog();
   if (k === 'k' && !e.repeat && state.mode === 'play') { if (skillWin.hidden) openSkills(false); else closeSkills(); }
   if (k === 'v') toggleCam();
   if (state.camMode === 'classic' && !e.repeat && (k === 'q' || k === 'e')) state.camYawGoal += (k === 'q' ? 1 : -1) * Math.PI / 2;
@@ -459,6 +464,7 @@ function enterMap(id, portalId) {
   $('#banner-name').textContent = map.def.name;
   $('#banner-lv').textContent = map.def.miniland ? 'Your home · press L' : map.def.safe ? 'Safe zone' : map.def.level || '';
   if (map.def.miniland) miniland.onEnter(map);
+  quests.onEvent('visit', id);
   banner.classList.remove('show');
   void banner.offsetWidth;
   banner.classList.add('show');
@@ -654,6 +660,7 @@ function onMonsterKilled(m) {
   toast(`${m.t.name} defeated  +${m.t.xp} XP  +${m.t.jobXp} Job XP${loot}`);
   if (game.target === m) { game.target = null; game.aa = false; }
   tutorial.event('kill');
+  quests.onKill(m.typeId);
 }
 
 // ---------------------------------------------------------------- hotbar actions, auto-attack, Catch, companions
@@ -734,6 +741,7 @@ function tryCatch() {
     if (first) mate?.place(player.pos);
     toast(first ? `You caught a ${m.t.name}! It is your companion now.` : `You caught a ${m.t.name}! It waits in your Miniland (L → NosMates).`, 4000);
     tutorial.event('catch');
+    quests.onEvent('catch');
   }, 650);
 }
 
@@ -858,6 +866,7 @@ function setJobLv(lv) {
   fx.ring(ch.root.position, 0xffd66b, 3, 0.08, 0.8);
   fx.burst(ch.root.position.clone().setY(1.5), 0xffd66b, 26, 4, 0.13, 2);
   audio.sfx('jobUp');
+  quests.onEvent('job', lv);
   const ready = game.heroClass === 'adventurer' && lv >= CLASS_CHANGE_JOB;
   toast(`Job Lv. ${lv}!${fresh.length ? ` New skill at Skill Master Kael: ${fresh.join(', ')}` : ''}${ready ? ' Visit the Class Master in Mossvale to choose your class!' : ''}`, ready ? 5000 : 2200);
 }
@@ -1053,8 +1062,12 @@ function drawMinimap() {
   mctx.drawImage(map.minimap, 0, 0, w, h);
   mctx.fillStyle = '#8ae0ff';
   for (const p of map.portals) mctx.fillRect(X(p.pos.x) - 4, Z(p.pos.z) - 4, 8, 8);
-  mctx.fillStyle = '#ffd24a';
-  for (const n of map.npcs) mctx.fillRect(X(n.pos.x) - 2, Z(n.pos.z) - 2, 5, 5);
+  for (const n of map.npcs) {
+    const q = n.plate?.dataset.q, big = q === 'new' || q === 'ready';
+    mctx.fillStyle = big ? '#ffe600' : '#d8a83a';
+    const r = big ? 4 : 2;
+    mctx.fillRect(X(n.pos.x) - r, Z(n.pos.z) - r, r * 2 + 1, r * 2 + 1);
+  }
   for (const m of map.monsters) {
     if (!m.alive) continue;
     mctx.fillStyle = m === game.target ? '#ffffff' : m.t.static ? '#c8b070' : '#e8483a';
@@ -1101,7 +1114,12 @@ function updateLabels() {
     el.lastChild.firstChild.style.width = pct(m.hp, m.maxHp);
     place(el, m.pos, m.height + 0.5);
   }
-  for (const n of map.npcs) place(plate(n, 'npcname', `<small>${n.guide ? 'Guide · tutorial' : n.skills ? 'Skills' : 'NPC'}</small>${n.name}`), n.pos, 3.9);
+  for (const n of map.npcs) {
+    const el = plate(n, 'npcname', `<span class="qmark"></span><small>${n.guide ? 'Guide · tutorial' : n.skills ? 'Skills' : 'NPC'}</small>${n.name}`);
+    const mk = quests.marker(n.name);
+    if (el.dataset.q !== mk) { el.dataset.q = mk; el.firstChild.textContent = mk === 'new' ? '!' : mk ? '?' : ''; }
+    place(el, n.pos, 3.9);
+  }
   if (mate) {
     const el = plate(mate, 'matename', '');
     const html = `<small>Companion</small>Lv.${mate.data.lv} ${mate.data.name}`;
@@ -1280,6 +1298,7 @@ function talk(npc) {
   npc.ch.root.rotation.y = Math.atan2(d.x, d.z);
   npc.ch.play('wave');
   audio.sfx('talk');
+  if (!(npc.skills && tutorial.active) && quests.talkTo(npc.name)) return;   // the tutorial sends you to Kael's skills first
   if (npc.shop) return miniland.openShop(npc.shop, npc.name);
   if (npc.guide) {
     if (tutorial.active) return toast(`${npc.name}: “Follow the golden arrow, you are doing great!”`, 4000);
@@ -1315,6 +1334,7 @@ stickEl.addEventListener('pointercancel', releaseStick);
 document.querySelectorAll('#emotes button').forEach((b) => (b.onclick = () => {
   if (b.dataset.emote === 'cam') return toggleCam();
   if (b.dataset.emote === 'miniland') return goToMiniland();
+  if (b.dataset.emote === 'quests') return quests.toggleLog();
   if (b.dataset.emote === 'sprint') { state.sprint = !state.sprint; b.classList.toggle('on', state.sprint); return; }
   if (b.dataset.emote === 'sit') toggleSit();
   else action(b.dataset.emote);
@@ -1609,4 +1629,4 @@ $('#loading').classList.add('done');
 Object.assign(window, { changeClass, openClassPick, chars, state, setMode, selectClass, playAnim, game, player, hero, useSkill, enterMap, maps, getMap: () => map });
 
 // test hook, only with ?debug in the URL: lets automated checks jump between maps and trigger events
-if (new URLSearchParams(location.search).has('debug')) window.voxelQuest = { game, hero, player, state, enterMap, die, miniland, tutorial, tryCatch, useSlot, openSkills, get mate() { return mate; }, get map() { return map; }, maps };
+if (new URLSearchParams(location.search).has('debug')) window.voxelQuest = { game, hero, player, state, enterMap, die, miniland, tutorial, quests, tryCatch, useSlot, openSkills, get mate() { return mate; }, get map() { return map; }, maps };

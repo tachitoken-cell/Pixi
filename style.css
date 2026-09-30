@@ -502,3 +502,31 @@ body.play #view { filter: saturate(1.12) contrast(1.03); }
 .matename { position: absolute; transform: translate(-50%, -100%); pointer-events: none; white-space: nowrap; text-align: center; font-weight: 800; font-size: 11px; color: #c8f59a; text-shadow: 0 1px 2px #000, 0 0 3px #000; }
 .matename small { display: block; font-size: 9px; color: #ff9ac0; letter-spacing: 1px; }
 .dmg.mate { color: #c8f59a; font-size: 18px; }
+
+/* quests */
+#qtrack { position: fixed; left: calc(20px + env(safe-area-inset-left, 0px)); top: calc(200px + env(safe-area-inset-top, 0px)); z-index: 5; width: 230px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; font-size: 12px; pointer-events: none; }
+#qtrack[hidden] { display: none; }
+#qtrack > b { display: block; color: var(--gold); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+#qtrack > b small { float: right; color: var(--muted); }
+#qtrack .qt { margin-bottom: 6px; }
+#qtrack .qt span { display: block; font-weight: 800; }
+#qtrack .qt small { display: block; color: var(--muted); padding-left: 8px; }
+#qtrack .qt small.ok { color: #9be86a; text-decoration: line-through; }
+#qtrack .qt.ready span, #qtrack .qt.ready small { color: #ffe066; }
+#qtrack .more { color: var(--muted); }
+body:not(.play) #qtrack { display: none; }
+#qdlg, #qlog { position: fixed; inset: 0; z-index: 24; display: grid; place-items: center; background: #15161ab0; padding: 16px; }
+#qdlg[hidden], #qlog[hidden] { display: none; }
+#qd-close, #ql-close { width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--line); background: #ffffff10; font-size: 20px; line-height: 1; }
+.qd-box { width: min(460px, 100%); }
+.qd-text { font-size: 14px; line-height: 1.5; margin: 4px 0 8px; }
+.qd-reward { color: var(--gold); font-weight: 800; font-size: 13px; }
+.ql-goals { margin: 4px 0 8px; padding-left: 18px; font-size: 13px; }
+.ql-goals li.ok { color: #9be86a; }
+#qdlg .ml-row button, #qlog .ml-row button { flex: 1; padding: 9px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff10; font-weight: 800; }
+#qdlg .ml-row button.primary { background: var(--gold); color: #2b2210; border-color: transparent; }
+#qlog .ml-row button.confirm { background: #c8483a; color: #fff; }
+.npcname .qmark { display: block; font-family: 'Pixelify Sans', monospace; font-size: 26px; line-height: 1; color: #ffe600; text-shadow: 0 2px 0 #7a5a00, 0 0 6px #000; animation: qbob 1.2s ease-in-out infinite; }
+.npcname .qmark:empty { display: none; }
+.npcname[data-q="busy"] .qmark { color: #b8b8b8; text-shadow: 0 2px 0 #444, 0 0 6px #000; }
+@keyframes qbob { 50% { transform: translateY(-4px); } }

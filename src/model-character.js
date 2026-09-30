@@ -23,7 +23,7 @@ function loadModel(url, texture) {
       const map = await new THREE.TextureLoader().loadAsync(texture);
       map.flipY = false;                        // glTF texture convention
       map.colorSpace = THREE.SRGBColorSpace;
-      gltf.scene.traverse((o) => { if (o.isMesh) o.material.map = map; });
+      gltf.scene.traverse((o) => { if (o.isMesh) for (const m of [o.material].flat()) if (m.map) m.map = map; }); // only textured parts (the face and hair)
     }
     return gltf;
   })());
@@ -31,11 +31,16 @@ function loadModel(url, texture) {
 }
 
 // model bone -> procedural pivot group (see Character constructor)
-const BONES = [['Body', 'body'], ['Torso', 'torso'], ['Neck', 'neck'], ['ArmL', 'armL'], ['HandL', 'handL'],
-  ['ArmR', 'armR'], ['HandR', 'handR'], ['LegL', 'legL'], ['LegR', 'legR']];
+const BONES = [['Body', 'body'], ['Torso', 'torso'], ['Neck', 'neck'], ['ArmL', 'armL'], ['ArmR', 'armR'], ['LegL', 'legL'], ['LegR', 'legR']];
+// joints the procedural rig doesn't have: they follow their parent bone plus a bend around the character's
+// side-to-side axis, read from the pose (knees, ankles, elbows). Hands follow the forearm; weapons still turn
+// with the procedural hand pivot. The first model (v1) only had the bones above plus HandL/HandR.
+const JOINTS = [['ForeArmL', 'ArmL', 'elbowL'], ['ForeArmR', 'ArmR', 'elbowR'], ['HandL', 'ForeArmL', null], ['HandR', 'ForeArmR', null],
+  ['ShinL', 'LegL', 'kneeL'], ['ShinR', 'LegR', 'kneeR'], ['FootL', 'ShinL', 'footL'], ['FootR', 'ShinR', 'footR']];
+const X_AXIS = new THREE.Vector3(1, 0, 0);
 
 const MODEL_HEIGHT = 1.5;                        // exported model height (soles to hair top)
-const _q = new THREE.Quaternion(), _q2 = new THREE.Quaternion(), _v = new THREE.Vector3();
+const _q = new THREE.Quaternion(), _q2 = new THREE.Quaternion(), _v = new THREE.Vector3(), _v2 = new THREE.Vector3();
 
 export class ModelCharacter extends Character {
   constructor(cls) {
@@ -73,8 +78,8 @@ export class ModelCharacter extends Character {
       o.bind(new THREE.Skeleton(bones, o.skeleton.boneInverses), o.bindMatrix);
       o.castShadow = true;
       o.frustumCulled = false;
-      const map = o.material.map;
-      o.material = new THREE.MeshLambertMaterial({ map });
+      const lambert = (m) => new THREE.MeshLambertMaterial({ map: m.map, color: m.map ? 0xffffff : m.color });
+      o.material = Array.isArray(o.material) ? o.material.map(lambert) : lambert(o.material);
     });
     const s = this.procHeight / MODEL_HEIGHT;       // skinned bounding boxes are unreliable before posing
     model.scale.setScalar(s);
@@ -82,15 +87,15 @@ export class ModelCharacter extends Character {
     this.root.updateMatrixWorld(true);
 
     const rootInv = this.root.getWorldQuaternion(new THREE.Quaternion()).invert();
-    this.bones = BONES.map(([bone, group]) => {
-      const b = byName[bone];
-      if (!b) return null;
-      return {
-        bone: b, group: this[group],
-        rest: rootInv.clone().multiply(b.getWorldQuaternion(new THREE.Quaternion())),    // rest rotation, root space
-        restPos: b.position.clone(), restLocal: this.root.worldToLocal(b.getWorldPosition(new THREE.Vector3())), // root space: follows the character
-      };
-    }).filter(Boolean);
+    const entry = (b, extra) => ({
+      bone: b, ...extra,
+      rest: rootInv.clone().multiply(b.getWorldQuaternion(new THREE.Quaternion())),    // rest rotation, root space
+      restPos: b.position.clone(), restLocal: this.root.worldToLocal(b.getWorldPosition(new THREE.Vector3())), // root space: follows the character
+    });
+    this.bones = BONES.filter(([bone]) => byName[bone]).map(([bone, group]) => entry(byName[bone], { group: this[group] }));
+    // v2 rig: extra joints (processed after their parents); the v1 rig drives its hands from the hand pivots
+    if (byName.ForeArmL) for (const [bone, parent, key] of JOINTS) this.bones.push(entry(byName[bone], { parent, key }));
+    else for (const [bone, group] of [['HandL', 'handL'], ['HandR', 'handR']]) if (byName[bone]) this.bones.push(entry(byName[bone], { group: this[group] }));
     this.boneBy = Object.fromEntries(this.bones.map((e) => [e.bone.name, e]));
     // the procedural body is only a driver from now on: hide its meshes (weapons live on the holders)
     this.body.traverse((o) => { if (o.isMesh) o.visible = false; });
@@ -107,10 +112,20 @@ export class ModelCharacter extends Character {
     this.root.updateMatrixWorld(true);
     const rootInv = this.root.getWorldQuaternion(_q2).invert();
     if (this.model) {
-      const posed = {};
+      const posed = {}, delta = {};
       for (const e of this.bones) {
-        // pivot rotation relative to the character root, applied on top of the bone's rest rotation
-        const want = rootInv.clone().multiply(e.group.getWorldQuaternion(_q)).multiply(e.rest);
+        let want;
+        if (e.group) {
+          // pivot rotation relative to the character root, applied on top of the bone's rest rotation
+          delta[e.bone.name] = rootInv.clone().multiply(e.group.getWorldQuaternion(_q));
+          want = delta[e.bone.name].clone().multiply(e.rest);
+        } else {
+          // extra joint: the parent's rotation, then its own bend around the side-to-side axis
+          const d = delta[e.parent].clone();
+          if (e.key) d.multiply(_q.setFromAxisAngle(X_AXIS, this.pose[e.key] || 0));
+          delta[e.bone.name] = d;
+          want = d.clone().multiply(e.rest);
+        }
         const parent = posed[e.bone.parent?.name] ?? rootInv.clone().multiply(e.bone.parent.getWorldQuaternion(_q));
         e.bone.quaternion.copy(parent.clone().invert().multiply(want));
         posed[e.bone.name] = want;
@@ -126,12 +141,26 @@ export class ModelCharacter extends Character {
       }
       this.model.updateMatrixWorld(true);
     }
-    // weapon holders follow the model hands (or the procedural hands until the model is loaded)
+    // weapon holders follow the model hands (or the procedural hands until the model is loaded); with elbows the
+    // weapon also turns with the forearm's bend
     for (const side of ['handR', 'handL']) {
-      const holder = this.holders[side], src = this.model ? this.boneBy[side === 'handR' ? 'HandR' : 'HandL']?.bone : null;
+      const holder = this.holders[side], S = side === 'handR' ? 'R' : 'L';
+      const src = this.model ? this.boneBy['Hand' + S]?.bone : null;
       (src ?? this[side]).getWorldPosition(_v);
+      const fore = src && this.boneBy['ForeArm' + S]?.bone;
+      if (fore) {                                   // grip = the middle of the fist, a little past the wrist
+        const dir = _v.clone().sub(fore.getWorldPosition(_v2)).normalize();
+        _v.addScaledVector(dir, 0.055 * this.model.scale.x * this.root.getWorldScale(_v2).x);
+      }
       holder.position.copy(this.root.worldToLocal(_v));
       holder.quaternion.copy(rootInv).multiply(this[side].getWorldQuaternion(_q));
+      const bend = this.model && this.boneBy['ForeArm' + S] ? this.pose['elbow' + S] || 0 : 0;
+      if (bend) {
+        // rotate about the upper arm's current side axis
+        const armD = rootInv.clone().multiply(this['arm' + S].getWorldQuaternion(new THREE.Quaternion()));
+        const axis = X_AXIS.clone().applyQuaternion(armD);
+        holder.quaternion.premultiply(_q.setFromAxisAngle(axis, bend));
+      }
     }
   }
 

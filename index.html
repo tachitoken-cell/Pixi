@@ -72,6 +72,7 @@
     <span>Click a monster / <kbd>Space</kbd>: auto-attack</span>
     <span><kbd>1</kbd> Sit · <kbd>2</kbd> Catch · <kbd>3</kbd>–<kbd>0</kbd> skills</span>
     <span><kbd>K</kbd>: skills (learn them from Kael)</span>
+    <span><kbd>J</kbd>: quests · NPCs with a yellow <b>!</b> have one</span>
     <span><kbd>V</kbd>: classic ↔ 360° view · <kbd>Q</kbd> <kbd>E</kbd>: turn</span>
     <span>Mouse wheel: zoom</span>
     <span><kbd>F</kbd> wave · <kbd>R</kbd> cheer · <kbd>X</kbd> sit (heal)</span>
@@ -107,6 +108,7 @@
       <button data-emote="wave">Wave</button>
       <button data-emote="victory">Cheer</button>
       <button data-emote="sit">Sit</button>
+      <button data-emote="quests" title="Quest log (J)">Quests</button>
       <button data-emote="miniland" title="Sweet Home Bell: go to your Miniland (L)">Miniland</button>
     </div>
   </div>
@@ -158,6 +160,29 @@
     </div>
   </div>
   <div id="tut" hidden aria-live="polite"></div>
+  <div id="qtrack" hidden></div>
+  <div id="qdlg" hidden role="dialog" aria-labelledby="qd-title">
+    <div class="ml-box qd-box">
+      <div class="ml-head">
+        <div><small class="cp-eyebrow" id="qd-who"></small><h2 id="qd-title"></h2></div>
+        <button id="qd-close" aria-label="Close">×</button>
+      </div>
+      <p id="qd-text" class="qd-text"></p>
+      <h4>Goals</h4>
+      <ul id="qd-goals" class="ql-goals"></ul>
+      <p id="qd-reward" class="qd-reward"></p>
+      <div class="ml-row"><button id="qd-ok" class="primary"></button><button id="qd-no"></button></div>
+    </div>
+  </div>
+  <div id="qlog" hidden role="dialog" aria-labelledby="ql-title">
+    <div class="ml-box">
+      <div class="ml-head">
+        <div><small class="cp-eyebrow">Adventurer's journal</small><h2 id="ql-title">Quests</h2></div>
+        <button id="ql-close" aria-label="Close">×</button>
+      </div>
+      <div id="ql-body"></div>
+    </div>
+  </div>
   <div id="skillwin" hidden role="dialog" aria-labelledby="sw-title">
     <div class="ml-box">
       <div class="ml-head">

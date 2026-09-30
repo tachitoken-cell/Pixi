@@ -596,7 +596,10 @@ function buildRobeSkirt(body, c) {
 // ---------------------------------------------------------------- poses
 const KEYS = ['bodyY', 'bodyX', 'bodyZ', 'bodyRY', 'torsoX', 'torsoY', 'torsoZ', 'headX', 'headY', 'headZ',
   'armLX', 'armLY', 'armLZ', 'armRX', 'armRY', 'armRZ', 'legLX', 'legLZ', 'legRX', 'legRZ',
-  'wRX', 'wRZ', 'wLX', 'wLZ', 'draw'];
+  'wRX', 'wRZ', 'wLX', 'wLZ', 'draw',
+  // joints only the rigged model has (knees, ankles, elbows): positive knee = shin back, positive foot = toe down,
+  // negative elbow = forearm forward
+  'kneeL', 'kneeR', 'footL', 'footR', 'elbowL', 'elbowR'];
 
 const ease = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
 const seg = (p, a, b) => ease((p - a) / (b - a));
@@ -616,37 +619,55 @@ function hold(c, armed) {
   return p;
 }
 
+// Walk / run cycle: the hip swings the thigh, the knee folds while the leg swings forward and is almost straight
+// when the heel lands, the foot lifts its toe at heel strike and pushes off behind. The pelvis dips at each step
+// and twists with the legs while the shoulders turn the other way; arms swing opposite to the legs.
+function gait(w, stride, o) {
+  const s = Math.sin(w), leg = (ph) => {
+    const sw = Math.sin(ph), cs = Math.cos(ph);
+    const hip = -sw * o.swing * stride, knee = 0.08 + o.knee * Math.max(0, Math.cos(ph - 0.45)) ** 2;
+    // on the ground the foot stays level with the floor (toe up at heel strike, heel up at push-off);
+    // in the air it hangs relaxed from the shin
+    const ground = -(hip + knee) + (sw > 0 ? -o.lift * sw : o.lift * 1.8 * sw * sw);
+    const air = -0.15 + (1 - cs) * 0.5 * ground;
+    return { hip, knee, foot: cs <= 0 ? ground : cs * air + (1 - cs) * ground };
+  };
+  const l = leg(w), r = leg(w + Math.PI);
+  return {
+    bodyY: o.bob * Math.cos(2 * w) - o.bob * 0.4, bodyX: o.lean, bodyRY: -s * o.twist, bodyZ: s * 0.025,
+    torsoY: s * o.twist * 1.5, torsoX: 0.03, headY: -s * o.twist, headX: -o.lean * 0.4,
+    legLX: l.hip, legRX: r.hip, kneeL: l.knee, kneeR: r.knee, footL: l.foot, footR: r.foot,
+    armLX: s * o.arm, armRX: -s * o.arm, armLZ: 0.12, armRZ: -0.12,
+    elbowL: -o.elbow - 0.3 * Math.max(0, -s) * o.arm, elbowR: -o.elbow - 0.3 * Math.max(0, s) * o.arm,
+  };
+}
+
 const ANIMS = {
   idle: {
     loop: true,
     pose(t) {
       const b = Math.sin(t * 2.2);
-      return { bodyY: b * 0.018, torsoX: b * 0.02, headX: -b * 0.025, headZ: Math.sin(t * 0.7) * 0.03,
-        armLZ: 0.16 + b * 0.03, armRZ: -0.16 - b * 0.03 };
+      return { bodyY: b * 0.018 - 0.008, torsoX: b * 0.02, headX: -b * 0.025, headZ: Math.sin(t * 0.7) * 0.03,
+        armLZ: 0.16 + b * 0.03, armRZ: -0.16 - b * 0.03, kneeL: 0.08 - b * 0.03, kneeR: 0.08 - b * 0.03, footL: -0.03, footR: -0.03,
+        elbowL: -0.18, elbowR: -0.18 };
     },
   },
   walk: {
     loop: true,
     pose(t, c) {
-      const w = t * 8.5, s = Math.sin(w), k = c.stride;
-      return { bodyY: Math.abs(Math.cos(w)) * 0.06 - 0.02, torsoY: s * 0.1, headY: -s * 0.06, torsoX: 0.05,
-        legLX: -s * 0.6 * k, legRX: s * 0.6 * k, armLX: s * 0.55, armRX: -s * 0.55, armLZ: 0.14, armRZ: -0.14 };
+      return gait(t * 8.5, c.stride, { swing: 0.55, knee: 0.95, lift: 0.26, bob: 0.028, lean: 0.05, arm: 0.5, elbow: 0.3, twist: 0.07 });
     },
   },
   run: {
     loop: true,
     pose(t, c) {
-      const w = t * 12.5, s = Math.sin(w), k = c.stride;
-      return { bodyY: Math.abs(Math.cos(w)) * 0.12 - 0.02, bodyX: 0.18, torsoY: s * 0.16, headX: -0.12,
-        legLX: -s * 0.95 * k, legRX: s * 0.95 * k, armLX: s * 1.0, armRX: -s * 1.0, armLZ: 0.22, armRZ: -0.22 };
+      return { ...gait(t * 12.5, c.stride, { swing: 0.85, knee: 1.55, lift: 0.36, bob: 0.07, lean: 0.2, arm: 0.95, elbow: 1.2, twist: 0.1 }), headX: -0.12, armLZ: 0.2, armRZ: -0.2 };
     },
   },
   sprint: {
     loop: true,
     pose(t, c) {
-      const w = t * 16, s = Math.sin(w), k = c.stride;
-      return { bodyY: Math.abs(Math.cos(w)) * 0.16 - 0.04, bodyX: 0.32, torsoY: s * 0.2, headX: -0.22,
-        legLX: -s * 1.15 * k, legRX: s * 1.15 * k, armLX: s * 1.3, armRX: -s * 1.3, armLZ: 0.28, armRZ: -0.28 };
+      return { ...gait(t * 16, c.stride, { swing: 1.05, knee: 1.9, lift: 0.42, bob: 0.1, lean: 0.34, arm: 1.25, elbow: 1.45, twist: 0.12 }), headX: -0.22, armLZ: 0.22, armRZ: -0.26 };
     },
   },
   attack: {
@@ -873,12 +894,26 @@ Object.assign(ANIMS, {
   },
 });
 
+// The rigged model has longer legs and real knees: it sits with its knees up and its feet flat on the ground.
+const MODEL_ANIMS = { ...ANIMS,
+  sit: {
+    loop: true,
+    pose(t) {
+      const b = Math.sin(t * 1.6);
+      return { bodyY: -1.0, bodyX: -0.05, legLX: -1.75, legRX: -1.75, legLZ: 0.22, legRZ: -0.22, kneeL: 0.62, kneeR: 0.62, footL: 1.1, footR: 1.1,
+        torsoX: 0.2 + b * 0.015, armLX: -0.85, armRX: -0.85, armLZ: 0.1, armRZ: -0.1, elbowL: -0.5, elbowR: -0.5,
+        headX: 0.05 + b * 0.02, headZ: 0.06, wRX: 1.57, wLX: 0.4 };
+    },
+  },
+};
+
 export const ANIM_NAMES = ['idle', 'walk', 'run', 'attack', 'skill', 'wave', 'victory', 'sit', 'hit', 'death'];
 
 // ---------------------------------------------------------------- character
 export class Character {
   constructor(cls) {
     this.c = cls;
+    this.A = cls.model ? MODEL_ANIMS : ANIMS;
     this.root = new THREE.Group();
     this.root.name = cls.id;
     this.body = group(this.root, 0, HIP, 0);
@@ -966,7 +1001,7 @@ export class Character {
 
   // name: any of ANIM_NAMES. Loops replace the base state; one-shots play then fall back.
   play(name) {
-    const a = ANIMS[name];
+    const a = this.A[name];
     if (!a) return;
     if (a.loop) {
       this.base = name;
@@ -982,7 +1017,7 @@ export class Character {
   get busy() { return !!this.oneShot; }
 
   duration(name) {
-    const a = ANIMS[name];
+    const a = this.A[name];
     if (typeof a.dur === 'number') return a.dur;
     return a.dur[this.armed ? this.c.weapon : 'none'] ?? a.dur.none;
   }
@@ -995,7 +1030,7 @@ export class Character {
   update(dt) {
     this.t += dt;
     this.clock += dt;
-    const c = this.c, a = ANIMS[this.state];
+    const c = this.c, a = this.A[this.state];
     let target;
     if (this.oneShot) {
       const D = this.duration(this.state);

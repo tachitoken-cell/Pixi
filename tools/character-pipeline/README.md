@@ -15,3 +15,17 @@ reference sheet, where every figure only has one real side):
 
 In the game, `src/model-character.js` drives these bones from the existing procedural animation rig, so every
 animation and skill works on the model. Paths in the scripts point at the working folders used when it was built.
+
+## v2 (current): `build_v2.py`
+
+The first model bent badly when walking: one bone per leg and automatic weights smeared the shorts between the legs.
+`build_v2.py` keeps the scanned face and hair (repainting the smeared sides of the head in the scanned hair colour)
+and rebuilds the body and outfit as clean, separate parts: shirt, laced vest with back straps, belt with gold buckle
+and pouches, navy shorts, fingerless gloves, fur-cuffed boots with straps. The rig has 15 bones: Body, Torso, Neck,
+ArmL/R, ForeArmL/R, HandL/R, LegL/R, ShinL/R, FootL/R, and the weights are computed from the part geometry (smooth
+blends only at the joints).
+
+    python build_v2.py adventurer_rigged.blend adventurer.glb [preview_dir]
+
+In the game the knees, ankles and elbows are driven by the `kneeL/R`, `footL/R` and `elbowL/R` pose values (walk and
+run cycles in `src/character.js`, `gait()`).
