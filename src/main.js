@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from '../vendor/OrbitControls.js';
 import { Character, ANIM_NAMES, setWireframe } from './character.js';
 import { makeCharacter } from './model-character.js';
+import { createMiniland } from './miniland.js';
 import { CLASSES, CLASS_ORDER, CLASS_CHANGE_LEVEL, CLASS_CHOICES } from './classes.js';
 import { Effects } from './effects.js';
 import { buildMap } from './world.js';
@@ -107,6 +108,8 @@ const keys = new Set();
 // ---------------------------------------------------------------- UI
 const $ = (s) => document.querySelector(s);
 const labels = $('#labels');
+const miniland = createMiniland({ $, toast, audio, fx, game, hero, player, placeLabel: (el, pos, y) => place(el, pos, y), labelsEl: labels });
+let homeReturn = null;   // where the Miniland exit leads: { id, portalId } or { id, pos, yaw }
 
 function renderInfo() {
   const c = CLASSES[state.cls];
@@ -332,6 +335,8 @@ addEventListener('keydown', (e) => {
     else if (slot < 2) playAnim(slot ? 'skill' : 'attack');
   }
   if (k === 'f') action('wave');
+  if (k === 'l' && !e.repeat) goToMiniland();
+  if (k === 'escape') { miniland.closeWindow(); miniland.setMode(null); }
   if (k === 'v') toggleCam();
   if (state.camMode === 'classic' && !e.repeat && (k === 'q' || k === 'e')) state.camYawGoal += (k === 'q' ? 1 : -1) * Math.PI / 2;
   if (k === 'r') action('victory');
@@ -415,6 +420,7 @@ function snapCamera() {
   camera.lookAt(player.pos.x, player.pos.y + 1.4, player.pos.z);
 }
 function enterMap(id, portalId) {
+  if (map?.def.miniland) miniland.onLeave();
   if (map) scene.remove(map.group);
   if (!maps[id]) { maps[id] = buildMap({ ...MAPS[id], id }); }
   map = maps[id];
@@ -438,7 +444,8 @@ function enterMap(id, portalId) {
   $('#mapname').textContent = map.def.name;
   const banner = $('#banner');
   $('#banner-name').textContent = map.def.name;
-  $('#banner-lv').textContent = map.def.safe ? 'Safe zone' : map.def.level || '';
+  $('#banner-lv').textContent = map.def.miniland ? 'Your home · press L' : map.def.safe ? 'Safe zone' : map.def.level || '';
+  if (map.def.miniland) miniland.onEnter(map);
   banner.classList.remove('show');
   void banner.offsetWidth;
   banner.classList.add('show');
@@ -446,13 +453,33 @@ function enterMap(id, portalId) {
 function travel(portal) {
   if (game.travelling) return;
   game.travelling = true;
+  if (portal.to === 'miniland' && !portal.bell) homeReturn = { id: map.def.id, portalId: portal.id };
   audio.sfx('portal');
   $('#fade').classList.add('on');
   setTimeout(() => {
-    enterMap(portal.to, portal.toPortal);
+    if (portal.to === 'back') {
+      const r = homeReturn || { id: START_MAP, portalId: 'south' };
+      enterMap(r.id, r.portalId || null);
+      if (r.pos) {
+        player.pos.copy(r.pos); player.yaw = r.yaw;
+        chars[state.cls].root.position.copy(r.pos);
+        pet.root.position.copy(r.pos).add(new THREE.Vector3(1.2, 0, -0.8));
+        snapCamera();
+      }
+    } else enterMap(portal.to, portal.toPortal);
     $('#fade').classList.remove('on');
     setTimeout(() => (game.travelling = false), 400);
   }, 380);
+}
+
+// Sweet Home Bell: the Miniland button / L. Inside the Miniland it opens the Miniland window
+function goToMiniland() {
+  if (state.mode !== 'play' || !map || hero.dead || game.travelling) return;
+  if (map.def.miniland) return miniland.windowOpen ? miniland.closeWindow() : miniland.openWindow();
+  if (map.def.dungeon) return audio.sfx('denied'), toast('The Sweet Home Bell does not work in dungeons.');
+  if (game.combatUntil > game.time) return audio.sfx('denied'), toast('You cannot go home in the middle of a fight.');
+  homeReturn = { id: map.def.id, pos: player.pos.clone(), yaw: player.yaw };
+  travel({ to: 'miniland', toPortal: 'exit', bell: true });
 }
 
 // ---------------------------------------------------------------- adventurer skills
@@ -584,12 +611,14 @@ function hitMonster(m, sk, extra, delay) {
       gainXp(m.t.xp);
       gainJobXp(m.t.jobXp);
       let loot = '';
+      const gold = m.t.static ? 0 : m.t.boss ? 300 : Math.round(m.t.lv * 6 * (0.7 + Math.random() * 0.6));
+      if (gold) { miniland.addGold(gold); loot += `  +${gold} gold`; }
       if (m.t.boss) {
         game.saat += 3;
         fx.ring(m.pos, 0xffd66b, 5, 0.1, 1.2);
         audio.sfx('jobUp');
         setTimeout(() => toast(`${map.def.name} cleared! +3 Saat`, 5000), 900);
-      } else if (!m.t.static && Math.random() < SAAT_DROP) { game.saat++; loot = '  +1 Saat'; }
+      } else if (!m.t.static && Math.random() < SAAT_DROP) { game.saat++; loot += '  +1 Saat'; }
       toast(`${m.t.name} defeated  +${m.t.xp} XP  +${m.t.jobXp} Job XP${loot}`);
       if (game.target === m) game.target = null;
     }
@@ -776,6 +805,7 @@ function updateHud() {
   if (game.buffs.def > game.time) b.push(`<span class="buff def">Morale ${Math.ceil(game.buffs.def - game.time)}s</span>`);
   if (SKILLS.some((sk) => sk.ammo)) b.push(`<span class="buff stones">Stones ${game.stones}</span>`);
   const saatCd = Math.max(0, game.saatReadyAt - game.time);
+  b.push(`<span class="buff gold" title="Gold: buy and repair Miniland structures">Gold ${miniland.state.gold}</span>`);
   b.push(`<span class="buff saat" title="Saat: ${SAAT_COST} revive you where you fall with 50% HP and MP">Saat ${game.saat}${saatCd > 0 ? ` · ${clockText(saatCd)}` : ''}</span>`);
   updateDeath();
   const html = b.join('');
@@ -860,8 +890,11 @@ function updateLabels() {
     place(el, m.pos, m.height + 0.5);
   }
   for (const n of map.npcs) place(plate(n, 'npcname', `<small>NPC</small>${n.name}`), n.pos, 3.9);
+  miniland.update();
   for (const p of map.portals) {
-    const el = plate(p, 'portalname', `→ ${MAPS[p.to].name}`);
+    const el = plate(p, 'portalname', '');
+    const dest = `→ ${p.to === 'back' ? MAPS[homeReturn?.id ?? START_MAP].name : MAPS[p.to].name}`;
+    if (el.textContent !== dest) el.textContent = dest;
     if (p.pos.distanceTo(player.pos) > 16) el.style.display = 'none';
     else place(el, p.pos, 7.6);
   }
@@ -959,6 +992,11 @@ canvas.addEventListener('pointerup', (e) => {
   if (Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 10) return;
   const r = canvas.getBoundingClientRect();
   ray.setFromCamera(new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1), camera);
+  if (miniland.active) {
+    const mhit = ray.intersectObjects(miniland.pickables(), true)[0];
+    const ground = ray.intersectObjects(map.terrain, false)[0];
+    if (miniland.click(mhit?.object, ground?.point)) return;
+  }
   // monsters and NPCs first
   const pickables = [...alive().map((m) => m.root), ...map.npcs.map((n) => n.ch.root)];
   const hits = ray.intersectObjects(pickables, true);
@@ -1020,6 +1058,7 @@ stickEl.addEventListener('pointerup', releaseStick);
 stickEl.addEventListener('pointercancel', releaseStick);
 document.querySelectorAll('#emotes button').forEach((b) => (b.onclick = () => {
   if (b.dataset.emote === 'cam') return toggleCam();
+  if (b.dataset.emote === 'miniland') return goToMiniland();
   if (b.dataset.emote === 'sprint') { state.sprint = !state.sprint; b.classList.toggle('on', state.sprint); return; }
   if (b.dataset.emote === 'sit') { if (state.anim === 'sit') playAnim('idle'); else playAnim('sit'); }
   else action(b.dataset.emote);
@@ -1175,8 +1214,24 @@ function updatePlayer(dt) {
   sun.position.copy(player.pos).add(new THREE.Vector3(18, 34, 14));
   sun.target.position.copy(player.pos);
 
-  // the dachshund trots after the hero and stays a little to the side
-  {
+  // the dachshund trots after the hero and stays a little to the side, or lives in the Miniland
+  const petHome = miniland.state.petHome;
+  pet.root.visible = !petHome || !!map.def.miniland;
+  if (petHome && map.def.miniland) {
+    if (!petState.goal || (petState.wander -= dt) < 0) {
+      petState.goal = new THREE.Vector3((Math.random() - 0.5) * 16, 0, (Math.random() - 0.5) * 16);
+      petState.wander = 3 + Math.random() * 4;
+    }
+    const to = petState.goal.clone().sub(pet.root.position).setY(0), d = to.length();
+    let v = 0;
+    if (d > 0.4) {
+      v = 2.4;
+      pet.root.position.addScaledVector(to.normalize(), Math.min(d, v * dt));
+      pet.root.rotation.y += Math.atan2(Math.sin(Math.atan2(to.x, to.z) - pet.root.rotation.y), Math.cos(Math.atan2(to.x, to.z) - pet.root.rotation.y)) * Math.min(1, dt * 6);
+    }
+    pet.root.position.y += (map.heightAt(pet.root.position.x, pet.root.position.z) - pet.root.position.y) * Math.min(1, dt * 14);
+    petState.vel = v;
+  } else {
     const to = player.pos.clone().sub(pet.root.position).setY(0);
     const d = to.length();
     let v = 0;
@@ -1284,4 +1339,4 @@ $('#loading').classList.add('done');
 Object.assign(window, { changeClass, openClassPick, chars, state, setMode, selectClass, playAnim, game, player, hero, useSkill, enterMap, maps, getMap: () => map });
 
 // test hook, only with ?debug in the URL: lets automated checks jump between maps and trigger events
-if (new URLSearchParams(location.search).has('debug')) window.voxelQuest = { game, hero, player, state, enterMap, die, get map() { return map; }, maps };
+if (new URLSearchParams(location.search).has('debug')) window.voxelQuest = { game, hero, player, state, enterMap, die, miniland, get map() { return map; }, maps };

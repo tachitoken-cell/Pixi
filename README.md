@@ -176,6 +176,23 @@ Stones for the slingshot (40 max) are refilled by walking over a grey stone pile
 Each boss waits at the far end of its dungeon; defeating it clears the dungeon and gives 3 Saat.
 Bosses return after 90 seconds.
 
+## Miniland
+
+Your own home area, like NosTale's Miniland. Go there through the gate south of Mossvale, or with the
+**Miniland** button / **L** from anywhere outside dungeons (the Sweet Home Bell); the exit gate takes you back.
+
+- **L** inside opens the Miniland window: welcome message, visits, Production points, gold, Public / Private.
+- **Installing / Deleting mode** works only while the Miniland is **Private**: pick a structure in storage,
+  click the ground to place it; Deleting mode puts a structure back into storage.
+- **Shop**: decorations (trees, lamps, fences, a fountain, a cottage...) and four minigames, paid with gold
+  (monsters drop gold, bosses 300).
+- **Minigames**: Woodcutting (timing), Rock Mining (hit the glowing ore), Fishing (react to the bite),
+  Chicken Shooting (click the chickens). Your score gives a reward level 1-5 (gold, and Saat from level 3).
+  Taking a reward costs 100 Production points (2000 per day) and some of the game's durability; repair it
+  with gold in the window.
+- **Dachshund**: untick "travels with me" and he stays home, trotting around your Miniland.
+- The first visit gives you Woodcutting for free. Your Miniland and gold are saved in the browser.
+
 ## Saat (revive)
 
 When the hero falls, the death screen offers **Use 5 Saat**: revive on the spot with 50% HP and 50% MP

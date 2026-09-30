@@ -8,6 +8,7 @@ export const MAPS = {
     portals: [
       { id: 'east', edge: 'east', at: 0, to: 'fields', toPortal: 'west' },
       { id: 'north', edge: 'north', at: 0, to: 'woods', toPortal: 'south' },
+      { id: 'south', edge: 'south', at: 0, to: 'miniland', toPortal: 'exit' },
     ],
     monsters: [{ type: 'dummy', at: [7, -7] }],
     stones: [-6, 7],
@@ -42,6 +43,14 @@ export const MAPS = {
     ],
     monsters: [{ type: 'crab', n: 9 }, { type: 'bluejelly', n: 6 }],
     stones: [-24, 18],
+  },
+
+  // ---- your Miniland (see miniland.js); its exit gate leads back to where you came from
+  miniland: {
+    name: 'Miniland', theme: 'miniland', miniland: true, safe: true, size: [52, 52], seed: 97,
+    sky: 0xa8d8f8, fog: [40, 100],
+    portals: [{ id: 'exit', edge: 'south', at: 0, to: 'back' }],
+    monsters: [],
   },
 
   // ---- dungeons: darker enclosed maps with a boss at the far end (dungeon: true)

@@ -34,6 +34,7 @@ const THEMES = {
   fields: { grass: [0x8cc83c, 0x7cba36, 0x9cd04a], amp: 4, trees: 'oak' },
   woods: { grass: [0x5e9e3a, 0x528e34, 0x6aaa44], amp: 5, trees: 'pine' },
   coast: { grass: [0x90c848, 0x82bc40, 0x9ed054], amp: 3, trees: 'palm' },
+  miniland: { grass: [0x8ed04a, 0x80c442, 0x9cd858], amp: 1, trees: 'oak' },
   // dungeons: `grass` is the floor colour, `mini` the minimap floor colour
   cave: { grass: [0x5a5448, 0x4e4a40, 0x646052], amp: 3, trees: 'rock', mini: [96, 90, 78] },
   grotto: { grass: [0x4a7a72, 0x3e6c66, 0x56887e], amp: 2, trees: 'rock', mini: [74, 122, 114] },
@@ -157,6 +158,7 @@ export function buildMap(def) {
       if (x > shore + 5 && edge < MOUNT) h = BASE - 4; // open sea to the east
     }
     if (def.theme === 'crypt' && edge >= MOUNT && type === 'grass') type = 'cobble';
+    if (def.theme === 'miniland' && edge >= MOUNT) h = BASE;          // flat ground to build on
     if (def.theme === 'grotto' && edge > MOUNT + 2 && pd > 3) {
       const pool = Math.min(Math.hypot(x + 14, z - 6), Math.hypot(x - 10, z + 14), Math.hypot(x - 18, z - 4)) - (5 + N2(x * 0.2, z * 0.2) * 2);
       if (pool < 0) { h = BASE - 3; type = 'sand'; } else if (pool < 1.2) { h = BASE; type = 'sand'; }
@@ -358,6 +360,11 @@ export function buildMap(def) {
     ridgeTrees(110, 'oak');
   }
 
+  if (def.theme === 'miniland') {
+    // a flower-lined meadow; the middle stays free for your own structures
+    scatter(10, 'bush', { clear: 17, scale: 1.1 });
+    ridgeTrees(120, 'oak');
+  }
   if (def.theme === 'cave') {
     scatter(46, 'rock', { clear: 5, scale: 1.3 });
     scatter(34, 'shroom', { clear: 3, block: false, scale: 1.2 });
@@ -525,6 +532,16 @@ export function buildMap(def) {
     if (!c0) return true;
     return Math.abs(H[k(...c1)] - H[k(...c0)]) <= 1;
   };
+  // structures placed at runtime (Miniland) block and free ground here
+  const setBlock = (x, z, r, on) => {
+    const [ci, cj] = col(x, z);
+    const n = Math.ceil(r / T);
+    for (let dj = -n; dj <= n; dj++) for (let di = -n; di <= n; di++) {
+      if ((di * T) ** 2 + (dj * T) ** 2 > r * r + 0.01) continue;
+      const i = ci + di, j = cj + dj;
+      if (i >= 0 && j >= 0 && i < CX && j < CZ) blocked[k(i, j)] = on ? 1 : 0;
+    }
+  };
   const randomSpawn = () => {
     for (let n = 0; n < 300; n++) {
       const [x, z] = rand(MOUNT + 2);
@@ -573,7 +590,7 @@ export function buildMap(def) {
 
   return {
     def, group, W, D, portals, monsters, npcs, stonePile, minimap, terrain,
-    walkable, heightAt, camTopAt: (x, z) => camTopAt(x, z), randomSpawn, arrive,
+    walkable, heightAt, camTopAt: (x, z) => camTopAt(x, z), randomSpawn, arrive, setBlock,
     surfaceAt: (x, z) => { const c = inCol(x, z); return c ? surf[k(...c)] : 'grass'; },
     update: (t, dt = 0.016) => update.forEach((f) => f(t, dt)),
   };

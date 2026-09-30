@@ -75,6 +75,7 @@
     <span>Mouse wheel: zoom</span>
     <span><kbd>F</kbd> wave · <kbd>R</kbd> cheer · <kbd>X</kbd> sit (heal)</span>
     <span>Walk into a glowing gate: next map</span>
+    <span><kbd>L</kbd>: Miniland (your home)</span>
   </div>
 
   <div id="pframe" hidden>
@@ -105,6 +106,7 @@
       <button data-emote="wave">Wave</button>
       <button data-emote="victory">Cheer</button>
       <button data-emote="sit">Sit</button>
+      <button data-emote="miniland" title="Sweet Home Bell: go to your Miniland (L)">Miniland</button>
     </div>
   </div>
 
@@ -118,6 +120,31 @@
       <p class="cp-lead">You have mastered the Adventurer. Pick one class; your Job Level starts again at 1. This choice is final.</p>
       <div id="cp-cards"></div>
       <button id="cp-close">Not yet</button>
+    </div>
+  </div>
+  <div id="ml-mode" hidden></div>
+  <div id="ml-window" hidden role="dialog" aria-labelledby="ml-title">
+    <div class="ml-box">
+      <div class="ml-head">
+        <div><small class="cp-eyebrow">Miniland</small><h2 id="ml-title">Hero's Miniland</h2></div>
+        <button id="ml-close" aria-label="Close">×</button>
+      </div>
+      <div class="ml-tabs"><button data-tab="home">My Miniland</button><button data-tab="shop">Shop</button></div>
+      <div id="ml-body"></div>
+    </div>
+  </div>
+  <div id="minigame" hidden role="dialog" aria-labelledby="mg-title">
+    <div class="mg-box">
+      <div class="ml-head">
+        <div><small class="cp-eyebrow">Minigame</small><h2 id="mg-title"></h2></div>
+        <button id="mg-close" aria-label="Close">×</button>
+      </div>
+      <p id="mg-desc" class="mg-desc"></p>
+      <p id="mg-info" class="mg-info"></p>
+      <div id="mg-area"></div>
+      <p id="mg-score" class="mg-score" aria-live="polite"></p>
+      <button id="mg-start" class="primary">Start</button>
+      <div id="mg-result" hidden></div>
     </div>
   </div>
   <div id="death" hidden>

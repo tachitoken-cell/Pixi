@@ -351,3 +351,74 @@ body.play #view { filter: saturate(1.12) contrast(1.03); }
 .mob.alerted .alert { display: block; animation: alert-pop .4s cubic-bezier(.2, 1.7, .4, 1) both; }
 @keyframes alert-pop { from { transform: scale(.2) translateY(10px); opacity: 0; } to { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .mob.alerted .alert { animation: none; } }
+
+/* ---- Miniland */
+.buff.gold { color: #ffd66b; border-color: #ffd66b66; }
+#ml-mode { position: fixed; top: 64px; left: 50%; transform: translateX(-50%); z-index: 20; background: var(--panel); border: 1px solid #ffd66b88; border-radius: 10px; padding: 8px 12px; font-size: 13px; display: flex; gap: 10px; align-items: center; max-width: calc(100vw - 32px); }
+#ml-mode[hidden] { display: none; }
+#ml-mode button { padding: 4px 12px; border-radius: 7px; border: 0; background: var(--gold); color: #2b2210; font-weight: 800; }
+#ml-window, #minigame { position: fixed; inset: 0; z-index: 24; display: grid; place-items: center; background: #15161ab0; padding: 16px; }
+#ml-window[hidden], #minigame[hidden] { display: none; }
+.ml-box, .mg-box { width: min(520px, 100%); max-height: calc(100dvh - 32px); overflow-y: auto; background: var(--panel); border: 2px solid #ffd66b55; border-radius: 16px; padding: 16px 18px; box-shadow: 0 18px 50px #000a; }
+.ml-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.ml-head h2 { font-family: 'Pixelify Sans', monospace; letter-spacing: 2px; margin: 2px 0 8px; font-size: 26px; }
+#ml-close, #mg-close { width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--line); background: #ffffff10; font-size: 20px; line-height: 1; }
+.ml-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+.ml-tabs button, .ml-seg button { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff0c; font-weight: 800; }
+.ml-tabs button.on, .ml-seg button.on { background: var(--gold); color: #2b2210; border-color: transparent; }
+.ml-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+.ml-stats div { background: #ffffff0a; border-radius: 10px; padding: 8px; }
+.ml-stats small, .ml-msg small { display: block; color: var(--muted); font-size: 11px; font-weight: 700; }
+.ml-stats b { font-size: 13px; font-variant-numeric: tabular-nums; }
+.ml-msg { display: block; margin-bottom: 10px; }
+.ml-msg input { width: 100%; margin-top: 4px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: #0004; color: inherit; font: inherit; }
+.ml-row { display: flex; gap: 8px; margin-bottom: 10px; }
+.ml-seg { display: flex; gap: 4px; flex: 1; }
+#ml-delete { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff0c; font-weight: 800; }
+#ml-delete:disabled, .ml-item button:disabled { opacity: .45; cursor: not-allowed; }
+.ml-toggle { display: flex; gap: 8px; align-items: baseline; font-size: 13px; font-weight: 700; margin-bottom: 6px; flex-wrap: wrap; }
+.ml-toggle small { color: var(--muted); font-weight: 600; }
+.ml-box h4 { margin: 14px 0 6px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); }
+.ml-box h4 small { text-transform: none; letter-spacing: 0; color: var(--muted); }
+.ml-item { display: grid; grid-template-columns: 1fr auto; column-gap: 10px; align-items: center; padding: 8px 10px; border-radius: 10px; background: #ffffff08; margin-bottom: 6px; }
+.ml-item small { grid-column: 1; color: var(--muted); font-size: 11.5px; }
+.ml-item button { grid-row: 1 / span 2; grid-column: 2; padding: 7px 12px; border-radius: 8px; border: 0; background: var(--gold); color: #2b2210; font-weight: 800; white-space: nowrap; }
+.ml-empty { color: var(--muted); font-size: 13px; margin: 4px 0; }
+.ml-game-label { position: absolute; transform: translate(-50%, -100%); text-align: center; pointer-events: none; white-space: nowrap; font-weight: 800; font-size: 12px; color: #fff2c0; text-shadow: 0 1px 2px #000, 0 0 3px #000; }
+.ml-game-label small { display: block; font-size: 10px; color: #c8f59a; }
+/* minigames */
+.mg-desc { color: var(--muted); margin: 0 0 4px; font-size: 13.5px; }
+.mg-info { color: var(--muted); font-size: 12px; margin: 0 0 12px; font-variant-numeric: tabular-nums; }
+#mg-area { min-height: 40px; }
+.mg-score { text-align: center; font-weight: 800; font-variant-numeric: tabular-nums; min-height: 1.3em; }
+#mg-start, #mg-result button, .mg-act { display: block; width: 100%; margin-top: 8px; padding: 11px; border-radius: 10px; font-weight: 800; border: 1px solid var(--line); background: #ffffff10; }
+#mg-start, #mg-result #mg-take { background: linear-gradient(#ffe08a, #d8a43a); color: #2b2210; border: 0; }
+#mg-result #mg-take:disabled { background: #ffffff14; color: var(--muted); }
+.mg-act kbd { font-size: 11px; opacity: .7; }
+.mg-level { text-align: center; font-size: 26px; color: #ffd66b; letter-spacing: 4px; }
+.mg-level b { display: block; font-size: 14px; letter-spacing: 1px; color: inherit; }
+#mg-result p { text-align: center; margin: 6px 0; }
+.mg-why { color: #ffb4a8; font-size: 12.5px; }
+.mg-bar { position: relative; height: 34px; border-radius: 9px; background: #0006; overflow: hidden; border: 2px solid #ffffff22; }
+.mg-bar .zone { position: absolute; top: 0; bottom: 0; background: #6fcf6a88; border-left: 2px solid #b8f59a; border-right: 2px solid #b8f59a; }
+.mg-bar .mark { position: absolute; top: -2px; bottom: -2px; width: 6px; margin-left: -3px; background: #fff; box-shadow: 0 0 8px #fff; border-radius: 3px; }
+.mg-bar.good { animation: mg-flash-good .3s; } .mg-bar.bad { animation: mg-flash-bad .3s; }
+@keyframes mg-flash-good { from { border-color: #b8f59a; } } @keyframes mg-flash-bad { from { border-color: #ff8f7e; } }
+.mg-rocks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.mg-rocks button { aspect-ratio: 1.6; border-radius: 40% 45% 35% 50%; border: 0; background: radial-gradient(circle at 35% 30%, #a8a49a, #6a665e); transition: transform .08s; }
+.mg-rocks button.lit { background: radial-gradient(circle at 40% 35%, #c8f8ff, #3ab4e8 45%, #6a665e 70%); box-shadow: 0 0 16px #6ae8ff; }
+.mg-rocks button.bad { transform: scale(.92); background: radial-gradient(circle at 35% 30%, #d88a7e, #6a665e); }
+.mg-pond { position: relative; height: 140px; border-radius: 50%; background: radial-gradient(ellipse at 50% 45%, #5ab8e8, #2a78b0); border: 6px solid #85817a; overflow: hidden; }
+.mg-pond .bob { position: absolute; left: 50%; top: 45%; width: 16px; height: 16px; margin: -8px; border-radius: 50%; background: linear-gradient(#e8483a 50%, #fff 50%); animation: bob 1.6s ease-in-out infinite; }
+.mg-pond.biting .bob { animation: bite .18s ease-in-out infinite; }
+.mg-pond .bite { position: absolute; left: 50%; top: 12%; transform: translateX(-50%); font: 900 34px/1 'Pixelify Sans', monospace; color: #ffd24a; -webkit-text-stroke: 2px #6a1a10; paint-order: stroke fill; display: none; }
+.mg-pond.biting .bite { display: block; }
+@keyframes bob { 50% { transform: translateY(3px); } } @keyframes bite { 50% { transform: translateY(9px); } }
+.mg-yard { position: relative; height: 200px; border-radius: 12px; background: repeating-linear-gradient(90deg, #8cc83c 0 40px, #82bc40 40px 80px); overflow: hidden; border: 2px solid #6a4a2e; cursor: crosshair; }
+.mg-yard .bird { position: absolute; width: 38px; height: 30px; margin-left: -19px; border: 0; padding: 0; background: #f4f0e8; border-radius: 45% 55% 40% 40%; box-shadow: inset -6px -4px 0 #ddd6c8; }
+.mg-yard .bird::before { content: ''; position: absolute; right: 2px; top: -9px; width: 14px; height: 14px; border-radius: 50%; background: inherit; box-shadow: 4px -3px 0 -3px #d8483a; }
+.mg-yard .bird::after { content: ''; position: absolute; right: -6px; top: -3px; border: 4px solid transparent; border-left: 7px solid #f2b23a; }
+.mg-yard .bird.flip { transform: scaleX(-1); }
+.mg-yard .bird.gold { background: #ffd24a; box-shadow: inset -6px -4px 0 #d8a43a, 0 0 12px #ffd24a; }
+@media (max-width: 520px) { .ml-stats { grid-template-columns: 1fr; } .ml-row { flex-direction: column; } }
+@media (prefers-reduced-motion: reduce) { .mg-pond .bob { animation: none; } }
