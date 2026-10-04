@@ -52,7 +52,9 @@ function slotsFor(date) {
 
 // ===== Theme =====
 $('#themeToggle').addEventListener('click', () => {
-  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  const current = document.documentElement.dataset.theme
+    || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = current === 'dark' ? 'light' : 'dark';
   document.documentElement.dataset.theme = next;
   try { localStorage.setItem('lumea-theme', next); } catch { /* ignorieren */ }
 });
@@ -75,10 +77,13 @@ navLinks.addEventListener('click', (e) => {
 });
 
 // ===== Scroll-Animation =====
+// Inhalte bleiben immer sichtbar; nur Elemente unterhalb des Bildschirms heben sich beim Scrollen leicht an
 const io = new IntersectionObserver((entries) => {
-  entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.remove('pending'); io.unobserve(e.target); } });
 }, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+document.querySelectorAll('.reveal').forEach((el) => {
+  if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('pending'); io.observe(el); }
+});
 
 $('#year').textContent = new Date().getFullYear();
 
@@ -239,7 +244,14 @@ function renderBookings() {
 
 $('#bookingList').addEventListener('click', (e) => {
   const btn = e.target.closest('.cancel-btn');
-  if (!btn || !confirm('Diesen Termin wirklich stornieren?')) return;
+  if (!btn) return;
+  // Zweistufige Bestätigung direkt auf der Seite
+  if (!btn.classList.contains('armed')) {
+    btn.classList.add('armed');
+    btn.textContent = 'Wirklich stornieren?';
+    setTimeout(() => { btn.classList.remove('armed'); btn.textContent = 'Stornieren'; }, 4000);
+    return;
+  }
   storage.set(storage.get().filter((b) => b.id !== btn.dataset.id));
   renderBookings(); renderCalendar(); renderSlots(); showNextSlot();
 });

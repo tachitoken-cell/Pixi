@@ -14,9 +14,36 @@
   --on-dark: #f4f2ee;
   --on-dark-muted: #a3a09a;
   --shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.18);
+  --orb: radial-gradient(circle at 35% 30%, #fff 0%, #ece3d7 35%, #c9ab86 75%, #8a6c4a 100%);
+  --orb-shadow: inset -30px -40px 80px rgba(0,0,0,0.15), 0 40px 80px -30px rgba(140,110,70,0.5);
+  --icon-sun: block;
+  --icon-moon: none;
+  --danger: var(--danger);
   --radius: 18px;
   --serif: "Cormorant Garamond", Georgia, serif;
   --sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --bg: #0e0e10;
+  --bg-soft: #141417;
+  --surface: #18181c;
+  --text: #f4f2ee;
+  --muted: #9d9a94;
+  --line: #2a2a2f;
+  --accent: #d4b48c;
+  --accent-strong: #e2c6a1;
+  --accent-soft: rgba(212, 180, 140, 0.12);
+  --dark: #050506;
+  --dark-2: #111114;
+  --shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.7);
+  --orb: radial-gradient(circle at 35% 30%, #3a3530 0%, #1d1b19 50%, #0b0b0c 100%);
+  --orb-shadow: inset 20px 20px 60px rgba(212,180,140,0.18), 0 0 120px -20px rgba(212,180,140,0.35);
+  --icon-sun: none;
+  --icon-moon: block;
+  color-scheme: dark;
+  }
 }
 
 :root[data-theme="dark"] {
@@ -32,6 +59,11 @@
   --dark: #050506;
   --dark-2: #111114;
   --shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.7);
+  --orb: radial-gradient(circle at 35% 30%, #3a3530 0%, #1d1b19 50%, #0b0b0c 100%);
+  --orb-shadow: inset 20px 20px 60px rgba(212,180,140,0.18), 0 0 120px -20px rgba(212,180,140,0.35);
+  --icon-sun: none;
+  --icon-moon: block;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -85,7 +117,7 @@ em { font-style: italic; color: var(--accent); }
 
 /* ===== Navigation ===== */
 .nav {
-  position: fixed; inset: 0 0 auto; z-index: 50;
+  position: fixed; inset: 0 0 auto; z-index: 50; padding-top: env(safe-area-inset-top, 0px);
   transition: background 0.3s, box-shadow 0.3s, backdrop-filter 0.3s;
 }
 .nav.scrolled {
@@ -111,9 +143,8 @@ em { font-style: italic; color: var(--accent); }
   display: grid; place-items: center; transition: border-color 0.2s, transform 0.4s;
 }
 .theme-toggle:hover { border-color: var(--accent); transform: rotate(20deg); }
-.icon-moon { display: none; }
-[data-theme="dark"] .icon-sun { display: none; }
-[data-theme="dark"] .icon-moon { display: block; }
+.icon-sun { display: var(--icon-sun); }
+.icon-moon { display: var(--icon-moon); }
 
 .burger { display: none; width: 40px; height: 40px; position: relative; }
 .burger span {
@@ -126,7 +157,7 @@ em { font-style: italic; color: var(--accent); }
 .burger.open span:last-child { top: 19px; transform: rotate(-45deg); }
 
 /* ===== Hero ===== */
-.hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px; position: relative; overflow: hidden; }
+.hero { display: flex; align-items: center; padding: 140px 0 100px; position: relative; overflow: hidden; }
 .hero__inner { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; }
 .hero__cta { display: flex; gap: 14px; flex-wrap: wrap; }
 .hero__stats { display: flex; gap: 44px; list-style: none; margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--line); }
@@ -137,14 +168,11 @@ em { font-style: italic; color: var(--accent); }
 .orb { position: absolute; border-radius: 50%; filter: blur(2px); }
 .orb--1 {
   inset: 0 0 12% 8%;
-  background: radial-gradient(circle at 35% 30%, #fff 0%, #ece3d7 35%, #c9ab86 75%, #8a6c4a 100%);
-  box-shadow: inset -30px -40px 80px rgba(0,0,0,0.15), 0 40px 80px -30px rgba(140,110,70,0.5);
+  background: var(--orb);
+  box-shadow: var(--orb-shadow);
   animation: float 9s ease-in-out infinite;
 }
-[data-theme="dark"] .orb--1 {
-  background: radial-gradient(circle at 35% 30%, #3a3530 0%, #1d1b19 50%, #0b0b0c 100%);
-  box-shadow: inset 20px 20px 60px rgba(212,180,140,0.18), 0 0 120px -20px rgba(212,180,140,0.35);
-}
+
 .orb--2 {
   width: 28%; aspect-ratio: 1; right: 0; top: 6%;
   background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
@@ -308,7 +336,7 @@ em { font-style: italic; color: var(--accent); }
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.field input.invalid { border-color: #d0503c; }
+.field input.invalid { border-color: var(--danger); }
 .check { display: flex; gap: 10px; align-items: flex-start; font-size: 0.8rem; color: var(--muted); cursor: pointer; }
 .check input { margin-top: 3px; accent-color: var(--accent); }
 
@@ -318,7 +346,7 @@ em { font-style: italic; color: var(--accent); }
 }
 .summary__label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em; }
 .summary__value { font-weight: 500; }
-.form-error { color: #d0503c; font-size: 0.88rem; padding: 0 32px; }
+.form-error { color: var(--danger); font-size: 0.88rem; padding: 0 32px; }
 .form-error:not(:empty) { padding-bottom: 20px; }
 
 .my-bookings { margin-top: 40px; }
@@ -329,8 +357,9 @@ em { font-style: italic; color: var(--accent); }
   padding: 16px 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface);
 }
 .my-bookings li small { color: var(--muted); display: block; }
-.cancel-btn { font-size: 0.82rem; color: #d0503c; border: 1px solid currentColor; padding: 6px 14px; border-radius: 999px; }
-.cancel-btn:hover { background: #d0503c; color: #fff; }
+.cancel-btn { font-size: 0.82rem; color: var(--danger); border: 1px solid currentColor; padding: 6px 14px; border-radius: 999px; }
+.cancel-btn.armed { background: var(--danger); color: #fff; }
+.cancel-btn:hover { background: var(--danger); color: #fff; }
 
 /* Bewertungen */
 .quote {
@@ -385,10 +414,10 @@ em { font-style: italic; color: var(--accent); }
 .modal p { color: var(--muted); margin-bottom: 28px; }
 
 /* Scroll-Animation */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.reveal.visible { opacity: 1; transform: none; }
+.reveal.pending { transform: translateY(18px); }
+.reveal { transition: transform 0.8s ease; }
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal, .reveal.pending { transform: none; transition: none; }
   .orb, .beam { animation: none; }
   html { scroll-behavior: auto; }
 }
